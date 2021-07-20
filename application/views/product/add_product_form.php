@@ -75,6 +75,8 @@
                                     <div class="col-sm-10">
                                         <input class="form-control" name="product_id" type="text" id="product_id" placeholder="<?php echo display('barcode_or_qrcode') ?>"  tabindex="1" >
                                         <input type="hidden" name="product_id_two" value="{product_id_two}">
+                                        <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
+                                        <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url(); ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +108,7 @@
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label">Brand Name</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="category_id" name="brand_id" tabindex="3">
+                                        <select class="form-control" id="brand_id" name="brand_id" tabindex="3">
                                             <option value=""></option>
                                             <?php if ($brand_list) { ?>
                                                 {brand_list}
@@ -121,7 +123,7 @@
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label">Product Type</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="category_id" name="ptype_id" tabindex="3">
+                                        <select class="form-control" id="ptype_id" name="ptype_id" tabindex="3">
                                             <option value=""></option>
                                             <?php if ($ptype_list) { ?>
                                                 {ptype_list}
@@ -142,6 +144,7 @@
                                     <label for="product_model" class="col-sm-4 col-form-label"><?php echo display('model') ?> <i class="text-danger"></i></label>
                                     <div class="col-sm-8">
                                         <input type="text" tabindex="" class="form-control" id="product_model" name="model" placeholder="<?php echo display('model') ?>" />
+                                        <input type="hidden" tabindex="" class="form-control" id="cat_id" name="cat_id"  />
                                     </div>
                                 </div>
                             </div>
@@ -149,13 +152,32 @@
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label"><?php echo display('category') ?></label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="category_id" name="category_id" tabindex="3">
+                                        <select class="form-control" id="category_id" name="category_id" onchange="select_type()" tabindex="3">
                                             <option value=""></option>
                                             <?php if ($category_list) { ?>
                                                 {category_list}
                                                 <option value="{category_id}">{category_name}</option>
                                                 {/category_list}
                                             <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" id="subCat_div" style="display: none;">
+                                <div class="form-group row">
+                                    <label for="sub_category_id" class="col-sm-4 col-form-label">Sub Category</label>
+                                    <div class="col-sm-8">
+<!--                                        <select class="form-control" id="sub_cat_id" name="sub_cat_id"  tabindex="3">-->
+<!--                                            <option value=""></option>-->
+<!--                                            --><?php //if ($sub_cat_list) { ?>
+<!--                                                {sub_cat_list}-->
+<!--                                                <option value="{sub_cat_id}">{subcat_name}</option>-->
+<!--                                                {/sub_cat_list}-->
+<!--                                            --><?php //} ?>
+<!--                                        </select>-->
+                                        <select name="sub_cat_id" id="sub_cat_id" class="sub_cat_id form-control text-right" required="" tabindex="1">
+                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
@@ -202,7 +224,7 @@
                                 <div class="form-group row">
                                     <label for="re_order_level" class="col-sm-4 col-form-label">Trash Hold</label>
                                     <div class="col-sm-8">
-                                        <input type="number" tabindex="" class="form-control " id="" name="re_order_level" placeholder=""   />
+                                        <input type="number" tabindex="" class="form-control " id="" name="re_order_level" placeholder=""  value="0" />
                                     </div>
                                 </div>
                             </div>
@@ -278,5 +300,40 @@
     </section>
 </div>
 <!-- Add Product End -->
+<script type="text/javascript">
 
+
+    function select_type() {
+        var category_id = $("#category_id").val();
+        var base_url = $('#base_url').val();
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+
+
+        $.ajax( {
+            url: base_url + "Cproduct/sub_cat_by_category",
+            method: 'post',
+            data: {
+                category_id:category_id,
+                csrf_test_name:csrf_test_name
+            },
+            cache: false,
+            success: function( data ) {
+                var obj = jQuery.parseJSON(data);
+                $('.sub_cat_id').html(obj.sub_cat);
+                  $('#cat_id').val(obj.c_id);
+                var cat_id = $("#cat_id").val();
+
+                if(category_id == cat_id ){
+                    $("#subCat_div").css("display", "block");
+                }else{
+                    $("#subCat_div").css("display", "none");
+                }
+                //console.log(cat_id);
+            }
+        });
+
+    };
+
+
+</script>
 

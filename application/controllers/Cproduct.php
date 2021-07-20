@@ -23,6 +23,49 @@ class Cproduct extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function sub_cat_by_category() {
+
+
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $CI->load->model('Categories');
+        $category_id = $this->input->post('category_id',TRUE);
+
+        $sub_category = $CI->Categories->sub_cat_list_product_by_cat_id($category_id);
+//        if(!empty($sub_category)){
+//            $list[''] = '';
+//            foreach ($sub_category as $value) {
+//                $json_product[] = $value['subcat_name'];
+//            }
+//        }else{
+//            $json_product[] = 'No Category Found';
+//        }
+
+        foreach ($sub_category as $sub_category) {
+            $sub_cat[] =array('subcat_name'=>$sub_category['subcat_name'],'sub_cat_id'=>$sub_category['sub_cat_id'],'cat_id'=>$sub_category['category_id']);
+
+        }
+        $sub[]= "";
+        if (empty($sub_cat)) {
+            $sub .="No Subcategory Found !";
+        }else{
+            $sub .="<select name=\"sub_cat\"   class=\"sub_cat form-control\" id=\"sub_cat\">";
+            $sub .= "<option value=''>".display('select_one')."</option>";
+            foreach ($sub_cat as $sub_cat) {
+
+                $sub .="<option value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
+
+            }
+            $sub .="</select>";
+        }
+
+        $data['sub_cat']  =$sub;
+        $data['c_id']  =$sub_cat['cat_id'];
+        //$data2['txnmber']        = $num_column;
+        echo json_encode($data);
+    }
+
     //Insert Product and uload
     public function insert_product() {
         $CI = & get_instance();

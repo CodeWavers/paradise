@@ -30,6 +30,7 @@ class Lproduct {
         $CI->load->model('Units');
         $supplier      = $CI->Suppliers->supplier_list("110", "0");
         $category_list = $CI->Categories->category_list_product();
+        $sub_cat_list = $CI->Categories->sub_cat_list_product();
         $brand_list = $CI->Brands->category_list_product();
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list     = $CI->Units->unit_list();
@@ -42,6 +43,7 @@ class Lproduct {
             'title'        => display('add_product'),
             'supplier'     => $supplier,
             'category_list'=> $category_list,
+            'sub_cat_list'=> $sub_cat_list,
             'brand_list'=> $brand_list,
             'ptype_list'=> $ptype_list,
             'unit_list'    => $unit_list,
