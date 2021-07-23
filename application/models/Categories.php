@@ -32,16 +32,20 @@ class Categories extends CI_Model {
         }
         return false;
     }
+
+    //List product by sub category and also used for listing sub category
     public function sub_cat_list_product() {
-        $this->db->select('*');
-        $this->db->from('product_subcat');
-        $this->db->where('status', 1);
+        $this->db->select('a.*, b.category_name, b.category_id');
+        $this->db->from('product_subcat a');
+        $this->db->join('product_category b', 'a.category_id = b.category_id');
+        $this->db->where('a.status', 1);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
         }
         return false;
     }
+
     public function sub_cat_list_product_by_cat_id($category_id) {
         $this->db->select('*');
         $this->db->from('product_subcat');
@@ -52,6 +56,45 @@ class Categories extends CI_Model {
             return $query->result_array();
         }
         return false;
+    }
+
+    public function sub_cat_entry($data) {
+        $this->db->select('*');
+        $this->db->from('product_subcat');
+        $this->db->where('status', 1);
+        $this->db->where('subcat_name', $data['subcat_name']);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return FALSE;
+        } else {
+            $this->db->insert('product_subcat', $data);
+            return TRUE;
+        }
+    }
+
+    //delete sub category data
+    public function delete_sub_cat($sub_cat_id) {
+        $this->db->where('sub_cat_id', $sub_cat_id);
+        $this->db->delete('product_subcat');
+        return true;
+    }
+
+    //retrieve sub category data to update
+    public function retrieve_sub_cat_editdata($sub_cat_id)
+    {
+        $this->db->select('*');
+        $this->db->from('product_subcat');
+        $this->db->where('sub_cat_id', $sub_cat_id);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function update_sub_cat($data, $sub_cat_id)
+    {
+        $this->db->where('sub_cat_id', $sub_cat_id);
+        $this->db->update('product_subcat', $data);
+        return true;
     }
 
     //customer List

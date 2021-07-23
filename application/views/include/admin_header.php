@@ -390,6 +390,14 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             }
                             ?>"><a href="<?php echo base_url('Ccategory') ?>"><?php echo display('category') ?></a></li>
+
+                           <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("sub_category")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Ccategory/sub_category') ?>">Sub Category</a></li>
                         <?php } ?>
 
                         <?php if($this->permission1->method('manage_brand','create')->access() || $this->permission1->method('manage_category','read')->access()|| $this->permission1->method('manage_category','update')->access()|| $this->permission1->method('manage_category','delete')->access()){ ?>

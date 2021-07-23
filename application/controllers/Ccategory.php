@@ -27,7 +27,7 @@ class Ccategory extends CI_Controller {
     public function manage_category() {
         $content = $this->lcategory->category_list();
         $this->template->full_admin_html_view($content);
-        
+
     }
 
     //Insert category and upload
@@ -44,9 +44,9 @@ class Ccategory extends CI_Controller {
 
         if ($result == TRUE) {
             $this->session->set_userdata(array('message' => display('successfully_added')));
-            
+
                 redirect(base_url('Ccategory'));
-            
+
         } else {
             $this->session->set_userdata(array('error_message' => display('already_inserted')));
             redirect(base_url('Ccategory'));
@@ -83,7 +83,7 @@ class Ccategory extends CI_Controller {
     //csv upload
         function uploadCsv_category()
     {
-          $filename = $_FILES['upload_csv_file']['name'];  
+          $filename = $_FILES['upload_csv_file']['name'];
         $ext = end(explode('.', $filename));
         $ext = substr(strrchr($filename, '.'), 1);
         if($ext == 'csv'){
@@ -92,15 +92,15 @@ class Ccategory extends CI_Controller {
 
         if (($handle = fopen($_FILES['upload_csv_file']['tmp_name'], 'r')) !== FALSE)
         {
-  
+
          while($csv_line = fgetcsv($fp,1024)){
                 //keep this if condition if you want to remove the first row
                 for($i = 0, $j = count($csv_line); $i < $j; $i++)
-                {                  
+                {
                    $insert_csv = array();
                    $insert_csv['category_name'] = (!empty($csv_line[0])?$csv_line[0]:null);
                 }
-             
+
                 $categorydata = array(
                     'category_id'      => $this->auth->generator(15),
                     'category_name'    => $insert_csv['category_name'],
@@ -110,18 +110,18 @@ class Ccategory extends CI_Controller {
 
                 if ($count > 0) {
                     $this->db->insert('product_category',$categorydata);
-                    }  
-                $count++; 
+                    }
+                $count++;
             }
-            
-        }              
+
+        }
         $this->session->set_userdata(array('message'=>display('successfully_added')));
         redirect(base_url('Ccategory'));
          }else{
         $this->session->set_userdata(array('error_message'=>'Please Import Only Csv File'));
         redirect(base_url('Ccategory'));
     }
-    
+
     }
     // category pdf download
         public function category_downloadpdf(){
@@ -129,7 +129,7 @@ class Ccategory extends CI_Controller {
         $CI->load->model('Categories');
         $CI->load->model('Web_settings');
         $CI->load->model('Invoices');
-        $CI->load->library('pdfgenerator'); 
+        $CI->load->library('pdfgenerator');
         $category_list = $CI->Categories->category_list();
         if (!empty($category_list)) {
             $i = 0;
@@ -163,4 +163,60 @@ class Ccategory extends CI_Controller {
             force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
 
+    //sub category home
+    public function sub_category()
+    {
+        $content = $this->lcategory->sub_cat_add_form();
+        $this->template->full_admin_html_view($content);
+    }
+
+    //insert sub category
+    public function insert_sub_cat() {
+        $sub_cat_id = $this->auth->generator(15);
+
+        $data = array(
+            'sub_cat_id'   => $sub_cat_id,
+            'category_id'  => $this->input->post('category_name', TRUE),
+            'subcat_name'  => $this->input->post('sub_cat_name',TRUE),
+            'status'       => 1
+        );
+
+        $result = $this->Categories->sub_cat_entry($data);
+
+        if ($result == TRUE) {
+            $this->session->set_userdata(array('message' => display('successfully_added')));
+
+                redirect(base_url('Ccategory/sub_category'));
+
+        } else {
+            $this->session->set_userdata(array('error_message' => display('already_inserted')));
+            redirect(base_url('Ccategory/sub_category'));
+        }
+    }
+    //delete sub category
+    public function sub_cat_delete($sub_cat_id) {
+        $this->load->model('Categories');
+        $this->Categories->delete_sub_cat($sub_cat_id);
+        $this->session->set_userdata(array('message' => display('successfully_delete')));
+        redirect(base_url('Ccategory/sub_category'));
+    }
+
+    public function sub_cat_update_form($sub_cat_id) {
+        $content = $this->lcategory->sub_cat_edit_data($sub_cat_id);
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function sub_cat_update()
+    {
+        $this->load->model('Categories');
+        $sub_cat_id = $this->input->post('sub_cat_id',TRUE);
+        $data = array(
+            'subcat_name' => $this->input->post('sub_cat_name',TRUE),
+            'category_id' => $this->input->post('category_name', TRUE)
+        );
+
+        $this->Categories->update_sub_cat($data, $sub_cat_id);
+        $this->session->set_userdata(array('message' => display('successfully_updated')));
+        redirect(base_url('Ccategory/sub_category'));
+    }
 }
