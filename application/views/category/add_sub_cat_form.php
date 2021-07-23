@@ -112,27 +112,33 @@
       <?php echo form_open('Ccategory/insert_sub_cat', array('class' => 'form-vertical', 'id' => 'insert_sub_cat')) ?>
 
                         <div class="form-group">
-
                             <div class="row">
-                                <label for="category_name" class="col-sm-3 col-form-label">Category Name <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <select class="form-control" name ="category_name" id="category_name" required="">
-                                        {category_list}
-                                        <option value="{category_id}">{category_name}</option>
-                                        {/category_list}
-                                    </select>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <label for="category_name" class="col-sm-3 col-form-label text-right" style="margin: 0.2em auto; font-size: 1.15em; padding-right: 0.2em;">Category Name</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name ="category_name" id="category_name" required="">
+                                                {category_list}
+                                                <option value="{category_id}">{category_name}</option>
+                                                {/category_list}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row margin-top10">
+                                        <label for="sub_cat_name" class="col-sm-3 col-form-label text-right" style="margin: 0.2em auto; font-size: 1.15em; padding-right: 0.2em;">Sub Category Name</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name ="sub_cat_name" id="sub_cat_name" type="text" placeholder="Sub Category Name"  required="">
+                                        </div>
+                                    </div>
+                                    <div class="row margin-top10">
+                                        <div class="col-sm-3">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="submit" id="add-sub-cat" class="btn btn-success btn-large" style="width: 100%;" name="add-sub-cat" value="<?php echo display('add') ?>" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label for="sub_cat_name" class="col-sm-3 col-form-label">Sub Category Name <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="sub_cat_name" id="sub_cat_name" type="text" placeholder="Sub Category Name"  required="">
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="submit" id="add-sub-cat" class="btn btn-success btn-large" name="add-sub-cat" value="<?php echo display('add') ?>" />
-                                </div>
-                            </div>
-
                         </div>
 
 

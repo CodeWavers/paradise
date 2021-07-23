@@ -95,6 +95,7 @@ class Lcategory {
             'title'         => 'Update Category',
             'sub_cat_id'   => $sub_cat_detail[0]['sub_cat_id'],
             'sub_cat_name'   => $sub_cat_detail[0]['subcat_name'],
+            'category_id'   => $sub_cat_detail[0]['category_id'],
             'category_list' => $category_list
         );
         $chapterList = $CI->parser->parse('category/edit_sub_cat_form', $data, true);
