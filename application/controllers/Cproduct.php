@@ -153,6 +153,7 @@ class Cproduct extends CI_Controller {
             $data['product_id_two']   = $product_id_two;
             $data['product_name'] = $this->input->post('product_name',TRUE);
             $data['category_id']  = $this->input->post('category_id',TRUE);
+            $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
             $data['brand_id']  = $this->input->post('brand_id',TRUE);
             $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
             $data['unit']         = $this->input->post('unit',TRUE);
