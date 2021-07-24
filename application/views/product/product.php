@@ -77,6 +77,7 @@
                                         <th><?php echo display('sl') ?></th>
                                         <th><?php echo display('product_name') ?></th>
                                         <th>Category</th>
+                                        <th>Sub Category</th>
                                         <th>Product Type</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th><?php echo display('supplier_name') ?></th>
