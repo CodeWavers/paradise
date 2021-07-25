@@ -203,6 +203,95 @@ class Rqsn extends CI_Model {
     }
 
 
+    public function rqsn_draft_count() {
+        $query= $this->db->select('*')
+            ->from('rqsn a')
+            ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
+            ->join('outlet_warehouse c','c.outlet_id=a.from_id')
+            ->join('product_information d','d.product_id=b.product_id')
+            ->where('b.status',1)
+            ->where('a.to_id','HK7TGDT69VFMXB7')
+            ->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        }
+        return $query;
+
+    }
+    public function rqsn_draft(){
+
+        ## Fetch records
+        $records= $this->db->select('*')
+            ->from('rqsn a')
+            ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
+            ->join('outlet_warehouse c','c.outlet_id=a.from_id')
+            ->join('product_information d','d.product_id=b.product_id')
+            ->where('b.status',1)
+            ->where('a.to_id','HK7TGDT69VFMXB7')
+            ->get()
+            ->result();
+
+        // $data = array();
+
+        $sl =1;
+
+
+
+
+
+        foreach($records as $record ){
+            $stockin = $this->db->select('sum(quantity) as totalSalesQnty')->from('invoice_details')->where('product_id',$record->product_id)->get()->row();
+            // $stock_r = $this->db->select('sum(a_qty) as totalQty')->from('rqsn_details')->where('product_id',$record->product_id)->where('status',2)->get()->row();
+            $warrenty_stock = $this->db->select('sum(ret_qty) as totalWarrentyQnty')->from('warrenty_return')->where('product_id',$record->product_id)->get()->row();
+            //$wastage_stock = $this->db->select('sum(ret_qty) as totalWastageQnty')->from('warrenty_return')->where('product_id',$record->product_id,'usablity',3)->get()->row();
+            $stockout = $this->db->select('sum(qty) as totalPurchaseQnty,Avg(rate) as purchaseprice')->from('product_purchase_details')->where('product_id',$record->product_id)->get()->row();
+
+            $stock_r = $this->db->select('sum(a.a_qty) as totalQty')
+                ->from('rqsn_details a')
+                ->join('rqsn b','a.rqsn_id=b.rqsn_id')
+                ->where('a.product_id',$record->product_id)
+                //  ->where('b.to_id','HK7TGDT69VFMXB7')
+                ->where('a.iscw',1)->get()->row();
+
+            //   $out_qty=(!empty($stockin->totalSalesQnty)?$stockin->totalSalesQnty:0)+(!empty($stock_r->totalQty)?$stock_r->totalQty:0);
+            $sprice = (!empty($record->price)?$record->price:0);
+            $pprice = (!empty($stockout->purchaseprice)?sprintf('%0.2f',$stockout->purchaseprice):0);
+            $stock =  (!empty($stockout->totalPurchaseQnty)?$stockout->totalPurchaseQnty:0)-((!empty($stockin->totalSalesQnty)?$stockin->totalSalesQnty:0)+(!empty($stock_r->totalQty)?$stock_r->totalQty:0));
+            $newStock=(!empty($warrenty_stock->totalWarrentyQnty)?$warrenty_stock->totalWarrentyQnty:0);
+            $qty=$stock-$newStock;
+            $t= (!empty($qty)?$qty:0);
+
+//           if($qty<0){
+//               $qty=0;
+//           }else{
+//               $qty=$t;
+//           }
+
+            $data[] = array(
+
+                // 'cw_id'=>$record->to_id,
+
+                'outlet_name'=>$record->outlet_name,
+                'date'=>$record->date,
+                'product_name'=>$record->product_name,
+                'quantity'=>$record->quantity,
+                'unit'=>$record->unit,
+                'details'=>$record->details,
+                'rqsn_detail_id'=>$record->rqsn_detail_id,
+                'rqsn_id'=>$record->rqsn_id,
+                'stok_quantity' => sprintf('%0.2f',$t),
+
+            );
+
+        }
+
+        ## Response
+
+
+        return $data;
+
+    }
     public function approve_rqsn_count() {
         $query= $this->db->select('*')
             ->from('rqsn a')
@@ -219,7 +308,6 @@ class Rqsn extends CI_Model {
         return $query;
 
     }
-
 
 
     public function approve_rqsn(){

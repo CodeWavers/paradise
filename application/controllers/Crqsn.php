@@ -32,6 +32,14 @@ class Crqsn extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+      public function rqsn_update_form() {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+        $content = $CI->lrqsn->rqsn_add_form();
+        $this->template->full_admin_html_view($content);
+    }
+
       public function cw_purchase() {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
@@ -108,6 +116,22 @@ class Crqsn extends CI_Controller {
 
       //  echo '<pre>';print_r($data);exit();
         $content = $this->parser->parse('rqsn/rqsn_approve', $data, true);
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function rqsn_draft(){
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Reports');
+        $data['title'] = 'Requisition Draft';
+        $data['t'] = $this->Rqsn->rqsn_draft();
+        //$data['t'] = $this->Reports->getCheckList_rqsn();
+       // $data = $this->Reports->getCheckLi st_rqsn();
+
+
+      //  echo '<pre>';print_r($data);exit();
+        $content = $this->parser->parse('rqsn/rqsn_draft', $data, true);
         $this->template->full_admin_html_view($content);
     }
 
