@@ -26,7 +26,7 @@
             ?>
             <div class="alert alert-info alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $message ?>                    
+                <?php echo $message ?>
             </div>
             <?php
             $this->session->unset_userdata('message');
@@ -36,7 +36,7 @@
             ?>
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $error_message ?>                    
+                <?php echo $error_message ?>
             </div>
             <?php
             $this->session->unset_userdata('error_message');
@@ -45,7 +45,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-               
+
  <?php if($this->permission1->method('add_product_csv','create')->access()){ ?>
                     <a href="<?php echo base_url('Cproduct/add_product_csv') ?>" class="btn btn-info m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_product_csv') ?> </a>
                 <?php }?>
@@ -53,7 +53,7 @@
                     <a href="<?php echo base_url('Cproduct/manage_product') ?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i>  <?php echo display('manage_product') ?> </a>
                      <?php }?>
 
-                
+
             </div>
         </div>
 
@@ -184,7 +184,7 @@
                             </div>
 
 
-                        </div>                        
+                        </div>
 
                         <div class="row">
                             <div class="col-sm-6">
@@ -193,7 +193,7 @@
                                     <div class="col-sm-8">
                                         <input class="form-control text-right" id="sell_price" name="price" type="text"  placeholder="0.00" tabindex="5" min="0">
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group row">
@@ -218,7 +218,7 @@
                                     <div class="col-sm-8">
                                         <input type="file" name="image" class="form-control" id="image" tabindex="4">
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group row">
@@ -230,7 +230,7 @@
                             </div>
                              <?php  $i=0;
                     foreach ($taxfield as $taxss) {?>
-                   
+
                             <div class="col-sm-6">
                          <div class="form-group row">
                             <label for="tax" class="col-sm-4 col-form-label"><?php echo $taxss['tax_name']; ?> <i class="text-danger"></i></label>
@@ -240,9 +240,9 @@
                             <div class="col-sm-1"> <i class="text-success">%</i></div>
                         </div>
                     </div>
-               
+
                        <?php $i++;}?>
-                        </div> 
+                        </div>
 
 
                         <div class="table-responsive product-supplier">
@@ -307,6 +307,7 @@
         var category_id = $("#category_id").val();
         var base_url = $('#base_url').val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
+        var sub_cat_selected = ""; //needed for sub_cat_by_category function in Cproduct
 
 
         $.ajax( {
@@ -314,6 +315,7 @@
             method: 'post',
             data: {
                 category_id:category_id,
+                sub_cat_selected: sub_cat_selected,
                 csrf_test_name:csrf_test_name
             },
             cache: false,
@@ -336,4 +338,3 @@
 
 
 </script>
-

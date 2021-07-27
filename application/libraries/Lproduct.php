@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Lproduct {
     /*
-     * * Retrieve  Quize List From DB 
+     * * Retrieve  Quize List From DB
      */
     public function product_list()
     {
@@ -34,11 +34,11 @@ class Lproduct {
         $brand_list = $CI->Brands->category_list_product();
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list     = $CI->Units->unit_list();
-      
+
         $taxfield = $CI->db->select('tax_name,default_value')
                 ->from('tax_settings')
                 ->get()
-                ->result_array();        
+                ->result_array();
         $data = array(
             'title'        => display('add_product'),
             'supplier'     => $supplier,
@@ -81,6 +81,7 @@ class Lproduct {
         @$category_id = $product_detail[0]['category_id'];
         @$brand_id = $product_detail[0]['brand_id'];
         @$ptype_id = $product_detail[0]['ptype_id'];
+        $sub_cat_id     = $product_detail[0]['sub_cat_id'];
         $supplier_list = $CI->Suppliers->supplier_list();
         $supplier_selected = $CI->Products->supplier_selected($product_id);
 
@@ -88,11 +89,13 @@ class Lproduct {
         $brand_list = $CI->Brands->category_list_product();
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list = $CI->Units->unit_list();
+        $sub_cat_list = $CI -> Categories -> sub_cat_list_product_by_cat_id($category_id);
         $category_selected = $CI->Categories->category_search_item($category_id);
         $brand_selected = $CI->Brands->category_search_item($brand_id);
         $ptype_selected = $CI->Ptype->category_search_item($ptype_id);
 
-       
+
+
 
                  $taxfield = $CI->db->select('tax_name,default_value')
                 ->from('tax_settings')
@@ -100,13 +103,13 @@ class Lproduct {
                 ->result_array();
                  $i = 0;
                 foreach ($taxfield as $taxs) {
-                  
+
                   $tax = 'tax'.$i;
                   $data[$tax] = $product_detail[0][$tax] * 100;
                   $i++;
                 }
 
-      
+
             $data['title']            = display('edit_your_product');
             $data['product_id']       = $product_detail[0]['product_id'];
             $data['product_id_two']       = $product_detail[0]['product_id_two'];
@@ -131,7 +134,10 @@ class Lproduct {
             $data['tax_selecete']     = $product_detail[0]['tax'] * 100;
             $data['supplier_product_data'] = $supplier_product_detail;
             $data['taxfield']         = $taxfield;
-       
+            $data['sub_cat_id']     = $sub_cat_id;
+            $data['sub_cat_list'] = $sub_cat_list;
+            $data['category_id'] = $category_id;
+
         $chapterList = $CI->parser->parse('product/edit_product_form', $data, true);
 
         return $chapterList;

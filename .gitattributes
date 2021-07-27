@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+application/ci_sessions/*
+
+!application/ci_sessions/emptyfile
