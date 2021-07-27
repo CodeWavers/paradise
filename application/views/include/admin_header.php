@@ -523,7 +523,13 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             }?>"><a href="<?php echo base_url('Crqsn/rqsn_form') ?>">Requisition Form</a></li>
                         <?php }?>
-
+                        <?php if($this->permission1->method('rqsn_form','create')->access()){ ?>
+                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")){
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }?>"><a href="<?php echo base_url('Crqsn/rqsn_draft') ?>">Requisition Draft</a></li>
+                        <?php }?>
 
 
                         <?php if($this->permission1->method('cw_purchase','create')->access()){ ?>
