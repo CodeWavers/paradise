@@ -46,8 +46,8 @@
 
 
         <?php foreach ($all_product as $product) { ?>
-   <div class="row panel panel-bd lobidrag"   style="margin: 5px;padding: 10px">
-    <div class="col-sm-12 col-md-3" >
+   <div class="row panel panel-bd lobidrag catalogue-panel">
+    <div class="col-sm-12 col-md-4">
 
         <div class="image_box" >
 
@@ -120,7 +120,7 @@
 
 
 </div>
-       
+
 
    </div>
 
