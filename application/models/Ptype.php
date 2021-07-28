@@ -46,10 +46,21 @@ class Ptype extends CI_Model {
     }
 
     //Category Search Item
-    public function category_search_item($ptype_id) {
-        $this->db->select('*');
-        $this->db->from('product_type');
-        $this->db->where('ptype_id ', $ptype_id );
+    // public function category_search_item($ptype_id) {
+    //     $this->db->select('*');
+    //     $this->db->from('product_type');
+    //     $this->db->where('ptype_id ', $ptype_id );
+    //     $this->db->limit('500');
+    //     $query = $this->db->get();
+    //     if ($query->num_rows() > 0) {
+    //         return $query->result_array();
+    //     }
+    //     return false;
+    // }
+    public function category_search_item($product_id) {
+        $this->db->select('ptype_id');
+        $this->db->from('product_information');
+        $this->db->where('product_id', $product_id );
         $this->db->limit('500');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -57,7 +68,6 @@ class Ptype extends CI_Model {
         }
         return false;
     }
-
     //Count customer
     public function category_entry($data) {
         $this->db->select('*');
