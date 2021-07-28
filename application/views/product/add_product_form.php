@@ -309,7 +309,11 @@
                                         <input class="form-control text-right" id="sell_price" name="price" type="text"  placeholder="0.00" tabindex="5" min="0">
                                     </div>
                                 </div>
+
                             </div> -->
+
+                            </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="unit" class="col-sm-4 col-form-label"><?php echo display('unit') ?></label>
@@ -356,7 +360,11 @@
                         </div>
                     </div>
 
+
                        <?php $i++;}?> -->
+
+                       <?php $i++;}?>
+
                         </div>
 
 

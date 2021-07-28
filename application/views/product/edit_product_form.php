@@ -177,12 +177,21 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
+
                                     <label for="model_id" class="col-sm-4 col-form-label">Model</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" id="model_id" name="model_id" tabindex="3">
                                             {model_list}
                                             <option value="{model_id}">{model_name}</option>
                                             {/model_list}
+
+                                    <label for="brand_name" class="col-sm-4 col-form-label">Brand Name</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="brand_name" name="brand_id" tabindex="3">
+                                            {brand_list}
+                                            <option value="{brand_id}">{brand_name}</option>
+                                            {/brand_list}
+
                                             <?php
                                             if ($model_selected) {
                                                 ?>
@@ -202,6 +211,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group row">
+
                                     <label for="product_type" class="col-sm-4 col-form-label">Purchase Type</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" id="product_type" name="ptype_id" tabindex="3">
@@ -210,6 +220,14 @@
                                             {/ptype_list} -->
                                             <option value="Import">Import</option>
                                             <option value="Local">Local</option>
+
+                                    <label for="product_type" class="col-sm-4 col-form-label">Product Type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="product_type" name="ptype_id" tabindex="3">
+                                            {ptype_list}
+                                            <option value="{ptype_id}">{ptype_name}</option>
+                                            {/ptype_list}
+
                                             <?php
                                             if ($ptype_selected) {
                                                 ?>
@@ -239,8 +257,13 @@
                                     </div>
                                 </div>
                             </div>
- -->
+
+
                 <!--             <div class="col-sm-6">
+
+
+                            <div class="col-sm-6">
+
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label"><?php echo display('category') ?></label>
                                     <div class="col-sm-8">
@@ -265,9 +288,15 @@
                                         </select>
                                     </div>
                                 </div>
+
                             </div> -->
 
                         <!-- </div> -->
+
+                            </div>
+
+                        </div>
+
 
                         <div class="row">
                            <!--  <div class="col-sm-6">
@@ -277,7 +306,11 @@
                                         <input class="form-control text-right" name="price" type="text"  placeholder="0.00" tabindex="5" min="0" value="{price}">
                                     </div>
                                 </div>
+
                             </div> -->
+
+                            </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="unit" class="col-sm-4 col-form-label"><?php echo display('unit') ?></label>

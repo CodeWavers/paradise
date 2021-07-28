@@ -207,6 +207,49 @@ class Cproduct extends CI_Controller {
             redirect(base_url('Cproduct'));
         }
     }
+    public function catalogue() {
+        $this->load->library('pagination');
+        $this->load->model('Products');
+
+        #
+        #pagination starts
+        #
+        $config["base_url"]       = base_url('Cproduct/catalogue/');
+        $config["total_rows"]     = $this->db->count_all('product_information');
+        $config["per_page"]       = 3;
+        $config["uri_segment"]    = 2;
+       // $config["num_links"]      = 1;
+        /* This Application Must Be Used With BootStrap 3 * */
+        $config['full_tag_open']  = "<ul class='pagination col-xs pull-right m-0'>";
+        $config['full_tag_close'] = "</ul>";
+        $config['num_tag_open']   = '<li>';
+        $config['num_tag_close']  = '</li>';
+        $config['cur_tag_open']   = "<li class='disabled'><li class='active'><a href='#'>";
+        $config['cur_tag_close']  = "<span class='sr-only'></span></a></li>";
+        $config['next_tag_open']  = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_tag_open']  = "<li>";
+        $config['prev_tagl_close'] = "</li>";
+        $config['first_tag_open'] = "<li>";
+        $config['first_tagl_close'] = "</li>";
+        $config['last_tag_open']  = "<li>";
+        $config['last_tagl_close'] = "</li>";
+        /* ends of bootstrap */
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data["links"] = $this->pagination->create_links();
+        #
+        #pagination ends
+        #
+        $data['title']            = 'Catalogue';
+        $data['all_product']    = $this->Products->all_product($config["per_page"], $page);
+
+
+
+      //  echo '<pre>';print_r($data);exit();
+        $content                  = $this->parser->parse('product/catalogue', $data, true);
+        $this->template->full_admin_html_view($content);
+    }
 
     //Product Update Form
     public function product_update_form($product_id) {
@@ -272,6 +315,7 @@ class Cproduct extends CI_Controller {
         }
 
 
+
     //     $price = $this->input->post('price',TRUE);
 
     //     $tablecolumn = $this->db->list_fields('tax_collection');
@@ -285,6 +329,21 @@ class Cproduct extends CI_Controller {
     //     $data[$value] = $this->input->post($value)/100;
     //    }
     // }
+
+        $price = $this->input->post('price',TRUE);
+
+        $tablecolumn = $this->db->list_fields('tax_collection');
+        $num_column = count($tablecolumn)-4;
+        if($num_column > 0){
+       $taxfield = [];
+       for($i=0;$i<$num_column;$i++){
+        $taxfield[$i] = 'tax'.$i;
+       }
+       foreach ($taxfield as $key => $value) {
+        $data[$value] = $this->input->post($value)/100;
+       }
+    }
+
             $data['product_name']   = $this->input->post('product_name',TRUE);
             $data['category_id']    = $this->input->post('category_id',TRUE);
             $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);

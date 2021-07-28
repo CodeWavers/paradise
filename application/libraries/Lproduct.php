@@ -95,12 +95,25 @@ class Lproduct {
         $brand_list = $CI->Brands->category_list_product();
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list = $CI->Units->unit_list();
+
         $sub_cat_list = $CI ->Categories -> sub_cat_list_product_by_cat_id($category_id);
+
+        $sub_cat_list = $CI -> Categories -> sub_cat_list_product_by_cat_id($category_id);
+
         $category_selected = $CI->Categories->category_search_item($category_id);
         $model_selected = $CI->Models->model_search_item($model_id);
         $brand_selected = $CI->Brands->category_search_item($brand_id);
+
         $ptype_selected = $CI->Ptype->category_search_item($product_id);
               $taxfield = $CI->db->select('tax_name,default_value')
+
+        $ptype_selected = $CI->Ptype->category_search_item($ptype_id);
+
+
+
+
+                 $taxfield = $CI->db->select('tax_name,default_value')
+
                 ->from('tax_settings')
                 ->get()
                 ->result_array();
