@@ -67,6 +67,7 @@
        <script src="<?php echo base_url('assets/js/jquery-3.4.1.min.js?v=3.4.1') ?>" type="text/javascript"></script>
        <script src="<?php echo base_url() ?>assets/js/wickedpicker.min.js" ></script>
         <script src="<?php echo base_url() ?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url() ?>assets/js/pagination.min.js" type="text/javascript"></script>
     </head>
     <body class="hold-transition sidebar-mini">
                 <!-- Page Loader -->

@@ -439,6 +439,17 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Cproduct') ?>"><?php echo display('add_product') ?></a></li>
                         <?php }?>
+
+                        <?php if($this->permission1->method('manage_brand','create')->access() || $this->permission1->method('manage_category','read')->access()|| $this->permission1->method('manage_category','update')->access()|| $this->permission1->method('manage_category','delete')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('1') == ("Cproduct/catalogue")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cproduct/catalogue') ?>">Catalogue</a></li>
+                        <?php } ?>
+
                         <?php if($this->permission1->method('add_product_csv','create')->access()){ ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('2') == ("add_product_csv")) {
@@ -448,6 +459,9 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Cproduct/add_product_csv') ?>"><?php echo display('import_product_csv') ?></a></li>
                         <?php }?>
+
+
+
                         <?php if($this->permission1->method('manage_product','read')->access()){ ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('2') == ("manage_product")) {
