@@ -85,7 +85,7 @@ class Cproduct extends CI_Controller {
         $product_id_two = $this->input->post('$product_id_two',TRUE);
         $sup_price = $this->input->post('supplier_price',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
-        $product_model = $this->input->post('model',TRUE);
+        $product_model = $this->input->post('model_id',TRUE);
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
@@ -96,7 +96,7 @@ class Cproduct extends CI_Controller {
 
                 'supplier_id'    => $supp_id,
                 'supplier_price' => $supplier_price,
-                'products_model' => $product_model = $this->input->post('model',TRUE)
+                'products_model' => $product_model = $this->input->post('model_id',TRUE)
             );
 
             $this->db->insert('supplier_product', $supp_prd);
@@ -136,36 +136,42 @@ class Cproduct extends CI_Controller {
 
         }
 
-        $price = $this->input->post('price',TRUE);
+       //  $price = $this->input->post('cost_price',TRUE);
 
-        $tax_percentage = $this->input->post('tax',TRUE);
-        $tax = $tax_percentage / 100;
+       //  $tax_percentage = $this->input->post('tax',TRUE);
+       //  $tax = $tax_percentage / 100;
 
-        $tablecolumn = $this->db->list_fields('tax_collection');
-        $num_column = count($tablecolumn)-4;
-        if($num_column > 0){
-       $taxfield = [];
-       for($i=0;$i<$num_column;$i++){
-        $taxfield[$i] = 'tax'.$i;
-       }
-       foreach ($taxfield as $key => $value) {
-        $data[$value] = $this->input->post($value)/100;
-       }
-    }
+       //  $tablecolumn = $this->db->list_fields('tax_collection');
+       //  $num_column = count($tablecolumn)-4;
+       //  if($num_column > 0){
+       // $taxfield = [];
+       // for($i=0;$i<$num_column;$i++){
+       //  $taxfield[$i] = 'tax'.$i;
+       // }
+       // foreach ($taxfield as $key => $value) {
+       //  $data[$value] = $this->input->post($value)/100;
+       // }
+    // }
 
             $data['product_id']   = $product_id;
             $data['product_id_two']   = $product_id_two;
-            $data['product_name'] = $this->input->post('product_name',TRUE);
             $data['category_id']  = $this->input->post('category_id',TRUE);
             $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
             $data['brand_id']  = $this->input->post('brand_id',TRUE);
+            $data['product_name'] = $this->input->post('product_name',TRUE);
+            $data['country'] = $this->input->post('country',TRUE);
+            $data['parts'] = $this->input->post('parts',TRUE);
+            $data['tag'] = $this->input->post('tag',TRUE);
+            $data['sku'] = $this->input->post('sku',TRUE);
+            $data['price']        = $this->input->post('cost_price',TRUE);
+            $data['product_model']= $this->input->post('model_id',TRUE);
             $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
             $data['unit']         = $this->input->post('unit',TRUE);
             $data['tax']          = 0;
-            $data['serial_no']    = $this->input->post('serial_no',TRUE);
-            $data['price']        = $price;
-        $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
-            $data['product_model']= $this->input->post('model',TRUE);
+            // $data['serial_no']    = $this->input->post('serial_no',TRUE);
+            // $data['price']        = $price;
+            // $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
+          
             $data['product_details'] = $this->input->post('description',TRUE);
             $data['image']        = (!empty($image_url) ? $image_url : base_url('my-assets/image/product.png'));
             $data['status']       = 1;
@@ -309,6 +315,21 @@ class Cproduct extends CI_Controller {
         }
 
 
+
+    //     $price = $this->input->post('price',TRUE);
+
+    //     $tablecolumn = $this->db->list_fields('tax_collection');
+    //     $num_column = count($tablecolumn)-4;
+    //     if($num_column > 0){
+    //    $taxfield = [];
+    //    for($i=0;$i<$num_column;$i++){
+    //     $taxfield[$i] = 'tax'.$i;
+    //    }
+    //    foreach ($taxfield as $key => $value) {
+    //     $data[$value] = $this->input->post($value)/100;
+    //    }
+    // }
+
         $price = $this->input->post('price',TRUE);
 
         $tablecolumn = $this->db->list_fields('tax_collection');
@@ -322,16 +343,22 @@ class Cproduct extends CI_Controller {
         $data[$value] = $this->input->post($value)/100;
        }
     }
+
             $data['product_name']   = $this->input->post('product_name',TRUE);
             $data['category_id']    = $this->input->post('category_id',TRUE);
             $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
             $data['product_id_two']    = $this->input->post('product_id_two',TRUE);
+            $data['country'] = $this->input->post('country',TRUE);
+            $data['parts'] = $this->input->post('parts',TRUE);
+            $data['tag'] = $this->input->post('tag',TRUE);
+            $data['sku'] = $this->input->post('sku',TRUE);
+            $data['price']        = $this->input->post('cost_price',TRUE);
+            $data['product_model']= $this->input->post('model_id',TRUE);
             $data['brand_id']    = $this->input->post('brand_id',TRUE);
             $data['ptype_id']    = $this->input->post('ptype_id',TRUE);
-            $data['price']          = $price;
-            $data['serial_no']      = $this->input->post('serial_no',TRUE);
-            $data['re_order_level']      = $this->input->post('re_order_level',TRUE);
-            $data['product_model']  = $this->input->post('model',TRUE);
+            // $data['serial_no']      = $this->input->post('serial_no',TRUE);
+            // $data['re_order_level']      = $this->input->post('re_order_level',TRUE);
+            // $data['product_model']  = $this->input->post('model',TRUE);
             $data['product_details']= $this->input->post('description',TRUE);
             $data['unit']           = $this->input->post('unit',TRUE);
             $data['tax']            = 0;

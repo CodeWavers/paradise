@@ -399,6 +399,15 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Ccategory/sub_category') ?>">Sub Category</a></li>
                         <?php } ?>
+                         <?php if($this->permission1->method('manage_model','create')->access() || $this->permission1->method('manage_model','read')->access()|| $this->permission1->method('manage_model','update')->access()|| $this->permission1->method('manage_model','delete')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('1') == ("Cmodel")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cmodel') ?>"><?php echo "Model" ?></a></li>
+                        <?php } ?>
 
                         <?php if($this->permission1->method('manage_brand','create')->access() || $this->permission1->method('manage_category','read')->access()|| $this->permission1->method('manage_category','update')->access()|| $this->permission1->method('manage_category','delete')->access()){ ?>
                             <li class="treeview <?php
