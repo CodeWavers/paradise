@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Lproduct {
     /*
-     * * Retrieve  Quize List From DB 
+     * * Retrieve  Quize List From DB
      */
     public function product_list()
     {
@@ -25,24 +25,27 @@ class Lproduct {
         $CI->load->model('Products');
         $CI->load->model('Suppliers');
         $CI->load->model('Categories');
+        $CI->load->model('Models');
         $CI->load->model('Brands');
         $CI->load->model('Ptype');
         $CI->load->model('Units');
         $supplier      = $CI->Suppliers->supplier_list("110", "0");
         $category_list = $CI->Categories->category_list_product();
+        $model_list = $CI->Models->model_list_product();
         $sub_cat_list = $CI->Categories->sub_cat_list_product();
         $brand_list = $CI->Brands->category_list_product();
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list     = $CI->Units->unit_list();
-      
+
         $taxfield = $CI->db->select('tax_name,default_value')
                 ->from('tax_settings')
                 ->get()
-                ->result_array();        
+                ->result_array();
         $data = array(
             'title'        => display('add_product'),
             'supplier'     => $supplier,
             'category_list'=> $category_list,
+            'model_list'=> $model_list,
             'sub_cat_list'=> $sub_cat_list,
             'brand_list'=> $brand_list,
             'ptype_list'=> $ptype_list,
@@ -70,6 +73,7 @@ class Lproduct {
         $CI->load->model('Products');
         $CI->load->model('Suppliers');
         $CI->load->model('Categories');
+        $CI->load->model('Models');
         $CI->load->model('Brands');
         $CI->load->model('Ptype');
         $CI->load->model('Units');
@@ -79,42 +83,48 @@ class Lproduct {
         @$supplier_id = $product_detail[0]['supplier_id'];
 
         @$category_id = $product_detail[0]['category_id'];
+        @$model_id = $product_detail[0]['product_model'];
         @$brand_id = $product_detail[0]['brand_id'];
         @$ptype_id = $product_detail[0]['ptype_id'];
+        $sub_cat_id     = $product_detail[0]['sub_cat_id'];
         $supplier_list = $CI->Suppliers->supplier_list();
         $supplier_selected = $CI->Products->supplier_selected($product_id);
 
         $category_list = $CI->Categories->category_list_product();
+        $model_list = $CI->Models->model_list_product();
         $brand_list = $CI->Brands->category_list_product();
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list = $CI->Units->unit_list();
+        $sub_cat_list = $CI ->Categories -> sub_cat_list_product_by_cat_id($category_id);
         $category_selected = $CI->Categories->category_search_item($category_id);
+        $model_selected = $CI->Models->model_search_item($model_id);
         $brand_selected = $CI->Brands->category_search_item($brand_id);
-        $ptype_selected = $CI->Ptype->category_search_item($ptype_id);
-
-       
-
-                 $taxfield = $CI->db->select('tax_name,default_value')
+        $ptype_selected = $CI->Ptype->category_search_item($product_id);
+              $taxfield = $CI->db->select('tax_name,default_value')
                 ->from('tax_settings')
                 ->get()
                 ->result_array();
                  $i = 0;
                 foreach ($taxfield as $taxs) {
-                  
+
                   $tax = 'tax'.$i;
                   $data[$tax] = $product_detail[0][$tax] * 100;
                   $i++;
                 }
 
-      
+
             $data['title']            = display('edit_your_product');
             $data['product_id']       = $product_detail[0]['product_id'];
             $data['product_id_two']       = $product_detail[0]['product_id_two'];
             $data['product_name']     = $product_detail[0]['product_name'];
             $data['price']            = $product_detail[0]['price'];
-            $data['re_order_level']            = $product_detail[0]['re_order_level'];
-            $data['serial_no']        = $product_detail[0]['serial_no'];
+            // $data['re_order_level']    = $product_detail[0]['re_order_level'];
+            // $data['serial_no']        = $product_detail[0]['serial_no'];
             $data['product_model']    = $product_detail[0]['product_model'];
+            $data['country']    = $product_detail[0]['country'];
+            $data['parts']    = $product_detail[0]['parts'];
+            $data['tag']    = $product_detail[0]['tag'];
+            $data['sku']    = $product_detail[0]['sku'];
             $data['product_details']  = $product_detail[0]['product_details'];
             $data['pr_details']       = $product_detail;
             $data['image']            = $product_detail[0]['image'];
@@ -123,15 +133,20 @@ class Lproduct {
             $data['supplier_selected']= $supplier_selected;
             $data['unit_list']        = $unit_list;
             $data['category_list']    = $category_list;
+            $data['model_list']    = $model_list;
             $data['brand_list']    = $brand_list;
             $data['ptype_list']    = $ptype_list;
             $data['category_selected']= $category_selected;
+            $data['model_selected']= $model_selected;
             $data['brand_selected']= $brand_selected;
             $data['ptype_selected']= $ptype_selected;
             $data['tax_selecete']     = $product_detail[0]['tax'] * 100;
             $data['supplier_product_data'] = $supplier_product_detail;
             $data['taxfield']         = $taxfield;
-       
+            $data['sub_cat_id']     = $sub_cat_id;
+            $data['sub_cat_list'] = $sub_cat_list;
+            $data['category_id'] = $category_id;
+
         $chapterList = $CI->parser->parse('product/edit_product_form', $data, true);
 
         return $chapterList;
