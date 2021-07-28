@@ -33,6 +33,7 @@ class Cproduct extends CI_Controller {
         $category_id = $this->input->post('category_id',TRUE);
 
         $sub_category = $CI->Categories->sub_cat_list_product_by_cat_id($category_id);
+        $sub_cat_selected = $this->input->post('sub_cat_selected',TRUE); //don't delete, needed in edit_product_form View
 //        if(!empty($sub_category)){
 //            $list[''] = '';
 //            foreach ($sub_category as $value) {
@@ -53,8 +54,11 @@ class Cproduct extends CI_Controller {
             $sub .="<select name=\"sub_cat\"   class=\"sub_cat form-control\" id=\"sub_cat\">";
             $sub .= "<option value=''>".display('select_one')."</option>";
             foreach ($sub_cat as $sub_cat) {
-
-                $sub .="<option value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
+                if(($sub_cat_selected) && ($sub_cat['sub_cat_id'] == $sub_cat_selected)){
+                    $sub .="<option selected value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
+                }else{
+                    $sub .="<option value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
+                }
 
             }
             $sub .="</select>";
@@ -81,7 +85,7 @@ class Cproduct extends CI_Controller {
         $product_id_two = $this->input->post('$product_id_two',TRUE);
         $sup_price = $this->input->post('supplier_price',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
-        $product_model = $this->input->post('model',TRUE);
+        $product_model = $this->input->post('model_id',TRUE);
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
@@ -92,7 +96,7 @@ class Cproduct extends CI_Controller {
 
                 'supplier_id'    => $supp_id,
                 'supplier_price' => $supplier_price,
-                'products_model' => $product_model = $this->input->post('model',TRUE)
+                'products_model' => $product_model = $this->input->post('model_id',TRUE)
             );
 
             $this->db->insert('supplier_product', $supp_prd);
@@ -116,9 +120,9 @@ class Cproduct extends CI_Controller {
                 $this->session->set_userdata(array('error_message' => $this->upload->display_errors()));
                 redirect(base_url('Cproduct'));
             } else {
-                
-            $imgdata = $this->upload->data();  
-            $image = $config['upload_path'].$imgdata['file_name']; 
+
+            $imgdata = $this->upload->data();
+            $image = $config['upload_path'].$imgdata['file_name'];
             $config['image_library']  = 'gd2';
             $config['source_image']   = $image;
             $config['create_thumb']   = false;
@@ -129,43 +133,49 @@ class Cproduct extends CI_Controller {
             $this->image_lib->resize();
             $image_url = base_url() . $image;
             }
-           
+
         }
 
-        $price = $this->input->post('price',TRUE);
+       //  $price = $this->input->post('cost_price',TRUE);
 
-        $tax_percentage = $this->input->post('tax',TRUE);
-        $tax = $tax_percentage / 100;
+       //  $tax_percentage = $this->input->post('tax',TRUE);
+       //  $tax = $tax_percentage / 100;
 
-        $tablecolumn = $this->db->list_fields('tax_collection');
-        $num_column = count($tablecolumn)-4;
-        if($num_column > 0){
-       $taxfield = [];
-       for($i=0;$i<$num_column;$i++){
-        $taxfield[$i] = 'tax'.$i;
-       }
-       foreach ($taxfield as $key => $value) {
-        $data[$value] = $this->input->post($value)/100;
-       }
-    }
+       //  $tablecolumn = $this->db->list_fields('tax_collection');
+       //  $num_column = count($tablecolumn)-4;
+       //  if($num_column > 0){
+       // $taxfield = [];
+       // for($i=0;$i<$num_column;$i++){
+       //  $taxfield[$i] = 'tax'.$i;
+       // }
+       // foreach ($taxfield as $key => $value) {
+       //  $data[$value] = $this->input->post($value)/100;
+       // }
+    // }
 
             $data['product_id']   = $product_id;
             $data['product_id_two']   = $product_id_two;
-            $data['product_name'] = $this->input->post('product_name',TRUE);
             $data['category_id']  = $this->input->post('category_id',TRUE);
             $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
             $data['brand_id']  = $this->input->post('brand_id',TRUE);
+            $data['product_name'] = $this->input->post('product_name',TRUE);
+            $data['country'] = $this->input->post('country',TRUE);
+            $data['parts'] = $this->input->post('parts',TRUE);
+            $data['tag'] = $this->input->post('tag',TRUE);
+            $data['sku'] = $this->input->post('sku',TRUE);
+            $data['price']        = $this->input->post('cost_price',TRUE);
+            $data['product_model']= $this->input->post('model_id',TRUE);
             $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
             $data['unit']         = $this->input->post('unit',TRUE);
             $data['tax']          = 0;
-            $data['serial_no']    = $this->input->post('serial_no',TRUE);
-            $data['price']        = $price;
-        $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
-            $data['product_model']= $this->input->post('model',TRUE);
+            // $data['serial_no']    = $this->input->post('serial_no',TRUE);
+            // $data['price']        = $price;
+            // $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
+          
             $data['product_details'] = $this->input->post('description',TRUE);
             $data['image']        = (!empty($image_url) ? $image_url : base_url('my-assets/image/product.png'));
             $data['status']       = 1;
-      
+
         $result = $CI->lproduct->insert_product($data);
 
         $data_service=array(
@@ -180,7 +190,7 @@ class Cproduct extends CI_Controller {
         $this->db->insert('product_service', $data_service);
 
 
-        
+
 
 
         if ($result == 1) {
@@ -232,7 +242,7 @@ class Cproduct extends CI_Controller {
 
             $this->db->insert('supplier_product', $supp_prd);
         }
-        // configure for upload 
+        // configure for upload
         $config = array(
             'upload_path'   => "./my-assets/image/product/",
             'allowed_types' => "png|jpg|jpeg|gif|bmp|tiff",
@@ -247,7 +257,7 @@ class Cproduct extends CI_Controller {
             $image_data = $this->upload->data();
             $image_name = base_url() . "my-assets/image/product/" . $image_data['file_name'];
             $config['image_library'] = 'gd2';
-            $config['source_image'] = $image_data['full_path']; 
+            $config['source_image'] = $image_data['full_path'];
             $config['maintain_ratio'] = TRUE;
             $config['height'] = '100';
             $config['width'] = '100';
@@ -262,33 +272,39 @@ class Cproduct extends CI_Controller {
         }
 
 
-        $price = $this->input->post('price',TRUE);
-       
-        $tablecolumn = $this->db->list_fields('tax_collection');
-        $num_column = count($tablecolumn)-4;
-        if($num_column > 0){
-       $taxfield = [];
-       for($i=0;$i<$num_column;$i++){
-        $taxfield[$i] = 'tax'.$i;
-       }
-       foreach ($taxfield as $key => $value) {
-        $data[$value] = $this->input->post($value)/100;
-       }
-    }
+    //     $price = $this->input->post('price',TRUE);
+
+    //     $tablecolumn = $this->db->list_fields('tax_collection');
+    //     $num_column = count($tablecolumn)-4;
+    //     if($num_column > 0){
+    //    $taxfield = [];
+    //    for($i=0;$i<$num_column;$i++){
+    //     $taxfield[$i] = 'tax'.$i;
+    //    }
+    //    foreach ($taxfield as $key => $value) {
+    //     $data[$value] = $this->input->post($value)/100;
+    //    }
+    // }
             $data['product_name']   = $this->input->post('product_name',TRUE);
             $data['category_id']    = $this->input->post('category_id',TRUE);
+            $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
             $data['product_id_two']    = $this->input->post('product_id_two',TRUE);
+            $data['country'] = $this->input->post('country',TRUE);
+            $data['parts'] = $this->input->post('parts',TRUE);
+            $data['tag'] = $this->input->post('tag',TRUE);
+            $data['sku'] = $this->input->post('sku',TRUE);
+            $data['price']        = $this->input->post('cost_price',TRUE);
+            $data['product_model']= $this->input->post('model_id',TRUE);
             $data['brand_id']    = $this->input->post('brand_id',TRUE);
             $data['ptype_id']    = $this->input->post('ptype_id',TRUE);
-            $data['price']          = $price;
-            $data['serial_no']      = $this->input->post('serial_no',TRUE);
-            $data['re_order_level']      = $this->input->post('re_order_level',TRUE);
-            $data['product_model']  = $this->input->post('model',TRUE);
+            // $data['serial_no']      = $this->input->post('serial_no',TRUE);
+            // $data['re_order_level']      = $this->input->post('re_order_level',TRUE);
+            // $data['product_model']  = $this->input->post('model',TRUE);
             $data['product_details']= $this->input->post('description',TRUE);
             $data['unit']           = $this->input->post('unit',TRUE);
             $data['tax']            = 0;
             $data['image']          = $image_name;
-       
+
         $result = $CI->Products->update_product($data, $product_id);
         if ($result == true) {
             $this->session->set_userdata(array('message' => display('successfully_updated')));
@@ -301,8 +317,8 @@ class Cproduct extends CI_Controller {
 
     //Manage Product
     public function manage_product()
-    {   
-    
+    {
+
         $CI =& get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('lproduct');
@@ -310,7 +326,7 @@ class Cproduct extends CI_Controller {
         $content =$this->lproduct->product_list();
         $this->template->full_admin_html_view($content);
 
-    
+
     }
 
     public function CheckProductList(){
@@ -319,7 +335,7 @@ class Cproduct extends CI_Controller {
         $postData = $this->input->post();
         $data = $this->Products->getProductList($postData);
         echo json_encode($data);
-    } 
+    }
     //Add Product CSV
     public function add_product_csv() {
         $CI = & get_instance();
@@ -771,17 +787,17 @@ class Cproduct extends CI_Controller {
 
     //Export CSV
     public function exportCSV() {
-        // file name 
+        // file name
         $this->load->model('Products');
         $filename = 'product_' . date('Ymd') . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
 
-        // get data 
+        // get data
         $usersData = $this->Products->product_csv_file();
 
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array('product_id', 'supplier_id', 'category_id','brand_id','ptype_id', 'product_name', 'price', 'supplier_price', 'unit', 'tax', 'product_model', 'product_details', 'image', 'status');
@@ -793,13 +809,13 @@ class Cproduct extends CI_Controller {
         exit;
     }
 
-// product pdf download 
+// product pdf download
         public function product_downloadpdf(){
         $CI = & get_instance();
         $CI->load->model('Products');
         $CI->load->model('Invoices');
         $CI->load->model('Web_settings');
-        $CI->load->library('pdfgenerator'); 
+        $CI->load->library('pdfgenerator');
         $product_list = $CI->Products->product_list_pdf();
         if (!empty($product_list)) {
             $i = 0;
