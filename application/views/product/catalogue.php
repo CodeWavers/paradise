@@ -46,7 +46,7 @@
 
 
         <?php foreach ($all_product as $product) { ?>
-   <div class="row panel panel-bd lobidrag" style="margin: 5px;padding: 10px">
+   <div class="row panel panel-bd lobidrag"   style="margin: 5px;padding: 10px">
     <div class="col-sm-12 col-md-3" >
 
         <div class="image_box" >
@@ -85,11 +85,11 @@
 
                     <tr>
                         <th>Parts No.</th>
-                        <td><?php echo html_escape($row[0]['hrate']);?></td>
+                        <td><?php echo html_escape($product->parts);?></td>
                     </tr>
               <tr>
                   <th>SKU</th>
-                  <td><?php echo html_escape($row[0]['hrate']);?></td>
+                  <td><?php echo html_escape($product->sku);?></td>
               </tr>
               <tr>
                   <th>Unit Type</th>
@@ -101,11 +101,11 @@
                     </tr>
                   <tr>
                       <th>Model</th>
-                      <td><?php echo html_escape($product->product_model); ?></td>
+                      <td><?php echo html_escape($product->model_name); ?></td>
                   </tr>
               <tr>
                   <th>Associated Tag</th>
-                  <td><?php echo html_escape($row[0]['hrate']);?></td>
+                  <td><?php echo html_escape($product->tag);?></td>
               </tr>
 
 
@@ -120,20 +120,25 @@
 
 
 </div>
+       
 
    </div>
 
         <?php } ?>
 
 
+
+
     </section>
-    <?php echo  $this->uri->segment(4);?>
     <?php echo $links;?>
 </div>
 
 
 
 <script>
+
+
+
     // Get the img object using its Id
     img = document.getElementById("img1");
     // Function to increase image size
@@ -150,12 +155,5 @@
         img.style.transition = "transform 0.25s ease";
     }
 
-    $('.lobidrag').pagination({
-        dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
-    callback: function(data, pagination) {
-        // template method of yourself
-        var html = template(data);
-        dataContainer.html(html);
-    }
-    })
+
 </script>

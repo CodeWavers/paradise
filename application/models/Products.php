@@ -32,11 +32,12 @@ class Products extends CI_Model {
     //All Product List
 
     public function all_product() {
-        $query = $this->db->select('a.*,b.*,c.*,d.*')
+        $query = $this->db->select('a.*,b.*,c.*,d.*,e.*')
             ->from('product_information a')
             ->join('product_category b', 'b.category_id = a.category_id', 'left')
             ->join('product_brand c', 'c.brand_id = a.brand_id', 'left')
             ->join('product_subcat d', 'd.sub_cat_id = a.sub_cat_id', 'left')
+            ->join('product_model e', 'e.model_id = a.product_model', 'left')
            // ->join('supplier_information', 'supplier_information.supplier_id = supplier_product.supplier_id', 'left')
             ->order_by('a.product_id', 'desc')
             ->get();

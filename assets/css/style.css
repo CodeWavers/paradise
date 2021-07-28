@@ -787,13 +787,13 @@ font-variant: small-caps
 
 .zoom {
 	transition: transform .2s; /* Animation */
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	margin: 0 auto;
 }
 
 .zoom:hover {
-	transform: scale(1.5); /* (150% zoom)*/
+	transform: scale(2); /* (150% zoom)*/
 }
 
 @-webkit-keyframes container-rotate {

@@ -216,9 +216,9 @@ class Cproduct extends CI_Controller {
         #
         $config["base_url"]       = base_url('Cproduct/catalogue/');
         $config["total_rows"]     = $this->db->count_all('product_information');
-        $config["per_page"]       = 3;
-        $config["uri_segment"]    = 2;
-       // $config["num_links"]      = 1;
+        $config["per_page"]       = 4;
+        $config["uri_segment"]    = 3;
+        $config["num_links"]      = 1;
         /* This Application Must Be Used With BootStrap 3 * */
         $config['full_tag_open']  = "<ul class='pagination col-xs pull-right m-0'>";
         $config['full_tag_close'] = "</ul>";
