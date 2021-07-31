@@ -369,4 +369,33 @@ class Crqsn extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function add_rqsn_form()
+    {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Products');
+
+
+        $all_product = $this->Products->all_product();
+
+
+
+        if (!empty($all_product)) {
+            $i = 0;
+            foreach ($all_product as $k => $v) {
+                $i++;
+                $all_product[$k]['sl'] = $i;
+            }
+        }
+
+        $data['title']          = 'Add Requisition';
+        $data['all_product']    = $all_product;
+
+        // echo '<pre>'; print_r($data); exit();
+
+        $content                = $this->parser->parse('rqsn/rqsn_add_form', $data, true);
+
+        $this->template->full_admin_html_view($content);
+    }
+
 }

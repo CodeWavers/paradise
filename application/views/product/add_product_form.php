@@ -46,12 +46,12 @@
         <div class="row">
             <div class="col-sm-12">
 
- <?php if($this->permission1->method('add_product_csv','create')->access()){ ?>
+                <?php if($this->permission1->method('add_product_csv','create')->access()){ ?>
                     <a href="<?php echo base_url('Cproduct/add_product_csv') ?>" class="btn btn-info m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_product_csv') ?> </a>
                 <?php }?>
-<?php if($this->permission1->method('manage_product','read')->access()){ ?>
+                <?php if($this->permission1->method('manage_product','read')->access()){ ?>
                     <a href="<?php echo base_url('Cproduct/manage_product') ?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i>  <?php echo display('manage_product') ?> </a>
-                     <?php }?>
+                <?php }?>
 
 
             </div>
@@ -69,7 +69,7 @@
                     <?php echo form_open_multipart('Cproduct/insert_product', array('class' => 'form-vertical', 'id' => 'insert_product', 'name' => 'insert_product')) ?>
                     <div class="panel-body">
                         <div class="row">
-                                 <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label"><?php echo display('category') ?></label>
                                     <div class="col-sm-8">
@@ -95,18 +95,18 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="col-sm-6" id="subCat_div" style="display: none;">
+                            <div class="col-sm-6" id="subCat_div" style="display: none;">
                                 <div class="form-group row">
                                     <label for="sub_category_id" class="col-sm-4 col-form-label">Sub Category</label>
                                     <div class="col-sm-8">
-<!--                                        <select class="form-control" id="sub_cat_id" name="sub_cat_id"  tabindex="3">-->
-<!--                                            <option value=""></option>-->
-<!--                                            --><?php //if ($sub_cat_list) { ?>
-<!--                                                {sub_cat_list}-->
-<!--                                                <option value="{sub_cat_id}">{subcat_name}</option>-->
-<!--                                                {/sub_cat_list}-->
-<!--                                            --><?php //} ?>
-<!--                                        </select>-->
+                                        <!--                                        <select class="form-control" id="sub_cat_id" name="sub_cat_id"  tabindex="3">-->
+                                        <!--                                            <option value=""></option>-->
+                                        <!--                                            --><?php //if ($sub_cat_list) { ?>
+                                        <!--                                                {sub_cat_list}-->
+                                        <!--                                                <option value="{sub_cat_id}">{subcat_name}</option>-->
+                                        <!--                                                {/sub_cat_list}-->
+                                        <!--                                            --><?php //} ?>
+                                        <!--                                        </select>-->
                                         <select name="sub_cat_id" id="sub_cat_id" class="sub_cat_id form-control text-right" required="" tabindex="1">
                                             <option></option>
                                         </select>
@@ -117,7 +117,7 @@
 
 
                         <div class="row">
-                                <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label">Brand Name</label>
                                     <div class="col-sm-8">
@@ -163,7 +163,7 @@
                         </div>
 
                         <div class="row">
-                     <!--        <div class="col-sm-6">
+                            <!--        <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label">Brand Name</label>
                                     <div class="col-sm-8">
@@ -193,7 +193,7 @@
                                     </div>
                                 </div>
                             </div> -->
-                             <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "Parts No" ?> </label>
                                     <div class="col-sm-8">
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "Associated Tag" ?> </label>
                                     <div class="col-sm-8">
@@ -213,7 +213,7 @@
                         </div>
 
                         <div class="row">
-                             <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "SKU" ?> </label>
                                     <div class="col-sm-8">
@@ -221,7 +221,7 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "Unit Cost Price" ?> </label>
                                     <div class="col-sm-8">
@@ -238,7 +238,7 @@
                                 <div class="form-group row">
                                     <label for="product_model" class="col-sm-4 col-form-label"><?php echo display('model') ?> <i class="text-danger"></i></label>
                                     <div class="col-sm-8">
-                                          <select class="form-control" id="model_id" name="model_id" tabindex="3">
+                                        <select class="form-control" id="model_id" name="model_id" tabindex="3">
                                             <option value=""></option>
                                             <?php if ($model_list) { ?>
                                                 {model_list}
@@ -250,14 +250,14 @@
                                     </div>
                                 </div>
                             </div>
-                                 <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="category_id" class="col-sm-4 col-form-label">Purchase Type</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" id="ptype_id" name="ptype_id" tabindex="3">
                                             <option value=""></option>
-                                                <option value="Import">Import</option>   
-                                                 <option value="Local">Local</option> 
+                                            <option value="Import">Import</option>
+                                            <option value="Local">Local</option>
                                         </select>
                                     </div>
                                 </div>
@@ -284,36 +284,32 @@
                                     <label for="sub_category_id" class="col-sm-4 col-form-label">Sub Category</label>
                                     <div class="col-sm-8">
                                     <select class="form-control" id="sub_cat_id" name="sub_cat_id"  tabindex="3">-->
-<!--                                            <option value=""></option>-->
-<!--                                            --><?php //if ($sub_cat_list) { ?>
-<!--                                                {sub_cat_list}-->
-<!--                                                <option value="{sub_cat_id}">{subcat_name}</option>-->
-<!--                                                {/sub_cat_list}-->
-<!--                                            --><?php //} ?>
-<!--                                        </select>-->
-                                 <!--        <select name="sub_cat_id" id="sub_cat_id" class="sub_cat_id form-control text-right" required="" tabindex="1">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> -->
+                            <!--                                            <option value=""></option>-->
+                            <!--                                            --><?php //if ($sub_cat_list) { ?>
+                            <!--                                                {sub_cat_list}-->
+                            <!--                                                <option value="{sub_cat_id}">{subcat_name}</option>-->
+                            <!--                                                {/sub_cat_list}-->
+                            <!--                                            --><?php //} ?>
+                            <!--                                        </select>-->
+                            <!--        <select name="sub_cat_id" id="sub_cat_id" class="sub_cat_id form-control text-right" required="" tabindex="1">
+                                       <option></option>
+                                   </select>
+                               </div>
+                           </div>
+                       </div> -->
 
 
                         </div>
 
                         <div class="row">
-                         <!--    <div class="col-sm-6">
+                            <!--    <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="sell_price" class="col-sm-4 col-form-label"><?php echo display('sell_price') ?> </label>
                                     <div class="col-sm-8">
                                         <input class="form-control text-right" id="sell_price" name="price" type="text"  placeholder="0.00" tabindex="5" min="0">
                                     </div>
                                 </div>
-
                             </div> -->
-
-                            </div>
-
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="unit" class="col-sm-4 col-form-label"><?php echo display('unit') ?></label>
@@ -329,8 +325,8 @@
                                     </div>
                                 </div>
                             </div>
-                   <!--      </div> -->
-<!--                         <div class="row"> -->
+                            <!--      </div> -->
+                            <!--                         <div class="row"> -->
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="image" class="col-sm-4 col-form-label"><?php echo display('image') ?> </label>
@@ -339,16 +335,16 @@
                                     </div>
                                 </div>
                             </div>
-             <!--                <div class="col-sm-6">
-                                <div class="form-group row">
-                                    <label for="re_order_level" class="col-sm-4 col-form-label">Trash Hold</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" tabindex="" class="form-control " id="" name="re_order_level" placeholder=""  value="0" />
-                                    </div>
-                                </div>
-                            </div> -->
-               <!--               <?php  $i=0;
-                    foreach ($taxfield as $taxss) {?>
+                            <!--                <div class="col-sm-6">
+                                               <div class="form-group row">
+                                                   <label for="re_order_level" class="col-sm-4 col-form-label">Trash Hold</label>
+                                                   <div class="col-sm-8">
+                                                       <input type="number" tabindex="" class="form-control " id="" name="re_order_level" placeholder=""  value="0" />
+                                                   </div>
+                                               </div>
+                                           </div> -->
+                            <!--               <?php  $i=0;
+                            foreach ($taxfield as $taxss) {?>
 
                             <div class="col-sm-6">
                          <div class="form-group row">
@@ -360,44 +356,40 @@
                         </div>
                     </div>
 
-
                        <?php $i++;}?> -->
-
-                       <?php $i++;}?>
-
                         </div>
 
 
                         <div class="table-responsive product-supplier">
                             <table class="table table-bordered table-hover"  id="product_table">
                                 <thead>
-                                    <tr>
-                                        <th class="text-center"><?php echo display('supplier') ?> </th>
-                                        <th class="text-center"><?php echo display('supplier_price') ?> </th>
+                                <tr>
+                                    <th class="text-center"><?php echo display('supplier') ?> </th>
+                                    <th class="text-center"><?php echo display('supplier_price') ?> </th>
 
-                                        <th class="text-center"><?php echo display('action') ?> <i class="text-danger"></i></th>
-                                    </tr>
+                                    <th class="text-center"><?php echo display('action') ?> <i class="text-danger"></i></th>
+                                </tr>
                                 </thead>
                                 <tbody id="proudt_item">
-                                    <tr class="">
+                                <tr class="">
 
-                                        <td width="300">
-                                            <select name="supplier_id[]" class="form-control"  required="">
-                                                <option value=""> select Supplier</option>
-                                                <?php if ($supplier) { ?>
-                                                    {supplier}
-                                                    <option value="{supplier_id}">{supplier_name}</option>
-                                                    {/supplier}
-                                                <?php } ?>
-                                            </select>
-                                        </td>
-                                        <td class="">
-                                            <input type="text" tabindex="6" class="form-control text-right" name="supplier_price[]" placeholder="0.00"    min="0"/>
-                                        </td>
+                                    <td width="300">
+                                        <select name="supplier_id[]" class="form-control"  >
+                                            <option value=""> select Supplier</option>
+                                            <?php if ($supplier) { ?>
+                                                {supplier}
+                                                <option value="{supplier_id}">{supplier_name}</option>
+                                                {/supplier}
+                                            <?php } ?>
+                                        </select>
+                                    </td>
+                                    <td class="">
+                                        <input type="text" tabindex="6" class="form-control text-right" name="supplier_price[]" placeholder="0.00"    min="0"/>
+                                    </td>
 
-                                        <td width="100"> <a  id="add_purchase_item" class="btn btn-info btn-sm" name="add-invoice-item" onClick="addpruduct('proudt_item');"  tabindex="9"/><i class="fa fa-plus-square" aria-hidden="true"></i></a> <a class="btn btn-danger btn-sm"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                        </td>
-                                    </tr>
+                                    <td width="100"> <a  id="add_purchase_item" class="btn btn-info btn-sm" name="add-invoice-item" onClick="addpruduct('proudt_item');"  tabindex="9"/><i class="fa fa-plus-square" aria-hidden="true"></i></a> <a class="btn btn-danger btn-sm"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -445,7 +437,7 @@
             success: function( data ) {
                 var obj = jQuery.parseJSON(data);
                 $('.sub_cat_id').html(obj.sub_cat);
-                  $('#cat_id').val(obj.c_id);
+                $('#cat_id').val(obj.c_id);
                 var cat_id = $("#cat_id").val();
 
                 if(category_id == cat_id ){

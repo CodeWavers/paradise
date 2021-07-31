@@ -77,13 +77,13 @@
 
 
 
-                    <div class="rqsn_panel" >
+                    <div class="rqsn_panel" style="margin-top: 10px;">
                         <?php echo form_open_multipart('Crqsn/insert_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
                         <div class="row">
 
                             <div class="col-sm-8" id="payment_from_2">
-                                <div class="form-group row">
-                                    <label for="customer_name_others" class="col-sm-3 col-form-label"><?php echo display('customer_name') ?> <i class="text-danger">*</i></label>
+                                <div class="form-group row  rqsn-form-input">
+                                    <label for="customer_name_others" class="col-sm-3 col-form-label text-right"><?php echo display('customer_name') ?> <i class="text-danger">*</i></label>
                                     <div class="col-sm-6">
                                         <input  autofill="off" type="text"  size="100" name="customer_name_others" placeholder='<?php echo display('customer_name') ?>' id="customer_name_others" class="form-control" />
                                         <input type ="hidden" name="csrf_test_name" id="csrf_test_name" value="<?php echo $this->security->get_csrf_hash();?>">
@@ -99,56 +99,9 @@
                             </div>
                             <div class="col-sm-8" id="payment_from">
 
-                                <div class="form-group row">
-                                    <label for="payment_type" class="col-sm-3 col-form-label">From<i class="text-danger">*</i></label>
-                                    <div class="col-sm-6">
-                                        <select name="from_id" class="form-control" required=""  tabindex="3">
-                                            <?php foreach($outlet_list as $outlet){?>
-                                                <option value="<?php echo html_escape($outlet['outlet_id'])?>"><?php echo html_escape($outlet['outlet_name']) ;?></option>
-                                            <?php }?>
-<!--                                            --><?php //foreach($cw_list as $cw){?>
-<!--                                                <option value="--><?php //echo html_escape($cw['warehouse_id'])?><!--">--><?php //echo html_escape($cw['central_warehouse']) ;?><!--</option>-->
-<!--                                            --><?php //}?>
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-
-                            <div class="col-sm-8" id="payment_from">
-
-                                <div class="form-group row">
-                                    <label for="payment_type" class="col-sm-3 col-form-label">To<i class="text-danger">*</i></label>
-                                    <div class="col-sm-6">
-                                        <select name="to_id" class="form-control" required=""  tabindex="3">
-                                            <?php foreach($cw_list as $cw){?>
-                                                <option value="<?php echo html_escape($cw['warehouse_id'])?>"><?php echo html_escape($cw['central_warehouse']) ;?></option>
-                                            <?php }?>
-                                            <?php foreach($outlet_list_to as $outlet){?>
-                                                <option value="<?php echo html_escape($outlet['outlet_id'])?>"><?php echo html_escape($outlet['outlet_name']) ;?></option>
-                                            <?php }?>
-
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group row">
-                                    <label for="date" class="col-sm-4 col-form-label"><?php echo display('date') ?> <i class="text-danger">*</i></label>
-                                    <div class="col-sm-8">
+                                <div class="form-group row rqsn-form-input">
+                                    <label for="date" class="col-sm-3 col-form-label text-right"><?php echo display('date') ?> : </label>
+                                    <div class="col-sm-9">
                                         <?php
 
                                         $date = date('Y-m-d');
@@ -156,82 +109,58 @@
                                         <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" />
                                     </div>
                                 </div>
+
+                                <div class="form-group row rqsn-form-input">
+                                    <label for="customer_name" class="col-sm-3 col-form-label text-right">Customer Name : </label>
+                                    <div class="col-sm-9" >
+                                        <input type="text" class="form-control" name="customer_name" id="customer_name" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row  rqsn-form-input">
+                                    <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Requisition For : </label>
+                                    <div class="col-sm-9">
+                                        <select name="rqsn_for" id="rqsn_for" class="form-control">
+                                            {customers}
+                                                <option value="{customer_id}">{customer_name}</option>
+                                            {/customers}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row rqsn-form-input">
+                                    <label for="rqsn_no" class="col-sm-3 col-form-label text-right">Requisition No. : </label>
+                                    <div class="col-sm-9" >
+                                        <input type="text" class="form-control" name="rqsn_no" id="rqsn_no">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <a href="<?= base_url()."Cproduct/catalogue" ?>">
+                                    <div class="col-sm-9">
+                                        <input type="button" id="catalogue_link" class="btn btn-success form-control" name="catalogue_link" value="Goto Catalogue">
+                                    </div>
+                                    </a>
+                                </div>
+
                             </div>
 
-
-
-
                         </div>
+
                         <br>
-                        <div class="table-responsive center">
-                            <table class="table table-bordered table-hover" id="normalinvoice">
-                                <thead>
-                                <tr>
-                                    <th class="text-center " width="25%"><?php echo display('item_information') ?> <i class="text-danger">*</i></th>
 
-                                    <th class="text-center"><?php echo display('unit') ?></th>
-                                    <th class="text-center"><?php echo display('quantity') ?> <i class="text-danger">*</i></th>
-
-                                    <th class="text-center"><?php echo display('action') ?></th>
-                                </tr>
-                                </thead>
-                                <tbody id="addinvoiceItem">
-                                <tr>
-                                    <td class="product_field">
-                                        <input type="text" required name="product_name" onkeypress="invoice_productList(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
-
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1" name="product_id[]" id="SchoolHiddenId"/>
-
-                                        <input type="hidden" class="baseUrl" value="<?php echo base_url(); ?>" />
-                                    </td>
-
-                                    <td>
-                                        <input name="unit[]" id="" class="form-control text-right unit_1 valid" value="None" readonly="" aria-invalid="false" type="text">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="product_quantity[]" required="" onkeyup="quantity_calculate(1);" onchange="quantity_calculate(1);" class="total_qntt_1 form-control text-right" id="total_qntt_1" placeholder="0.00" min="0" tabindex="8"  value="1" />
-                                    </td>
-
-
-                                    <td>
-
-
-                                        <button  class='btn btn-danger text-right' type='button' value='Delete' onclick='deleteRow(this)'><i class='fa fa-close'></i></button>
-
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="3" rowspan="1">
-                                        <center><label  for="details" class="  col-form-label text-center">Requisition Reason/Des</label></center>
-                                        <textarea name="inva_details" id="details" class="form-control" placeholder="Requisition Reason/Des" ></textarea>
-                                    </td>
-                                    <td><a style="margin-top: 30%"  id="add_invoice_item" class="btn btn-info" name="add-invoice-item"  onClick="addInputField('addinvoiceItem');"  tabindex="11"><i class="fa fa-plus"></i></a></td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                </tfoot>
-                            </table>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <input type="submit" id="insert_rqsn" class="btn btn-success" name="" value="<?php echo display('submit') ?>" tabindex="17"/>
-                                <!-- <input type="submit" value="<?php echo display('submit_and_add_another') ?>" name="add-purchase-another" class="btn btn-large btn-success" id="add_purchase_another" > -->
+                            <div id="cart_details">
+                                <h3 align="center">Requisition  is Empty</h3>
                             </div>
-                        </div>
-
-
 
                         <?php echo form_close()?>
                     </div>
 
                 </div>
             </div>
+
+
 <!--            <div class="modal fade" id="printconfirmodal" tabindex="-1" role="dialog" aria-labelledby="printconfirmodal" aria-hidden="true">-->
 <!--                <div class="modal-dialog modal-sm">-->
 <!--                    <div class="modal-content">-->
@@ -347,61 +276,60 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        setInterval(function(){
 
-        $(".add_cheque").click(function(){
-            $(".addCheque").append(" <div id=\"cheque\" class=\"cheque\">\n" +
-                "                                            <input type =\"hidden\" name=\"csrf_test_name\" id=\"\" value=\"<?php echo $this->security->get_csrf_hash();?>\">\n" +
-                "                                            <label for=\"bank\" class=\"col-sm-4 col-form-label\">Cheque type:\n" +
-                "                                                <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\">\n" +
-                "                                                <input type=\"text\"   name=\"cheque_type[]\" class=\" form-control\" placeholder=\"\"   autocomplete=\"off\"/>\n" +
-                //"                                                <input type=\"number\"   name=\"cheque_id[]\" class=\" form-control\" placeholder=\"\"  value=\"<?php //echo rand();?>//\" autocomplete=\"off\"/>\n" +
-                "                                            </div>\n" +
-                "                                            <label for=\"bank\" class=\"col-sm-4 col-form-label\">Cheque NO:\n" +
-                "                                                <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\">\n" +
-                "                                                <input type=\"number\"   name=\"cheque_no[]\" class=\" form-control\" placeholder=\"\"   autocomplete=\"off\"/>\n" +
-                //"                                                <input type=\"number\"   name=\"cheque_id[]\" class=\" form-control\" placeholder=\"\"  value=\"<?php //echo rand();?>//\" autocomplete=\"off\"/>\n" +
-                "                                            </div>\n" +
+            $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
 
-                "\n" +
-                "\n" +
-                "                                            <label for=\"date\" class=\"col-sm-4 col-form-label\">Due Date <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\">\n" +
-                "\n" +
-                "                                                <input class=\"datepicker form-control\" type=\"date\" size=\"50\" name=\"cheque_date[]\" id=\"\"  value=\"\" tabindex=\"4\" autocomplete=\"off\" />\n" +
-                "                                            </div>\n" +
-                "\n" +
-                "                                            <label for=\"bank\" class=\"col-sm-4 col-form-label\">Amount:\n" +
-                "                                                <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\" style=\"padding-bottom:10px \" >\n" +
-                "                                                <input type=\"number\"   name=\"amount[]\" class=\" form-control\" placeholder=\"\"   autocomplete=\"off\"/>\n" +
-                //"                                                <input type=\"number\"   name=\"cheque_id[]\" class=\" form-control\" placeholder=\"\"  value=\"<?php //echo rand();?>//\" autocomplete=\"off\"/>\n" +
-                "                                            </div>\n" +
-                "\n" +
-                "\n" +
-                "                                            <div  class=\" col-sm-1\">\n" +
-                "                                                <a href=\"#\" id=\"Remove_Cheque\"  class=\"client-add-btn btn btn-danger remove_cheque\" ><i class=\"fa fa-minus-circle m-r-2\"></i></a>\n" +
-                "                                            </div>\n" +
-                "                                            </div>");
+        }, 1000);
+
+
+
+        $(document).on('click', '.remove_inventory', function(){
+            var row_id = $(this).attr("id");
+            var csrf_test_name = $('[name="csrf_test_name"]').val();
+            if(confirm("Are you sure you want to remove this?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
+                    method:"POST",
+                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
+                    success:function(data)
+                    {
+                        alert("Product removed from Cart");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
         });
 
+        $(document).on('click', '#clear_cart', function(){
+            if(confirm("Are you sure you want to clear cart?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
+                    success:function(data)
+                    {
+                        alert("Your cart has been clear...");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+        });
 
     });
 
 
-
-    $("body").on("click",".remove_cheque",function(e){
-        $(this).parents('.cheque').remove();
-        //the above method will remove the user_data div
-    });
 </script>
 
 
 
 
 </script>
-
-
-
-

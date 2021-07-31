@@ -194,7 +194,7 @@
 }
 
 .company_name_p{
-	font-size: 20px; 
+	font-size: 20px;
 }
 
 .invoice-address{
@@ -224,7 +224,7 @@
 }
 
 .border-bottom-top{
-	border-top: 0; 
+	border-top: 0;
 	border-bottom: 0;
 }
 
@@ -383,14 +383,14 @@ color:#D4AC0D;
 .profilossphead{
 	font-size:20px;
 	 font-weight:bold;
-	 border-right:solid 1px #000; 
+	 border-right:solid 1px #000;
 	 border-left:solid 1px #000;
 	  border-top:solid 1px #000;
 	  color: green;
 }
 
 .profitlossbranchead{
-	border-left:solid 1px #000; border-top:solid 1px #000; 
+	border-left:solid 1px #000; border-top:solid 1px #000;
 }
 
 .font-bold{
@@ -398,15 +398,15 @@ color:#D4AC0D;
 }
 
 .profitlossbrancheadamount{
-border-left:solid 1px #000; 
+border-left:solid 1px #000;
  border-right:solid 1px #000;
   border-top:solid 1px #000;
 }
 
 .profitlosstablehead{
-font-size:18px; 
-border-left:solid 1px #000; 
-border-top:solid 1px #000;	
+font-size:18px;
+border-left:solid 1px #000;
+border-top:solid 1px #000;
 }
 
 .profitloss-result{
@@ -422,34 +422,34 @@ border-top:solid 1px #000;
 }
 
 .cashflowparticular{
-	padding-left:10px; 
+	padding-left:10px;
 	border:1px solid #000;
 }
 
 .cashflowamount{
 	padding-left:10px;
-	 padding-right:10px; 
+	 padding-right:10px;
 	  border:1px solid #000;
 }
 
 .paddingleft10px{
-	padding-left:10px; 
+	padding-left:10px;
 }
 
 .cashflowamnt{
-	padding-right:10px; 
+	padding-right:10px;
 	border-left: solid 1px #000;
 	 border-right:solid 1px #000;
 }
 
 .paddingleftright10{
 	padding-left:10px;
-	 padding-right:10px; 
+	 padding-right:10px;
 }
 
 .totalopeninig{
-	padding-right:10px; 
-	border-top: solid 1px #000; 
+	padding-right:10px;
+	border-top: solid 1px #000;
 	border-bottom: solid 1px #000;
 }
 
@@ -459,7 +459,7 @@ border-top:solid 1px #000;
 }
 
 .pddingright10{
-	padding-right:10px; 
+	padding-right:10px;
 }
 
 .noncurcss{
@@ -473,13 +473,13 @@ border-top:solid 1px #000;
 }
 
 .resumehead{
-	text-align: center; 
+	text-align: center;
 	font-size: 25px;
 }
 
 .rpthtext{
 color:#3D9970;
-font-size: 50px; 
+font-size: 50px;
 font-weight: bold;
 font-family: Stencil Std, fantasy;
 font-variant: small-caps
@@ -487,7 +487,7 @@ font-variant: small-caps
 
 .rptname{
 	color:black;
-	 font-size: 20px; 
+	 font-size: 20px;
 	 font-weight: bold;
 	  font-family:cursive;
 }
@@ -516,7 +516,7 @@ font-variant: small-caps
 }
 
 .appsettingqrtxt{
-	font-weight: bold; 
+	font-weight: bold;
 	margin-left: 25%;
 }
 
@@ -617,7 +617,7 @@ font-variant: small-caps
 }
 
 .best-sale-title{
-	display: inline-block; 
+	display: inline-block;
 	line-height: 34px;
 }
 
@@ -786,14 +786,40 @@ font-variant: small-caps
 
 
 .zoom {
-	transition: transform .2s; /* Animation */
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .zoom:hover {
-	transform: scale(1.5); /* (150% zoom)*/
+	transform: scale(2); /* (150% zoom)*/
+    border: 1px solid #37476760;
+    border-radius: 3px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50)
+}
+
+.img-zoom{
+	width: 80px;
+	height: auto;
+	margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.img-zoom:hover {
+    background-color: beige;
+	transform: scale(4);
+    border: 1px solid #37476760;
+    border-radius: 3px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50)
+}
+
+#add_rqsn_table > thead > tr > th{
+    text-align: center;
+}
+
+#add_rqsn_table > tbody > tr > td{
+    vertical-align: middle;
 }
 
 @-webkit-keyframes container-rotate {
@@ -939,7 +965,3 @@ font-variant: small-caps
         transform: rotate(-130deg)
     }
 }
-
-
-
-

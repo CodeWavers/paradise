@@ -15,6 +15,12 @@ class Rqsn extends CI_Model {
         $this->auth->check_admin_auth();
     }
 
+    function product_fetch_all()
+    {
+        $query = $this->db->get("product_information");
+        return $query->result();
+    }
+
 
     // outlet list
     public function outlet_list(){

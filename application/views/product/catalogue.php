@@ -89,7 +89,11 @@ Manage Category Start -->
         </div>
 
         <?php foreach ($all_product as $product) { ?>
+
    <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
+
+   <div class="row panel panel-bd lobidrag catalogue-panel">
+
     <div class="col-sm-12 col-md-4">
 
         <div class="image_box" >

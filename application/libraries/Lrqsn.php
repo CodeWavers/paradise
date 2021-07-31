@@ -41,8 +41,10 @@ class Lrqsn {
         $CI = & get_instance();
         $CI->load->model('Rqsn');
         $CI->load->model('Web_settings');
+        $CI->load->model('Customers');
         $outlet_list    = $CI->Rqsn->outlet_list();
         $outlet_list_to    = $CI->Rqsn->outlet_list_to();
+        $customers = $CI->Customers->customer_list();
         $cw_list    = $CI->Rqsn->cw_list();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $taxfield = $CI->db->select('tax_name,default_value')
@@ -50,12 +52,13 @@ class Lrqsn {
                 ->get()
                 ->result_array();
         $data = array(
-            'title'         => "Requisition",
-            'outlet_list' => $outlet_list,
-            'outlet_list_to' => $outlet_list_to,
-            'cw_list' => $cw_list,
-            'discount_type' => $currency_details[0]['discount_type'],
-            'taxes'         => $taxfield,
+            'title'             => "Requisition",
+            'outlet_list'       => $outlet_list,
+            'outlet_list_to'    => $outlet_list_to,
+            'cw_list'           => $cw_list,
+            'discount_type'     => $currency_details[0]['discount_type'],
+            'taxes'             => $taxfield,
+            'customers'         => $customers,
         );
 
        // echo '<pre'; print_r($cw_list);exit();
