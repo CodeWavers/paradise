@@ -45,7 +45,16 @@ class Categories extends CI_Model {
         }
         return false;
     }
-
+ public function subcat_list() {
+        $this->db->select('*');
+        $this->db->from('product_subcat');
+        $this->db->where('status', 1);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
     public function sub_cat_list_product_by_cat_id($category_id) {
         $this->db->select('*');
         $this->db->from('product_subcat');
