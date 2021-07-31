@@ -338,7 +338,7 @@
                                 <tr class="">
 
                                     <td width="300">
-                                        <select name="supplier_id[]" class="form-control" required="" tabindex="8">
+                                        <select name="supplier_id[]" class="form-control"  tabindex="8">
 
                                             <?php foreach ($supplier_list as $supplier) { ?>
                                                 <option value="<?php echo $supplier['supplier_id'] ?>"><?php echo $supplier['supplier_name'] ?> </option>

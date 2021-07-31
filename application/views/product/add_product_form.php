@@ -374,7 +374,7 @@
                                 <tr class="">
 
                                     <td width="300">
-                                        <select name="supplier_id[]" class="form-control"  required="">
+                                        <select name="supplier_id[]" class="form-control"  >
                                             <option value=""> select Supplier</option>
                                             <?php if ($supplier) { ?>
                                                 {supplier}

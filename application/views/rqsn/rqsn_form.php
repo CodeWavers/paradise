@@ -149,29 +149,18 @@
                         </div>
 
                         <br>
-                        <div class="table-responsive center">
-                            <table class="table table-bordered table-hover" id="rqsn_table">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">Sl No.</th>
-                                    <th class="text-center">Category</th>
-                                    <th class="text-center">Sub-category</th>
-                                    <th class="text-center">Product Name</th>
-                                    <th class="text-center">Parts No.</th>
-                                    <th class="text-center">SKU</th>
-                                    <th class="text-center">Brand</th>
-                                    <th class="text-center">Model</th>
-                                    <th class="text-center">Required Quantity</th>
-                                </tr>
-                                </thead>
-                                </tbody>
-                            </table>
-                        </div>
+
+                            <div id="cart_details">
+                                <h3 align="center">Requisition  is Empty</h3>
+                            </div>
+
                         <?php echo form_close()?>
                     </div>
 
                 </div>
             </div>
+
+
 <!--            <div class="modal fade" id="printconfirmodal" tabindex="-1" role="dialog" aria-labelledby="printconfirmodal" aria-hidden="true">-->
 <!--                <div class="modal-dialog modal-sm">-->
 <!--                    <div class="modal-content">-->
@@ -287,54 +276,57 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        setInterval(function(){
 
-        $(".add_cheque").click(function(){
-            $(".addCheque").append(" <div id=\"cheque\" class=\"cheque\">\n" +
-                "                                            <input type =\"hidden\" name=\"csrf_test_name\" id=\"\" value=\"<?php echo $this->security->get_csrf_hash();?>\">\n" +
-                "                                            <label for=\"bank\" class=\"col-sm-4 col-form-label\">Cheque type:\n" +
-                "                                                <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\">\n" +
-                "                                                <input type=\"text\"   name=\"cheque_type[]\" class=\" form-control\" placeholder=\"\"   autocomplete=\"off\"/>\n" +
-                //"                                                <input type=\"number\"   name=\"cheque_id[]\" class=\" form-control\" placeholder=\"\"  value=\"<?php //echo rand();?>//\" autocomplete=\"off\"/>\n" +
-                "                                            </div>\n" +
-                "                                            <label for=\"bank\" class=\"col-sm-4 col-form-label\">Cheque NO:\n" +
-                "                                                <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\">\n" +
-                "                                                <input type=\"number\"   name=\"cheque_no[]\" class=\" form-control\" placeholder=\"\"   autocomplete=\"off\"/>\n" +
-                //"                                                <input type=\"number\"   name=\"cheque_id[]\" class=\" form-control\" placeholder=\"\"  value=\"<?php //echo rand();?>//\" autocomplete=\"off\"/>\n" +
-                "                                            </div>\n" +
+            $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
 
-                "\n" +
-                "\n" +
-                "                                            <label for=\"date\" class=\"col-sm-4 col-form-label\">Due Date <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\">\n" +
-                "\n" +
-                "                                                <input class=\"datepicker form-control\" type=\"date\" size=\"50\" name=\"cheque_date[]\" id=\"\"  value=\"\" tabindex=\"4\" autocomplete=\"off\" />\n" +
-                "                                            </div>\n" +
-                "\n" +
-                "                                            <label for=\"bank\" class=\"col-sm-4 col-form-label\">Amount:\n" +
-                "                                                <i class=\"text-danger\">*</i></label>\n" +
-                "                                            <div class=\"col-sm-6\" style=\"padding-bottom:10px \" >\n" +
-                "                                                <input type=\"number\"   name=\"amount[]\" class=\" form-control\" placeholder=\"\"   autocomplete=\"off\"/>\n" +
-                //"                                                <input type=\"number\"   name=\"cheque_id[]\" class=\" form-control\" placeholder=\"\"  value=\"<?php //echo rand();?>//\" autocomplete=\"off\"/>\n" +
-                "                                            </div>\n" +
-                "\n" +
-                "\n" +
-                "                                            <div  class=\" col-sm-1\">\n" +
-                "                                                <a href=\"#\" id=\"Remove_Cheque\"  class=\"client-add-btn btn btn-danger remove_cheque\" ><i class=\"fa fa-minus-circle m-r-2\"></i></a>\n" +
-                "                                            </div>\n" +
-                "                                            </div>");
+        }, 1000);
+
+
+
+        $(document).on('click', '.remove_inventory', function(){
+            var row_id = $(this).attr("id");
+            var csrf_test_name = $('[name="csrf_test_name"]').val();
+            if(confirm("Are you sure you want to remove this?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
+                    method:"POST",
+                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
+                    success:function(data)
+                    {
+                        alert("Product removed from Cart");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
         });
 
+        $(document).on('click', '#clear_cart', function(){
+            if(confirm("Are you sure you want to clear cart?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
+                    success:function(data)
+                    {
+                        alert("Your cart has been clear...");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+        });
 
     });
 
 
-
-    $("body").on("click",".remove_cheque",function(e){
-        $(this).parents('.cheque').remove();
-        //the above method will remove the user_data div
-    });
 </script>
 
 
