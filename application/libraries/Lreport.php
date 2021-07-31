@@ -928,11 +928,11 @@ class Lreport extends CI_Model
         $data = array(
             'title'             => display('category_wise_purchase_report'),
             'category_list'     => $category_list,
-            'subcategory_list'     => $subcategory_list,
-            'category_wise' => $filter_category_wise,
+            'subcategory_list'  => $subcategory_list,
+            'all_product'       => $filter_category_wise,
             'links'             => $links,
         );
-        $reportList = $CI->parser->parse('product/catalogue_search', $data, true);
+        $reportList = $CI->parser->parse('product/catalogue', $data, true);
         return $reportList;
     }
     public function filter_purchase_report_supplier_wise($supplier = null, $from_date = null, $to_date = null, $links = null) {
@@ -2094,7 +2094,7 @@ class Lreport extends CI_Model
         return $returnList;
     }
 
-// Tax report 
+// Tax report
     public function retrieve_dateWise_tax($from_date, $to_date, $links, $per_page, $page) {
         $CI = & get_instance();
         $CI->load->model('Reports');

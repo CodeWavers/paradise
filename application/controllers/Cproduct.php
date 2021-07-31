@@ -54,7 +54,7 @@ class Cproduct extends CI_Controller {
             $sub .="<select name=\"sub_cat\"   class=\"sub_cat form-control\" id=\"sub_cat\">";
             $sub .= "<option value=''>".display('select_one')."</option>";
             foreach ($sub_cat as $sub_cat) {
-                if(($sub_cat_selected) && ($sub_cat['sub_cat_id'] == $sub_cat_selected)){
+                if(!empty($sub_cat_selected) && ($sub_cat['sub_cat_id'] == $sub_cat_selected)){
                     $sub .="<option selected value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
                 }else{
                     $sub .="<option value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
@@ -171,7 +171,7 @@ class Cproduct extends CI_Controller {
             // $data['serial_no']    = $this->input->post('serial_no',TRUE);
             // $data['price']        = $price;
             // $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
-          
+
             $data['product_details'] = $this->input->post('description',TRUE);
             $data['image']        = (!empty($image_url) ? $image_url : base_url('my-assets/image/product.png'));
             $data['status']       = 1;
@@ -210,7 +210,7 @@ class Cproduct extends CI_Controller {
     public function catalogue() {
         $this->load->library('pagination');
         $this->load->model('Products');
-          $this->load->model('Categories');
+        $this->load->model('Categories');
 
         #
         #pagination starts
@@ -241,7 +241,7 @@ class Cproduct extends CI_Controller {
         $data["links"] = $this->pagination->create_links();
         $category_list = $this->Categories->category_list_product();
         $subcategory_list = $this->Categories->subcat_list();
-        
+
         #
         #pagination ends
         #
@@ -256,13 +256,124 @@ class Cproduct extends CI_Controller {
         $content                  = $this->parser->parse('product/catalogue', $data, true);
         $this->template->full_admin_html_view($content);
     }
+
     public function filter_category_wise() {
-        $CI = & get_instance();
-        $CI->load->library('lreport');
-        $category  = $this->input->post('category',TRUE);
-        $subcategory  = $this->input->post('subcategory',TRUE);
-        $content   = $this->lreport->filter_category_wise($category, $subcategory);
-        $this->template->full_admin_html_view($content);
+        $this->load->library('pagination');
+        $this->load->model('Products');
+        $this->load->model('Categories');
+
+        $post_sub_cat_id = $this->input->post('sub_cat_id', TRUE);
+        $post_cat_id = $this->input->post('category_id', TRUE);
+
+        #
+        #pagination starts
+        #
+        $config["base_url"]       = base_url('Cproduct/catalogue/');
+        $config["total_rows"]     = $this->db->count_all('product_information');
+        $config["per_page"]       = 4;
+        $config["uri_segment"]    = 3;
+        $config["num_links"]      = 1;
+        /* This Application Must Be Used With BootStrap 3 * */
+        $config['full_tag_open']  = "<ul class='pagination col-xs pull-right m-0'>";
+        $config['full_tag_close'] = "</ul>";
+        $config['num_tag_open']   = '<li>';
+        $config['num_tag_close']  = '</li>';
+        $config['cur_tag_open']   = "<li class='disabled'><li class='active'><a href='#'>";
+        $config['cur_tag_close']  = "<span class='sr-only'></span></a></li>";
+        $config['next_tag_open']  = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_tag_open']  = "<li>";
+        $config['prev_tagl_close'] = "</li>";
+        $config['first_tag_open'] = "<li>";
+        $config['first_tagl_close'] = "</li>";
+        $config['last_tag_open']  = "<li>";
+        $config['last_tagl_close'] = "</li>";
+        /* ends of bootstrap */
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $links = $this->pagination->create_links();
+
+        #
+        #pagination ends
+        #
+        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id,); //$config["per_page"], $page);
+
+
+        $html_data = '';
+        foreach ($all_product as $product) {
+            $html_data .= '<div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
+                <div class="col-sm-12 col-md-4">
+
+                    <div class="image_box" >
+                        <img class=\'zoom\' src="'.html_escape($product->image).'" id=\'img1\'  >
+                    </div>
+
+                </div>
+
+
+                <div class="col-sm-12 col-md-8">
+
+                    <div class="col-sm-6 col-md-6 " >
+
+                        <table class="table" width="100%" id="myTable">
+
+                            <tr>
+                                <th>Category</th>
+                                <td>'.html_escape($product->category_name).'</td>
+                            </tr>';
+
+                            if($product->subcat_name){
+                                $html_data .= '<tr>
+                                    <th>Sub-category</th>
+                                    <td>'.html_escape($product->subcat_name).'</td>;
+                                </tr>';
+                            }
+                            $html_data .= '<tr>
+                                <th>Product Name</th>
+                                <td>'.html_escape($product->product_name).'</td>
+                            </tr>
+
+
+                            <tr>
+                                <th>Parts No.</th>
+                                <td>'.html_escape($product->parts).'</td>
+                            </tr>
+                            <tr>
+                                <th>SKU</th>
+                                <td>'.html_escape($product->sku).'</td>
+                            </tr>
+                            <tr>
+                                <th>Unit Type</th>
+                                <td>'.html_escape($product->unit).'</td>
+                            </tr>
+                            <tr>
+                                <th>Brand</th>
+                                <td>'.html_escape($product->brand_name).'</td>
+                            </tr>
+                            <tr>
+                                <th>Model</th>
+                                <td>'.html_escape($product->model_name).'</td>
+                            </tr>
+                            <tr>
+                                <th>Associated Tag</th>
+                                <td>'.html_escape($product->tag).'</td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>';
+        }
+
+
+
+
+        // $html_data .= '</section>'.$links.'</div>';
+        $data['html_data'] = $html_data;
+        $data['links'] = $links;
+    //    echo '<pre>';print_r($data);exit();
+        echo json_encode($data);
     }
 
     //Product Update Form

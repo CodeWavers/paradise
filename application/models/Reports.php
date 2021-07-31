@@ -871,27 +871,7 @@ class reports extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-        public function filter_category_wise($category = null, $subcategory = null, $per_page = null, $page = null) {
-         $this->db->select('a.*,b.*,c.*,d.*,e.*');
-            $this->db->from('product_information a');
-            $this->db->join('product_category b', 'b.category_id = a.category_id', 'left');
-            $this->db->join('product_brand c', 'c.brand_id = a.brand_id', 'left');
-            $this->db->join('product_subcat d', 'd.sub_cat_id = a.sub_cat_id', 'left');
-            $this->db->join('product_model e', 'e.model_id = a.product_model', 'left');
 
-        if ($category) {
-            $this->db->where('b.category_id', $category);
-
-        } if ($subcategory) {
-            $this->db->where('d.sub_cat_id', $subcategory);
-        }
-        if ($category && $subcategory) {
-             $this->db->where('b.category_id', $category);
-            $this->db->where('d.sub_cat_id', $subcategory);
-        }
-        $query = $this->db->get();
-        return $query->result();
-    }
     public function filter_purchase_report_supplier_wise($supplier = null, $from_date = null, $to_date = null, $per_page = null, $page = null) {
         $dateRange = "d.purchase_date BETWEEN '$from_date' AND '$to_date'";
         $this->db->select('f.supplier_name,f.supplier_id,b.product_name, b.product_model,SUM(a.quantity) as quantity, SUM(a.total_amount) as total_amount, d.purchase_date, c.category_name');
@@ -1243,30 +1223,30 @@ class reports extends CI_Model {
     //Retrieve Monthly Sales Report
     public function monthly_sales_report() {
         $query1 = $this->db->query("
-            SELECT 
+            SELECT
                 date,
-                EXTRACT(MONTH FROM STR_TO_DATE(date,'%Y-%m-%d')) as month, 
+                EXTRACT(MONTH FROM STR_TO_DATE(date,'%Y-%m-%d')) as month,
                 COUNT(invoice_id) as total
-            FROM 
+            FROM
                 invoice
-            WHERE 
+            WHERE
                 EXTRACT(YEAR FROM STR_TO_DATE(date,'%Y-%m-%d'))  >= EXTRACT(YEAR FROM NOW())
-            GROUP BY 
+            GROUP BY
                 EXTRACT(YEAR_MONTH FROM STR_TO_DATE(date,'%Y-%m-%d'))
             ORDER BY
                 month ASC
         ")->result();
 
         $query2 = $this->db->query("
-            SELECT 
+            SELECT
                 purchase_date,
-                EXTRACT(MONTH FROM STR_TO_DATE(purchase_date,'%Y-%m-%d')) as month, 
+                EXTRACT(MONTH FROM STR_TO_DATE(purchase_date,'%Y-%m-%d')) as month,
                 COUNT(purchase_id) as total_month
-            FROM 
+            FROM
                 product_purchase
-            WHERE 
+            WHERE
                 EXTRACT(YEAR FROM STR_TO_DATE(purchase_date,'%Y-%m-%d'))  >= EXTRACT(YEAR FROM NOW())
-            GROUP BY 
+            GROUP BY
                 EXTRACT(YEAR_MONTH FROM STR_TO_DATE(purchase_date,'%Y-%m-%d'))
             ORDER BY
                 month ASC
@@ -2513,9 +2493,9 @@ class reports extends CI_Model {
 
 
     public function dashboard_query1($invoice_id,$customer_id){
-        $sql =  "SELECT (SELECT SUM(total_price) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_amount, 
-    (SELECT SUM(paid_amount) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_paid, 
-    (SELECT SUM(due_amount) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_due, 
+        $sql =  "SELECT (SELECT SUM(total_price) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_amount,
+    (SELECT SUM(paid_amount) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_paid,
+    (SELECT SUM(due_amount) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_due,
     (SELECT SUM(total_discount) FROM invoice_details a JOIN invoice b ON b.invoice_id = a.invoice_id WHERE a.invoice_id = '" . $invoice_id . "' AND b.customer_id = '" . $customer_id . "') as total_discount";
         return $sql;
 

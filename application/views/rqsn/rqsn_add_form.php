@@ -125,7 +125,7 @@
                     data:{csrf_test_name:csrf_test_name,product_id:product_id, product_name:product_name, category_name:category_name, subcat:subcat,parts:parts,sku:sku,brand:brand,model:model,quantity:quantity},
                     success:function(data)
                     {
-                        alert("Product Added into Cart");
+                        toastr.success("Requisition Added");
                         $('#cart_details').html(data);
                         $('#' + product_id).val('');
                     }

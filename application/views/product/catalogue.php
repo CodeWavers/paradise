@@ -47,47 +47,51 @@ Manage Category Start -->
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <?php echo form_open('CProduct/filter_category_wise', array('class' => 'form-inline', 'method' => 'post')) ?>
+                        <?php echo form_open('CProduct/filter_category_wise', array('class' => 'form-inline', 'method' => 'post', 'id' => 'search_form')) ?>
                         <?php
                         date_default_timezone_set("Asia/Dhaka");
                         $today = date('Y-m-d');
                         ?>
-                        <div class="col-sm-6">
-                            <div class="form-group row">
-                                <label class="" for="category"><?php echo display('category') ?></label>
-                                <select  name="category" class="form-control" id="category">
-                                    <option value="">--select one -- </option>
-                                    <?php
-                                    foreach ($category_list as $category) {
-                                        ?>
-                                        <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4" id="subCat_div">
-                            <div class="form-group row">
-                                <label for="sub_category_id" class="">Sub Category</label>
-                                <div class="col-sm-8">
-                                    <select  name="subcategory" class="form-control" id="subcategory">
-                                        <option value="">--select one -- </option>
-                                        <?php
-                                        foreach ($subcategory_list as $subcategory) {
-                                            ?>
-                                            <option value="<?php echo $subcategory['sub_cat_id']; ?>"><?php echo $subcategory['subcat_name']; ?></option>
-                                        <?php } ?>
-                                    </select>
+                         <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group row" style="width: 100%;">
+                                    <label for="category_id" class="col-sm-4 col-form-label"><?php echo display('category') ?></label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="category_id" name="category_id" onchange="select_type()" tabindex="3">
+                                            <option value=""></option>
+                                            <?php if ($category_list) { ?>
+                                                {category_list}
+                                                <option value="{category_id}">{category_name}</option>
+                                                {/category_list}
+                                            <?php } ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-sm-5 text-center" >
+                                <div id="subCat_div" style="display: none;">
+                                    <div class="form-group row" style="width: 100%;">
+                                        <label for="sub_category_id" class="col-sm-4 col-form-label">Sub Category</label>
+                                        <div class="col-sm-8">
+                                            <select name="sub_cat_id" id="sub_cat_id" class="sub_cat_id form-control text-right" tabindex="1">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <button type="submit" class="btn btn-success "><?php echo display('search') ?></button>
+                                <a  class="btn btn-warning" href="#" onclick="printDiv('purchase_div')"><?php echo display('print') ?></a>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-success"><?php echo display('search') ?></button>
-                        <a  class="btn btn-warning" href="#" onclick="printDiv('purchase_div')"><?php echo display('print') ?></a>
                         <?php echo form_close() ?>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div style="margin: 0; padding : 0;" id="main_pan">
         <?php foreach ($all_product as $product) { ?>
             <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
                 <div class="col-sm-12 col-md-4">
@@ -170,16 +174,55 @@ Manage Category Start -->
 
         <?php } ?>
 
+        </div>
+
 
 
 
     </section>
-    <?php echo $links;?>
+    <div id="page_link">
+        <?php echo $links;?>
+    </div>
 </div>
 
 
 
+
 <script>
+
+
+function select_type() {
+        var category_id = $("#category_id").val();
+
+        var base_url = "<?= base_url() ?>";
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+        var sub_cat_selected = ""
+
+
+        $.ajax( {
+            url: base_url + "Cproduct/sub_cat_by_category",
+            method: 'post',
+            data: {
+                category_id:category_id,
+                sub_cat_selected: sub_cat_selected,
+                csrf_test_name:csrf_test_name
+            },
+            cache: false,
+            success: function( data ) {
+                var obj = jQuery.parseJSON(data);
+                $('.sub_cat_id').html(obj.sub_cat);
+                // $('#cat_id').val(obj.c_id);
+                // var cat_id = $("#cat_id").val();
+
+                if(category_id == obj.c_id ){
+                    $("#subCat_div").css("display", "block");
+                }else{
+                    $("#subCat_div").css("display", "none");
+                }
+            }
+        })
+
+    }
 
 
 
@@ -199,6 +242,39 @@ Manage Category Start -->
         img.style.transition = "transform 0.25s ease";
     }
 
+    function get_data_by_cat(){
+        var cat_id = $("#category_id").val();
+        var base_url = "<?= base_url() ?>";
+        var sub_cat_id = $("#sub_cat_id");
+        var main_panel = $("#main_pan");
+    }
+
+    $(document).ready(function() {
+    "use strict";
+    var frm = $("#search_form");
+
+    frm.on('submit', function(e) {
+        e.preventDefault();
+
+        var main_panel = $("#main_pan");
+        var links = $("#page_link");
+        console.log("Hello");
+            $.ajax({
+                url: frm.attr('action'),
+                method: 'post',
+                dataType: 'json',
+                data: $(this).serialize(),
+                cache: false,
+                success: function( data ) {
+                    main_panel.html(data.html_data);
+                    links.html("");
+                },
+                error: function() {
+                    alert("Something went wrong!");
+                }
+            });
+        });
+    });
 
 </script>
 <!-- <script>
@@ -217,7 +293,7 @@ function myFunction() {
       } else {
         tr[i].style.display = "none";
       }
-    }       
+    }
   }
 }
 </script>
