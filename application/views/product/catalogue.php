@@ -1,4 +1,4 @@
-<!-- Manage Category Start -->
+Manage Category Start -->
 
 
 <script src="<?php echo base_url() ?>assets/js/pagination.min.js" type="text/javascript"></script>
@@ -43,11 +43,54 @@
             $this->session->unset_userdata('error_message');
         }
         ?>
-
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body"> 
+                        <?php echo form_open('CProduct/filter_category_wise', array('class' => 'form-inline', 'method' => 'post')) ?>
+                        <?php
+                        date_default_timezone_set("Asia/Dhaka");
+                        $today = date('Y-m-d');
+                        ?>
+                         <div class="col-sm-6">
+                                <div class="form-group row">
+                            <label class="" for="category"><?php echo display('category') ?></label>
+                            <select  name="category" class="form-control" id="category">
+                                <option value="">--select one -- </option>
+                                <?php
+                                foreach ($category_list as $category) {
+                                    ?>
+                                    <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div> 
+                      </div>
+                            <div class="col-sm-4" id="subCat_div">
+                                <div class="form-group row">
+                                    <label for="sub_category_id" class="">Sub Category</label>
+                                    <div class="col-sm-8">
+                                        <select  name="subcategory" class="form-control" id="subcategory">
+                                <option value="">--select one -- </option>
+                                <?php
+                                foreach ($subcategory_list as $subcategory) {
+                                    ?>
+                                    <option value="<?php echo $subcategory['sub_cat_id']; ?>"><?php echo $subcategory['subcat_name']; ?></option>
+                                <?php } ?>
+                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                        <button type="submit" class="btn btn-success"><?php echo display('search') ?></button>
+                        <a  class="btn btn-warning" href="#" onclick="printDiv('purchase_div')"><?php echo display('print') ?></a>
+                        <?php echo form_close() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <?php foreach ($all_product as $product) { ?>
-   <div class="row panel panel-bd lobidrag" style="margin: 5px;padding: 10px">
-    <div class="col-sm-12 col-md-3" >
+   <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
+    <div class="col-sm-12 col-md-4">
 
         <div class="image_box" >
 
@@ -56,11 +99,12 @@
 
     </div>
 
+
     <div class="col-sm-12 col-md-8">
 
         <div class="col-sm-6 col-md-6 " >
 
-          <table class="table" width="100%">
+          <table class="table" width="100%" id="myTable">
 
 
 <!--            <caption  class="resumehead">--><?php //echo display('positional_information')?><!--</caption>-->
@@ -85,11 +129,11 @@
 
                     <tr>
                         <th>Parts No.</th>
-                        <td><?php echo html_escape($row[0]['hrate']);?></td>
+                        <td><?php echo html_escape($product->parts);?></td>
                     </tr>
               <tr>
                   <th>SKU</th>
-                  <td><?php echo html_escape($row[0]['hrate']);?></td>
+                  <td><?php echo html_escape($product->sku);?></td>
               </tr>
               <tr>
                   <th>Unit Type</th>
@@ -101,11 +145,11 @@
                     </tr>
                   <tr>
                       <th>Model</th>
-                      <td><?php echo html_escape($product->product_model); ?></td>
+                      <td><?php echo html_escape($product->model_name); ?></td>
                   </tr>
               <tr>
                   <th>Associated Tag</th>
-                  <td><?php echo html_escape($row[0]['hrate']);?></td>
+                  <td><?php echo html_escape($product->tag);?></td>
               </tr>
 
 
@@ -121,19 +165,24 @@
 
 </div>
 
+
    </div>
 
         <?php } ?>
 
 
+
+
     </section>
-    <?php echo  $this->uri->segment(4);?>
     <?php echo $links;?>
 </div>
 
 
 
 <script>
+
+
+
     // Get the img object using its Id
     img = document.getElementById("img1");
     // Function to increase image size
@@ -150,12 +199,25 @@
         img.style.transition = "transform 0.25s ease";
     }
 
-    $('.lobidrag').pagination({
-        dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
-    callback: function(data, pagination) {
-        // template method of yourself
-        var html = template(data);
-        dataContainer.html(html);
-    }
-    })
+
+</script>
+<!-- <script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "<tr><th>Category</th><td><?php echo html_escape($product->category_name); ?></td></tr> <?php if($product->subcat_name):?><tr><th>Sub-category</th><td><?php echo html_escape($product->subcat_name); ?></td></tr><?php endif;?><tr><th>Product Name</th><td><?php echo html_escape($product->product_name); ?></td></tr> <tr><th>Parts No.</th><td><?php echo html_escape($product->parts);?></td></tr><tr><th>SKU</th><td><?php echo html_escape($product->sku);?></td></tr><tr><th>Unit Type</th><td><?php echo html_escape($product->unit); ?></td></tr><tr><th>Brand</th><td><?php echo html_escape($product->brand_name); ?></td></tr><tr> <th>Model</th><td><?php echo html_escape($product->model_name); ?></td> </tr> <tr><th>Associated Tag</th><td><?php echo html_escape($product->tag);?></td></tr>";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
 </script>
