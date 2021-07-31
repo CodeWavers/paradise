@@ -871,6 +871,27 @@ class reports extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+        public function filter_category_wise($category = null, $subcategory = null, $per_page = null, $page = null) {
+         $this->db->select('a.*,b.*,c.*,d.*,e.*');
+            $this->db->from('product_information a');
+            $this->db->join('product_category b', 'b.category_id = a.category_id', 'left');
+            $this->db->join('product_brand c', 'c.brand_id = a.brand_id', 'left');
+            $this->db->join('product_subcat d', 'd.sub_cat_id = a.sub_cat_id', 'left');
+            $this->db->join('product_model e', 'e.model_id = a.product_model', 'left');
+
+        if ($category) {
+            $this->db->where('b.category_id', $category);
+
+        } if ($subcategory) {
+            $this->db->where('d.sub_cat_id', $subcategory);
+        }
+        if ($category && $subcategory) {
+             $this->db->where('b.category_id', $category);
+            $this->db->where('d.sub_cat_id', $subcategory);
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function filter_purchase_report_supplier_wise($supplier = null, $from_date = null, $to_date = null, $per_page = null, $page = null) {
         $dateRange = "d.purchase_date BETWEEN '$from_date' AND '$to_date'";
         $this->db->select('f.supplier_name,f.supplier_id,b.product_name, b.product_model,SUM(a.quantity) as quantity, SUM(a.total_amount) as total_amount, d.purchase_date, c.category_name');

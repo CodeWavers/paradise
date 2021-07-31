@@ -210,6 +210,7 @@ class Cproduct extends CI_Controller {
     public function catalogue() {
         $this->load->library('pagination');
         $this->load->model('Products');
+          $this->load->model('Categories');
 
         #
         #pagination starts
@@ -238,16 +239,29 @@ class Cproduct extends CI_Controller {
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $data["links"] = $this->pagination->create_links();
+        $category_list = $this->Categories->category_list_product();
+        $subcategory_list = $this->Categories->subcat_list();
+        
         #
         #pagination ends
         #
         $data['title']            = 'Catalogue';
         $data['all_product']    = $this->Products->all_product($config["per_page"], $page);
+        $data['category_list'] = $category_list;
+        $data['subcategory_list'] = $subcategory_list;
 
 
 
       //  echo '<pre>';print_r($data);exit();
         $content                  = $this->parser->parse('product/catalogue', $data, true);
+        $this->template->full_admin_html_view($content);
+    }
+    public function filter_category_wise() {
+        $CI = & get_instance();
+        $CI->load->library('lreport');
+        $category  = $this->input->post('category',TRUE);
+        $subcategory  = $this->input->post('subcategory',TRUE);
+        $content   = $this->lreport->filter_category_wise($category, $subcategory);
         $this->template->full_admin_html_view($content);
     }
 

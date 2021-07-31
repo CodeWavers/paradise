@@ -914,6 +914,27 @@ class Lreport extends CI_Model
         $reportList = $CI->parser->parse('report/purchase_report_category_wise', $data, true);
         return $reportList;
     }
+    public function filter_category_wise($category = null, $subcategory = null, $links = null) {
+        $CI = & get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Web_settings');
+        $CI->load->library('occational');
+        $CI->load->model('Categories');
+        $category_list = $CI->Categories->category_list_product();
+        $subcategory_list = $CI->Categories->subcat_list();
+        $filter_category_wise = $CI->Reports->filter_category_wise($category, $subcategory);
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $company_info = $CI->Reports->retrieve_company();
+        $data = array(
+            'title'             => display('category_wise_purchase_report'),
+            'category_list'     => $category_list,
+            'subcategory_list'     => $subcategory_list,
+            'category_wise' => $filter_category_wise,
+            'links'             => $links,
+        );
+        $reportList = $CI->parser->parse('product/catalogue_search', $data, true);
+        return $reportList;
+    }
     public function filter_purchase_report_supplier_wise($supplier = null, $from_date = null, $to_date = null, $links = null) {
         $CI = & get_instance();
         $CI->load->model('Reports');
