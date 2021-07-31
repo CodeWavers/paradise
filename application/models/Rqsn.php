@@ -21,6 +21,14 @@ class Rqsn extends CI_Model {
         return $query->result();
     }
 
+    function cart_list()
+    {
+        return $list = $this->db->select('*')
+            ->from('rqsn_cart')
+            ->group_by('product_id')
+            ->get()->result_array();
+    }
+
 
     // outlet list
     public function outlet_list(){

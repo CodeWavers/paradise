@@ -9,6 +9,7 @@ class Cadd_rqsn extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->db->query('SET SESSION sql_mode = ""');
         $this->load->library('auth');
         $this->load->library('lrqsn');
         $this->load->library('session');
@@ -25,17 +26,45 @@ class Cadd_rqsn extends CI_Controller {
 
     function add()
     {
-        $this->load->library("cart");
-        $data = array(
-            "id"  => $_POST["product_id"],
-            "name"  => $_POST["product_name"],
-            "qty"  => $_POST["quantity"],
-            "price"  => $_POST["product_price"]
-        );
+   //     $this->load->library("cart");
 
-      //  echo '<pre>';print_r($data);exit();
-        $this->cart->insert($data); //return rowid
-        echo $this->view();
+        $product_id=$_POST["product_id"];
+        $data = array(
+            "product_id"  => $_POST["product_id"],
+            "product_name"  => $_POST["product_name"],
+            "category"  => $_POST["category_name"],
+            "subcat"  => $_POST["subcat"],
+            "parts"  => $_POST["parts"],
+            "sku"  => $_POST["sku"],
+            "brand"  => $_POST["brand"],
+            "model"  => $_POST["model"],
+            "qty"  => $_POST["quantity"],
+
+        );
+        $check_product = $this->db->select('*')->from('rqsn_cart')->where('product_id',$product_id)->get()->num_rows();
+        $cart_product = $this->db->select('*')->from('rqsn_cart')->where('product_id',$product_id)->get()->result();
+
+
+
+//        $total_qty=($cart_product->qty)+$_POST["quantity"];
+//        if($check_product > 0){
+//
+//            $this->db->set('qty',$total_qty );
+//            $this->db->where('product_id',$product_id);
+//            $this->db->update('rqsn_cart');
+//
+//        }else{
+//            $this->db->insert('rqsn_cart',$data);
+//        }
+//        $cart_list = $this->Rqsn->cart_list();
+
+
+
+     //   echo '<pre>';print_r($check_product);exit();
+      //return rowid
+      //  echo $this->view();
+        $this->db->insert('rqsn_cart',$data);
+        json_encode($data);
     }
 
     function load()
@@ -65,6 +94,9 @@ class Cadd_rqsn extends CI_Controller {
     function view()
     {
         $this->load->library("cart");
+        $this->load->model("Rqsn");
+     //   $product_id=$_POST["product_id"];
+        $cart_list = $this->Rqsn->cart_list();
         $output = '';
         $output .= '
 
@@ -88,21 +120,24 @@ class Cadd_rqsn extends CI_Controller {
     </tr>
 
   ';
+
+
         $count = 0;
-        foreach($this->cart->contents() as $items)
+        foreach($cart_list as $items)
         {
+            $total_quantity = $this->db->select('sum(qty) as total_qty')->from('rqsn_cart')->where('product_id',$items["product_id"])->get()->row();
             $count++;
             $output .= '
    <tr> 
     <td>'.$count.'</td>
-    <td>'.$items["category_name"].'</td>
-    <td>'.$items["sub_cat_name"].'</td>
-    <td>'.$items["name"].'</td>
+    <td>'.$items["category"].'</td>
+    <td>'.$items["subcat"].'</td> 
+    <td>'.$items["product_name"].'</td>
     <td>'.$items["parts"].'</td>
     <td>'.$items["sku"].'</td>
     <td>'.$items["brand"].'</td>
     <td>'.$items["model"].'</td>
-    <td>'.$items["qty"].'</td>
+    <td>'.$total_quantity->total_qty.'</td>
     <td><button type="button" name="remove" class="btn btn-danger btn-xs remove_inventory" id="'.$items["rowid"].'">Remove</button></td>
    </tr>
    ';
