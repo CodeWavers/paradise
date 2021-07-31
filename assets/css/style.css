@@ -786,7 +786,6 @@ font-variant: small-caps
 
 
 .zoom {
-	transition: transform .2s; /* Animation */
 	width: 150px;
 	height: 150px;
 	margin: 0 auto;
@@ -798,6 +797,29 @@ font-variant: small-caps
     border: 1px solid #37476760;
     border-radius: 3px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50)
+}
+
+.img-zoom{
+	width: 80px;
+	height: auto;
+	margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.img-zoom:hover {
+    background-color: beige;
+	transform: scale(4);
+    border: 1px solid #37476760;
+    border-radius: 3px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50)
+}
+
+#add_rqsn_table > thead > tr > th{
+    text-align: center;
+}
+
+#add_rqsn_table > tbody > tr > td{
+    vertical-align: middle;
 }
 
 @-webkit-keyframes container-rotate {
