@@ -112,6 +112,7 @@ class Rqsn extends CI_Model {
             'rqsn_no'=> $this->input->post('rqsn_no',true),
             'from_id'=> $this->input->post('rqsn_for',true),
             'to_id'  => 'HK7TGDT69VFMXB7',
+            'rqsn_customer_name' => $this->input->post('customer_name',true),
             'status'   => 1,
         );
 //        $datarq = array(
@@ -953,6 +954,26 @@ class Rqsn extends CI_Model {
             ->join('outlet_warehouse c','c.outlet_id=a.from_id')
             ->join('product_information d','d.product_id=b.product_id')
             ->where('b.status',1)
+            ->group_by('b.rqsn_id')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function rqsn_details_data_by_rqsn_id($rqsn_id)
+    {
+        $records= $this->db->select('a.*, b.*, c.*, d.*, e.category_name,f.subcat_name, g.brand_name, h.model_name')
+            ->from('rqsn a')
+            ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
+            ->join('outlet_warehouse c','c.outlet_id=a.from_id')
+            ->join('product_information d','d.product_id=b.product_id')
+            ->join('product_category e', 'e.category_id = d.category_id')
+            ->join('product_subcat f', 'f.sub_cat_id = d.sub_cat_id')
+            ->join('product_brand g', 'g.brand_id = d.brand_id')
+            ->join('product_model h', 'h.model_id = d.product_model')
+            ->where('b.status',1)
+            ->where('b.rqsn_id', $rqsn_id)
             ->get()
             ->result_array();
 

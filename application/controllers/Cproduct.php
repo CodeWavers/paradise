@@ -127,8 +127,8 @@ class Cproduct extends CI_Controller {
             $config['source_image']   = $image;
             $config['create_thumb']   = false;
             $config['maintain_ratio'] = TRUE;
-            $config['width']          = 100;
-            $config['height']         = 100;
+            $config['width']          = 500;
+            $config['height']         = 500;
             $this->load->library('image_lib', $config);
             $this->image_lib->resize();
             $image_url = base_url() . $image;

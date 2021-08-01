@@ -71,15 +71,20 @@
                                 <td><?php echo $rqsn_details['rqsn_no']?> </td>
                                 <td><?php echo $rqsn_details['outlet_name']?> </td>
                                 <td><?php echo $rqsn_details['date']?> </td>
-                                <td><?php echo $rqsn_details['product_name']?> </td>
                                 <td>
-                                    <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
+                                    <a href="<?= base_url().'Crqsn/edit_approve_rqsn/'.$rqsn_details['rqsn_id']?>">
+                                        <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
+                                    </a>
                                 </td>
                             </tr>
                             <?php } ?>
                         </tbody>
                     </table>
-
+                    <div class="form-group row">
+                            <div class="col-sm-6">
+                                 <input type="submit" value="Save as Draft" name="" class="btn btn-large btn-warning" id="" >
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>

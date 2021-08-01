@@ -258,7 +258,6 @@ function select_type() {
 
         var main_panel = $("#main_pan");
         var links = $("#page_link");
-        console.log("Hello");
             $.ajax({
                 url: frm.attr('action'),
                 method: 'post',

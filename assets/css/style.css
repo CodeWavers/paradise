@@ -808,7 +808,7 @@ font-variant: small-caps
 
 .img-zoom:hover {
     background-color: beige;
-	transform: scale(4);
+	transform: scale(2);
     border: 1px solid #37476760;
     border-radius: 3px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50)

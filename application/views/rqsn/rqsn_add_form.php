@@ -58,9 +58,9 @@
                                 <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
+                                        <th><?php echo display('image') ?>s</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
-                                        <th><?php echo display('image') ?>s</th>
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
                                         <th>Parts No.</th>
                                         <th>SKU</th>
@@ -75,9 +75,9 @@
                                 <?php foreach ($all_product as $row) { ?>
                                     <tr class="text-center">
                                         <td><?php echo $row['sl']?> </td>
+                                        <td class="text-center"><img src="<?php echo $row['image']?>" class="img-zoom" alt="Product Photo"></td>
                                         <td><?php echo $row['category_name']?></td>
                                         <td><?php echo $row['subcat_name']?></td>
-                                        <td class="text-center"><img src="<?php echo $row['image']?>" class="img-zoom" alt="Product Photo"></td>
                                         <td><?php echo $row['product_name']?></td>
                                         <td><?php echo $row['parts']?></td>
                                         <td><?php echo $row['sku']?></td>
