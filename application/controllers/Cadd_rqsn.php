@@ -76,18 +76,19 @@ class Cadd_rqsn extends CI_Controller {
     {
         $this->load->library("cart");
         $row_id = $_POST["row_id"];
-        $data = array(
-            'rowid'  => $row_id,
-            'qty'  => 0
-        );
-        $this->cart->update($data);
+//        $data = array(
+//            'rowid'  => $row_id,
+//            'qty'  => 0
+//        );
+        $this->db->where('product_id', $row_id);
+        $this->db->delete('rqsn_cart');
         echo $this->view();
     }
 
     function clear()
     {
         $this->load->library("cart");
-        $this->cart->destroy();
+        $this->db->empty_table('rqsn_cart');
         echo $this->view();
     }
 
@@ -129,16 +130,19 @@ class Cadd_rqsn extends CI_Controller {
             $count++;
             $output .= '
    <tr>
-    <td><input type="text" class="form-control" value="'.$count.'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["category"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["subcat"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["product_name"].'" id="product_'.$items["product_id"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["parts"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["sku"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["brand"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$items["model"].'" readonly></td>
-    <td><input type="text" class="form-control" value="'.$total_quantity->total_qty.'" readonly></td>
-    <td><button type="button" name="remove" class="btn btn-danger btn-xs remove_inventory" id="'.$items["rowid"].'">Remove</button></td>
+    <td><input   type="text" class="form-control" value="'.$count.'" readonly></td>
+    <td><input name="" type="text" class="form-control" value="'.$items["category"].'" readonly></td>
+    <td><input name="" type="text" class="form-control" value="'.$items["subcat"].'" readonly></td>
+    <td>
+    <input name="" type="text" class="form-control" value="'.$items["product_name"].'"  readonly>
+    <input name="product_id[]" type="text" class="form-control" value="'.$items["product_id"].'"  readonly>
+    </td>
+    <td><input name="" type="text" class="form-control" value="'.$items["parts"].'" readonly></td>
+    <td><input name="" type="text" class="form-control" value="'.$items["sku"].'" readonly></td>
+    <td><input name="" type="text" class="form-control" value="'.$items["brand"].'" readonly></td>
+    <td><input name="" type="text" class="form-control" value="'.$items["model"].'" readonly></td>
+    <td><input name="product_quantity[]" type="text" class="form-control" value="'.$total_quantity->total_qty.'" ></td>
+    <td><button type="button" name="remove" class="btn btn-danger btn-xs remove_inventory" id="'.$items["product_id"].'">Remove</button></td>
    </tr>
    ';
         }

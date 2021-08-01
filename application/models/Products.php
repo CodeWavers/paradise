@@ -102,7 +102,7 @@ class Products extends CI_Model {
          $this->db->from('product_information a');
          $this->db->join('supplier_product c','c.product_id = a.product_id','left');
          $this->db->join('product_category x','x.category_id = a.category_id','left');
-        $this->db->join('product_type d','d.ptype_id = a.ptype_id','left');
+      //  $this->db->join('product_type d','d.ptype_id = a.ptype_id','left');
         $this->db->join('product_subcat e','a.sub_cat_id = e.sub_cat_id','left');
          $this->db->join('supplier_information m','m.supplier_id = c.supplier_id','left');
           if($searchValue != '')
@@ -115,7 +115,7 @@ class Products extends CI_Model {
          $this->db->from('product_information a');
          $this->db->join('supplier_product c','c.product_id = a.product_id','left');
         $this->db->join('product_category x','x.category_id = a.category_id','left');
-        $this->db->join('product_type d','d.ptype_id = a.ptype_id','left');
+        $this->db->join('product_model d','d.model_id = a.product_model','left');
         $this->db->join('product_subcat e','a.sub_cat_id = e.sub_cat_id','left');
          $this->db->join('supplier_information m','m.supplier_id = c.supplier_id','left');
          if($searchValue != '')
@@ -133,13 +133,13 @@ class Products extends CI_Model {
                 c.supplier_id,
                 m.supplier_name,
               x.category_name,
-              d.ptype_name,
+             d.model_name,
               e.subcat_name
                 ");
          $this->db->from('product_information a');
          $this->db->join('supplier_product c','c.product_id = a.product_id','left');
          $this->db->join('product_category x','x.category_id = a.category_id','left');
-         $this->db->join('product_type d','d.ptype_id = a.ptype_id','left');
+         $this->db->join('product_model d','d.model_id = a.product_model','left');
          $this->db->join('product_subcat e','a.sub_cat_id = e.sub_cat_id','left');
          $this->db->join('supplier_information m','m.supplier_id = c.supplier_id','left');
          if($searchValue != '')
@@ -175,8 +175,8 @@ class Products extends CI_Model {
                 'product_name'     =>$product_name,
                 'product_category'    =>$record->category_name,
                 'subcat_name'    =>$record->subcat_name,
-                'product_type'    =>$record->ptype_name,
-                'product_model'    =>$record->product_model,
+                'product_type'    =>$record->ptype_id,
+                'product_model'    =>$record->model_name,
                 'supplier_name'    =>$supplier,
                 'price'            =>$record->price,
                 'purchase_p'       =>$record->supplier_price,

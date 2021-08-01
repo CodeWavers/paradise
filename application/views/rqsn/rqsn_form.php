@@ -150,9 +150,17 @@
 
                         <br>
 
+
                             <div id="cart_details">
                                 <h3 align="center">Requisition  is Empty</h3>
                             </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+<!--                                <input type="submit" id="add_invoice" class="btn btn-success" name="add-invoice" value="Finalize" tabindex="17"/>-->
+                                 <input type="submit" value="Save as Draft" name="" class="btn btn-large btn-warning" id="" >
+                            </div>
+                        </div>
+
 
                         <?php echo form_close()?>
                     </div>
@@ -276,13 +284,13 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        setInterval(function(){
+        // setInterval(function(){
+        //
+        //
+        //
+        // }, 1000);
 
-            $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
-
-        }, 1000);
-
-
+        $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
 
         $(document).on('click', '.remove_inventory', function(){
             var row_id = $(this).attr("id");
@@ -295,7 +303,7 @@
                     data:{csrf_test_name:csrf_test_name,row_id:row_id},
                     success:function(data)
                     {
-                        toastr.error("Product removed from Cart!");
+                        toastr.success("Product removed from Cart!");
                         $('#cart_details').html(data);
                     }
                 });
@@ -313,7 +321,7 @@
                     url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
                     success:function(data)
                     {
-                        toastr.warning("Your cart has been clear...");
+                        toastr.success("Your cart has been clear...");
                         $('#cart_details').html(data);
                     }
                 });
