@@ -27,7 +27,7 @@ class Ccwarehouse extends CI_Controller {
     public function manage_category() {
         $content = $this->lwarehouse->category_list();
         $this->template->full_admin_html_view($content);
-        
+
     }
 
     //Insert category and upload
@@ -44,9 +44,9 @@ class Ccwarehouse extends CI_Controller {
 
         if ($result == TRUE) {
             $this->session->set_userdata(array('message' => display('successfully_added')));
-            
+
                 redirect(base_url('Ccwarehouse'));
-            
+
         } else {
             $this->session->set_userdata(array('error_message' => display('already_inserted')));
             redirect(base_url('Ccwarehouse'));
@@ -85,7 +85,7 @@ class Ccwarehouse extends CI_Controller {
     //csv upload
         function uploadCsv_category()
     {
-          $filename = $_FILES['upload_csv_file']['name'];  
+          $filename = $_FILES['upload_csv_file']['name'];
         $ext = end(explode('.', $filename));
         $ext = substr(strrchr($filename, '.'), 1);
         if($ext == 'csv'){
@@ -94,15 +94,15 @@ class Ccwarehouse extends CI_Controller {
 
         if (($handle = fopen($_FILES['upload_csv_file']['tmp_name'], 'r')) !== FALSE)
         {
-  
+
          while($csv_line = fgetcsv($fp,1024)){
                 //keep this if condition if you want to remove the first row
                 for($i = 0, $j = count($csv_line); $i < $j; $i++)
-                {                  
+                {
                    $insert_csv = array();
                    $insert_csv['category_name'] = (!empty($csv_line[0])?$csv_line[0]:null);
                 }
-             
+
                 $categorydata = array(
                     'warehouse_id'      => $this->auth->generator(15),
                     'central_warehouse'    => $insert_csv['central_warehouse'],
@@ -112,18 +112,18 @@ class Ccwarehouse extends CI_Controller {
 
                 if ($count > 0) {
                     $this->db->insert('product_category',$categorydata);
-                    }  
-                $count++; 
+                    }
+                $count++;
             }
-            
-        }              
+
+        }
         $this->session->set_userdata(array('message'=>display('successfully_added')));
         redirect(base_url('Ccategory'));
          }else{
         $this->session->set_userdata(array('error_message'=>'Please Import Only Csv File'));
         redirect(base_url('Ccategory'));
     }
-    
+
     }
     // category pdf download
         public function category_downloadpdf(){
@@ -131,7 +131,7 @@ class Ccwarehouse extends CI_Controller {
         $CI->load->model('Warehouse');
         $CI->load->model('Web_settings');
         $CI->load->model('Invoices');
-        $CI->load->library('pdfgenerator'); 
+        $CI->load->library('pdfgenerator');
         $category_list = $CI->Warehouse->category_list();
         if (!empty($category_list)) {
             $i = 0;
@@ -185,7 +185,7 @@ class Ccwarehouse extends CI_Controller {
         $data = array(
             'outlet_id'   => $branch_id,
             'warehouse_id'   => $courier_id,
-            'user_id'   => $user_id,
+            'customer_id' => $user_id,
             'outlet_name' => $this->input->post('category_name',TRUE),
             'status'        => 1
         );
@@ -318,7 +318,3 @@ class Ccwarehouse extends CI_Controller {
     }
 
 }
-
-
-
-

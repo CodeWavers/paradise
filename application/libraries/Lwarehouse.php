@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Lwarehouse {
 
-    //Retrieve  category List	
+    //Retrieve  category List
     public function category_list() {
         $CI = & get_instance();
         $CI->load->model('Warehouse');
@@ -95,8 +95,9 @@ class Lwarehouse {
     public function branch_add_form() {
         $CI = & get_instance();
         $CI->load->model('Warehouse');
+        $CI->load->model('Customers');
         $warehouse_list = $CI->Warehouse->get_courier_list();
-        $users_list = $CI->Warehouse->get_user_list();
+        $users_list = $CI->Customers->customer_list();
         $category_list = $CI->Warehouse->branch_list();
         $i = 0;
         $total = 0;

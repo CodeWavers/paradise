@@ -121,9 +121,9 @@
                                     <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Requisition For : </label>
                                     <div class="col-sm-9">
                                         <select name="rqsn_for" id="rqsn_for" class="form-control">
-                                            {customers}
-                                                <option value="{customer_id}">{customer_name}</option>
-                                            {/customers}
+                                            {outlet_list}
+                                                <option value="{outlet_id}">{outlet_name}</option>
+                                            {/outlet_list}
                                         </select>
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@
                     data:{csrf_test_name:csrf_test_name,row_id:row_id},
                     success:function(data)
                     {
-                        alert("Product removed from Cart");
+                        toastr.error("Product removed from Cart!");
                         $('#cart_details').html(data);
                     }
                 });
@@ -313,7 +313,7 @@
                     url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
                     success:function(data)
                     {
-                        alert("Your cart has been clear...");
+                        toastr.warning("Your cart has been clear...");
                         $('#cart_details').html(data);
                     }
                 });
@@ -325,11 +325,6 @@
         });
 
     });
-
-
-</script>
-
-
 
 
 </script>

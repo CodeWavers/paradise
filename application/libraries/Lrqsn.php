@@ -42,7 +42,8 @@ class Lrqsn {
         $CI->load->model('Rqsn');
         $CI->load->model('Web_settings');
         $CI->load->model('Customers');
-        $outlet_list    = $CI->Rqsn->outlet_list();
+        $CI->load->model('Warehouse');
+        $outlet_list    = $CI->Warehouse->branch_list();
         $outlet_list_to    = $CI->Rqsn->outlet_list_to();
         $customers = $CI->Customers->customer_list();
         $cw_list    = $CI->Rqsn->cw_list();

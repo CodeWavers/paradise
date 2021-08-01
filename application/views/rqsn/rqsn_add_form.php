@@ -60,12 +60,12 @@
                                         <th><?php echo display('sl') ?></th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
+                                        <th><?php echo display('image') ?>s</th>
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
                                         <th>Parts No.</th>
                                         <th>SKU</th>
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
-                                        <th><?php echo display('image') ?>s</th>
                                         <th class="col-md-1">Quantity</th>
                                         <th><?php echo display('action') ?></th>
                                     </tr>
@@ -77,14 +77,15 @@
                                         <td><?php echo $row['sl']?> </td>
                                         <td><?php echo $row['category_name']?></td>
                                         <td><?php echo $row['subcat_name']?></td>
+                                        <td class="text-center"><img src="<?php echo $row['image']?>" class="img-zoom" alt="Product Photo"></td>
                                         <td><?php echo $row['product_name']?></td>
                                         <td><?php echo $row['parts']?></td>
                                         <td><?php echo $row['sku']?></td>
                                         <td><?php echo $row['brand_name']?></td>
                                         <td><?php echo $row['product_model']?></td>
-                                        <td class="text-center"><img src="<?php echo $row['image']?>" class="img-zoom" alt="Product Photo"></td>
                                         <td><input type="text" class="form-control quantity" name="quantity" id="<?php echo $row['product_id']?>"></td>
-                                        <td><button type="button" name="add_cart" class="btn btn-success add_cart" data-category="<?php echo $row['category_name']?>" data_subcat="<?php echo $row['subcat_name']?>" data-productname="<?php echo $row['product_name']?>" data-parts="<?php echo $row['parts']?>" data-sku="<?php echo $row['sku']?>" data-brand="<?php echo $row['brand_name']?>" data-model="<?php echo $row['product_model']?>" data-productid="<?php echo $row['product_id']?>"</button>Add</td>
+                                        <td><button type="button" id="add_btn<?=$row['sl']?>" name="add_cart" title="Add to requisition" class="btn btn-success add_cart" style="border:none; outline:none" data-sl="<?php echo $row['sl']?>" data-category="<?php echo $row['category_name']?>" data_subcat="<?php echo $row['subcat_name']?>" data-productname="<?php echo $row['product_name']?>" data-parts="<?php echo $row['parts']?>" data-sku="<?php echo $row['sku']?>" data-brand="<?php echo $row['brand_name']?>" data-model="<?php echo $row['product_model']?>" data-productid="<?php echo $row['product_id']?>"><i class="fa fa-plus" aria-hidden="true"></i>
+</button></td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
@@ -112,6 +113,8 @@
             var brand = $(this).data("brand");
             var model = $(this).data("model");
             var quantity = $('#' + product_id).val();
+            var sl = $(this).data("sl");
+            var btn = $("#add_btn" + sl);
             // console.log(product_id)
             // console.log(product_name)
             // console.log(category_name)
@@ -128,6 +131,17 @@
                         toastr.success("Requisition Added");
                         $('#cart_details').html(data);
                         $('#' + product_id).val('');
+                        // $('.add_cart').attr()
+                        btn.html('<i class="fa fa-check"></i>');
+                        btn.removeClass("btn-success");
+                        btn.addClass("btn-warning");
+                        setTimeout(function(){
+                            btn.html('<i class="fa fa-plus"></i>')
+                            btn.removeClass("btn-warning");
+                            btn.addClass("btn-success");
+                        },
+                        4000
+                        );
                     }
                     // error:function (e) {
                     //
@@ -155,7 +169,7 @@
                     data:{csrf_test_name:csrf_test_name,row_id:row_id},
                     success:function(data)
                     {
-                        alert("Product removed from Cart");
+                        toastr.error("Product removed from Cart");
                         $('#cart_details').html(data);
                     }
                 });
@@ -173,7 +187,7 @@
                     url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
                     success:function(data)
                     {
-                        alert("Your cart has been clear...");
+                        toastr.warning("Your cart has been cleared.");
                         $('#cart_details').html(data);
                     }
                 });

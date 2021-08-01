@@ -24,9 +24,9 @@
         ?>
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $message ?>                    
+            <?php echo $message ?>
         </div>
-        <?php 
+        <?php
             $this->session->unset_userdata('message');
             }
             $error_message = $this->session->userdata('error_message');
@@ -34,9 +34,9 @@
         ?>
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $error_message ?>                    
+            <?php echo $error_message ?>
         </div>
-        <?php 
+        <?php
             $this->session->unset_userdata('error_message');
             }
         ?>
@@ -78,7 +78,7 @@
                                 <input class="form-control" name ="category_name" id="category_name" type="text" placeholder="Outlet Name"  required="" value="{outlet_name}">
                             </div>
                         </div>
-                      
+
                         <input type="hidden" value="{outlet_id}" name="courier_id">
 
                         <div class="form-group row">
@@ -95,6 +95,3 @@
     </section>
 </div>
 <!-- Edit customer end -->
-
-
-

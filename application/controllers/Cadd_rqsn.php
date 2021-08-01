@@ -107,16 +107,16 @@ class Cadd_rqsn extends CI_Controller {
    <br />
    <table class="table table-bordered table-hover">
     <tr>
-     <th width="15%">SL No</th>
+     <th width="5%">SL No</th>
      <th width="15%">Category</th>
      <th width="15%">Sub-category</th>
-     <th width="40%">Product Name</th>
-     <th width="15%">Parts No</th>
-     <th width="15%">SKU</th>
-     <th width="15%">Brand</th>
-     <th width="15%">Model</th>
-     <th width="15%">Required Quantity</th>
-     <th width="15%">Action</th>
+     <th width="20%">Product Name</th>
+     <th width="8%">Parts No</th>
+     <th width="7%">SKU</th>
+     <th width="10%">Brand</th>
+     <th width="10%">Model</th>
+     <th width="5%">Required Quantity</th>
+     <th width="5%">Action</th>
     </tr>
 
   ';
@@ -128,16 +128,16 @@ class Cadd_rqsn extends CI_Controller {
             $total_quantity = $this->db->select('sum(qty) as total_qty')->from('rqsn_cart')->where('product_id',$items["product_id"])->get()->row();
             $count++;
             $output .= '
-   <tr> 
-    <td>'.$count.'</td>
-    <td>'.$items["category"].'</td>
-    <td>'.$items["subcat"].'</td> 
-    <td>'.$items["product_name"].'</td>
-    <td>'.$items["parts"].'</td>
-    <td>'.$items["sku"].'</td>
-    <td>'.$items["brand"].'</td>
-    <td>'.$items["model"].'</td>
-    <td>'.$total_quantity->total_qty.'</td>
+   <tr>
+    <td><input type="text" class="form-control" value="'.$count.'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["category"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["subcat"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["product_name"].'" id="product_'.$items["product_id"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["parts"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["sku"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["brand"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$items["model"].'" readonly></td>
+    <td><input type="text" class="form-control" value="'.$total_quantity->total_qty.'" readonly></td>
     <td><button type="button" name="remove" class="btn btn-danger btn-xs remove_inventory" id="'.$items["rowid"].'">Remove</button></td>
    </tr>
    ';

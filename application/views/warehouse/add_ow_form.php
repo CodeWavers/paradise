@@ -16,7 +16,7 @@
     </section>
 
     <section class="content">
-   
+
         <!-- Alert Message -->
         <?php
         $message = $this->session->userdata('message');
@@ -24,7 +24,7 @@
             ?>
             <div class="alert alert-info alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $message ?>                    
+                <?php echo $message ?>
             </div>
             <?php
             $this->session->unset_userdata('message');
@@ -34,14 +34,14 @@
             ?>
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $error_message ?>                    
+                <?php echo $error_message ?>
             </div>
             <?php
             $this->session->unset_userdata('error_message');
         }
         ?>
 
-      
+
 
         <!-- New customer -->
         <div class="row">
@@ -52,7 +52,7 @@
                             <h4>Outlet Name</h4>
                         </div>
                     </div>
-                   
+
                     <div class="panel-body category">
 <ul class="nav nav-tabs">
  <li class="active"><a data-toggle="tab" href="#categoryList"><i class="ti-align-justify"> </i> Manage Branch</a></li>
@@ -68,7 +68,7 @@
                             <table id="dataTableExample3" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
-                                      
+
                                         <th class="text-center">Central Warehouse Name</th>
                                         <th class="text-center">Outlet Name</th>
                                         <th class="text-center">User</th>
@@ -81,10 +81,10 @@
                                         ?>
                                         {category_list}
                                         <tr>
-                                           
+
                                             <td class="text-center">{central_warehouse}</td>
                                             <td class="text-center">{outlet_name}</td>
-                                            <td class="text-center">{first_name} {last_name}</td>
+                                            <td class="text-center">{customer_name}</td>
                                             <td>
 
                                     <center>
@@ -133,7 +133,7 @@
                  <div class="col-sm-6">
                      <select class="form-control" name="user_id" tabindex="3">
                          {users_list}
-                         <option value="{user_id}">{first_name}{last_name}</option>
+                         <option value="{customer_id}">{customer_name}</option>
                          {/users_list}
 
 
@@ -153,7 +153,7 @@
                         </div>
 
 
-                       
+
                          <?php echo form_close() ?>
                      </div>
   </div>
@@ -161,14 +161,14 @@
       <div class="row cat-tabcontent">
      <div class="panel">
                     <div class="panel-heading">
-                        
-                           
-                       
+
+
+
                     </div>
-                    
+
                     <div class="panel-body">
                          <div><a href="<?php echo base_url('assets/data/csv/category_csv_sample.csv') ?>" class="btn btn-primary pull-right"><i class="fa fa-download"></i><?php echo display('download_sample_file')?> </a> </div>
-                       
+
                       <?php echo form_open_multipart('Ccwarehouse/uploadCsv_category',array('class' => 'form-vertical', 'id' => 'validate','name' => 'insert_category'))?>
                             <div class="col-sm-12">
                                 <div class="form-group row">
@@ -181,8 +181,8 @@
                             </div>
                                 </div>
                             </div>
-                        
-                     
+
+
                           <?php echo form_close()?>
                     </div>
                     </div>
@@ -191,15 +191,11 @@
   </div>
 
                     </div>
-                   
+
                 </div>
             </div>
-  
+
         </div>
     </section>
 </div>
 <!-- Add new customer end -->
-
-
-
-
