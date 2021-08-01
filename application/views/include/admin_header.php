@@ -608,6 +608,14 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                     </a>
                     <ul class="treeview-menu">
 
+                        <?php if($this->permission1->method('aprove_rqsn_edit','create')->access()){ ?>
+                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("aprove_rqsn_edit")){
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit') ?>">Approve Requisition</a></li>
+                        <?php }?>
+
                         <?php if($this->permission1->method('aprove_rqsn','create')->access()){ ?>
                             <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")){
                                 echo "active";

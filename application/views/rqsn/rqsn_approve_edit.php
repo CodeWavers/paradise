@@ -4,12 +4,12 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Outlet Received </h1>
-            <small>Outlet Received</small>
+            <h1>Approve Requisition</h1>
+            <small>Requisition</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
-                <li><a href="#">Outlet Received </a></li>
-                <li class="active">Outlet Received </li>
+                <li><a href="#">Approve Requisition</a></li>
+                <li class="active">Approve Requisition</li>
             </ol>
         </div>
     </section>
@@ -56,43 +56,24 @@
                         <thead>
                             <tr>
                                 <th><?php echo display('sl_no') ?></th>
-                                <th>From</th>
-                                <th>To</th>
-                                 <th><?php echo display('date') ?></th>
-                                 <th>Product Name</th>
-                                 <th style="width: 70px">Transferred Quantity</th>
-                                <th>Unit</th>
-                                <th>Details</th>
-
+                                <th>Requisition No.</th>
+                                <th>Outlet Name</th>
+                                <th><?php echo display('date') ?></th>
                                 <th><?php echo display('action') ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($t)) ?>
+                            <?php if (!empty($rqsn_details)) ?>
                             <?php $sl = 1; ?>
-                            <?php foreach ($t as $approve) { ?>
+                            <?php foreach ($rqsn_details as $rqsn_details) { ?>
                             <tr>
                                 <td><?php echo $sl++; ?></td>
-
-
-                                <td>  <?php if( $approve['to_id']=='HK7TGDT69VFMXB7'){ echo html_escape($approve['cw']);} else echo html_escape($approve['from']); ?></td>
-                                <td><?php echo html_escape($approve['to']); ?></td>
-                                <td><?php echo html_escape($approve['date']); ?></td>
-                                <td><?php echo html_escape($approve['product_name']); ?></td>
-                                <td id="r_qty"><?php echo $approve['a_qty']; ?></td>
-                                <td><?php echo html_escape($approve['unit']); ?></td>
-                                <td><?php echo html_escape($approve['details']); ?></td>
-                             <td>
-
-                                 <?php $id=$approve['rqsn_detail_id'] ?>
-                                 <a id="approve"  href="" onclick="this.href='<?php echo base_url("Crqsn/isreceive/$id/active/") ?>'" class="btn btn-info" data-toggle="tooltip" data-placement="right" title=""><i class="fa fa-hand-rock-o"></i></a>
-<!--                                --><?php //if($this->permission1->method('aprove_v','update')->access()){ ?>
-<!--                                <a href="" id="editData" class="btn btn-info btn-sm" title="Update"><i class="fa fa-edit"></i></a>-->
-<!--                            --><?php //}?>
-                            <?php if($this->permission1->method('aprove_v','delete')->access()){ ?>
-                                <a href="<?php echo base_url("Crqsn/outlet_rqsn_delete/$id/") ?>" class="btn btn-danger" onclick="return confirm('Are You Sure?')" title="delete"><i class="fa fa-trash"></i></a>
-                            <?php }?>
-
+                                <td><?php echo $rqsn_details['rqsn_no']?> </td>
+                                <td><?php echo $rqsn_details['outlet_name']?> </td>
+                                <td><?php echo $rqsn_details['date']?> </td>
+                                <td><?php echo $rqsn_details['product_name']?> </td>
+                                <td>
+                                    <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -110,19 +91,36 @@
 
 <script type="text/javascript">
 
+        // function myFunction(){
+        //     var x = $('.a_qty').val();
+        //     var y=$('#r_qty').html();
+        //     var z=parseInt(y);
+        //     if (x > z){
+        //         var msg = "You can not transfer more than requested " + z + " Items";
+        //         alert(msg);
+        //     }
+        // }
 
 
     $(document).ready(function(){
-        var x = $('#a_qty').val();
-        var y=$('#r_qty').html();
-        var z=parseInt(y);
 
 
+       // console.log(data_id);
         $('.a_qty').on('change', function() {
+
             var qty=this.value;
+            var y= $(this).closest('tr').find('.r_qty').html()
+            var s= $(this).closest('tr').find('.s_qty').html()
+            var z=parseInt(y);
+            var s_qty=parseInt(s);
+          //  console.log( qty);
             if (qty > z){
-                var msg = "You can not transfer more than " + y + " Items";
+                var msg = "You can not transfer more than requested " + z + " Items";
                              alert(msg);
+            }
+            if (qty > s_qty){
+                var msg = "You can transfer maximum " + s_qty + " Items";
+                alert(msg);
             }
         });
     });

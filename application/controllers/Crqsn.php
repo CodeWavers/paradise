@@ -398,4 +398,13 @@ class Crqsn extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function aprove_rqsn_edit()
+    {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+
+        $content = $this->lrqsn->approve_rqsn_edit();
+        $this->template->full_admin_html_view($content);
+    }
 }

@@ -916,7 +916,7 @@ class Rqsn extends CI_Model {
 
 
 
-    // customer information 
+    // customer information
     public function customer_info($customer_id){
         return $this->db->select('*')
             ->from('customer_information')
@@ -942,5 +942,19 @@ class Rqsn extends CI_Model {
         }
         return $list;
 
+    }
+
+    public function rqsn_details_data()
+    {
+        $records= $this->db->select('a.*, b.*, c.*, d.*')
+            ->from('rqsn a')
+            ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
+            ->join('outlet_warehouse c','c.outlet_id=a.from_id')
+            ->join('product_information d','d.product_id=b.product_id')
+            ->where('b.status',1)
+            ->get()
+            ->result_array();
+
+        return $records;
     }
 }

@@ -93,7 +93,29 @@ class Lrqsn {
         return $invoiceForm;
     }
 
+    public function approve_rqsn_edit()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
 
+        $rqsn_details = $CI->Rqsn->rqsn_details_data();
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'Approve Requisition',
+            'rqsn_details'      => $rqsn_details,
+        );
+
+        return $CI->parser->parse('rqsn/rqsn_approve_edit', $data, true);
+
+    }
 
 }
 
