@@ -97,7 +97,8 @@ class Lwarehouse {
         $CI->load->model('Warehouse');
         $CI->load->model('Customers');
         $warehouse_list = $CI->Warehouse->get_courier_list();
-        $users_list = $CI->Customers->customer_list();
+        $users_list = $CI->Warehouse->get_user_list();
+        $customer_list = $CI->Customers->customer_list();
         $category_list = $CI->Warehouse->branch_list();
         $i = 0;
         $total = 0;
@@ -112,6 +113,7 @@ class Lwarehouse {
             'category_list' => $category_list,
             'warehouse_list' => $warehouse_list,
             'users_list' => $users_list,
+            'customer_list' => $customer_list
         );
         //echo '<pre>';print_r($data);exit();
         $categoryForm = $CI->parser->parse('warehouse/add_ow_form', $data, true);

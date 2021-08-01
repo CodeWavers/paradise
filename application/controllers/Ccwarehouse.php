@@ -14,6 +14,7 @@ class Ccwarehouse extends CI_Controller {
         $this->load->library('Lwarehouse');
         $this->load->library('session');
         $this->load->model('Warehouse');
+        $this->load->model('Customers');
         $this->auth->check_admin_auth();
     }
 
@@ -181,14 +182,19 @@ class Ccwarehouse extends CI_Controller {
         $branch_id = $this->auth->generator(15);
         $courier_id = $this->input->post('courier_id',TRUE);
         $user_id = $this->input->post('user_id',TRUE);
+        $customer_id = $this->input->post('customer_id',TRUE);
+        $outlet_name = $this->Customers->customer_personal_data($customer_id);
 
         $data = array(
             'outlet_id'   => $branch_id,
             'warehouse_id'   => $courier_id,
-            'customer_id' => $user_id,
-            'outlet_name' => $this->input->post('category_name',TRUE),
+            'user_id' => $user_id,
+            'customer_id' => $customer_id,
+            'outlet_name' => $outlet_name[0]['customer_name'],
             'status'        => 1
         );
+
+        // echo '<pre>'; print_r($data); exit();
 
         $result = $this->Warehouse->branch_entry($data);
 

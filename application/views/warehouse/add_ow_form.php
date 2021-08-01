@@ -133,7 +133,7 @@
                  <div class="col-sm-6">
                      <select class="form-control" name="user_id" tabindex="3">
                          {users_list}
-                         <option value="{customer_id}">{customer_name}</option>
+                         <option value="{user_id}">{first_name} {last_name}</option>
                          {/users_list}
 
 
@@ -144,7 +144,11 @@
                          <div class="form-group row">
                             <label for="category_name" class="col-sm-3 col-form-label">Outlet Name <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
-                                <input class="form-control" name ="category_name" id="category_name" type="text" placeholder="Outlet Name"  required="">
+                                <select class="form-control" name="customer_id" tabindex="3">
+                                    {customer_list}
+                                    <option value="{customer_id}">{customer_name}</option>
+                                    {/customer_list}
+                                </select>
                             </div>
 
                               <div class="col-sm-3">
