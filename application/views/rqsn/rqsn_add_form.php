@@ -54,7 +54,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="add_rqsn_table">
+                            <table class="table table-striped table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
                                 <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
@@ -82,9 +82,12 @@
                                         <td><?php echo $row['parts']?></td>
                                         <td><?php echo $row['sku']?></td>
                                         <td><?php echo $row['brand_name']?></td>
+
                                         <td><?php echo $row['model_name']?></td>
                                         <td><input type="text" class="form-control quantity" style="width:100%;" name="quantity" id="<?php echo $row['product_id']?>"></td>
                                         <td><button type="button" id="add_btn<?=$row['sl']?>" name="add_cart" title="Add to requisition" class="btn btn-success add_cart" style="border:none; outline:none" data-sl="<?php echo $row['sl']?>" data-category="<?php echo $row['category_name']?>" data_subcat="<?php echo $row['subcat_name']?>" data-productname="<?php echo $row['product_name']?>" data-parts="<?php echo $row['parts']?>" data-sku="<?php echo $row['sku']?>" data-brand="<?php echo $row['brand_name']?>" data-model="<?php echo $row['product_model']?>" data-productid="<?php echo $row['product_id']?>"><i class="fa fa-plus" aria-hidden="true"></i>
+
+
 </button></td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
@@ -103,11 +106,15 @@
 <script>
     $(document).ready(function(){
 
+
         $("#add_rqsn_table").dataTable({
             "columnDefs": [
                 { "width": "5%", "targets": 9 }
             ]
         });
+
+
+
 
         $('.add_cart').click(function(){
             var product_id = $(this).data("productid");
@@ -158,51 +165,11 @@
             }
             else
             {
-                alert("Please Enter quantity");
+                toastr.error("Please Enter quantity");
             }
         });
 
-        $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
 
-        $(document).on('click', '.remove_inventory', function(){
-            var row_id = $(this).attr("id");
-            var csrf_test_name = $('[name="csrf_test_name"]').val();
-            if(confirm("Are you sure you want to remove this?"))
-            {
-                $.ajax({
-                    url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
-                    method:"POST",
-                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
-                    success:function(data)
-                    {
-                        toastr.error("Product removed from Cart");
-                        $('#cart_details').html(data);
-                    }
-                });
-            }
-            else
-            {
-                return false;
-            }
-        });
-
-        $(document).on('click', '#clear_cart', function(){
-            if(confirm("Are you sure you want to clear cart?"))
-            {
-                $.ajax({
-                    url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
-                    success:function(data)
-                    {
-                        toastr.warning("Your cart has been cleared.");
-                        $('#cart_details').html(data);
-                    }
-                });
-            }
-            else
-            {
-                return false;
-            }
-        });
 
     });
 </script>

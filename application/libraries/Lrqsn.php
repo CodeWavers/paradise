@@ -62,7 +62,7 @@ class Lrqsn {
             'customers'         => $customers,
         );
 
-       // echo '<pre'; print_r($cw_list);exit();
+   //    echo '<pre'; print_r($data);exit();
     //    die();
         $invoiceForm = $CI->parser->parse('rqsn/rqsn_form', $data, true);
         return $invoiceForm;
