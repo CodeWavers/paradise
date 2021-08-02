@@ -16,11 +16,11 @@
         </div>
         <div class="header-title">
             <h1>Requisition</h1>
-            <small>Approve</small>
+            <small>List</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#">Requisition</a></li>
-                <li class="active">Approve Requisition</li>
+                <li class="active">Requisition List</li>
             </ol>
         </div>
     </section>
@@ -70,7 +70,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4>Approve Requisition</h4>
+                            <h4>Requisition List</h4>
 
                         </div>
                     </div>
@@ -163,7 +163,6 @@
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Quantity</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -181,9 +180,7 @@
                                         <td><?php echo $rqsn_detail['sku']?></td>
                                         <td><?php echo $rqsn_detail['brand_name']?></td>
                                         <td><?php echo $rqsn_detail['model_name']?></td>
-                                        <td style="width: 5%;" ><input type="text" class="form-control quantity text-center" value="<?php echo $rqsn_detail['quantity']?>" name="product_quantity[]" id="<?php echo $rqsn_detail['product_id']?>"></td>
-                                        <td style="width: 5%;" ><button type="button" name="remove" class="btn btn-danger btn-xs remove_inventory" id="<?php echo $rqsn_detail['product_id']?>">Remove</button></td>
-
+                                        <td style="width: 5%;" ><?php echo $rqsn_detail['quantity']?></td>
 
 
                                     </tr>
@@ -196,8 +193,7 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
-                                 <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="" >
-                                <input type="submit" value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="" >
+                                 <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="submit" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                             </div>
                         </div>
 
@@ -242,5 +238,3 @@
         }
     });
 </script>
-
-

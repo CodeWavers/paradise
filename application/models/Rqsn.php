@@ -1085,7 +1085,7 @@ class Rqsn extends CI_Model {
             ->join('product_subcat f', 'f.category_id = e.category_id')
             ->join('product_brand g', 'g.brand_id = d.brand_id')
             ->join('product_model h', 'h.model_id = d.product_model')
-            ->where('b.status',1)
+            ->where('b.status',2)
             ->where('b.rqsn_id', $rqsn_id)
             ->get()
             ->result_array();
