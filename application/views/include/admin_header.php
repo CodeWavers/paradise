@@ -399,7 +399,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Ccategory/sub_category') ?>">Sub Category</a></li>
                         <?php } ?>
-                         <?php if($this->permission1->method('manage_model','create')->access() || $this->permission1->method('manage_model','read')->access()|| $this->permission1->method('manage_model','update')->access()|| $this->permission1->method('manage_model','delete')->access()){ ?>
+                         <?php if($this->permission1->method('manage_category','create')->access() || $this->permission1->method('manage_model','read')->access()|| $this->permission1->method('manage_category','update')->access()|| $this->permission1->method('manage_category','delete')->access()){ ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('1') == ("Cmodel")) {
                                 echo "active";
@@ -551,7 +551,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo "active";
                             } else {
                                 echo " ";
-                            }?>"><a href="<?php echo base_url('Crqsn/rqsn_draft') ?>">Requisition Draft</a></li>
+                            }?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit') ?>">Requisition Draft</a></li>
                         <?php }?>
 
 
@@ -608,13 +608,13 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                     </a>
                     <ul class="treeview-menu">
 
-                        <?php if($this->permission1->method('aprove_rqsn_edit','create')->access()){ ?>
-                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("aprove_rqsn_edit")){
-                                echo "active";
-                            } else {
-                                echo " ";
-                            }?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit') ?>">Approve Requisition</a></li>
-                        <?php }?>
+<!--                        --><?php //if($this->permission1->method('aprove_rqsn_edit','create')->access()){ ?>
+<!--                            <li class="treeview --><?php //if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("aprove_rqsn_edit")){
+//                                echo "active";
+//                            } else {
+//                                echo " ";
+//                            }?><!--"><a href="--><?php //echo base_url('Crqsn/aprove_rqsn_edit') ?><!--">Approve Requisition</a></li>-->
+<!--                        --><?php //}?>
 
                         <?php if($this->permission1->method('aprove_rqsn','create')->access()){ ?>
                             <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")){

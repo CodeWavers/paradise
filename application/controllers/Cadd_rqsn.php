@@ -27,7 +27,8 @@ class Cadd_rqsn extends CI_Controller {
     function add()
     {
    //     $this->load->library("cart");
-
+      //  $rqsn_id = $this->db->select('id')->order_by('id','desc')->limit(1)->get('rqsn_details')->row('id');
+        $rqsn_id = $this->db->select("*")->limit(1)->order_by('id',"DESC")->get("rqsn")->row();
         $product_id=$_POST["product_id"];
         $data = array(
             "product_id"  => $_POST["product_id"],
@@ -39,9 +40,10 @@ class Cadd_rqsn extends CI_Controller {
             "brand"  => $_POST["brand"],
             "model"  => $_POST["model"],
             "qty"  => $_POST["quantity"],
+            "rqsn_id"  => $rqsn_id->rqsn_no,
 
         );
-        $check_product = $this->db->select('*')->from('rqsn_cart')->where('product_id',$product_id)->get()->num_rows();
+
         $cart_product = $this->db->select('*')->from('rqsn_cart')->where('product_id',$product_id)->get()->result();
 
 
@@ -60,9 +62,9 @@ class Cadd_rqsn extends CI_Controller {
 
 
 
-     //   echo '<pre>';print_r($check_product);exit();
+      //  echo '<pre>';print_r($rqsn_id);exit();
       //return rowid
-      //  echo $this->view();
+       // echo $rqsn_id->rqsn_id;
         $this->db->insert('rqsn_cart',$data);
         json_encode($data);
     }
@@ -103,7 +105,7 @@ class Cadd_rqsn extends CI_Controller {
 
   <div class="table-responsive">
    <div align="right">
-    <button type="button" id="clear_cart" class="btn btn-warning">Clear Cart</button>
+    <button type="button" id="clear_cart" class="btn btn-warning">Clear Requisition</button>
    </div>
    <br />
    <table class="table table-bordered table-hover">
@@ -135,7 +137,8 @@ class Cadd_rqsn extends CI_Controller {
     <td><input name="" type="text" class="form-control" value="'.$items["subcat"].'" readonly></td>
     <td>
     <input name="" type="text" class="form-control" value="'.$items["product_name"].'"  readonly>
-    <input name="product_id[]" type="text" class="form-control" value="'.$items["product_id"].'"  readonly>
+    <input name="product_id[]" type="hidden" class="form-control" value="'.$items["product_id"].'"  readonly>
+    <input name="rqsn_id[]" type="hidden" class="form-control" value="'.$items["rqsn_id"].'"  readonly>
     </td>
     <td><input name="" type="text" class="form-control" value="'.$items["parts"].'" readonly></td>
     <td><input name="" type="text" class="form-control" value="'.$items["sku"].'" readonly></td>

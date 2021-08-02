@@ -125,6 +125,7 @@ class Lproduct {
         $data['parts']    = $product_detail[0]['parts'];
         $data['tag']    = $product_detail[0]['tag'];
         $data['sku']    = $product_detail[0]['sku'];
+        $data['ptype_id']    = $product_detail[0]['ptype_id'];
         $data['product_details']  = $product_detail[0]['product_details'];
         $data['pr_details']       = $product_detail;
         $data['image']            = $product_detail[0]['image'];

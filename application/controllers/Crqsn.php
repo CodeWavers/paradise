@@ -32,6 +32,7 @@ class Crqsn extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+
       public function rqsn_update_form() {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
@@ -60,6 +61,7 @@ class Crqsn extends CI_Controller {
 
 
 
+
      //   echo "ok";exit();
 
         if ($rqsn == TRUE) {
@@ -70,6 +72,34 @@ class Crqsn extends CI_Controller {
         } else {
             $this->session->set_userdata(array('error_message' => display('please_try_again')));
             redirect(base_url('Crqsn/rqsn_form'));
+        }
+
+
+}
+
+    public function update_rqsn(){
+        $CI = & get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+
+        $rqsn = $CI->Rqsn->rqsn_update();
+        $this->db->empty_table('rqsn_cart');
+
+
+
+     //   echo "ok";exit();
+
+        if ($rqsn == TRUE) {
+            $this->session->set_userdata(array('message' => display('successfully_added')));
+
+            redirect(base_url('Crqsn/aprove_rqsn_edit'));
+
+        } else {
+            $this->session->set_userdata(array('error_message' => display('please_try_again')));
+            redirect(base_url('Crqsn/aprove_rqsn_edit'));
         }
 
 

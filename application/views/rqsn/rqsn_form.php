@@ -113,7 +113,7 @@
                                 <div class="form-group row rqsn-form-input">
                                     <label for="customer_name" class="col-sm-3 col-form-label text-right">Customer Name : </label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" name="customer_name" id="customer_name" required>
+                                        <input type="text" class="form-control" name="customer_name" id="customer_name" >
                                     </div>
                                 </div>
 
@@ -131,15 +131,15 @@
                                 <div class="form-group row rqsn-form-input">
                                     <label for="rqsn_no" class="col-sm-3 col-form-label text-right">Requisition No. : </label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" name="rqsn_no" id="rqsn_no">
+                                        <input type="text" class="form-control" value="<?php echo $rqsn_no?>" name="rqsn_no" id="rqsn_no" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-3"></div>
-                                    <a href="<?= base_url()."Cproduct/catalogue" ?>">
+                                    <a href="<?= base_url()."Crqsn/add_rqsn_form" ?>">
                                     <div class="col-sm-9">
-                                        <input type="button" id="catalogue_link" class="btn btn-success form-control" name="catalogue_link" value="Goto Catalogue">
+                                        <input type="button" id="catalogue_link" class="btn btn-success form-control" name="catalogue_link" value="Go to Add Requisition">
                                     </div>
                                     </a>
                                 </div>
@@ -156,8 +156,8 @@
                             </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
-<!--                                <input type="submit" id="add_invoice" class="btn btn-success" name="add-invoice" value="Finalize" tabindex="17"/>-->
-                                 <input type="submit" value="Save as Draft" name="" class="btn btn-large btn-warning" id="" >
+                                <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="" >
+                                <input type="submit" value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="" >
                             </div>
                         </div>
 
@@ -169,113 +169,10 @@
             </div>
 
 
-<!--            <div class="modal fade" id="printconfirmodal" tabindex="-1" role="dialog" aria-labelledby="printconfirmodal" aria-hidden="true">-->
-<!--                <div class="modal-dialog modal-sm">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!---->
-<!--                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-<!---->
-<!--                            <h4 class="modal-tit le" id="myModalLabel">--><?php //echo display('print') ?><!--</h4>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            --><?php //echo form_open('Cinvoice/invoice_inserted_data_manual', array('class' => 'form-vertical', 'id' => '', 'name' => '')) ?>
-<!--                            <div id="outputs" class="hide alert alert-danger"></div>-->
-<!--                            <h3> --><?php //echo display('successfully_inserted') ?><!--</h3>-->
-<!--                            <h4>--><?php //echo display('do_you_want_to_print') ?><!-- ??</h4>-->
-<!--                            <label class="ab">With Chalan </label>-->
-<!--                            <input type="checkbox"  name="chalan_value" value=''>-->
-<!---->
-<!---->
-<!--                            <input type="hidden" name="invoice_id" id="inv_id">-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" onclick="cancelprint()" class="btn btn-default" data-dismiss="modal">--><?php //echo display('no') ?><!--</button>-->
-<!--                            <button type="submit" class="btn btn-primary" id="yes">--><?php //echo display('yes') ?><!--</button>-->
-<!--                            --><?php //echo form_close() ?>
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
 
 
-            <div class="modal fade modal-success" id="cust_info" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
 
-                            <a href="#" class="close" data-dismiss="modal">&times;</a>
-                            <h3 class="modal-title"><?php echo display('add_new_customer') ?></h3>
-                        </div>
 
-                        <div class="modal-body">
-                            <div id="customeMessage" class="alert hide"></div>
-                            <?php echo form_open('Cinvoice/instant_customer', array('class' => 'form-vertical', 'id' => 'newcustomer')) ?>
-                            <div class="panel-body">
-                                <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
-                                <div class="form-group row">
-                                    <label for="customer_id_two" class="col-sm-3 col-form-label">Customer ID <i class="text-danger">*</i></label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" name ="customer_id_two" id="" type="text" placeholder="Customer ID"  required="" tabindex="1">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="customer_name" class="col-sm-3 col-form-label"><?php echo display('customer_name') ?> <i class="text-danger">*</i></label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" name ="customer_name" id="" type="text" placeholder="<?php echo display('customer_name') ?>"  required="" tabindex="1">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-3 col-form-label"><?php echo display('customer_email') ?></label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" name ="email" id="email" type="email" placeholder="<?php echo display('customer_email') ?>" tabindex="2">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="mobile" class="col-sm-3 col-form-label"><?php echo display('customer_mobile') ?></label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" name ="mobile" id="mobile" type="number" placeholder="<?php echo display('customer_mobile') ?>" min="0" tabindex="3">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="customer_id_two" class="col-sm-3 col-form-label">Contact Person</label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" name ="contact_person" id="" type="text" placeholder="Contact Person"  required="" tabindex="1">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="customer_id_two" class="col-sm-3 col-form-label">Contact Mobile</label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" name ="contact" id="" type="number" placeholder="Contact Mobile"  required="" tabindex="1">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="address " class="col-sm-3 col-form-label"><?php echo display('customer_address') ?></label>
-                                    <div class="col-sm-6">
-                                        <textarea class="form-control" name="address" id="address " rows="3" placeholder="<?php echo display('customer_address') ?>" tabindex="4"></textarea>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="modal-footer">
-
-                            <a href="#" class="btn btn-danger" data-dismiss="modal">Close</a>
-
-                            <input type="submit" class="btn btn-success" value="Submit">
-                        </div>
-                        <?php echo form_close() ?>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
 
         </div>
     </section>
@@ -286,7 +183,7 @@
     $(document).ready(function(){
         // setInterval(function(){
         //
-        //
+        //$('#cart_details').load("<?php //echo base_url(); ?>//Cadd_rqsn/load");
         //
         // }, 1000);
 

@@ -45,6 +45,7 @@ class Lrqsn {
         $CI->load->model('Warehouse');
         $outlet_list    = $CI->Warehouse->branch_list();
         $outlet_list_to    = $CI->Rqsn->outlet_list_to();
+        $rqsn_no    = $CI->Rqsn->number_generator();
         $customers = $CI->Customers->customer_list();
         $cw_list    = $CI->Rqsn->cw_list();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
@@ -57,6 +58,7 @@ class Lrqsn {
             'outlet_list'       => $outlet_list,
             'outlet_list_to'    => $outlet_list_to,
             'cw_list'           => $cw_list,
+            'rqsn_no'           => $rqsn_no,
             'discount_type'     => $currency_details[0]['discount_type'],
             'taxes'             => $taxfield,
             'customers'         => $customers,
@@ -144,6 +146,8 @@ class Lrqsn {
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list
         );
+
+     //   echo '<pre>';print_r($rqsn_details);exit();
 
         return $CI->parser->parse('rqsn/rqsn_approve_update', $data, true);
     }

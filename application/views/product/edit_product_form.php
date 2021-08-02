@@ -211,15 +211,15 @@
                                             <option value="Import">Import</option>
                                             <option value="Local">Local</option>
                                             <?php
-                                            if ($ptype_selected) {
+                                            if ($ptype_id) {
                                                 ?>
-                                                {ptype_selected}
-                                                <option selected value="{ptype_id}">{ptype_id}</option>
-                                                {/ptype_selected}
+
+                                                <option selected value="<?php echo $ptype_id?>"><?php echo $ptype_id?></option>
+
                                                 <?php
                                             } else {
                                                 ?>
-                                                <option selected value="0">Product type not selected</option>
+                                                <option selected value="0">Purchase type not selected</option>
                                                 <?php
                                             }
                                             ?>

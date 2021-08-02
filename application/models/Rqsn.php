@@ -101,11 +101,21 @@ class Rqsn extends CI_Model {
     public function rqsn_entry(){
         $this->load->model('Web_settings');
         $rqsn_id=mt_rand();
-
+      //  $rqsn_no = $this->number_generator();
         //    echo "Ok";exit();
 
         //Data inserting into invoice table
-        $datarq = array(
+        $data_draft = array(
+            'rqsn_id'     => $rqsn_id,
+            'date'            => (!empty($this->input->post('invoice_date',true))?$this->input->post('invoice_date',true):date('Y-m-d')),
+            'details'         => (!empty($this->input->post('inva_details',true))?$this->input->post('inva_details',true):'Requisition'),
+           // 'rqsn_no'=> $this->input->post('rqsn_no',true),
+            'from_id'=> $this->input->post('rqsn_for',true),
+            'to_id'  => 'HK7TGDT69VFMXB7',
+            'rqsn_customer_name' => $this->input->post('customer_name',true),
+            'status'   => 1,
+        );
+        $data_finalize = array(
             'rqsn_id'     => $rqsn_id,
             'date'            => (!empty($this->input->post('invoice_date',true))?$this->input->post('invoice_date',true):date('Y-m-d')),
             'details'         => (!empty($this->input->post('inva_details',true))?$this->input->post('inva_details',true):'Requisition'),
@@ -113,7 +123,7 @@ class Rqsn extends CI_Model {
             'from_id'=> $this->input->post('rqsn_for',true),
             'to_id'  => 'HK7TGDT69VFMXB7',
             'rqsn_customer_name' => $this->input->post('customer_name',true),
-            'status'   => 1,
+            'status'   => 2,
         );
 //        $datarq = array(
 //            'rqsn_id'     => 1,
@@ -126,7 +136,12 @@ class Rqsn extends CI_Model {
 
         //  echo '<pre>';print_r($datarq);exit();
 
-        $this->db->insert('rqsn', $datarq);
+        if (isset($_POST['finalize'])){
+            $this->db->insert('rqsn',$data_finalize);
+            $this->db->empty_table('rqsn_cart');
+        }else{
+            $this->db->insert('rqsn', $data_draft);
+        }
 
 
         $quantity            = $this->input->post('product_quantity',true);
@@ -149,6 +164,91 @@ class Rqsn extends CI_Model {
                 'status'                => 1,
 
             );
+            if (!empty($quantity)) {
+                $this->db->insert('rqsn_details', $rqsn_details);
+
+                $this->db->where('product_id',$product_id);
+                $this->db->set('qty',$qty);
+                $this->db->update('rqsn_cart');
+            }
+
+
+        }
+
+        return $rqsn_id;
+    }
+
+    public function rqsn_update(){
+        $this->load->model('Web_settings');
+        // $rqsn_id=mt_rand();
+        date_default_timezone_set("Asia/Dhaka");
+        //    echo "Ok";exit();
+        $rqsn_id             = $this->input->post('rqsn_id',true);
+        //Data inserting into invoice table
+        $data_draft = array(
+            'rqsn_id'     => $rqsn_id,
+            'date'            => (!empty($this->input->post('invoice_date',true))?$this->input->post('invoice_date',true):date('Y-m-d')),
+            'details'         => (!empty($this->input->post('inva_details',true))?$this->input->post('inva_details',true):'Requisition'),
+            'rqsn_no'=> $this->input->post('rqsn_no',true),
+            'from_id'=> $this->input->post('rqsn_for',true),
+            'to_id'  => 'HK7TGDT69VFMXB7',
+            'rqsn_customer_name' => $this->input->post('customer_name',true),
+            'status'   => 1,
+        );
+        $data_finalize = array(
+            'rqsn_id'     => $rqsn_id,
+            'date'            => (!empty($this->input->post('invoice_date',true))?$this->input->post('invoice_date',true):date('Y-m-d')),
+            'details'         => (!empty($this->input->post('inva_details',true))?$this->input->post('inva_details',true):'Requisition'),
+            'rqsn_no'=> $this->input->post('rqsn_no',true),
+            'from_id'=> $this->input->post('rqsn_for',true),
+            'to_id'  => 'HK7TGDT69VFMXB7',
+            'rqsn_customer_name' => $this->input->post('customer_name',true),
+            'status'   => 2,
+        );
+
+
+        if (isset($_POST['finalize'])){
+            $this->db->where('rqsn_id', $rqsn_id);
+            $this->db->update('rqsn',$data_finalize);
+        }else{
+            $this->db->where('rqsn_id', $rqsn_id);
+            $this->db->update('rqsn', $data_draft);
+        }
+
+
+        //  echo '<pre>';print_r($datarq);exit();
+//        if ($rqsn_id != '') {
+//            $this->db->where('rqsn_id', $rqsn_id);
+//            $this->db->update('rqsn', $datarq);
+//
+//        }
+
+
+        $this->db->where('rqsn_id', $rqsn_id);
+        $this->db->delete('rqsn_details');
+        // exit();
+        $quantity            = $this->input->post('product_quantity',true);
+        $p_id             = $this->input->post('product_id',true);
+
+
+
+        for ($i = 0, $n   = count($p_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            //   $un  = $unit[$i];
+            $product_id   = $p_id[$i];
+
+
+
+
+      $rqsn_details = array(
+          'rqsn_detail_id'     => mt_rand(),
+          'rqsn_id'     => $rqsn_id,
+          'product_id'         => $product_id,
+          'quantity'                => $qty,
+          //    'unit'                => $un,
+          'status'                => 1,
+
+      );
             if (!empty($quantity)) {
                 $this->db->insert('rqsn_details', $rqsn_details);
             }
@@ -190,6 +290,7 @@ class Rqsn extends CI_Model {
 
         $quantity            = $this->input->post('product_quantity',true);
         $p_id             = $this->input->post('product_id',true);
+        $r_id             = $this->input->post('rqsn_id',true);
         $unit             = $this->input->post('unit',true);
 
 
@@ -216,6 +317,18 @@ class Rqsn extends CI_Model {
         }
 
         return $rqsn_id;
+    }
+    public function number_generator() {
+        $this->db->select_max('rqsn_no', 'rqsn_no')->where('status',2);
+        $query = $this->db->get('rqsn');
+        $result = $query->result_array();
+        $rqsn_no = $result[0]['rqsn_no'];
+        if ($rqsn_no != '') {
+            $rqsn_no = $rqsn_no + 1;
+        } else {
+            $rqsn_no = 1000;
+        }
+        return $rqsn_no;
     }
 
 
@@ -963,13 +1076,13 @@ class Rqsn extends CI_Model {
 
     public function rqsn_details_data_by_rqsn_id($rqsn_id)
     {
-        $records= $this->db->select('a.*, b.*, c.*, d.*, e.category_name,f.subcat_name, g.brand_name, h.model_name')
+        $records= $this->db->select('a.*, b.*, c.*, d.*,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
             ->join('outlet_warehouse c','c.outlet_id=a.from_id')
             ->join('product_information d','d.product_id=b.product_id')
             ->join('product_category e', 'e.category_id = d.category_id')
-            ->join('product_subcat f', 'f.sub_cat_id = d.sub_cat_id')
+            ->join('product_subcat f', 'f.category_id = e.category_id')
             ->join('product_brand g', 'g.brand_id = d.brand_id')
             ->join('product_model h', 'h.model_id = d.product_model')
             ->where('b.status',1)
