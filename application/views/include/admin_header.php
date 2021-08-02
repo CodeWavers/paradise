@@ -551,7 +551,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo "active";
                             } else {
                                 echo " ";
-                            }?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit') ?>">Requisition Draft</a></li>
+                            }?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit') ?>">Requisition List</a></li>
                         <?php }?>
 
 
@@ -579,7 +579,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }?>"><a href="<?php echo base_url('Crqsn/rqsn_list_outlet') ?>">Stock Transferred Reports(Outlet)</a></li>
                         <?php }?>
 
-                        <?php if($this->permission1->method('add_rqsn_form','create')->access()){ ?>
+                        <?php if($this->permission1->method('rqsn_form','create')->access()){ ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("add_rqsn_form")){
                                 echo "active";
                             } else {

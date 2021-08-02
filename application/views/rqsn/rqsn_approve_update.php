@@ -78,7 +78,7 @@
 
 
                     <div class="rqsn_panel" style="margin-top: 10px; margin-bottom:10px;">
-                        <?php echo form_open_multipart('Crqsn/update_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
+<!--                        --><?php //echo form_open_multipart('Crqsn/update_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
                         <div class="row">
 
                             <div class="col-sm-8" id="payment_from_2">
@@ -97,6 +97,7 @@
 
 
                             </div>
+
                             <div class="col-sm-8" id="payment_from">
 
                                 <div class="form-group row rqsn-form-input">
@@ -106,14 +107,14 @@
 
                                         $date = date('Y-m-d');
                                         ?>
-                                        <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" />
+                                        <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo $rqsn_details[0]['date'] ?>" tabindex="4" readonly />
                                     </div>
                                 </div>
 
                                 <div class="form-group row rqsn-form-input">
                                     <label for="customer_name" class="col-sm-3 col-form-label text-right">Customer Name : </label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['rqsn_customer_name'] ?>" >
+                                        <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['rqsn_customer_name'] ?>" readonly >
                                     </div>
                                 </div>
 
@@ -193,12 +194,12 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
-                                 <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="submit" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
+                                 <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                             </div>
                         </div>
 
 
-                        <?php echo form_close()?>
+<!--                        --><?php //echo form_close()?>
                     </div>
 
                 </div>
