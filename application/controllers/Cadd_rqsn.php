@@ -40,7 +40,7 @@ class Cadd_rqsn extends CI_Controller {
             "brand"  => $_POST["brand"],
             "model"  => $_POST["model"],
             "qty"  => $_POST["quantity"],
-            "rqsn_id"  => $rqsn_id->rqsn_no,
+//            "rqsn_id"  => $rqsn_id->rqsn_no,
 
         );
 
