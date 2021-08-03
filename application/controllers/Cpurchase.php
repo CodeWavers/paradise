@@ -51,8 +51,8 @@ class Cpurchase extends CI_Controller {
         $postData = $this->input->post();
         $data = $this->Purchases->getPurchaseList($postData);
         echo json_encode($data);
-    } 
-    // search purchase by supplier 
+    }
+    // search purchase by supplier
     public function purchase_search() {
         $CI = & get_instance();
         $this->auth->check_admin_auth();
@@ -90,7 +90,7 @@ class Cpurchase extends CI_Controller {
         $links = $this->pagination->create_links();
         #
         #pagination ends
-        #  
+        #
         $content = $this->lpurchase->purchase_search_supplier($supplier_id, $links, $config["per_page"], $page);
         $this->template->full_admin_html_view($content);
     }
@@ -180,12 +180,12 @@ class Cpurchase extends CI_Controller {
         $product_name = $this->input->post('product_name',TRUE);
         $product_info = $CI->Suppliers->product_search_item($supplier_id, $product_name);
         if(!empty($product_info)){
-        $list[''] = '';
-        foreach ($product_info as $value) {
-            $json_product[] = array('label'=>$value['product_name'].'('.$value['product_model'].')','value'=>$value['product_id']);
-        } 
-    }else{
-        $json_product[] = 'No Product Found';
+            $list[''] = '';
+            foreach ($product_info as $value) {
+                $json_product[] = array('label'=>$value['product_name'].'('.$value['product_model'].')','value'=>$value['product_id']);
+            }
+        }else{
+            $json_product[] = 'No Product Found';
         }
         echo json_encode($json_product);
     }
@@ -267,7 +267,7 @@ class Cpurchase extends CI_Controller {
         $CI->load->model('Purchases');
         $CI->load->model('Web_settings');
         $CI->load->model('Invoices');
-        $CI->load->library('pdfgenerator'); 
+        $CI->load->library('pdfgenerator');
         $purchase_list = $CI->Purchases->pdf_purchase_list();
         if (!empty($purchase_list)) {
             $i = 0;
@@ -300,5 +300,5 @@ class Cpurchase extends CI_Controller {
            $file_name = 'purchase'.$time.'.pdf';
             force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
-   
+
 }

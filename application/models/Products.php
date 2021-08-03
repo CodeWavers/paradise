@@ -457,6 +457,16 @@ class Products extends CI_Model {
    }
 
 
-
-
+   public function retrieve_product_full_data($product_id) {
+    $this->db->select('a.*, b.category_name, c.subcat_name');
+    $this->db->from('product_information a');
+    $this->db->join('product_category b', 'b.category_id = a.category_id');
+    $this->db->join('product_subcat c', 'c.sub_cat_id = a.sub_cat_id');
+    $this->db->where('product_id', $product_id);
+    $query = $this->db->get();
+    if ($query->num_rows() > 0) {
+        return $query->result_array();
+    }
+    return false;
+   }
 }

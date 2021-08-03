@@ -527,7 +527,7 @@ class Cinvoice extends CI_Controller {
         $links = $this->pagination->create_links();
         #
         #pagination ends
-        #  
+        #
         $content = $this->linvoice->invoice_search($customer_id, $links, $config["per_page"], $page);
         $this->template->full_admin_html_view($content);
     }
@@ -543,7 +543,7 @@ class Cinvoice extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
-    // invoice list date to date 
+    // invoice list date to date
     public function date_to_date_invoice() {
         $CI = & get_instance();
         $this->auth->check_admin_auth();
@@ -583,7 +583,7 @@ class Cinvoice extends CI_Controller {
         $links = $this->pagination->create_links();
         #
         #pagination ends
-        #  
+        #
 
         $content = $this->linvoice->invoice_list_date_to_date($from_date, $to_date, $links, $config["per_page"], $page);
         $this->template->full_admin_html_view($content);
@@ -639,24 +639,24 @@ class Cinvoice extends CI_Controller {
 
             $tr .= "<tr id=\"row_" . $product_details->product_id . "\">
 						<td class=\"\" style=\"\">
-							
+
 							<input type=\"text\" name=\"product_name\" onkeypress=\"invoice_productList('" . $product_details->product_id . "');\" class=\"form-control productSelection \" value='" . $product_details->product_name . "- (" . $product_details->product_model . ")" . "' placeholder='" . display('product_name') . "' required=\"\" id=\"product_name_" . $product_details->product_id . "\" tabindex=\"\" readonly>
 
 							<input type=\"hidden\" class=\"form-control autocomplete_hidden_value product_id_" . $product_details->product_id . "\" name=\"product_id[]\" id=\"SchoolHiddenId_" . $product_details->product_id . "\" value = \"$product_details->product_id\"/>
-							
+
 						</td>
-                        
+
                         <td>
                              <input type=\"text\" name=\"desc[]\" class=\"form-control text-right \"  />
                         </td>
-                        
+
                         <td style=\"width:120px\">".$html."</td>
-                        
+
                         <td>
-                        
+
                              <input id=\"warehouse\" type=\"text\" name=\"warehouse[]\" class=\"form-control text-center \" value='".$product_details->warehouse."'  readonly/>
                         </td>
-                        
+
 	  					<td>
                             <input type=\"text\" name=\"available_quantity[]\" class=\"form-control text-right available_quantity_" . $product_details->product_id . "\" value='" . $product_details->total_product . "' readonly=\"\" id=\"available_quantity_" . $product_details->product_id . "\"/>
                         </td>
@@ -664,22 +664,22 @@ class Cinvoice extends CI_Controller {
                         <td>
                             <input class=\"form-control text-right unit_'" . $product_details->product_id . "' valid\" value=\"$product_details->unit\" readonly=\"\" aria-invalid=\"false\" type=\"text\">
                         </td>
-                    
+
                         <td>
                             <input type=\"text\" name=\"product_quantity[]\" onkeyup=\"quantity_calculate('" . $product_details->product_id . "');\" onchange=\"quantity_calculate('" . $product_details->product_id . "');\" class=\"total_qntt_" . $product_details->product_id . " form-control text-right\" id=\"total_qntt_" . $product_details->product_id . "\" placeholder=\"0.00\" min=\"0\" value='" . $qty . "'/>
                         </td>
-                        
+
                         <td>
-                        
+
                               <input id=\'warrenty_date\' type=\"text\" name=\"warrenty_date[]\" class=\"form-control datepicker \" value=\" $product_details->warrenty_date\"  />
                         </td>
-                        
-                   
-                                            
-                                    
 
-                        
-                        
+
+
+
+
+
+
 
 						<td style=\"width:85px\">
 							<input type=\"text\" name=\"product_rate[]\" onkeyup=\"quantity_calculate('" . $product_details->product_id . "');\" onchange=\"quantity_calculate('" . $product_details->product_id . "');\" value='" . $product_details->price . "' id=\"price_item_" . $product_details->product_id . "\" class=\"price_item1 form-control text-right\" required placeholder=\"0.00\" min=\"0\"/>
@@ -811,12 +811,26 @@ class Cinvoice extends CI_Controller {
         $CI = & get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
+        $CI->load->model('Products');
         $product_id  = $this->input->post('product_id',TRUE);
         $supplier_id = $this->input->post('supplier_id',TRUE);
 
+        $product_details = $CI->Products->retrieve_product_full_data($product_id)[0];
+
         $product_info = $CI->Invoices->get_total_product($product_id, $supplier_id);
 
-        echo json_encode($product_info);
+        if(empty($product_details['category_name'])){
+            $product_details['category_name'] = "No category found";
+        }
+
+        if(empty($product_details['subcat_name'])){
+            $product_details['subcat_name'] = "No sub category found";
+        }
+
+
+        $data = array('data1' => $product_info, 'data2' => $product_details);
+
+        echo json_encode($data);
     }
 
 
@@ -982,17 +996,17 @@ class Cinvoice extends CI_Controller {
         }
         echo json_encode($json_customer);
     }
-    //csv excel 
+    //csv excel
     public function exportinvocsv() {
-        // file name 
+        // file name
         $this->load->model('Invoices');
         $filename = 'sale_' . date('Ymd') . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
-        // get data 
+        // get data
         $invoicedata = $this->Invoices->invoice_csv_file();
-        // file creation 
+        // file creation
         $file = fopen('php://output', 'w');
 
         $header = array('invoice_no', 'invoice_id', 'customer_name', 'date', 'total_amount');
@@ -1077,7 +1091,7 @@ class Cinvoice extends CI_Controller {
 
             $tr .= "<tr id=\"row_" . $product_details->product_id . "\">
                         <td class=\"\" style=\"width:220px\">
-                            
+
                             <input type=\"text\" name=\"product_name\" onkeypress=\"invoice_productList('" . $product_details->product_id . "');\" class=\"form-control productSelection \" value='" . $product_details->product_name . "- (" . $product_details->product_model . ")" . "' placeholder='" . display('product_name') . "' required=\"\"  tabindex=\"\" readonly>
 
                             <input type=\"hidden\" class=\"form-control autocomplete_hidden_value product_id_" . $product_details->product_id . "\" name=\"product_id[]\" id=\"SchoolHiddenId_" . $product_details->product_id . "\" value = \"$product_details->product_id\"/>
