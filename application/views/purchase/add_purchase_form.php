@@ -206,7 +206,7 @@
                                 <tbody id="addPurchaseItem">
                                     <tr>
 
-                                        <td class="wt"> <input type="text"  placeholder="SN" name="sn[]" id="sn_1" class="form-control text-right stock_ctn_1"  /></td>
+                                    <td class="wt"> <input type="text"  placeholder="SN" name="sn[]" id="sn" class="form-control text-right stock_ctn_1"  /></td>
 
                                         <td class="span3 supplier">
                                            <input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list(1);" placeholder="Pr. Name" id="product_name_1" tabindex="3" >
@@ -227,11 +227,11 @@
                                         </td>
 
                                         <td class="test">
-                                            <input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
+                                            <input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_1" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
                                         </td>
 
                                         <td class="test">
-                                            <input type="text" name="order_quantity[]" required=""  id="ordered_quantity" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
+                                            <input type="text" name="order_quantity[]" required=""  id="order_quantity_1" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
                                         </td>
 
                                         <!-- <td>
@@ -246,12 +246,12 @@
 
 
                                             <td class="text-right">
-                                                <input type="text" name="price[]" id="product_rate_1" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value=""  tabindex="6"/>
+                                                <input type="text" name="price[]" id="product_rate_1" onkeyup="calculate_store(1);" onchange="calculate_store(1);" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value=""  tabindex="6"/>
                                             </td>
 
 
                                             <td class="text-right">
-                                                <input class="form-control total_price text-right" type="text" name="discount[]" id="discount" value="00"/>
+                                                <input class="form-control total_price text-right" onkeyup="calculate_store(1);" onchange="calculate_store(1);" type="text" name="discount[]" id="total_price" value="00"/>
                                             </td>
                                             <td>
                                                 <button  class="btn btn-danger text-right red" type="button" value="<?php echo display('delete')?>" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>
