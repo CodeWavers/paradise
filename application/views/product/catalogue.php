@@ -47,7 +47,7 @@ Manage Category Start -->
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <?php echo form_open('CProduct/filter_category_wise', array('class' => 'form-inline', 'method' => 'post', 'id' => 'search_form')) ?>
+                        <?php echo form_open('Cproduct/filter_category_wise', array('class' => 'form-inline', 'method' => 'post', 'id' => 'search_form')) ?>
                         <?php
                         date_default_timezone_set("Asia/Dhaka");
                         $today = date('Y-m-d');
@@ -275,24 +275,4 @@ function select_type() {
         });
     });
 
-</script>
-<!-- <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "<tr><th>Category</th><td><?php echo html_escape($product->category_name); ?></td></tr> <?php if($product->subcat_name):?><tr><th>Sub-category</th><td><?php echo html_escape($product->subcat_name); ?></td></tr><?php endif;?><tr><th>Product Name</th><td><?php echo html_escape($product->product_name); ?></td></tr> <tr><th>Parts No.</th><td><?php echo html_escape($product->parts);?></td></tr><tr><th>SKU</th><td><?php echo html_escape($product->sku);?></td></tr><tr><th>Unit Type</th><td><?php echo html_escape($product->unit); ?></td></tr><tr><th>Brand</th><td><?php echo html_escape($product->brand_name); ?></td></tr><tr> <th>Model</th><td><?php echo html_escape($product->model_name); ?></td> </tr> <tr><th>Associated Tag</th><td><?php echo html_escape($product->tag);?></td></tr>";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
 </script>

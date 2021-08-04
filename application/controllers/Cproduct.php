@@ -1,7 +1,7 @@
 <?php
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+//if (!defined('BASEPATH'))
+//    exit('No direct script access allowed');
 
 class Cproduct extends CI_Controller {
 
@@ -27,7 +27,6 @@ class Cproduct extends CI_Controller {
 
 
         $CI = & get_instance();
-        $this->auth->check_admin_auth();
         $CI->load->library('lpurchase');
         $CI->load->model('Categories');
         $category_id = $this->input->post('category_id',TRUE);
@@ -296,7 +295,7 @@ class Cproduct extends CI_Controller {
         #
         #pagination ends
         #
-        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id,); //$config["per_page"], $page);
+        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id); //$config["per_page"], $page);
 
 
         $html_data = '';
