@@ -188,7 +188,7 @@ Manage Category Start -->
 
 
 
-<script>
+<script type="text/javascript">
 
 
 function select_type() {
