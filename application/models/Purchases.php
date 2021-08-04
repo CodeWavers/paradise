@@ -47,7 +47,7 @@ class Purchases extends CI_Model {
          $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
          $searchValue = $postData['search']['value']; // Search value
 
-         ## Search 
+         ## Search
          $searchQuery = "";
          if($searchValue != ''){
             $searchQuery = " (b.supplier_name like '%".$searchValue."%' or a.chalan_no like '%".$searchValue."%' or a.purchase_id like '%".$searchValue."%' or a.purchase_date like'%".$searchValue."%')";
@@ -62,7 +62,7 @@ class Purchases extends CI_Model {
          }
           if($searchValue != '')
           $this->db->where($searchQuery);
-          
+
          $records = $this->db->get()->result();
          $totalRecords = $records[0]->allcount;
 
@@ -75,7 +75,7 @@ class Purchases extends CI_Model {
          }
          if($searchValue != '')
             $this->db->where($searchQuery);
-          
+
          $records = $this->db->get()->result();
          $totalRecordwithFilter = $records[0]->allcount;
 
@@ -88,7 +88,7 @@ class Purchases extends CI_Model {
          }
          if($searchValue != '')
          $this->db->where($searchQuery);
-       
+
          $this->db->order_by($columnName, $columnSortOrder);
          $this->db->limit($rowperpage, $start);
          $records = $this->db->get()->result();
@@ -104,11 +104,11 @@ class Purchases extends CI_Model {
          $button .=' <a href="'.$base_url.'Cpurchase/purchase_update_form/'.$record->purchase_id.'" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="'. display('update').'"><i class="fa fa-pencil" aria-hidden="true"></i></a> ';
      }
 
-     
+
 
          $purchase_ids ='<a href="'.$base_url.'Cpurchase/purchase_details_data/'.$record->purchase_id.'">'.$record->purchase_id.'</a>';
-               
-            $data[] = array( 
+
+            $data[] = array(
                 'sl'               =>$sl,
                 'chalan_no'        =>$record->chalan_no,
                 'purchase_id'      =>$purchase_ids,
@@ -116,8 +116,8 @@ class Purchases extends CI_Model {
                 'purchase_date'    =>$this->occational->dateConvert($record->purchase_date),
                 'total_amount'     =>$record->grand_total_amount,
                 'button'           =>$button,
-                
-            ); 
+
+            );
             $sl++;
          }
 
@@ -129,7 +129,7 @@ class Purchases extends CI_Model {
             "aaData" => $data
          );
 
-         return $response; 
+         return $response;
     }
 
 
@@ -461,6 +461,8 @@ class Purchases extends CI_Model {
 
         return true;
     }
+
+
     public function po_entry() {
         $purchase_id = date('YmdHis');
 
@@ -748,7 +750,7 @@ class Purchases extends CI_Model {
           $bank_id      = $this->input->post('bank_id',TRUE);
         if(!empty($bank_id)){
        $bankname = $this->db->select('bank_name')->from('bank_add')->where('bank_id',$bank_id)->get()->row()->bank_name;
-    
+
        $bankcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName',$bankname)->get()->row()->HeadCode;
    }
         $p_id = $this->input->post('product_id',TRUE);
@@ -786,7 +788,7 @@ class Purchases extends CI_Model {
       'CreateBy'       =>  $receive_by,
       'CreateDate'     =>  $createdate,
       'IsAppove'       =>  1
-    ); 
+    );
                   // bank ledger
  $bankc = array(
       'VNo'            =>  $purchase_id,
@@ -800,9 +802,9 @@ class Purchases extends CI_Model {
       'CreateBy'       =>  $receive_by,
       'CreateDate'     =>  $createdate,
       'IsAppove'       =>  1
-    ); 
+    );
 
-        
+
          $purchasecoatran = array(
           'VNo'            =>  $purchase_id,
           'Vtype'          =>  'Purchase',
@@ -815,7 +817,7 @@ class Purchases extends CI_Model {
           'CreateBy'       =>  $receive_by,
           'CreateDate'     =>  $receive_date,
           'IsAppove'       =>  1
-        ); 
+        );
           ///Inventory credit
        $coscr = array(
       'VNo'            =>  $purchase_id,
@@ -829,7 +831,7 @@ class Purchases extends CI_Model {
       'CreateBy'       => $receive_by,
       'CreateDate'     => $createdate,
       'IsAppove'       => 1
-    ); 
+    );
           // Expense for company
          $expense = array(
       'VNo'            => $purchase_id,
@@ -843,7 +845,7 @@ class Purchases extends CI_Model {
       'CreateBy'       => $receive_by,
       'CreateDate'     => $createdate,
       'IsAppove'       => 1
-    ); 
+    );
 
          $supplier_debit = array(
           'VNo'            =>  $purchase_id,
@@ -857,7 +859,7 @@ class Purchases extends CI_Model {
           'CreateBy'       =>  $receive_by,
           'CreateDate'     =>  $receive_date,
           'IsAppove'       =>  1
-        ); 
+        );
 
         if ($purchase_id != '') {
             $this->db->where('purchase_id', $purchase_id);
@@ -865,7 +867,7 @@ class Purchases extends CI_Model {
             //account transaction update
              $this->db->where('VNo', $purchase_id);
             $this->db->update('acc_transaction');
-        
+
             //supplier ledger update
 
             $this->db->where('purchase_id', $purchase_id);
@@ -873,7 +875,7 @@ class Purchases extends CI_Model {
         }
 
         $this->db->insert('acc_transaction',$coscr);
-        $this->db->insert('acc_transaction',$purchasecoatran);  
+        $this->db->insert('acc_transaction',$purchasecoatran);
         $this->db->insert('acc_transaction',$expense);
         if($this->input->post('paytype') == 2){
           if(!empty($paid_amount)){
@@ -884,8 +886,8 @@ class Purchases extends CI_Model {
         if($this->input->post('paytype') == 1){
           if(!empty($paid_amount)){
         $this->db->insert('acc_transaction',$cashinhand);
-        $this->db->insert('acc_transaction',$supplier_debit); 
-        }    
+        $this->db->insert('acc_transaction',$supplier_debit);
+        }
         }
 
         $rate = $this->input->post('product_rate',TRUE);
@@ -1063,6 +1065,246 @@ class Purchases extends CI_Model {
             return $query->result_array();
         }
         return false;
+    }
+
+    public function purchase_entry_new() {
+        $purchase_id = date('YmdHis');
+
+
+        $p_id = $this->input->post('product_id',TRUE);
+        $supplier_id = $this->input->post('supplier_id',TRUE);
+        $supinfo =$this->db->select('*')->from('supplier_information')->where('supplier_id',$supplier_id)->get()->row();
+        $sup_head = $supinfo->supplier_id.'-'.$supinfo->supplier_name;
+        $sup_coa = $this->db->select('*')->from('acc_coa')->where('HeadName',$sup_head)->get()->row();
+        $receive_by=$this->session->userdata('user_id');
+        $receive_date=date('Y-m-d');
+        $createdate=date('Y-m-d H:i:s');
+        $paid_amount = $this->input->post('paid_amount',TRUE);
+        $due_amount = $this->input->post('due_amount',TRUE);
+        $discount = $this->input->post('discount',TRUE);
+        $bank_id = $this->input->post('bank_id',TRUE);
+        if(!empty($bank_id)){
+            $bankname = $this->db->select('bank_name')->from('bank_add')->where('bank_id',$bank_id)->get()->row()->bank_name;
+
+            $bankcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName',$bankname)->get()->row()->HeadCode;
+        }else{
+            $bankcoaid = '';
+        }
+
+        //supplier & product id relation ship checker.
+        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+            $product_id = $p_id[$i];
+            $value = $this->product_supplier_check($product_id, $supplier_id);
+            if ($value == 0) {
+                $this->session->set_flashdata('error_message', display('product_and_supplier_did_not_match'));
+                redirect(base_url('Cpurchase'));
+                exit();
+            }
+        }
+
+        if($this->input->post('paid_amount')<=0){
+
+            $data = array(
+                'purchase_id'        => $purchase_id,
+                'chalan_no'          => $this->input->post('chalan_no',TRUE),
+                'supplier_id'        => $this->input->post('supplier_id',TRUE),
+                'grand_total_amount' => $this->input->post('total',TRUE),
+                'total_discount'     => $this->input->post('discount',TRUE),
+                'purchase_date'      => $this->input->post('purchase_date',TRUE),
+                'cheque_date'      => $this->input->post('cheque_date',TRUE),
+                'purchase_details'   => $this->input->post('purchase_details',TRUE),
+                'paid_amount'        => $paid_amount,
+                'due_amount'         => $due_amount,
+                'status'             => 2,
+                'bank_id'            =>  $this->input->post('bank_id',TRUE),
+                'cheque_no'            =>  $this->input->post('cheque_no',TRUE),
+                'payment_type'       =>  $this->input->post('paytype',TRUE),
+            );
+            $this->db->insert('product_purchase', $data);
+        }else{
+            $data = array(
+                'purchase_id'        => $purchase_id,
+                'chalan_no'          => $this->input->post('chalan_no',TRUE),
+                'supplier_id'        => $this->input->post('supplier_id',TRUE),
+                'grand_total_amount' => $this->input->post('grand_total_price',TRUE),
+                'total_discount'     => $this->input->post('discount',TRUE),
+                'purchase_date'      => $this->input->post('purchase_date',TRUE),
+                'cheque_date'      => $this->input->post('cheque_date',TRUE),
+                'purchase_details'   => $this->input->post('purchase_details',TRUE),
+                'paid_amount'        => $paid_amount,
+                'due_amount'         => $due_amount,
+                'status'             => 1,
+                'bank_id'            =>  $this->input->post('bank_id',TRUE),
+                'cheque_no'            =>  $this->input->post('cheque_no',TRUE),
+                'payment_type'       =>  $this->input->post('paytype',TRUE),
+            );
+            $this->db->insert('product_purchase', $data);
+        }
+        //Supplier Credit
+        $purchasecoatran = array(
+            'VNo'            =>  $purchase_id,
+            'Vtype'          =>  'Purchase',
+            'VDate'          =>  $this->input->post('purchase_date',TRUE),
+            'COAID'          =>  $sup_coa->HeadCode,
+            'Narration'      =>  'Supplier .'.$supinfo->supplier_name,
+            'Debit'          =>  0,
+            'Credit'         =>  $this->input->post('grand_total_price',TRUE),
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $receive_by,
+            'CreateDate'     =>  $receive_date,
+            'IsAppove'       =>  1
+        );
+        ///Inventory Debit
+        $coscr = array(
+            'VNo'            =>  $purchase_id,
+            'Vtype'          =>  'Purchase',
+            'VDate'          =>  $this->input->post('purchase_date',TRUE),
+            'COAID'          =>  10107,
+            'Narration'      =>  'Inventory Debit For Supplier '.$supinfo->supplier_name,
+            'Debit'          =>  $this->input->post('grand_total_price',TRUE),
+            'Credit'         =>  0,//purchase price asbe
+            'IsPosted'       => 1,
+            'CreateBy'       => $receive_by,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+
+
+
+        // Expense for company
+        $expense = array(
+            'VNo'            => $purchase_id,
+            'Vtype'          => 'Purchase',
+            'VDate'          => $this->input->post('purchase_date',TRUE),
+            'COAID'          => 402,
+            'Narration'      => 'Company Credit For  '.$supinfo->supplier_name,
+            'Debit'          => $this->input->post('grand_total_price',TRUE),
+            'Credit'         => 0,//purchase price asbe
+            'IsPosted'       => 1,
+            'CreateBy'       => $receive_by,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $cashinhand = array(
+            'VNo'            =>  $purchase_id,
+            'Vtype'          =>  'Purchase',
+            'VDate'          =>  $this->input->post('purchase_date',TRUE),
+            'COAID'          =>  1020101,
+            'Narration'      =>  'Cash in Hand For Supplier '.$supinfo->supplier_name,
+            'Debit'          =>  0,
+            'Credit'         =>  $paid_amount,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $receive_by,
+            'CreateDate'     =>  $createdate,
+            'IsAppove'       =>  1
+        );
+
+        $supplierdebit = array(
+            'VNo'            =>  $purchase_id,
+            'Vtype'          =>  'Purchase',
+            'VDate'          =>  $this->input->post('purchase_date',TRUE),
+            'COAID'          =>  $sup_coa->HeadCode,
+            'Narration'      =>  'Supplier .'.$supinfo->supplier_name,
+            'Debit'          =>  $paid_amount,
+            'Credit'         =>  0,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $receive_by,
+            'CreateDate'     =>  $receive_date,
+            'IsAppove'       =>  1
+        );
+
+        // bank ledger
+        $bankc = array(
+            'VNo'            =>  $purchase_id,
+            'Vtype'          =>  'Purchase',
+            'VDate'          =>  $this->input->post('purchase_date',TRUE),
+            'COAID'          =>  $bankcoaid,
+            'Narration'      =>  'Paid amount for Supplier  '.$supinfo->supplier_name,
+            'Debit'          =>  0,
+            'Credit'         =>  $paid_amount,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $receive_by,
+            'CreateDate'     =>  $createdate,
+            'IsAppove'       =>  1
+        );
+        // Bank summary for credit
+
+        //new end
+
+        //$this->db->insert('product_purchase', $data);
+
+        $this->db->insert('acc_transaction',$coscr);
+        $this->db->insert('acc_transaction',$purchasecoatran);
+        $this->db->insert('acc_transaction',$expense);
+        if($this->input->post('paytype') == 2){
+            if(!empty($paid_amount)){
+                $this->db->insert('acc_transaction',$bankc);
+
+                $this->db->insert('acc_transaction',$supplierdebit);
+            }
+        }
+        if($this->input->post('paytype') == 1){
+            if(!empty($paid_amount)){
+                $this->db->insert('acc_transaction',$cashinhand);
+                $this->db->insert('acc_transaction',$supplierdebit);
+            }
+        }
+
+        $rate = $this->input->post('price',TRUE);
+        $quantity = $this->input->post('order_quantity',TRUE);
+        $sn = $this->input->post('sn',TRUE);
+        $origin = $this->input->post('origin',TRUE);
+        // $warehouse = $this->input->post('warehouse',TRUE);
+        $warrenty = $this->input->post('warrenty_date',TRUE);
+        // $expired = $this->input->post('expired_date',TRUE);
+        $t_price = $this->input->post('total',TRUE);
+        $discount = $this->input->post('discount',TRUE);
+        $pur_order_no = $this->input->post('pur_order_no', TRUE);
+
+        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+            $product_quantity = $quantity[$i];
+            $sn_number = $sn[$i];
+            $origin_t = $origin[$i];
+            $warrenty_date = $warrenty[$i];
+            $product_rate = $rate[$i];
+            $product_id = $p_id[$i];
+            $disc = $discount[$i];
+
+            $data1 = array(
+                'purchase_detail_id' => $this->generator(15),
+                'purchase_id'        => $purchase_id,
+                'purchase_order'     => $pur_order_no,
+                'product_id'         => $product_id,
+                'quantity'           => $product_quantity,
+                'sn'           => $sn_number,
+                 'qty'           => $product_quantity,
+                'origin'             => $origin_t,
+                'warrenty_date'      => $warrenty_date,
+                'rate'               => $product_rate,
+                'total_amount'       => $t_price,
+                'discount'           => $disc,
+                'status'             => 1
+            );
+
+            if (!empty($quantity)) {
+                $this->db->insert('product_purchase_details', $data1);
+            }
+        }
+
+        return true;
+    }
+
+    public function number_generator() {
+        $this->db->select('purchase_order')->where('status',1)->order_by('purchase_order', 'desc');
+        $query = $this->db->get('product_purchase_details');
+        $result = $query->result_array();
+        $order_no = substr($result[0]['purchase_order'], -4);
+        if ($order_no != '') {
+            $order_no = $order_no + 1;
+        } else {
+            $order_no = 1000;
+        }
+        return 'P'.$order_no;
     }
 
 }

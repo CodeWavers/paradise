@@ -28,7 +28,7 @@ header('Content-Type: text/javascript; charset=utf8');
 
 
 
-            newdiv.innerHTML ='<td class="wt"> <input type="text" placeholder="SN" name="sn[]" id="sn_'+ count +'" class="form-control text-right stock_ctn_1'+ count +'" /></td><td class="span3 supplier"><input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+ count +');" placeholder="Pr. Name" id="product_name_'+ count +'" tabindex="3"><input type="hidden" class="autocomplete_hidden_value product_id_'+ count +'" name="product_id[]" id="SchoolHiddenId" /><input type="hidden" class="sl" value="'+ count +'"></td><td class="wt"><input type="text" placeholder="Category" id="category_name_'+ count +'" class="form-control text-center" readonly /></td><td class="wt"><input type="text" placeholder="Sub Category" id="subcat_name_'+ count +'" class="form-control text-center" readonly /></td><td class="wt"> <input type="text" placeholder="Parts No." name="parts_no[]" id="parts_number_'+ count +'" class="form-control text-right stock_ctn_'+ count +'" readonly /></td><td class="wt"><input type="text" id="available_quantity_'+ count +'" class="form-control text-right stock_ctn_'+ count +'" placeholder="0.00" readonly /></td><td class="test"><input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_'+count+'" class="form-control product_rate_'+ count +' text-right" placeholder="1234" value="" min="0" tabindex="7" /></td><td class="test"><input type="text" name="order_quantity[]" required="" id="ordered_quantity'+count+'" class="form-control product_rate_'+ count +' text-right" placeholder="1234" value="" min="0" tabindex="7" /></td><td><input type="date" style="width: 110px" id="warrenty_date" name="warrenty_date[]" /></td><td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin" class="form-control text-right stock_ctn_'+ count +'" /></td><td class="text-right"><input type="text" name="price[]" id="product_rate_'+ count +'" required="" min="0" class="form-control text-right store_cal_'+ count +'" placeholder="0.00" value="" tabindex="6" /></td><td class="text-right"><input class="form-control total_price text-right" type="text" name="discount[]" id="discount" value="00" /></td><td><button class="btn btn-danger text-right red" type="button" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button></td>';
+            newdiv.innerHTML ='<td class="wt"> <input type="text"  placeholder="SN" name="sn[]" id="sn" class="form-control text-right stock_ctn_'+count+'"  /></td><td class="span3 supplier"><input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+count+');" placeholder="Pr. Name" id="product_name_'+count+'" tabindex="3" ><input type="hidden" class="autocomplete_hidden_value product_id_'+count+'" name="product_id[]" id="SchoolHiddenId"/><input type="hidden" class="sl" value="'+count+'"></td><td class="wt"><input type="text" placeholder="Category" id="category_name_'+count+'" class="form-control text-center"  readonly/></td><td class="wt"><input type="text" placeholder="Sub Category" id="subcat_name_'+count+'" class="form-control text-center"  readonly/></td><td class="wt"> <input type="text" placeholder="Parts No." name="parts_no[]" id="parts_number_'+count+'" class="form-control text-right stock_ctn_'+count+'"  readonly/></td><td class="wt"><input type="text"  id="available_quantity_'+count+'" class="form-control text-right stock_ctn_'+count+'" placeholder="0.00" readonly/></td><td class="test"><input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_'+count+'" class="form-control product_rate_'+count+' text-right" placeholder="1234" value="" min="0" tabindex="7"/></td><td class="test"><input type="text" name="order_quantity[]" required=""  id="order_quantity_'+count+'" class="form-control product_rate_'+count+' text-right" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" placeholder="1234" value="" min="0" tabindex="7"/></td><td><input type="date"  style="width: 110px" id="warrenty_date" name="warrenty_date[]"  /></td><td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin" class="form-control text-right stock_ctn_'+count+'"  /></td><td class="text-right"><input type="text" name="price[]" id="product_rate_'+count+'" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" required="" min="0" class="form-control text-right store_cal_'+count+'"  placeholder="0.00" value=""  tabindex="6"/></td><td class="text-right"><input class="form-control discount text-right" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" type="text" name="discount[]" id="discount_'+count+'" value="00"/><input type="hidden" name="row_total[]" value="" id = "row_total_'+count+'" class="row_total"></td><td><button  class="btn btn-danger text-right red" type="button" tabindex="8"><i class="fa fa-close"></i></button></td>';
             document.getElementById(divName).appendChild(newdiv);
             document.getElementById(tabin).focus();
             document.getElementById("add_invoice_item").setAttribute("tabindex", tab5);
@@ -53,30 +53,31 @@ header('Content-Type: text/javascript; charset=utf8');
 
         var gr_tot = 0;
         var dis = 0;
+        var discount = $("#discount_"+sl).val()
         var item_ctn_qty    = $("#order_quantity_"+sl).val();
         var vendor_rate = $("#product_rate_"+sl).val();
 
-        var total_price     = item_ctn_qty * vendor_rate;
-        $("#total_price_"+sl).val(total_price.toFixed(2));
+        var total_price     = (item_ctn_qty * (vendor_rate-discount));
+        $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
         //Total Price
-        $(".total_price").each(function() {
+        $(".row_total").each(function() {
             isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
         });
          $(".discount").each(function() {
             isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
         });
 
-        $("#Total").val(gr_tot.toFixed(2,2));
+        // $("#Total").val(gr_tot.toFixed(2,2));
         var grandtotal = gr_tot - dis;
-        $("#grandTotal").val(grandtotal.toFixed(2,2));
+        $("#Total").val(grandtotal.toFixed(2,2));
         invoice_paidamount();
     }
 
 
         function invoice_paidamount() {
-      var t = $("#grandTotal").val(),
+      var t = $("#Total").val(),
             a = $("#paidAmount").val(),
             e = t - a;
      if(e > 0){
@@ -88,7 +89,7 @@ header('Content-Type: text/javascript; charset=utf8');
 
     "use strict";
     function full_paid() {
-    var grandTotal = $("#grandTotal").val();
+    var grandTotal = $("#Total").val();
     $("#paidAmount").val(grandTotal);
     invoice_paidamount();
     calculate_store();

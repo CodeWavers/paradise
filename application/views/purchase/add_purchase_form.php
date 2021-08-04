@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="panel-body">
-                    <?php echo form_open_multipart('Cpurchase/insert_purchase',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+                    <?php echo form_open_multipart('Cpurchase/insert_purchase_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
                         <div class="row">
@@ -81,14 +81,15 @@
                                         </select>
                                     </div>
                                   <?php if($this->permission1->method('add_supplier','create')->access()){ ?>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-success" title="Add New Supplier" href="<?php echo base_url('Csupplier'); ?>"><i class="fa fa-user"></i></a>
+                                    <div class="col-sm-2" style="padding: 0px;">
+                                        <a class="btn btn-success" style="margin: 0;" title="Add New Supplier" href="<?php echo base_url('Csupplier'); ?>"><i class="fa fa-user"></i></a>
                                     </div>
                                 <?php }?>
                                 </div>
                             </div>
+                        </div>
 
-
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="date" class="col-sm-4 col-form-label"><?php echo display('purchase_date') ?>
@@ -102,85 +103,18 @@
                             </div>
 
                         </div>
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="invoice_no" class="col-sm-4 col-form-label">Chalan No:
-                                        <i class="text-danger"></i>
-                                    </label>
-                                    <div class="col-sm-6">
-                                        <input type="text" tabindex="3" class="form-control" name="chalan_no" placeholder="Chalan No:" id="invoice_no" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                               <div class="form-group row">
-                                    <label for="adress" class="col-sm-4 col-form-label"><?php echo display('details') ?>
-                                    </label>
+                                    <label for="date" class="col-sm-4 col-form-label">Purchase Order No.</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" tabindex="4" id="adress" name="purchase_details" placeholder=" <?php echo display('details') ?>" rows="1"></textarea>
+                                        <input type="text" class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $order_no ?>" readonly>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                             <div class="row">
-                              <div class="col-sm-6" id="payment_from_1">
-                                <div class="form-group row">
-                                    <label for="payment_type" class="col-sm-4 col-form-label"><?php
-                                        echo display('payment_type');
-                                        ?> <i class="text-danger">*</i></label>
-                                    <div class="col-sm-6">
-                                        <select name="paytype" class="form-control" required="" onchange="bank_paymet(this.value)">
-                                            <option value="1"><?php echo display('cash_payment');?></option>
-                                            <option value="2"><?php echo display('bank_payment');?></option>
 
-                                        </select>
-
-
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                                 <div class="col-sm-6" id="bank_div">
-                                     <div class="form-group row">
-                                         <label for="bank" class="col-sm-4 col-form-label"><?php
-                                             echo display('bank');
-                                             ?> <i class="text-danger">*</i></label>
-                                         <div class="col-sm-8">
-                                             <select name="bank_id" class="form-control bankpayment"  id="bank_id">
-                                                 <option value="">Select Location</option>
-                                                 <?php foreach($bank_list as $bank){?>
-                                                     <option value="<?php echo $bank['bank_id']?>"><?php echo $bank['bank_name'];?></option>
-                                                 <?php }?>
-                                             </select>
-
-                                         </div>
-
-                                         <label for="bank" class="col-sm-4 col-form-label">Cheque NO:
-                                             <i class="text-danger">*</i></label>
-                                         <div class="col-sm-8">
-                                             <input type="number"   name="cheque_no" class=" form-control" placeholder=""  />
-                                         </div>
-                                         <br>
-
-                                         <label for="date" class="col-sm-4 col-form-label">Cheque Date <i class="text-danger">*</i></label>
-                                         <div class="col-sm-8">
-                                             <?php
-
-                                             $date = date('Y-m-d');
-                                             ?>
-                                             <input class="datepicker form-control" type="text" size="50" name="cheque_date" id="" required value="<?php echo html_escape($date); ?>" tabindex="4" />
-                                         </div>
-
-
-
-                                     </div>
-                                 </div>
-                        </div>
 
 <br>
                         <div class="table-responsive">
@@ -199,7 +133,7 @@
                                         <th class="text-center">Warranty</th>
                                         <th class="text-center">Origin</th>
                                         <th class="text-center">Price</th>
-                                        <th class="text-center">Discount</th>
+                                        <th class="text-center">Discount Per Item</th>
                                         <th class="text-center"><?php echo display('action') ?></th>
                                     </tr>
                                 </thead>
@@ -231,7 +165,7 @@
                                         </td>
 
                                         <td class="test">
-                                            <input type="text" name="order_quantity[]" required=""  id="order_quantity_1" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
+                                            <input type="text" name="order_quantity[]" required=""  id="order_quantity_1" class="form-control product_rate_1 text-right" onkeyup="calculate_store(1);" onchange="calculate_store(1);" placeholder="1234" value="" min="0" tabindex="7"/>
                                         </td>
 
                                         <!-- <td>
@@ -251,7 +185,8 @@
 
 
                                             <td class="text-right">
-                                                <input class="form-control total_price text-right" onkeyup="calculate_store(1);" onchange="calculate_store(1);" type="text" name="discount[]" id="total_price" value="00"/>
+                                                <input class="form-control discount text-right" onkeyup="calculate_store(1);" onchange="calculate_store(1);" type="text" name="discount[]" id="discount_1" value="00"/>
+                                                <input type="hidden" name="row_total[]" value="" id = "row_total_1" class="row_total">
                                             </td>
                                             <td>
                                                 <button  class="btn btn-danger text-right red" type="button" value="<?php echo display('delete')?>" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>

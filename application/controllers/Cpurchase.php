@@ -122,6 +122,21 @@ class Cpurchase extends CI_Controller {
         }
     }
 
+    public function insert_purchase_new() {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Purchases');
+        $CI->Purchases->purchase_entry_new();
+        $this->session->set_userdata(array('message' => display('successfully_added')));
+        if (isset($_POST['add-purchase'])) {
+            redirect(base_url('Cpurchase/manage_purchase'));
+            exit;
+        } elseif (isset($_POST['add-purchase-another'])) {
+            redirect(base_url('Cpurchase'));
+            exit;
+        }
+    }
+
     public function insert_po() {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
