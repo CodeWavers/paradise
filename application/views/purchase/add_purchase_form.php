@@ -148,6 +148,7 @@
                                             <option value="{category_id}">{category_name}</option>
                                             {/category_list}
                                         </select>
+                                        <input type="hidden" id="cat_list" value='{category_list}<option value="{category_id}">{category_name}</option>{/category_list}' name="">
                                     </td>
 
                                     <td class="wt">
@@ -186,7 +187,7 @@
                                            <input type="date"  style="width: 110px" id="warrenty_date" name="warrenty_date[]"  />
                                        </td>
 
-                                       <td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin" class="form-control text-right stock_ctn_1"  /></td>
+                                       <td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin_1" class="form-control text-right stock_ctn_1"  readonly/></td>
 
 
                                             <td class="text-right">

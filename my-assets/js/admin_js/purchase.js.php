@@ -18,6 +18,7 @@ header('Content-Type: text/javascript; charset=utf8');
              tabindex = count * 4 ,
            newdiv = document.createElement("tr");
             tab1 = tabindex + 1;
+            cat_list = $("#cat_list").val();
 
             tab2 = tabindex + 2;
             tab3 = tabindex + 3;
@@ -28,12 +29,75 @@ header('Content-Type: text/javascript; charset=utf8');
 
 
 
-            newdiv.innerHTML ='<td class="wt"> <input type="text"  placeholder="SN" name="sn[]" id="sn" class="form-control text-right stock_ctn_'+count+'"  /></td><td class="span3 supplier"><input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+count+');" placeholder="Pr. Name" id="product_name_'+count+'" tabindex="3" ><input type="hidden" class="autocomplete_hidden_value product_id_'+count+'" name="product_id[]" id="SchoolHiddenId"/><input type="hidden" class="sl" value="'+count+'"></td><td class="wt"><input type="text" placeholder="Category" id="category_name_'+count+'" class="form-control text-center"  readonly/></td><td class="wt"><input type="text" placeholder="Sub Category" id="subcat_name_'+count+'" class="form-control text-center"  readonly/></td><td class="wt"> <input type="text" placeholder="Parts No." name="parts_no[]" id="parts_number_'+count+'" class="form-control text-right stock_ctn_'+count+'"  readonly/></td><td class="wt"><input type="text"  id="available_quantity_'+count+'" class="form-control text-right stock_ctn_'+count+'" placeholder="0.00" readonly/></td><td class="test"><input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_'+count+'" class="form-control product_rate_'+count+' text-right" placeholder="1234" value="" min="0" tabindex="7"/></td><td class="test"><input type="text" name="order_quantity[]" required=""  id="order_quantity_'+count+'" class="form-control product_rate_'+count+' text-right" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" placeholder="1234" value="" min="0" tabindex="7"/></td><td><input type="date"  style="width: 110px" id="warrenty_date" name="warrenty_date[]"  /></td><td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin" class="form-control text-right stock_ctn_'+count+'"  /></td><td class="text-right"><input type="text" name="price[]" id="product_rate_'+count+'" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" required="" min="0" class="form-control text-right store_cal_'+count+'"  placeholder="0.00" value=""  tabindex="6"/></td><td class="text-right"><input class="form-control discount text-right" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" type="text" name="discount[]" id="discount_'+count+'" value="00"/><input type="hidden" name="row_total[]" value="" id = "row_total_'+count+'" class="row_total"></td><td><button  class="btn btn-danger text-right red" type="button" tabindex="8"><i class="fa fa-close"></i></button></td>';
+            // newdiv.innerHTML ='<td class="wt"> <input type="text"  placeholder="SN" name="sn[]" id="sn" class="form-control text-right stock_ctn_'+count+'"  /></td><td class="span3 supplier"><input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+count+');" placeholder="Pr. Name" id="product_name_'+count+'" tabindex="3" ><input type="hidden" class="autocomplete_hidden_value product_id_'+count+'" name="product_id[]" id="SchoolHiddenId"/><input type="hidden" class="sl" value="'+count+'"></td><td class="wt"><input type="text" placeholder="Category" id="category_name_'+count+'" class="form-control text-center"  readonly/></td><td class="wt"><input type="text" placeholder="Sub Category" id="subcat_name_'+count+'" class="form-control text-center"  readonly/></td><td class="wt"> <input type="text" placeholder="Parts No." name="parts_no[]" id="parts_number_'+count+'" class="form-control text-right stock_ctn_'+count+'"  readonly/></td><td class="wt"><input type="text"  id="available_quantity_'+count+'" class="form-control text-right stock_ctn_'+count+'" placeholder="0.00" readonly/></td><td class="test"><input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_'+count+'" class="form-control product_rate_'+count+' text-right" placeholder="1234" value="" min="0" tabindex="7"/></td><td class="test"><input type="text" name="order_quantity[]" required=""  id="order_quantity_'+count+'" class="form-control product_rate_'+count+' text-right" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" placeholder="1234" value="" min="0" tabindex="7"/></td><td><input type="date"  style="width: 110px" id="warrenty_date" name="warrenty_date[]"  /></td><td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin" class="form-control text-right stock_ctn_'+count+'"  /></td><td class="text-right"><input type="text" name="price[]" id="product_rate_'+count+'" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" required="" min="0" class="form-control text-right store_cal_'+count+'"  placeholder="0.00" value=""  tabindex="6"/></td><td class="text-right"><input class="form-control discount text-right" onkeyup="calculate_store('+count+');" onchange="calculate_store('+count+');" type="text" name="discount[]" id="discount_'+count+'" value="00"/><input type="hidden" name="row_total[]" value="" id = "row_total_'+count+'" class="row_total"></td><td><button  class="btn btn-danger text-right red" type="button" tabindex="8"><i class="fa fa-close"></i></button></td>';
+
+            newdiv.innerHTML = '<td class="wt"> <input type="text" value="'+ count +'" name="sn[]" id="sn" class="form-control text-right stock_ctn_'+ count +'"  readonly/></td>'
+
+            +'<td class="wt">'
+                +'<select name="category_name" id="category_name_'+ count +'" class="form-control text-center" onchange="change_cat('+ count +')">'
+                    + cat_list
+                +'</select>'
+            +'</td>'
+
+            +'<td class="wt">'
+               + '<select name="subcat_name" id="subcat_name_'+ count +'" class="form-control text-center">'
+                +   ' <option value=""></option>'
+               +' </select>'
+            +'</td>'
+
+            +'<td class="span3 supplier">'
+              + '<input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+ count +');" placeholder="Pr. Name" id="product_name_'+ count +'" tabindex="3" >'
+                +'<input type="hidden" class="autocomplete_hidden_value product_id_'+ count +'" name="product_id[]" id="SchoolHiddenId"/>'
+               + '<input type="hidden" class="sl" value="'+ count +'">'
+            +'</td>'
+
+                +'<td class="wt"> <input type="text" placeholder="Parts No." name="parts_no[]" id="parts_number_'+ count +'" class="form-control text-right stock_ctn_'+ count +'"  readonly/></td>'
+
+                +'<td class="wt">'
+                +    '<input type="text"  id="available_quantity_'+ count +'" class="form-control text-right stock_ctn_'+ count +'" placeholder="0.00" readonly/>'
+                +'</td>'
+
+                +'<td class="test">'
+                +    '<input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_'+ count +'" class="form-control product_rate_'+ count +' text-right" placeholder="1234" value="" min="0" tabindex="7"/>'
+                +'</td>'
+
+                +'<td class="test">'
+                +    '<input type="text" name="order_quantity[]" required=""  id="order_quantity_'+ count +'" class="form-control product_rate_'+ count +' text-right" onkeyup="calculate_store('+ count +');" onchange="calculate_store('+ count +');" placeholder="1234" value="" min="0" tabindex="7"/>'
+               +' </td>'
+
+                +'<td>'
+                 +   '<select name="supplier_name[]" id="supplier_drop_'+ count +'" class="form-control text-center" onchange="get_price('+ count +')">'
+
+                 +   '</select>'
+                +'</td>'
+
+                +'<td>'
+                  + '<input type="date"  style="width: 110px" id="warrenty_date" name="warrenty_date[]"  />'
+              +' </td>'
+
+               +'<td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin_'+ count +'" class="form-control text-right stock_ctn_'+ count +'"  readonly/></td>'
+
+
+                   +'<td class="text-right">'
+                    +    '<input type="text" name="price[]" id="product_rate_'+ count +'" onkeyup="calculate_store('+ count +');" onchange="calculate_store('+ count +');" required="" min="0" class="form-control text-right store_cal_'+ count +'"  placeholder="0.00" value=""  tabindex="6"/>'
+                    +'</td>'
+
+
+                    +'<td class="text-right">'
+                    +    '<input class="form-control discount text-right" onkeyup="calculate_store('+ count +');" onchange="calculate_store('+ count +');" type="text" name="discount[]" id="discount_'+ count +'" value="00"/>'
+                    +    '<input type="hidden" name="row_total[]" value="" id = "row_total_'+ count +'" class="row_total">'
+                    +'</td>'
+                    +'<td>'
+                    +    '<button  class="btn btn-danger text-right red" type="button" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>'
+            +'</td>';
+
             document.getElementById(divName).appendChild(newdiv);
             document.getElementById(tabin).focus();
             document.getElementById("add_invoice_item").setAttribute("tabindex", tab5);
             document.getElementById("add_purchase").setAttribute("tabindex", tab6);
             document.getElementById("add_purchase_another").setAttribute("tabindex", tab7);
+
+            change_cat(count);
 
             count++;
 
@@ -127,6 +191,7 @@ function get_price(sl) {
         success: function (data) {
             obj = JSON.parse(data);
             $('#' + product_rate).val(obj.price);
+            calculate_store(sl);
         }
     });
 }
@@ -222,7 +287,7 @@ function get_price(sl) {
            var subcat = 'subcat_name_' + sl;
 
            var parts_no = 'parts_number_' + sl;
-
+           var origin = $("#origin_" + sl);
            var supplier_drop = $("#supplier_drop_" + sl);
 
 
@@ -240,6 +305,7 @@ function get_price(sl) {
                     $('#'+available_quantity).val(obj.data1.total_product);
                     // $('#' + product_rate).val(obj.data1.supplier_price);
                     $('#' + parts_no).val(obj.data2.parts);
+                    origin.val(obj.data2.country);
                     supplier_drop.html(obj.supp);
 
                 }
