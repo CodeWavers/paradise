@@ -168,7 +168,7 @@ header('Content-Type: text/javascript; charset=utf8');
             var a = e.parentNode.parentNode;
             a.parentNode.removeChild(a)
         }
-        calculateSum();
+        calculate_store();
     }
 
 "use strict";

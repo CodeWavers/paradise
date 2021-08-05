@@ -1082,6 +1082,8 @@ class Purchases extends CI_Model {
         $due_amount = $this->input->post('due_amount',TRUE);
         $discount = $this->input->post('discount',TRUE);
         $bank_id = $this->input->post('bank_id',TRUE);
+        $pur_order_no = $this->input->post('pur_order_no', TRUE);
+
 
         //supplier & product id relation ship checker.
         // for ($i = 0, $n = count($p_id); $i < $n; $i++) {
@@ -1102,6 +1104,8 @@ class Purchases extends CI_Model {
             $data=array(
                 'purchase_id'        => $purchase_id,
                 'grand_total_amount' => $this->input->post('total',TRUE),
+                'purchase_order'     => $pur_order_no,
+                'purchase_date'      => $receive_date,
                 'paid_amount'        => $paid_amount,
                 'due_amount'         => $due_amount,
                 'status'             => 2,
@@ -1112,6 +1116,8 @@ class Purchases extends CI_Model {
             $data=array(
                 'purchase_id'        => $purchase_id,
                 'grand_total_amount' => $this->input->post('total',TRUE),
+                'purchase_order'     => $pur_order_no,
+                'purchase_date'      => $receive_date,
                 'paid_amount'        => $paid_amount,
                 'due_amount'         => $due_amount,
                 'status'             => 1,
@@ -1133,7 +1139,6 @@ class Purchases extends CI_Model {
         // $expired = $this->input->post('expired_date',TRUE);
         $t_price = $this->input->post('total',TRUE);
         $discount = $this->input->post('discount',TRUE);
-        $pur_order_no = $this->input->post('pur_order_no', TRUE);
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
             $supp_id = $supplier_id[$i];
@@ -1148,7 +1153,6 @@ class Purchases extends CI_Model {
             $data1 = array(
                 'purchase_detail_id' => $this->generator(15),
                 'purchase_id'        => $purchase_id,
-                'purchase_order'     => $pur_order_no,
                 'supplier_id'        => $supp_id,
                 'product_id'         => $product_id,
                 'quantity'           => $product_quantity,
@@ -1174,7 +1178,7 @@ class Purchases extends CI_Model {
 
     public function number_generator() {
         $this->db->select('purchase_order')->where('status',1)->order_by('purchase_order', 'desc');
-        $query = $this->db->get('product_purchase_details');
+        $query = $this->db->get('product_purchase');
         $result = $query->result_array();
         $order_no = substr($result[0]['purchase_order'], -4);
         if ($order_no != '') {
@@ -1182,7 +1186,7 @@ class Purchases extends CI_Model {
         } else {
             $order_no = 1000;
         }
-        return 'P'.$order_no;
+        return 'PO'.$order_no;
     }
 
 }
