@@ -456,6 +456,29 @@ class Products extends CI_Model {
        return $query->result();
    }
 
+   public function product_filter_category_wise2($category = null, $subcategory = null, $config = null) {
+    $this->db->select('a.*,b.*,c.*,d.*,e.*');
+       $this->db->from('product_information a');
+       $this->db->join('product_category b', 'b.category_id = a.category_id', 'left');
+       $this->db->join('product_brand c', 'c.brand_id = a.brand_id', 'left');
+       $this->db->join('product_subcat d', 'd.sub_cat_id = a.sub_cat_id', 'left');
+       $this->db->join('product_model e', 'e.model_id = a.product_model', 'left');
+
+   if ($category) {
+       $this->db->where('b.category_id', $category);
+
+   } if ($subcategory) {
+       $this->db->where('d.sub_cat_id', $subcategory);
+   }
+   if ($category && $subcategory) {
+        $this->db->where('b.category_id', $category);
+       $this->db->where('d.sub_cat_id', $subcategory);
+   }
+   $this->db->limit($config);
+   $query = $this->db->get();
+   return $query->result_array();
+}
+
 
    public function retrieve_product_full_data($product_id) {
     $this->db->select('a.*, b.category_name, c.subcat_name');

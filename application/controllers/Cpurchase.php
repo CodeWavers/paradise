@@ -316,4 +316,38 @@ class Cpurchase extends CI_Controller {
             force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
 
+    public function retrieve_product_cat_subcat_wise()
+    {
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Products');
+        $cat_id = $this->input->post('cat_id',TRUE);
+        $subcat_id = $this->input->post('subcat_id',TRUE);
+        $product_info = $CI->Products->product_filter_category_wise2($cat_id, $subcat_id, 15);
+        if(!empty($product_info)){
+            $list[''] = '';
+            foreach ($product_info as $value) {
+                $json_product[] = array('label'=>$value['product_name'].'('.$value['product_model'].')','value'=>$value['product_id']);
+            }
+        }else{
+            $json_product[] = 'No Product Found';
+        }
+        echo json_encode($json_product);
+    }
+
+    public function get_supplier_price()
+    {
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Suppliers');
+
+        $supplier_id = $this->input->post('supplier_id', TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
+
+        $price = $CI->Suppliers->product_suppliers($supplier_id, $product_id);
+
+        $data['price'] = $price[0]['supplier_price'];
+        // echo '<pre>'; print_r($data); exit();
+        echo json_encode($data);
+    }
 }

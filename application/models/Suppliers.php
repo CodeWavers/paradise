@@ -41,7 +41,7 @@ class Suppliers extends CI_Model {
          $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
          $searchValue = $postData['search']['value']; // Search value
 
-         ## Search 
+         ## Search
          $searchQuery = "";
          if($searchValue != ''){
             $searchQuery = " (a.supplier_name like '%".$searchValue."%' or a.mobile like '%".$searchValue."%' or a.country like '%".$searchValue."%' or a.state like '%".$searchValue."%' or a.zip like '%".$searchValue."%' or a.city like '%".$searchValue."%') ";
@@ -79,16 +79,16 @@ class Suppliers extends CI_Model {
          $records = $this->db->get()->result();
          $data = array();
          $sl =1;
-  
+
          foreach($records as $record ){
           $button = '';
           $base_url = base_url();
           $jsaction = "return confirm('Are You Sure ?')";
 
-       
+
         $balance = $record->balance;
 
-        
+
    if($this->permission1->method('manage_supplier','update')->access()){
     $button .='<a href="'.$base_url.'Csupplier/supplier_update_form/'.$record->supplier_id.'" class="btn btn-info btn-xs"  data-placement="left" title="'. display('update').'"><i class="fa fa-edit"></i></a> ';
 }
@@ -96,8 +96,8 @@ class Suppliers extends CI_Model {
      $button .='<a href="'.$base_url.'Csupplier/supplier_delete/'.$record->supplier_id.'" class="btn btn-danger btn-xs" onclick="'.$jsaction.'"><i class="fa fa-trash"></i></a>';
  }
 
-               
-            $data[] = array( 
+
+            $data[] = array(
                 'sl'               =>$sl,
                 'supplier_name'    =>html_escape($record->supplier_name),
                 'address'          =>html_escape($record->address),
@@ -115,8 +115,8 @@ class Suppliers extends CI_Model {
                 'details'          =>html_escape($record->details),
                 'balance'          =>(!empty($balance)?$balance:0),
                 'button'           =>$button,
-                
-            ); 
+
+            );
             $sl++;
          }
 
@@ -128,7 +128,7 @@ class Suppliers extends CI_Model {
             "aaData" => $data
          );
 
-         return $response; 
+         return $response;
     }
 
     // supplier search
@@ -224,7 +224,21 @@ class Suppliers extends CI_Model {
                 ->limit(15)
                 ->get();
         if ($query->num_rows() > 0) {
-            return $query->result_array();  
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function product_suppliers($supplier_id, $product_id)
+    {
+        $query = $this->db->select('*')
+                      ->from('supplier_product')
+                      ->where('product_id', $product_id)
+                      ->where('supplier_id', $supplier_id)
+                      ->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
         }
         return false;
     }
@@ -294,7 +308,7 @@ class Suppliers extends CI_Model {
         $transaction_id = $this->auth->generator(10);
     $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName',$c_acc)->get()->row();
     $supplier_headcode = $coainfo->HeadCode;
-       
+
              $cosdr = array(
       'VNo'            =>  $transaction_id,
       'Vtype'          =>  'PR Balance',
@@ -320,11 +334,11 @@ class Suppliers extends CI_Model {
       'CreateBy'       => $this->session->userdata('user_id'),
       'CreateDate'     => date('Y-m-d H:i:s'),
       'IsAppove'       => 1
-    ); 
+    );
 
         if(!empty($balance)){
-           $this->db->insert('acc_transaction', $cosdr); 
-           $this->db->insert('acc_transaction', $inventory); 
+           $this->db->insert('acc_transaction', $cosdr);
+           $this->db->insert('acc_transaction', $inventory);
         }
     }
 
@@ -361,14 +375,14 @@ class Suppliers extends CI_Model {
 
 
 
-    // Delete supplier from transection 
+    // Delete supplier from transection
     // Delete supplier Item
     public function delete_supplier($supplier_id) {
         $supplier_info = $this->db->select('supplier_name')->from('supplier_information')->where('supplier_id',$supplier_id)->get()->row();
         $supplier_head = $supplier_id.'-'.$supplier_info->supplier_name;
         $this->db->where('supplier_id', $supplier_id);
         $this->db->delete('acc_coa');
-        
+
         $this->db->where('supplier_id', $supplier_id);
         $this->db->delete('supplier_information');
 
@@ -385,7 +399,7 @@ class Suppliers extends CI_Model {
         return true;
     }
 
-    //Retrieve supplier Personal Data 
+    //Retrieve supplier Personal Data
     public function supplier_personal_data($supplier_id) {
         $this->db->select('*');
         $this->db->from('supplier_information');
@@ -419,7 +433,7 @@ class Suppliers extends CI_Model {
         return false;
     }
 
-    //Retrieve Supplier Purchase Data 
+    //Retrieve Supplier Purchase Data
     public function supplier_purchase_data($supplier_id) {
         $this->db->select('*');
         $this->db->from('product_purchase');
@@ -472,7 +486,7 @@ class Suppliers extends CI_Model {
         }
     }
 
-    // Second 
+    // Second
     public function supplier_product_sale1($per_page, $page) {
         $this->db->select('a.*,b.HeadName');
         $this->db->from('acc_transaction a');
@@ -689,7 +703,7 @@ class Suppliers extends CI_Model {
 						date,
 						quantity,
 						product_name,product_model,
-						product_id, 
+						product_id,
 						sum(quantity) as quantity ,
 						supplier_rate,
 						CAST(sum(quantity*supplier_rate) AS DECIMAL(16,2)) as total,

@@ -107,6 +107,64 @@ header('Content-Type: text/javascript; charset=utf8');
         calculateSum();
     }
 
+"use strict";
+
+function get_price(sl) {
+    var supplier_id = $("#supplier_drop_" + sl).val();
+    var product_rate    = 'product_rate_'+sl;
+    var product_id = $('.product_id_1').val();
+    var base_url = $('#base_url').val();
+    var csrf_test_name = $('[name="csrf_test_name"]').val();
+    $.ajax({
+        type: "POST",
+        url: base_url + "Cpurchase/get_supplier_price",
+        data: {
+            product_id: product_id,
+            supplier_id: supplier_id,
+            csrf_test_name: csrf_test_name
+        },
+        cache: false,
+        success: function (data) {
+            obj = JSON.parse(data);
+            $('#' + product_rate).val(obj.price);
+        }
+    });
+}
+
+    "use strict";
+    function change_cat(sl){
+        var category_id = $("#category_name_" + sl).val();
+        var base_url = $('#base_url').val();
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+        var sub_cat_selected = ""; //needed for sub_cat_by_category function in Cproduct
+
+
+        $.ajax( {
+            url: base_url + "Cproduct/sub_cat_by_category",
+            method: 'post',
+            data: {
+                sl: sl,
+                category_id:category_id,
+                sub_cat_selected: sub_cat_selected,
+                csrf_test_name:csrf_test_name
+            },
+            cache: false,
+            success: function( data ) {
+                var obj = jQuery.parseJSON(data);
+                $('#subcat_name_' + sl).html(obj.sub_cat);
+                // $('#cat_id').val(obj.c_id);
+                // var cat_id = $("#cat_id").val();
+
+                // if(category_id == cat_id ){
+                //     $("#subCat_div").css("display", "block");
+                // }else{
+                //     $("#subCat_div").css("display", "none");
+                // }
+                //console.log(cat_id);
+            }
+        });
+
+    }
 
        "use strict";
     function product_pur_or_list(sl) {
@@ -114,24 +172,27 @@ header('Content-Type: text/javascript; charset=utf8');
     var supplier_id = $('#supplier_id').val();
     var base_url = $('#base_url').val();
     var csrf_test_name = $('[name="csrf_test_name"]').val();
-    if ( supplier_id == 0) {
-        alert('Please select Supplier !');
-        return false;
-    }
+    // if ( supplier_id == 0) {
+    //     alert('Please select Supplier !');
+    //     return false;
+    // }
 
     // Auto complete
     var options = {
         minLength: 0,
         source: function( request, response ) {
-            var product_name = $('#product_name_'+sl).val();
+            // var product_name = $('#product_name_' + sl).val();
+            var cat_id = $('#category_name_' + sl).val();
+            var subcat_id = $('#subcat_name_' + sl).val();
+
         $.ajax( {
-          url: base_url + "Cpurchase/product_search_by_supplier",
+          url: base_url + "Cpurchase/retrieve_product_cat_subcat_wise",
           method: 'post',
           dataType: "json",
           data: {
             term: request.term,
-            supplier_id:$('#supplier_id').val(),
-            product_name:product_name,
+            cat_id: cat_id,
+            subcat_id: subcat_id,
             csrf_test_name:csrf_test_name
           },
           success: function( data ) {
@@ -162,23 +223,24 @@ header('Content-Type: text/javascript; charset=utf8');
 
            var parts_no = 'parts_number_' + sl;
 
+           var supplier_drop = $("#supplier_drop_" + sl);
+
 
 
 
             $.ajax({
                 type: "POST",
                 url: base_url+"Cinvoice/retrieve_product_data",
-                 data: {product_id:product_id,supplier_id:supplier_id,csrf_test_name:csrf_test_name},
+                 data: {product_id:product_id,supplier_id:supplier_id,csrf_test_name:csrf_test_name, sl : sl},
                 cache: false,
                 success: function(data)
                 {
                     // console.log(data);
                     obj = JSON.parse(data);
                     $('#'+available_quantity).val(obj.data1.total_product);
-                    $('#' + product_rate).val(obj.data1.supplier_price);
-                    $('#' + category).val(obj.data2.category_name);
-                    $('#' + subcat).val(obj.data2.subcat_name);
+                    // $('#' + product_rate).val(obj.data1.supplier_price);
                     $('#' + parts_no).val(obj.data2.parts);
+                    supplier_drop.html(obj.supp);
 
                 }
             });

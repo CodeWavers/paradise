@@ -69,6 +69,54 @@ class Cproduct extends CI_Controller {
         echo json_encode($data);
     }
 
+
+    public function sub_cat_by_category_for_purchase() {
+
+
+        $CI = & get_instance();
+        $CI->load->library('lpurchase');
+        $CI->load->model('Categories');
+        $category_id = $this->input->post('category_id',TRUE);
+        $sl = $this->input->post('sl',TRUE);
+
+        $sub_category = $CI->Categories->sub_cat_list_product_by_cat_id($category_id);
+        $sub_cat_selected = $this->input->post('sub_cat_selected',TRUE); //don't delete, needed in edit_product_form View
+//        if(!empty($sub_category)){
+//            $list[''] = '';
+//            foreach ($sub_category as $value) {
+//                $json_product[] = $value['subcat_name'];
+//            }
+//        }else{
+//            $json_product[] = 'No Category Found';
+//        }
+
+        foreach ($sub_category as $sub_category) {
+            $sub_cat[] =array('subcat_name'=>$sub_category['subcat_name'],'sub_cat_id'=>$sub_category['sub_cat_id'],'cat_id'=>$sub_category['category_id']);
+
+        }
+        $sub[]= "";
+        if (empty($sub_cat)) {
+            $sub .="No Subcategory Found !";
+        }else{
+            $sub .="<select name=\"subcat_name\"   class=\"form-control text-center\" id=\"subcat_name_".$sl."\">";
+            $sub .= "<option value=''>".display('select_one')."</option>";
+            foreach ($sub_cat as $sub_cat) {
+                if(!empty($sub_cat_selected) && ($sub_cat['sub_cat_id'] == $sub_cat_selected)){
+                    $sub .="<option selected value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
+                }else{
+                    $sub .="<option value=".$sub_cat['sub_cat_id'].">".$sub_cat['subcat_name']."</option>";
+                }
+
+            }
+            $sub .="</select>";
+        }
+
+        $data['sub_cat']  =$sub;
+        // $data['c_id']  =$sub_cat['cat_id'];
+        //$data2['txnmber']        = $num_column;
+        echo json_encode($data);
+    }
+
     //Insert Product and uload
     public function insert_product() {
         $CI = & get_instance();
@@ -1031,5 +1079,6 @@ class Cproduct extends CI_Controller {
            $file_name = 'product'.$time.'.pdf';
             force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
+
 
 }

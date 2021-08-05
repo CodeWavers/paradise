@@ -806,6 +806,7 @@ class Cinvoice extends CI_Controller {
         $content = $CI->linvoice->chalan_invoice_html_data($invoice_id);
         $this->template->full_admin_html_view($content);
     }
+
     // Retrieve_product_data
     public function retrieve_product_data() {
         $CI = & get_instance();
@@ -813,22 +814,32 @@ class Cinvoice extends CI_Controller {
         $CI->load->model('Invoices');
         $CI->load->model('Products');
         $product_id  = $this->input->post('product_id',TRUE);
-        $supplier_id = $this->input->post('supplier_id',TRUE);
+        $sl  = $this->input->post('sl',TRUE);
+        // $supplier_id = $this->input->post('supplier_id',TRUE);
+
+        $product_suppliers = $CI->Products->supplier_product_editdata($product_id);
+
+
+
+        foreach ($product_suppliers as $ps) {
+            $pr_supp[] =array('supplier_name'=>$ps['supplier_name'],'supplier_id'=>$ps['supplier_id']);
+        }
 
         $product_details = $CI->Products->retrieve_product_full_data($product_id)[0];
 
-        $product_info = $CI->Invoices->get_total_product($product_id, $supplier_id);
+        $product_info = $CI->Invoices->get_total_product_invoic($product_id);
 
-        if(empty($product_details['category_name'])){
-            $product_details['category_name'] = "No category found";
+        $suppliers[] = '<select name="supplier_name[]" id="supplier_drop_1" class="form-control text-center" onchange=get_price('.$sl.')>';
+        $suppliers .= "<option value=''>".display('select_one')."</option>";
+        foreach ($pr_supp as $pr_supp) {
+            $suppliers .= "<option value=".$pr_supp['supplier_id'].">".$pr_supp['supplier_name']."</option>";
         }
 
-        if(empty($product_details['subcat_name'])){
-            $product_details['subcat_name'] = "No sub category found";
-        }
+        $suppliers .= "</select>";
 
 
-        $data = array('data1' => $product_info, 'data2' => $product_details);
+
+        $data = array('data1' => $product_info, 'data2' => $product_details, 'supp' => $suppliers);
 
         echo json_encode($data);
     }

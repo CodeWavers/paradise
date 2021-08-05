@@ -1072,7 +1072,6 @@ class Purchases extends CI_Model {
 
 
         $p_id = $this->input->post('product_id',TRUE);
-        $supplier_id = $this->input->post('supplier_id',TRUE);
         $supinfo =$this->db->select('*')->from('supplier_information')->where('supplier_id',$supplier_id)->get()->row();
         $sup_head = $supinfo->supplier_id.'-'.$supinfo->supplier_name;
         $sup_coa = $this->db->select('*')->from('acc_coa')->where('HeadName',$sup_head)->get()->row();
@@ -1085,15 +1084,15 @@ class Purchases extends CI_Model {
         $bank_id = $this->input->post('bank_id',TRUE);
 
         //supplier & product id relation ship checker.
-        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
-            $product_id = $p_id[$i];
-            $value = $this->product_supplier_check($product_id, $supplier_id);
-            if ($value == 0) {
-                $this->session->set_flashdata('error_message', display('product_and_supplier_did_not_match'));
-                redirect(base_url('Cpurchase'));
-                exit();
-            }
-        }
+        // for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+        //     $product_id = $p_id[$i];
+        //     $value = $this->product_supplier_check($product_id, $supplier_id);
+        //     if ($value == 0) {
+        //         $this->session->set_flashdata('error_message', display('product_and_supplier_did_not_match'));
+        //         redirect(base_url('Cpurchase'));
+        //         exit();
+        //     }
+        // }
 
 
     //    $this->db->insert('product_purchase', $data);
@@ -1102,17 +1101,16 @@ class Purchases extends CI_Model {
 
             $data=array(
                 'purchase_id'        => $purchase_id,
-                'supplier_id'        => $this->input->post('supplier_id',TRUE),
                 'grand_total_amount' => $this->input->post('total',TRUE),
                 'paid_amount'        => $paid_amount,
                 'due_amount'         => $due_amount,
                 'status'             => 2,
             );
+            // echo '<pre>';print_r($data);exit();
             $this->db->insert('product_purchase', $data);
         }else{
             $data=array(
                 'purchase_id'        => $purchase_id,
-                'supplier_id'        => $this->input->post('supplier_id',TRUE),
                 'grand_total_amount' => $this->input->post('total',TRUE),
                 'paid_amount'        => $paid_amount,
                 'due_amount'         => $due_amount,
@@ -1125,7 +1123,7 @@ class Purchases extends CI_Model {
 
 
 
-
+        $supplier_id = $this->input->post('supplier_name',TRUE);
         $rate = $this->input->post('price',TRUE);
         $quantity = $this->input->post('order_quantity',TRUE);
         $sn = $this->input->post('sn',TRUE);
@@ -1138,6 +1136,7 @@ class Purchases extends CI_Model {
         $pur_order_no = $this->input->post('pur_order_no', TRUE);
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+            $supp_id = $supplier_id[$i];
             $product_quantity = $quantity[$i];
             $sn_number = $sn[$i];
             $origin_t = $origin[$i];
@@ -1150,10 +1149,11 @@ class Purchases extends CI_Model {
                 'purchase_detail_id' => $this->generator(15),
                 'purchase_id'        => $purchase_id,
                 'purchase_order'     => $pur_order_no,
+                'supplier_id'        => $supp_id,
                 'product_id'         => $product_id,
                 'quantity'           => $product_quantity,
-                'sn'           => $sn_number,
-                 'qty'           => $product_quantity,
+                'sn'                 => $sn_number,
+                'qty'                => $product_quantity,
                 'origin'             => $origin_t,
                 'warrenty_date'      => $warrenty_date,
                 'rate'               => $product_rate,
@@ -1161,6 +1161,8 @@ class Purchases extends CI_Model {
                 'discount'           => $disc,
                 'status'             => 1
             );
+
+
 
             if (!empty($quantity)) {
                 $this->db->insert('product_purchase_details', $data1);
