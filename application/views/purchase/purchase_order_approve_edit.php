@@ -1,0 +1,295 @@
+<!-- Product Purchase js -->
+<script src="<?php echo base_url()?>my-assets/js/admin_js/json/product_purchase.js.php" ></script>
+<!-- Supplier Js -->
+<script src="<?php echo base_url(); ?>my-assets/js/admin_js/json/supplier.js.php" ></script>
+
+<script src="<?php echo base_url()?>my-assets/js/admin_js/purchase.js.php" type="text/javascript"></script>
+<style type="text/css">
+    .form-control{
+        padding: 6px 5px;
+    }
+</style>
+
+<!-- Add New Purchase Start -->
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="header-icon">
+            <i class="pe-7s-note2"></i>
+        </div>
+        <div class="header-title">
+            <h1>Approve Purchase Order</h1>
+            <small>Edit Approve Purchase Order</small>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
+                <li><a href="#">Purchase</a></li>
+                <li class="active">Edit Approve Purchase</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="content">
+        <!-- Alert Message -->
+        <?php
+            $message = $this->session->userdata('message');
+            if (isset($message)) {
+        ?>
+        <div class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+            <?php echo $message ?>
+        </div>
+        <?php
+            $this->session->unset_userdata('message');
+            }
+            $error_message = $this->session->userdata('error_message');
+            if (isset($error_message)) {
+        ?>
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <?php echo $error_message ?>
+        </div>
+        <?php
+            $this->session->unset_userdata('error_message');
+            }
+        ?>
+
+        <!-- Purchase report -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-bd lobidrag">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4><?php echo display('add_purchase') ?></h4>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                    <?php echo form_open_multipart('Cpurchase/insert_purchase_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+
+
+
+
+                        <div class="row" >
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="pur_date" class="col-sm-4 col-form-label"><?php echo display('purchase_date') ?>
+
+                                    </label>
+                                    <div class="col-sm-8">
+
+                                        <input type="text" tabindex="2" class="form-control" name="purchase_date" value="<?php echo $all_purchase_list[0]['purchase_date']; ?>" id="pur_date"  readonly/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="invoice_no" class="col-sm-4 col-form-label">Invoice No.
+                                        <i class="text-danger">*</i>
+                                    </label>
+                                    <div class="col-sm-8">
+
+                                        <input type="text" required tabindex="1" class="form-control" name="invoice_no" value="" id="invoice_no"  />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="pur_order_no" class="col-sm-4 col-form-label">Purchase Order No.</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['purchase_order'] ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="supp_file" class="col-sm-4 col-form-label">Suppliers Invoice</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" class="form-control" id="supp_file" name="supp_file" value="<?= $order_no ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="pay_type" class="col-sm-4 col-form-label">Payment Type</label>
+                                    <div class="col-sm-8">
+                                        <select name="pay_type" id="pay_type" class="form-control">
+                                            <option value="1"><?php echo display('cash_payment') ?></option>
+                                            <option value="2"><?php echo display('bank_payment') ?></option>
+                                            <option value="3">Bkash Payment</option>
+                                            <option value="4">Nagad Payment</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="pay_date" class="col-sm-4 col-form-label">Payment Date</label>
+                                    <div class="col-sm-8">
+                                        <?php $date = date('Y-m-d'); ?>
+                                        <input type="text" class="form-control datepicker" id="pay_date" name="pay_date" value="<?= $date ?>" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-sm-1">
+                                <button class="btn btn-success" onclick="add_payment_opt(1)"><i class="fa fa-plus"></i></button>
+                            </div> -->
+
+                        </div>
+
+                        <div class="row" id="extra_pay">
+
+                        </div>
+
+
+<br>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="purchaseTable">
+                                <thead>
+                                     <tr>
+                                        <th class="text-center" width="8%">SN</th>
+                                        <th class="text-center" width="12%">Product Name</th>
+                                        <th class="text-center" width="8%">Parts No.</th>
+                                        <th class="text-center">Order Quantity</th>
+                                        <th class="text-center">Supplier Name</th>
+                                        <th class="text-center">Origin</th>
+                                        <th class="text-center">Warranty</th>
+                                        <th class="text-center">Unit Price</th>
+                                        <th class="text-center">Discount Per Item</th>
+                                        <th class="text-center">Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="addPurchaseItem">
+                                    {all_purchase_list}
+                                    <tr>
+
+                                    <td class="wt"> {sl}</td>
+
+                                    <td class="span3 supplier">
+                                       <span>{product_name}</span>
+                                        <input type="hidden" class="autocomplete_hidden_value product_id_1" name="product_id[]" id="SchoolHiddenId"/>
+                                        <input type="hidden" class="sl" value="1">
+                                    </td>
+
+                                        <td class="wt"> {parts}</td>
+
+                                        <td class="test">
+                                            {quantity}
+                                        </td>
+
+                                        <td>
+                                            {supplier_name}
+                                        </td>
+
+                                        <td class="wt"> {origin}</td>
+
+                                        <td>
+                                           {warrenty_date}
+                                       </td>
+
+                                            <td class="text-right">
+                                                {rate}
+                                            </td>
+
+
+                                            <td class="text-right">
+                                                {discount}
+                                                <input type="hidden" name="row_total[]" value="" id = "row_total_1" class="row_total">
+                                            </td>
+                                            <td class="text-right">
+                                                {total_amount}
+                                            </td>
+                                    </tr>
+                                    {/all_purchase_list}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b><?php echo display('total') ?>:</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" id="Total" class="text-right form-control" name="total" value="<?= $all_purchase_list[0]['grand_total_amount']?>" readonly="readonly" />
+                                            <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Total Discount (If any):</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Other Charges (If any):</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Grand Total</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" />
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-right" colspan="9"><b><?php echo display('paid_amount') ?>:</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" id="paidAmount" class="text-right form-control"  name="paid_amount" value="<?= $all_purchase_list[0]['paid_amount'] ?>" readonly/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b><?php echo display('due_amount') ?>:</b></td>
+                                        <td class="text-right">
+                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $all_purchase_list[0]['$due_amount'] ?>" readonly="readonly" />
+                                        </td>
+
+
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <input type="submit" id="add_purchase" class="btn btn-primary btn-large" name="add-purchase" value="<?php echo display('submit') ?>" />
+                            </div>
+                        </div>
+                    <?php echo form_close()?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Purchase Report End -->
+
+<script type="text/javascript">
+
+$( document ).ready(function() {
+    change_cat(1);
+});
+
+</script>

@@ -28,9 +28,9 @@
         ?>
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-            <?php echo $message ?>                    
+            <?php echo $message ?>
         </div>
-        <?php 
+        <?php
             $this->session->unset_userdata('message');
             }
             $error_message = $this->session->userdata('error_message');
@@ -38,9 +38,9 @@
         ?>
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $error_message ?>                    
+            <?php echo $error_message ?>
         </div>
-        <?php 
+        <?php
             $this->session->unset_userdata('error_message');
             }
         ?>
@@ -57,7 +57,7 @@
 
                     <div class="panel-body">
                     <?php echo form_open_multipart('Cpurchase/purchase_update',array('class' => 'form-vertical', 'id' => 'purchase_update'))?>
-                        
+
 
                         <div class="row">
                             <div class="col-sm-6">
@@ -66,19 +66,19 @@
                                         <i class="text-danger">*</i>
                                     </label>
                                     <div class="col-sm-6">
-                                        <select name="supplier_id" id="supplier_id" class="form-control " required=""> 
-                                          
+                                        <select name="supplier_id" id="supplier_id" class="form-control " required="">
+
                                             {supplier_list}
                                             <option value="{supplier_id}">{supplier_name}</option>
-                                            {/supplier_list} 
+                                            {/supplier_list}
                                             {supplier_selected}
                                             <option value="{supplier_id}" selected="">{supplier_name}</option>
                                             {/supplier_selected}
                                         </select>
                                     </div>
 
-                                 
-                                </div> 
+
+                                </div>
                             </div>
 
                              <div class="col-sm-6">
@@ -115,7 +115,7 @@
                                     <div class="col-sm-6">
                                         <textarea class="form-control" tabindex="4" id="adress" name="purchase_details" placeholder=" <?php echo display('details') ?>" rows="1">{purchase_details}</textarea>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                                      <div class="row">
@@ -129,13 +129,13 @@
                                             <option value="">Select Payment Option</option>
                                             <option value="1" <?php if($paytype ==1){echo 'selected';}?>><?php echo display('cash_payment') ?></option>
                                             <option value="2" <?php if($paytype ==2){echo 'selected';}?>><?php echo display('bank_payment') ?></option>
-                                           
-                                        </select>
-                                      
 
-                                     
+                                        </select>
+
+
+
                                     </div>
-                                 
+
                                 </div>
                             </div>
                              <div class="col-sm-6" id="bank_div">
@@ -151,9 +151,9 @@
                                         <?php }?>
                                     </select>
                                     <input type="hidden" id="editpayment_type" value="<?php echo $paytype;?>" name="">
-                                 
+
                                 </div>
-                             
+
                             </div>
                         </div>
                         </div>
@@ -176,7 +176,7 @@
 
                                             <th class="text-center"><?php echo display('rate') ?><i class="text-danger">*</i></th>
 
-                                           
+
 
                                             <th class="text-center"><?php echo display('total') ?></th>
                                             <th class="text-center"><?php echo display('action') ?></th>
@@ -229,7 +229,7 @@
                                             </td>
                                             <td>
 
-                                               
+
 
                                                 <button  class="btn btn-danger text-right red" type="button" value="<?php echo display('delete')?>" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>
                                             </td>
@@ -239,7 +239,7 @@
                                 <tfoot>
                                       <tfoot>
                                     <tr>
-                                        
+
                                         <td class="text-right" colspan="10"><b><?php echo display('total') ?>:</b></td>
                                         <td class="text-right">
                                             <input type="text" id="Total" class="text-right form-control" name="total" value="{total}" readonly="readonly" />
@@ -249,18 +249,18 @@
                                             <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/></td>
                                     </tr>
                                         <tr>
-                                       
+
                                         <td class="text-right" colspan="10"><b><?php echo display('discounts') ?>:</b></td>
                                         <td class="text-right">
                                             <input type="text" id="discount" class="text-right form-control discount" onkeyup="calculate_store(1)" name="discount" placeholder="0.00" value="{total_discount}" />
                                         </td>
-                                        <td> 
+                                        <td>
 
                                            </td>
                                     </tr>
 
                                         <tr>
-                                        
+
                                         <td class="text-right" colspan="10"><b><?php echo display('grand_total') ?>:</b></td>
                                         <td class="text-right">
                                             <input type="text" id="grandTotal" class="text-right form-control" name="grand_total_price" value="{grand_total}" readonly="readonly" />
@@ -268,7 +268,7 @@
                                         <td> </td>
                                     </tr>
                                          <tr>
-                                        
+
                                         <td class="text-right" colspan="10"><b><?php echo display('paid_amount') ?>:</b></td>
                                         <td class="text-right">
                                             <input type="text" id="paidAmount" class="text-right form-control" onKeyup="invoice_paidamount()" name="paid_amount" value="{paid_amount}" />
@@ -303,5 +303,3 @@
         </div>
     </section>
 </div>
-
-

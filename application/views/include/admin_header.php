@@ -766,10 +766,10 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             } else {
                                 echo " ";
                             }
-                            ?>"><a href="<?php echo base_url('Cpurchase') ?>"><?php echo display('add_purchase') ?></a></li>
+                            ?>"><a href="<?php echo base_url('Cpurchase') ?>">Purchase Order</a></li>
                         <?php } ?>
 
-                        <?php if($this->permission1->method('purchase_order','create')->access()){ ?>
+                        <!-- <?php if($this->permission1->method('purchase_order','create')->access()){ ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('1') == ("purchase_order") && $this->uri->segment('2') == ("")) {
                                 echo "active";
@@ -777,6 +777,16 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             }
                             ?>"><a href="<?php echo base_url('Cpurchase/purchase_order') ?>">Purchase PO</a></li>
+                        <?php } ?> -->
+
+                        <?php if($this->permission1->method('purchase_order','create')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('1') == ("purchase_order_approve") && $this->uri->segment('2') == ("")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cpurchase/purchase_order_approve') ?>">PO Approve</a></li>
                         <?php } ?>
 
                         <?php if($this->permission1->method('manage_purchase','read')->access()){ ?>

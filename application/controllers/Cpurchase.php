@@ -349,5 +349,24 @@ class Cpurchase extends CI_Controller {
         $data['price'] = $price[0]['supplier_price'];
         // echo '<pre>'; print_r($data); exit();
         echo json_encode($data);
-    }
+
+        }
+
+        public function purchase_order_approve()
+        {
+            $CI = & get_instance();
+            $CI->auth->check_admin_auth();
+            $CI->load->library('lpurchase');
+            $content = $CI->lpurchase->purchase_order_approve_form();
+            $this->template->full_admin_html_view($content);
+        }
+
+        public function edit_purchase_order($PO_No)
+        {
+            $CI = & get_instance();
+            $CI->auth->check_admin_auth();
+            $CI->load->library('lpurchase');
+            $content = $CI->lpurchase->purchase_order_edit_form($PO_No);
+            $this->template->full_admin_html_view($content);
+        }
 }

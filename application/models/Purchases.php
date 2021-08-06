@@ -1137,18 +1137,19 @@ class Purchases extends CI_Model {
         // $warehouse = $this->input->post('warehouse',TRUE);
         $warrenty = $this->input->post('warrenty_date',TRUE);
         // $expired = $this->input->post('expired_date',TRUE);
-        $t_price = $this->input->post('total',TRUE);
+        // $t_price = $this->input->post('total',TRUE);
         $discount = $this->input->post('discount',TRUE);
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
             $supp_id = $supplier_id[$i];
             $product_quantity = $quantity[$i];
-            $sn_number = $sn[$i];
+            // $sn_number = $sn[$i];
             $origin_t = $origin[$i];
             $warrenty_date = $warrenty[$i];
             $product_rate = $rate[$i];
             $product_id = $p_id[$i];
             $disc = $discount[$i];
+            $t_price = ($product_rate - $disc) * $product_quantity;
 
             $data1 = array(
                 'purchase_detail_id' => $this->generator(15),
@@ -1156,7 +1157,6 @@ class Purchases extends CI_Model {
                 'supplier_id'        => $supp_id,
                 'product_id'         => $product_id,
                 'quantity'           => $product_quantity,
-                'sn'                 => $sn_number,
                 'qty'                => $product_quantity,
                 'origin'             => $origin_t,
                 'warrenty_date'      => $warrenty_date,
@@ -1187,6 +1187,36 @@ class Purchases extends CI_Model {
             $order_no = 1000;
         }
         return 'PO'.$order_no;
+    }
+
+    public function purchase_list_by_po_no()
+    {
+        $this->db->select('*')->where('status',1)->order_by('purchase_order', 'desc');
+        $query = $this->db->get('product_purchase');
+        $result = $query->result_array();
+        return $result;
+    }
+
+    public function purchase_list_details_by_po_no($PO_no)
+    {
+        $this->db->select('a.*, b.*, c.product_name, c.parts, d.supplier_name');
+        $this->db->from('product_purchase a');
+        $this->db->where('purchase_order', $PO_no);
+        $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
+        $this->db->join('product_information c', 'c.product_id = b.product_id');
+        $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
+
+        $query = $this->db->get();
+
+        // echo '<pre>'; print_r($query->result_array()); die();
+
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+
     }
 
 }

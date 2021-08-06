@@ -332,6 +332,47 @@ class Lpurchase {
         return $purchaseList;
     }
 
+    public function purchase_order_approve_form()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Purchases');
+        $purchase_list = $CI->Purchases->purchase_list_by_po_no();
+
+        $i = 0;
+        foreach ($purchase_list as $k => $v) {
+            $i++;
+            $purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
+        }
+
+        $data = array(
+            'title'     => 'Approve Order Purchases',
+            'purchase_list' => $purchase_list,
+        );
+        $purchaseList = $CI->parser->parse('purchase/purchase_order_approve', $data, true);
+        return $purchaseList;
+    }
+
+    public function purchase_order_edit_form($PO_No)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Purchases');
+
+        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no($PO_No);
+
+        $i = 0;
+        foreach ($all_purchase_list as $k => $v) {
+            $i++;
+            $all_purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
+        }
+
+        $data = array(
+            'title'     => 'Edit Approve Order Purchases',
+            'all_purchase_list' => $all_purchase_list,
+        );
+        $purchaseList = $CI->parser->parse('purchase/purchase_order_approve_edit', $data, true);
+        return $purchaseList;
+    }
+
 }
 
 ?>
