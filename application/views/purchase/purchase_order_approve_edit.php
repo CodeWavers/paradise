@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="panel-body">
-                    <?php echo form_open_multipart('Cpurchase/insert_purchase_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+                    <?php echo form_open_multipart('Cpurchase/update_po',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
 

@@ -158,7 +158,7 @@
                                     </td>
 
                                     <td class="span3 supplier">
-                                       <input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list(1);" placeholder="Pr. Name" id="product_name_1" tabindex="3" >
+                                       <input type="text" autocomplete="off" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list(1);" placeholder="Pr. Name" id="product_name_1" tabindex="3" >
                                         <input type="hidden" class="autocomplete_hidden_value product_id_1" name="product_id[]" id="SchoolHiddenId"/>
                                         <input type="hidden" class="sl" value="1">
                                     </td>
@@ -170,7 +170,7 @@
                                         </td>
 
                                         <td class="test">
-                                            <input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_1" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
+                                            <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_1" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
                                         </td>
 
                                         <td class="test">

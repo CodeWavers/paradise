@@ -28,6 +28,16 @@ class Cpurchase extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function update_po() {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Purchases');
+        $CI->Purchases->update_po();
+        $this->session->set_userdata(array('message' =>'Succesfully Approved'));
+
+        redirect(base_url('Cpurchase/purchase_order_approve'));
+    }
+
     public function product_receive() {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
@@ -327,7 +337,7 @@ class Cpurchase extends CI_Controller {
         if(!empty($product_info)){
             $list[''] = '';
             foreach ($product_info as $value) {
-                $json_product[] = array('label'=>$value['product_name'].'('.$value['product_model'].')','value'=>$value['product_id']);
+                $json_product[] = array('label'=>$value['product_name'],'value'=>$value['product_id']);
             }
         }else{
             $json_product[] = 'No Product Found';

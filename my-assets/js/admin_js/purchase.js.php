@@ -46,7 +46,7 @@ header('Content-Type: text/javascript; charset=utf8');
             +'</td>'
 
             +'<td class="span3 supplier">'
-              + '<input type="text" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+ count +');" placeholder="Pr. Name" id="product_name_'+ count +'" tabindex="3" >'
+              + '<input type="text"  autocomplete="off" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list('+ count +');" placeholder="Pr. Name" id="product_name_'+ count +'" tabindex="3" >'
                 +'<input type="hidden" class="autocomplete_hidden_value product_id_'+ count +'" name="product_id[]" id="SchoolHiddenId"/>'
                + '<input type="hidden" class="sl" value="'+ count +'">'
             +'</td>'
@@ -58,11 +58,11 @@ header('Content-Type: text/javascript; charset=utf8');
                 +'</td>'
 
                 +'<td class="test">'
-                +    '<input type="text" name="proposed_quantity[]" required="" id="prosposed_quantity_'+ count +'" class="form-control product_rate_'+ count +' text-right" placeholder="1234" value="" min="0" tabindex="7"/>'
+                +    '<input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_'+ count +'" class="form-control text-right" placeholder="1234" value="" min="0" tabindex="7"/>'
                 +'</td>'
 
                 +'<td class="test">'
-                +    '<input type="text" name="order_quantity[]" required=""  id="order_quantity_'+ count +'" class="form-control product_rate_'+ count +' text-right" onkeyup="calculate_store('+ count +');" onchange="calculate_store('+ count +');" placeholder="1234" value="" min="0" tabindex="7"/>'
+                +    '<input type="text" name="order_quantity[]" required=""  id="order_quantity_'+ count +'" class="form-control  text-right" onkeyup="calculate_store('+ count +');" onchange="calculate_store('+ count +');" placeholder="1234" value="" min="0" tabindex="7"/>'
                +' </td>'
 
                 +'<td>'
