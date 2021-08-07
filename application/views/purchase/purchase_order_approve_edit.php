@@ -89,7 +89,7 @@
                                     </label>
                                     <div class="col-sm-8">
 
-                                        <input type="text" required tabindex="1" class="form-control" name="invoice_no" value="" id="invoice_no"  />
+                                        <input type="text"  tabindex="1" class="form-control" name="invoice_no" value="" id="invoice_no"  />
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                 <div class="form-group row">
                                     <label for="pur_order_no" class="col-sm-4 col-form-label">Purchase Order No.</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['purchase_order'] ?>">
+                                        <input type="text" readonly class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['purchase_order'] ?>">
                                     </div>
                                 </div>
                             </div>

@@ -969,7 +969,7 @@ class Purchases extends CI_Model {
             'isaprv' =>1
         );
 
-            $this->db->where('purchase_id', $po_no);
+            $this->db->where('purchase_order', $po_no);
             $this->db->update('product_purchase',$data);
 
 //         $cashinhand = array(
