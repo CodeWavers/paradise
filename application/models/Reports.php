@@ -429,12 +429,13 @@ class reports extends CI_Model {
         ## Search
         $searchQuery = "";
         if($searchValue != ''){
-            $searchQuery = " (a.product_name like '%".$searchValue."%' or a.product_model like '%".$searchValue."%') ";
+            $searchQuery = " (a.product_name like '%".$searchValue."%' or b.model_name like '%".$searchValue."%') ";
         }
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
         $this->db->from('product_information a');
+//        $this->db->join('product_model b','a.product_model=b.model_id');
         if($searchValue != ''){
             $this->db->where($searchQuery);
         }
@@ -456,9 +457,10 @@ class reports extends CI_Model {
         $this->db->select("a.*,
                 a.product_name,
                 a.product_id,
-                a.product_model
+                b.model_name
                 ");
         $this->db->from('product_information a');
+        $this->db->join('product_model b','a.product_model=b.model_id');
         if($searchValue != '')
             $this->db->where($searchQuery);
         $this->db->order_by($columnName, $columnSortOrder);
@@ -482,7 +484,7 @@ class reports extends CI_Model {
             $warrenty_stock = $this->db->select('sum(ret_qty) as totalWarrentyQnty')->from('warrenty_return')->where('product_id',$record->product_id)->get()->row();
             $wastage_stock = $this->db->select('sum(ret_qty) as totalWastageQnty')->from('rqsn_return')->where('product_id',$record->product_id)->where('usablity',3)->get()->row();
             $return_rcv = $this->db->select('sum(ret_qty) as totalReturnQnty')->from('rqsn_return')->where('product_id',$record->product_id)->get()->row();
-            $stockout = $this->db->select('sum(qty) as totalPurchaseQnty,Avg(rate) as purchaseprice')->from('product_purchase_details')->where('product_id',$record->product_id)->where('status',1)->get()->row();
+            $stockout = $this->db->select('sum(qty) as totalPurchaseQnty,Avg(rate) as purchaseprice')->from('product_purchase_details')->join('product_purchase','product_purchase.purchase_id=product_purchase_details.purchase_id')->where('product_purchase_details.product_id',$record->product_id)->where('product_purchase.isaprv',1)->get()->row();
 
 
 
@@ -509,7 +511,7 @@ class reports extends CI_Model {
             $data[] = array(
                 'sl'            =>   $sl,
                 'product_name'  =>  $record->product_name,
-                'product_model' =>  $record->product_model,
+                'product_model' =>  $record->model_name,
                 'sales_price'   =>  sprintf('%0.2f',$sprice),
                 'purchase_p'    =>  $pprice,
                 'totalPurchaseQnty'=>$stockout->totalPurchaseQnty,
