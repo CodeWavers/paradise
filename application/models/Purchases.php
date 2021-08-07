@@ -1332,6 +1332,7 @@ class Purchases extends CI_Model {
         $supplier_id = $this->input->post('supplier_name',TRUE);
         $rate = $this->input->post('price',TRUE);
         $quantity = $this->input->post('order_quantity',TRUE);
+        $proposed_quantity = $this->input->post('proposed_quantity',TRUE);
         $sn = $this->input->post('sn',TRUE);
         $origin = $this->input->post('origin',TRUE);
         // $warehouse = $this->input->post('warehouse',TRUE);
@@ -1343,13 +1344,14 @@ class Purchases extends CI_Model {
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
             $supp_id = $supplier_id[$i];
             $product_quantity = $quantity[$i];
+            $prop_qty = $proposed_quantity[$i];
             // $sn_number = $sn[$i];
             $origin_t = $origin[$i];
             $warrenty_date = $warrenty[$i];
             $product_rate = $rate[$i];
             $product_id = $p_id[$i];
             $disc = $discount[$i];
-            $t_price = ($product_rate - $disc) * $product_quantity;
+            $t_price = ($product_rate * $product_quantity) - $disc;
 
             $data1 = array(
                 'purchase_detail_id' => $this->generator(15),
@@ -1357,7 +1359,7 @@ class Purchases extends CI_Model {
                 'supplier_id'        => $supp_id,
                 'product_id'         => $product_id,
                 'quantity'           => $product_quantity,
-                'qty'                => $product_quantity,
+                'qty'                => $prop_qty,
                 'origin'             => $origin_t,
                 'warrenty_date'      => $warrenty_date,
                 'rate'               => $product_rate,

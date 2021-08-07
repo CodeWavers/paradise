@@ -85,8 +85,12 @@ header('Content-Type: text/javascript; charset=utf8');
 
                     +'<td class="text-right">'
                     +    '<input class="form-control discount text-right" onkeyup="calculate_store('+ count +');" onchange="calculate_store('+ count +');" type="text" name="discount[]" id="discount_'+ count +'" value="00"/>'
-                    +    '<input type="hidden" name="row_total[]" value="" id = "row_total_'+ count +'" class="row_total">'
                     +'</td>'
+
+                    +'<td class="text-right">'
+                        +'<input type="text" class="form-control row_total" name="row_total[]" value="" id = "row_total_'+ count +'" readonly>'
+                    +'</td>'
+
                     +'<td>'
                     +    '<button  class="btn btn-danger text-right red" type="button" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>'
             +'</td>';
@@ -121,7 +125,7 @@ header('Content-Type: text/javascript; charset=utf8');
         var item_ctn_qty    = $("#order_quantity_"+sl).val();
         var vendor_rate = $("#product_rate_"+sl).val();
 
-        var total_price     = (item_ctn_qty * (vendor_rate-discount));
+        var total_price     = ((item_ctn_qty * vendor_rate) - discount);
         $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
@@ -134,7 +138,7 @@ header('Content-Type: text/javascript; charset=utf8');
         });
 
         // $("#Total").val(gr_tot.toFixed(2,2));
-        var grandtotal = gr_tot - dis;
+        var grandtotal = gr_tot;
         $("#Total").val(grandtotal.toFixed(2,2));
         invoice_paidamount();
     }
