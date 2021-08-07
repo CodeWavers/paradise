@@ -331,9 +331,10 @@ class Cpurchase extends CI_Controller {
         $CI = & get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Products');
+        $product_name = $this->input->post('product_name',TRUE);
         $cat_id = $this->input->post('cat_id',TRUE);
         $subcat_id = $this->input->post('subcat_id',TRUE);
-        $product_info = $CI->Products->product_filter_category_wise2($cat_id, $subcat_id, 15);
+        $product_info = $CI->Products->product_filter_category_wise2($product_name,$cat_id, $subcat_id, 15);
         if(!empty($product_info)){
             $list[''] = '';
             foreach ($product_info as $value) {

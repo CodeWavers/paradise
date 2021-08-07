@@ -250,7 +250,7 @@ function get_price(sl) {
     var options = {
         minLength: 0,
         source: function( request, response ) {
-            // var product_name = $('#product_name_' + sl).val();
+             var product_name = $('#product_name_' + sl).val();
             var cat_id = $('#category_name_' + sl).val();
             var subcat_id = $('#subcat_name_' + sl).val();
 
@@ -260,6 +260,7 @@ function get_price(sl) {
           dataType: "json",
           data: {
             term: request.term,
+              product_name: product_name,
             cat_id: cat_id,
             subcat_id: subcat_id,
             csrf_test_name:csrf_test_name
