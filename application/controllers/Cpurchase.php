@@ -380,4 +380,202 @@ class Cpurchase extends CI_Controller {
             $content = $CI->lpurchase->purchase_order_edit_form($PO_No);
             $this->template->full_admin_html_view($content);
         }
+
+        public function purchase_list()
+        {
+            $CI = & get_instance();
+            $CI->auth->check_admin_auth();
+            $CI->load->library('lpurchase');
+            $content = $CI->lpurchase->purchase_list_from_rqsn();
+            $this->template->full_admin_html_view($content);
+        }
+
+        public function add_to_draft()
+        {
+            $data = array(
+                "product_id"  => $_POST["product_id"],
+                "product_name"  => $_POST["product_name"],
+                "category"  => $_POST["category_name"],
+                "subcat"  => $_POST["subcat"],
+                "parts"  => $_POST["parts"],
+                "sku"  => $_POST["sku"],
+                "brand"  => $_POST["brand"],
+                "model"  => $_POST["model"],
+                "qty"  => $_POST["quantity"],
+            );
+            $this->db->insert('purchase_order_cart',$data);
+
+            $p_id = $_POST["product_id"];
+
+            // $data2 = array(
+            //     'purchase_status' => 2
+            // );
+
+            $sq = "UPDATE rqsn_details
+            SET purchase_status = 2
+            WHERE product_id = ".$p_id.";";
+
+            $this->db->query($sq);
+
+            json_encode($data);
+        }
+
+        function load()
+        {
+            echo $this->PO_live_data();
+        }
+
+        public function PO_live_data()
+        {
+            $this->load->model("Purchases");
+            $this->load->model("Products");
+            // $this->load->model("Suppliers");
+         //   $product_id=$_POST["product_id"];
+            $cart_list = $this->Purchases->purchase_cart_data();
+
+            $output = '';
+            $output .= '
+
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="purchaseTable">
+                <thead>
+                     <tr>
+                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="8%">Product Name</th>
+                        <th class="text-center" width="8%">Parts No.</th>
+                        <th class="text-center" width="8%">SKU</th>
+                        <th class="text-center">Stock</th>
+                        <th class="text-center">Proposed Quantity</th>
+                        <th class="text-center">Order Quantity</th>
+                        <th class="text-center">Supplier Name</th>
+                        <th class="text-center">Warranty</th>
+                        <th class="text-center">Origin</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Discount</th>
+                        <th class="text-center">Total</th>
+
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="addPurchaseItem">
+
+                        ';
+
+
+            $count = 0;
+            foreach($cart_list as $items)
+            {
+                $product_id = $items['product_id'];
+                $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+                $supplier_list = $this->Products->supplier_product_editdata($product_id);
+                $count++;
+                $output .= '
+                        <tr>
+
+                        <td class="wt"> '.$count.'</td>
+
+
+
+                        <td class="span3 supplier">
+                            <span>'.$items['product_name'].'</span>
+                            <input type="hidden" name="product_id[]" id="product_id_'.$count.'" value="'.$items['product_id'].'">
+                            <input type="hidden" class="sl" value="'.$count.'">
+                        </td>
+
+                            <td class="wt">'.$items['parts'].'</td>
+
+                            <td class="wt">'.$items['sku'].'</td>
+
+                            <td class="wt">
+                                <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00" readonly/>
+                            </td>
+
+                            <td class="test">
+                                <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_1" class="form-control product_rate_1 text-right" value="'.$items['qty'].'" min="0" tabindex="7" readonly/>
+                            </td>
+
+                            <td class="test">
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_'.$count.'" class="form-control product_rate_1 text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" placeholder="1234" value="" min="0" tabindex="7"/>
+                            </td>
+
+                            <td>
+                                <select name="supplier_name[]" id="supplier_drop_'.$count.'" class="form-control text-center" onchange="get_price('.$count.')">';
+
+                foreach ($supplier_list as $supp) {
+                    $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                }
+
+
+                $output .= '</select>
+                            </td>
+
+                            <td>
+                            <input type="date" class="form-control" style="width: 110px" id="warrenty_date" name="warrenty_date[]"  />
+                        </td>
+
+
+                        <td class="wt">'.$product_info['country'].'</td>
+
+                                <td class="text-right">
+                                    <input type="text" name="price[]" id="product_rate_'.$count.'" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value=""  tabindex="6"/>
+                                </td>
+
+
+                                <td class="text-right">
+                                    <input class="form-control discount text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" type="text" name="discount[]" id="discount_'.$count.'" value="00"/>
+
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" class="form-control row_total" name="row_total[]" value="" id = "row_total_'.$count.'" class="row_total" readonly>
+                                </td>
+
+                                <td>
+                                    <button  class="btn btn-danger text-right red" type="button"  onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>
+                                </td>
+                        </tr>
+                        ';
+            }
+            $output .= '
+
+            </tbody>
+            <tfoot>
+                <tr>
+
+                    <td class="text-right" colspan="11"><b>Total:</b></td>
+                    <td class="text-right" colspan="2">
+                        <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" readonly="readonly" />
+                    </td>
+
+                    <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/></td>
+                </tr>
+
+                <tr>
+                    <td class="text-right" colspan="11"><b>Paid Amount:</b></td>
+                    <td class="text-right" colspan="2">
+                        <input type="text" id="paidAmount" class="text-right form-control" onKeyup="invoice_paidamount()" name="paid_amount" value="" />
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="text-right">
+                         <input type="button" id="full_paid_tab" class="btn btn-warning" value="Full Paid" tabindex="16" onClick="full_paid()"/>
+                    </td>
+                    <td class="text-right" colspan="9"><b>Due Amount:</b></td>
+                    <td class="text-right" colspan="2">
+                        <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="0.00" readonly="readonly" />
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+                            ';
+
+            if($count == 0)
+            {
+                $output = '<h3 align="center">Purchase list is empty</h3>';
+            }
+            return $output;
+        }
 }

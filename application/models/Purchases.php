@@ -1421,4 +1421,44 @@ class Purchases extends CI_Model {
 
     }
 
+    public function get_rqsn_approved_list()
+    {
+        $this->db->select('a.*, b.*, sum(b.quantity) as qty, c.*,d.*, e.*, f.*, g.*');
+        $this->db->from('rqsn a');
+        $this->db->where('a.status', 2);
+        $this->db->where('b.purchase_status', 1);
+        $this->db->group_by('b.product_id');
+        $this->db->join('rqsn_details b', 'b.rqsn_id = a.rqsn_id');
+        $this->db->join('product_information c', 'c.product_id = b.product_id');
+        $this->db->join('product_category d', 'd.category_id = c.category_id');
+        $this->db->join('product_subcat e', 'e.sub_cat_id = c.sub_cat_id');
+        $this->db->join('product_brand f', 'f.brand_id = c.brand_id');
+        $this->db->join('product_model g', 'g.model_id = c.product_model');
+
+        // $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
+
+        $query = $this->db->get();
+
+        // echo '<pre>'; print_r($query->result_array()); die();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+
+
+    }
+
+    public function purchase_cart_data()
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order_cart');
+        $this->db->order_by('id', 'desc');
+
+        $query = $this->db->get();
+        // echo '<pre>'; print_r($query->result_array()); die();
+        return $query->result_array();
+    }
+
 }
