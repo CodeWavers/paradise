@@ -68,9 +68,14 @@ class Suppliers extends CI_Model {
          $totalRecordwithFilter = $records;
 
          ## Fetch records
-         $this->db->select("a.*,b.HeadCode,((select ifnull(sum(Debit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)-(select ifnull(sum(Credit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)) as balance");
+         $this->db->select("a.*,c.address,,d.contact,e.email_id,m.mobile_no,n.phone_no,b.HeadCode,((select ifnull(sum(Debit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)-(select ifnull(sum(Credit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)) as balance");
          $this->db->from('supplier_information a');
          $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
+         $this->db->join('supplier_address c','a.supplier_id = c.supplier_id','left');
+         $this->db->join('supplier_contact d','a.supplier_id = d.supplier_id','left');
+         $this->db->join('supplier_email e','a.supplier_id = e.supplier_id','left');
+         $this->db->join('supplier_mobile m','a.supplier_id = m.supplier_id','left');
+         $this->db->join('supplier_phone n','a.supplier_id = n.supplier_id','left');
          $this->db->group_by('a.supplier_id');
          if($searchValue != '')
          $this->db->where($searchQuery);
@@ -101,14 +106,14 @@ class Suppliers extends CI_Model {
                 'sl'               =>$sl,
                 'supplier_name'    =>html_escape($record->supplier_name),
                 'address'          =>html_escape($record->address),
-                'address2'         =>html_escape($record->address2),
-                'mobile'           =>html_escape($record->mobile),
-                'emailnumber'      =>html_escape($record->emailnumber),
-                'email_address'    =>html_escape($record->email_address),
+                'address2'         =>html_escape($record->bank_details),
+                'mobile'           =>html_escape($record->mobile_no),
+                'emailnumber'      =>html_escape($record->email_id),
+                'email_address'    =>html_escape($record->email_id),
                 'contact'          =>html_escape($record->contact),
-                'phone'            =>html_escape($record->phone),
+                'phone'            =>html_escape($record->phone_no),
                 'fax'              =>html_escape($record->fax),
-                'city'             =>html_escape($record->city),
+                'city'             =>html_escape($record->state),
                 'state'            =>html_escape($record->state),
                 'zip'              =>html_escape($record->zip),
                 'country'          =>html_escape($record->country),
@@ -347,6 +352,60 @@ class Suppliers extends CI_Model {
     public function retrieve_supplier_editdata($supplier_id) {
         $this->db->select('*');
         $this->db->from('supplier_information');
+        $this->db->where('supplier_id', $supplier_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function retrieve_email_editdata($supplier_id) {
+        $this->db->select('*');
+        $this->db->from('supplier_email');
+        $this->db->where('supplier_id', $supplier_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+
+    public function retrieve_mobile_editdata($supplier_id) {
+        $this->db->select('*');
+        $this->db->from('supplier_mobile');
+        $this->db->where('supplier_id', $supplier_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function retrieve_phone_editdata($supplier_id) {
+        $this->db->select('*');
+        $this->db->from('supplier_phone');
+        $this->db->where('supplier_id', $supplier_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+    public function retrieve_contact_editdata($supplier_id) {
+        $this->db->select('*');
+        $this->db->from('supplier_contact');
+        $this->db->where('supplier_id', $supplier_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+    public function retrieve_address_editdata($supplier_id) {
+        $this->db->select('*');
+        $this->db->from('supplier_address');
         $this->db->where('supplier_id', $supplier_id);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

@@ -24,44 +24,145 @@ class Csupplier extends CI_Controller {
 
     //Insert supplier
     public function insert_supplier() {
-       
+
+        $supp_id=mt_rand();
+
         $data = array(
+
             'supplier_name' => $this->input->post('supplier_name',TRUE),
-            'org_name' => $this->input->post('org_name',TRUE),
-            'supplier_type' => $this->input->post('supplier_type',TRUE),
-            'credit_interval' => $this->input->post('credit_interval',TRUE),
-            'address'       => $this->input->post('address',TRUE),
-            'address2'      => $this->input->post('address2',TRUE),
-            'mobile'        => $this->input->post('mobile',TRUE),
-            'phone'         => $this->input->post('phone',TRUE),
-            'contact'       => $this->input->post('contact',TRUE),
-            'emailnumber'   => $this->input->post('email',TRUE),
-            'email_address' => $this->input->post('emailaddress',TRUE),
-            'fax'           => $this->input->post('fax',TRUE),
-            'city'          => $this->input->post('city',TRUE),
             'state'         => $this->input->post('state',TRUE),
             'zip'           => $this->input->post('zip',TRUE),
             'country'       => $this->input->post('country',TRUE),
             'details'       => $this->input->post('details',TRUE),
+            'supplier_type'       => $this->input->post('supplier_type',TRUE),
+
+            'bank_details'      => $this->input->post('bank_details',TRUE),
             'status'        => 1
         );
-         
+
         $this->db->insert('supplier_information',$data);
 
+        $supplier_id = $this->db->insert_id();
 
-            $supplier_id = $this->db->insert_id();
-          $coa = $this->Suppliers->headcode();
+        $email=$this->input->post('email',TRUE);
+        $mobile=$this->input->post('mobile',TRUE);
+        $phone=$this->input->post('phone',TRUE);
+        $address=$this->input->post('address',TRUE);
+        $contact=$this->input->post('contact',TRUE);
+        if ( ! empty($email))
+        {
+
+            foreach ($email as $key => $value )
+            {
+
+
+                $data2['email_id'] = $value;
+                $data2['supplier_id']=$supplier_id;
+
+
+                //  echo '<pre>';print_r($data);
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data2))
+                {
+                    $this->db->insert('supplier_email', $data2);
+                }
+            }
+
+        }
+
+        if ( ! empty($mobile))
+        {
+
+            foreach ($mobile as $key => $value )
+            {
+
+
+                $data3['mobile_no'] = $value;
+                $data3['supplier_id']=$supplier_id;
+
+
+                if ( ! empty($data3))
+                {
+                    $this->db->insert('supplier_mobile', $data3);
+                }
+            }
+
+        }
+        if ( ! empty($phone))
+        {
+
+            foreach ($phone as $key => $value )
+            {
+
+
+                $data4['phone_no'] = $value;
+                $data4['supplier_id']=$supplier_id;
+
+
+                //  echo '<pre>';print_r($data);
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data4))
+                {
+                    $this->db->insert('supplier_phone', $data4);
+                }
+            }
+
+        }
+        if ( ! empty($address))
+        {
+
+            foreach ($address as $key => $value )
+            {
+
+
+                $data5['address'] = $value;
+                $data5['supplier_id']=$supplier_id;
+
+
+                //  echo '<pre>';print_r($data);
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data5))
+                {
+                    $this->db->insert('supplier_address', $data5);
+                }
+            }
+
+        }
+        if ( ! empty($contact))
+        {
+
+            foreach ($contact as $key => $value )
+            {
+
+
+                $data6['contact'] = $value;
+                $data6['supplier_id']=$supplier_id;
+
+
+                //  echo '<pre>';print_r($data);
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data6))
+                {
+                    $this->db->insert('supplier_contact', $data6);
+                }
+            }
+
+        }
+
+
+        $supplier_id = $this->db->insert_id();
+        $coa = $this->Suppliers->headcode();
         if($coa->HeadCode!=NULL){
             $headcode=$coa->HeadCode+1;
         }
         else{
-            $headcode="502000001";
+            $headcode="502020001";
         }
-             $c_acc=$supplier_id.'-'.$this->input->post('supplier_name',TRUE);
+        $c_acc=$supplier_id.'-'.$this->input->post('supplier_name',TRUE);
         $createby=$this->session->userdata('user_id');
         $createdate=date('Y-m-d H:i:s');
         $supplier_coa = [
-              'HeadCode'       => $headcode,
+            'HeadCode'       => $headcode,
             'HeadName'         => $c_acc,
             'PHeadName'        => 'Account Payable',
             'HeadLevel'        => '3',
@@ -76,19 +177,19 @@ class Csupplier extends CI_Controller {
             'CreateBy'         => $createby,
             'CreateDate'       => $createdate,
         ];
-            //Previous balance adding -> Sending to supplier model to adjust the data.
-            $this->db->insert('acc_coa',$supplier_coa);
-            $this->Suppliers->previous_balance_add($this->input->post('previous_balance',TRUE), $supplier_id,$c_acc,$this->input->post('supplier_name',TRUE));
-            
-            $this->session->set_userdata(array('message' => display('successfully_added')));
-            if (isset($_POST['add-supplier'])) {
-                redirect(base_url('Csupplier/manage_supplier'));
-                exit;
-            } elseif (isset($_POST['add-supplier-another'])) {
-                redirect(base_url('Csupplier'));
-                exit;
-            }
-     
+        //Previous balance adding -> Sending to supplier model to adjust the data.
+        $this->db->insert('acc_coa',$supplier_coa);
+        $this->Suppliers->previous_balance_add($this->input->post('previous_balance',TRUE), $supplier_id,$c_acc,$this->input->post('supplier_name',TRUE));
+
+        $this->session->set_userdata(array('message' => display('successfully_added')));
+        if (isset($_POST['add-supplier'])) {
+            redirect(base_url('Csupplier/manage_supplier'));
+            exit;
+        } elseif (isset($_POST['add-supplier-another'])) {
+            redirect(base_url('Csupplier'));
+            exit;
+        }
+
     }
 
     //Manage supplier
@@ -130,19 +231,13 @@ class Csupplier extends CI_Controller {
         $c_acc=$supplier_id.'-'.$this->input->post('supplier_name',TRUE);
         $data = array(
             'supplier_name' => $this->input->post('supplier_name',TRUE),
-            'address'       => $this->input->post('address',TRUE),
-            'address2'      => $this->input->post('address2',TRUE),
-            'mobile'        => $this->input->post('mobile',TRUE),
-            'phone'         => $this->input->post('phone',TRUE),
-            'contact'       => $this->input->post('contact',TRUE),
-            'emailnumber'   => $this->input->post('email',TRUE),
-            'email_address' => $this->input->post('emailaddress',TRUE),
-            'fax'           => $this->input->post('fax',TRUE),
-            'city'          => $this->input->post('city',TRUE),
             'state'         => $this->input->post('state',TRUE),
             'zip'           => $this->input->post('zip',TRUE),
             'country'       => $this->input->post('country',TRUE),
-            'details'       => $this->input->post('details',TRUE)
+            'details'       => $this->input->post('details',TRUE),
+            'supplier_type'       => $this->input->post('supplier_type',TRUE),
+            'bank_details'      => $this->input->post('bank_details',TRUE),
+            'status'        => 1
         );
          $supplier_coa = [
              'HeadName'         => $c_acc
@@ -151,6 +246,124 @@ class Csupplier extends CI_Controller {
         if ($result == TRUE) {
         $this->db->where('HeadName', $old_headnam);
         $this->db->update('acc_coa', $supplier_coa);
+
+
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->delete('supplier_email');
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->delete('supplier_address');
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->delete('supplier_mobile');
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->delete('supplier_contact');
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->delete('supplier_phone');
+
+            $email=$this->input->post('email',TRUE);
+            $mobile=$this->input->post('mobile',TRUE);
+            $phone=$this->input->post('phone',TRUE);
+            $address=$this->input->post('address',TRUE);
+            $contact=$this->input->post('contact',TRUE);
+            if ( ! empty($email))
+            {
+
+                foreach ($email as $key => $value )
+                {
+
+
+                    $data2['email_id'] = $value;
+                    $data2['supplier_id']=$supplier_id;
+
+
+                    //  echo '<pre>';print_r($data);
+                    // $this->ProductModel->add_products($data);
+                    if ( ! empty($data2))
+                    {
+                        $this->db->insert('supplier_email', $data2);
+                    }
+                }
+
+            }
+
+            if ( ! empty($mobile))
+            {
+
+                foreach ($mobile as $key => $value )
+                {
+
+
+                    $data3['mobile_no'] = $value;
+                    $data3['supplier_id']=$supplier_id;
+
+
+                    if ( ! empty($data3))
+                    {
+                        $this->db->insert('supplier_mobile', $data3);
+                    }
+                }
+
+            }
+            if ( ! empty($phone))
+            {
+
+                foreach ($phone as $key => $value )
+                {
+
+
+                    $data4['phone_no'] = $value;
+                    $data4['supplier_id']=$supplier_id;
+
+
+                    //  echo '<pre>';print_r($data);
+                    // $this->ProductModel->add_products($data);
+                    if ( ! empty($data4))
+                    {
+                        $this->db->insert('supplier_phone', $data4);
+                    }
+                }
+
+            }
+            if ( ! empty($address))
+            {
+
+                foreach ($address as $key => $value )
+                {
+
+
+                    $data5['address'] = $value;
+                    $data5['supplier_id']=$supplier_id;
+
+
+                    //  echo '<pre>';print_r($data);
+                    // $this->ProductModel->add_products($data);
+                    if ( ! empty($data5))
+                    {
+                        $this->db->insert('supplier_address', $data5);
+                    }
+                }
+
+            }
+            if ( ! empty($contact))
+            {
+
+                foreach ($contact as $key => $value )
+                {
+
+
+                    $data6['contact'] = $value;
+                    $data6['supplier_id']=$supplier_id;
+
+
+                    //  echo '<pre>';print_r($data);
+                    // $this->ProductModel->add_products($data);
+                    if ( ! empty($data6))
+                    {
+                        $this->db->insert('supplier_contact', $data6);
+                    }
+                }
+
+            }
+
         $this->session->set_userdata(array('message' => display('successfully_updated')));
         redirect(base_url('Csupplier/manage_supplier'));
         exit;

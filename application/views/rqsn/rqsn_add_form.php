@@ -54,7 +54,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
+                            <table class="datatable table table-striped table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
                                 <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
@@ -106,11 +106,11 @@
     $(document).ready(function(){
 
 
-        $("#add_rqsn_table").dataTable({
-            "columnDefs": [
-                { "width": "5%", "targets": 9 }
-            ]
-        });
+        // $("#add_rqsn_table").dataTable({
+        //     "columnDefs": [
+        //         { "width": "5%", "targets": 9 }
+        //     ]
+        // });
 
 
 
