@@ -117,133 +117,8 @@
 
 
 <br>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="purchaseTable">
-                                <thead>
-                                     <tr>
-                                        <th class="text-center" width="4%">SN</th>
-                                        <th class="text-center" width="8%">Category</th>
-                                        <th class="text-center" width="8%">Sub Category</th>
-                                        <th class="text-center" width="9%">Product Name</th>
-                                        <th class="text-center" width="8%">Parts No.</th>
-                                        <th class="text-center">Stock</th>
-                                        <th class="text-center">Proposed Quantity</th>
-                                        <th class="text-center">Order Quantity</th>
-                                        <th class="text-center">Supplier Name</th>
-                                        <th class="text-center">Warranty</th>
-                                        <th class="text-center">Origin</th>
-                                        <th class="text-center">Price</th>
-                                        <th class="text-center">Discount</th>
-                                        <th class="text-center">Total</th>
-
-                                        <th class="text-center"><?php echo display('action') ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="addPurchaseItem">
-                                    <tr>
-
-                                    <td class="wt"> <input type="text" value="1" name="sn[]" id="sn" class="form-control text-right stock_ctn_1"  readonly/></td>
-
-                                    <td class="wt">
-                                        <select name="category_name" id="category_name_1" class="form-control text-center" onchange="change_cat(1)">
-                                            {category_list}
-                                            <option value="{category_id}">{category_name}</option>
-                                            {/category_list}
-                                        </select>
-                                        <input type="hidden" id="cat_list" value='{category_list}<option value="{category_id}">{category_name}</option>{/category_list}' name="">
-                                    </td>
-
-                                    <td class="wt">
-                                        <select name="subcat_name" id="subcat_name_1" class="form-control text-center">
-                                            <option value=""></option>
-                                        </select>
-                                    </td>
-
-                                    <td class="span3 supplier">
-                                       <input type="text" autocomplete="off" name="product_name" required class="form-control product_name productSelection" onkeypress="product_pur_or_list(1);" placeholder="Pr. Name" id="product_name_1" tabindex="3" >
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1" name="product_id[]" id="SchoolHiddenId"/>
-                                        <input type="hidden" class="sl" value="1">
-                                    </td>
-
-                                        <td class="wt"> <input type="text" placeholder="Parts No." name="parts_no[]" id="parts_number_1" class="form-control text-right stock_ctn_1"  readonly/></td>
-
-                                        <td class="wt">
-                                            <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00" readonly/>
-                                        </td>
-
-                                        <td class="test">
-                                            <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_1" class="form-control product_rate_1 text-right" placeholder="1234" value="" min="0" tabindex="7"/>
-                                        </td>
-
-                                        <td class="test">
-                                            <input type="text" name="order_quantity[]" required=""  id="order_quantity_1" class="form-control product_rate_1 text-right" onkeyup="calculate_store(1);" onchange="calculate_store(1);" placeholder="1234" value="" min="0" tabindex="7"/>
-                                        </td>
-
-                                        <td>
-                                            <select name="supplier_name[]" id="supplier_drop_1" class="form-control text-center" onchange="get_price(1)">
-
-                                            </select>
-                                        </td>
-
-                                        <td>
-                                           <input type="date"  style="width: 110px" id="warrenty_date" name="warrenty_date[]"  />
-                                       </td>
-
-                                       <td class="wt"> <input type="text" placeholder="Origin" name="origin[]" id="origin_1" class="form-control text-right stock_ctn_1"  readonly/></td>
-
-
-                                            <td class="text-right">
-                                                <input type="text" name="price[]" id="product_rate_1" onkeyup="calculate_store(1);" onchange="calculate_store(1);" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value=""  tabindex="6"/>
-                                            </td>
-
-
-                                            <td class="text-right">
-                                                <input class="form-control discount text-right" onkeyup="calculate_store(1);" onchange="calculate_store(1);" type="text" name="discount[]" id="discount_1" value="00"/>
-
-                                            </td>
-
-                                            <td class="text-right">
-                                                <input type="text" class="form-control row_total" name="row_total[]" value="" id = "row_total_1" class="row_total" readonly>
-                                            </td>
-
-                                            <td>
-                                                <button  class="btn btn-danger text-right red" type="button" value="<?php echo display('delete')?>" onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>
-                                            </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-
-                                        <td class="text-right" colspan="12"><b><?php echo display('total') ?>:</b></td>
-                                        <td class="text-right" colspan="2">
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" readonly="readonly" />
-                                        </td>
-
-                                        <td> <button type="button" id="add_invoice_item" class="btn btn-info" name="add-invoice-item"  onClick="addPurchaseOrderField1('addPurchaseItem')"  tabindex="9"/><i class="fa fa-plus"></i></button>
-
-                                            <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="text-right" colspan="12"><b><?php echo display('paid_amount') ?>:</b></td>
-                                        <td class="text-right" colspan="2">
-                                            <input type="text" id="paidAmount" class="text-right form-control" onKeyup="invoice_paidamount()" name="paid_amount" value="" />
-                                        </td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2" class="text-right">
-                                             <input type="button" id="full_paid_tab" class="btn btn-warning" value="<?php echo display('full_paid') ?>" tabindex="16" onClick="full_paid()"/>
-                                        </td>
-                                        <td class="text-right" colspan="10"><b><?php echo display('due_amount') ?>:</b></td>
-                                        <td class="text-right" colspan="2">
-                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="0.00" readonly="readonly" />
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                        <div id="cart_details">
+                            <h3 align="center">No Purchase Order</h3>
                         </div>
 
                         <div class="form-group row">
@@ -264,8 +139,10 @@
 
 <script type="text/javascript">
 
-$( document ).ready(function() {
-    change_cat(1);
-});
+    $( document ).ready(function() {
+
+        $('#cart_details').load("<?php echo base_url(); ?>Cpurchase/load");
+
+    });
 
 </script>

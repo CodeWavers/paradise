@@ -759,6 +759,8 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                     </span>
                     </a>
                     <ul class="treeview-menu">
+
+
                         <?php if($this->permission1->method('add_purchase','create')->access()){ ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('1') == ("Cpurchase") && $this->uri->segment('2') == ("")) {
@@ -767,6 +769,16 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             }
                             ?>"><a href="<?php echo base_url('Cpurchase') ?>">Purchase Order</a></li>
+                        <?php } ?>
+
+                        <?php if($this->permission1->method('add_purchase','create')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('1') == ("Cpurchase") && $this->uri->segment('2') == ("purchase_list")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cpurchase/purchase_list') ?>">Purchase List</a></li>
                         <?php } ?>
 
                         <!-- <?php if($this->permission1->method('purchase_order','create')->access()){ ?>

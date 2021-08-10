@@ -180,7 +180,7 @@ header('Content-Type: text/javascript; charset=utf8');
 function get_price(sl) {
     var supplier_id = $("#supplier_drop_" + sl).val();
     var product_rate    = 'product_rate_'+sl;
-    var product_id = $('.product_id_1').val();
+    var product_id = $('#product_id_' + sl).val();
     var base_url = $('#base_url').val();
     var csrf_test_name = $('[name="csrf_test_name"]').val();
     $.ajax({

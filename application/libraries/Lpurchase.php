@@ -373,6 +373,29 @@ class Lpurchase {
         return $purchaseList;
     }
 
+    public function purchase_list_from_rqsn()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Purchases');
+
+        $rqsn_list = $CI->Purchases->get_rqsn_approved_list();
+
+
+        $i = 0;
+        foreach ($rqsn_list as $k => $v) {
+            $i++;
+            $rqsn_list[$k]['sl'] = $i;
+        }
+
+        $data = array(
+            'title'     => 'Purchases List',
+            'pur_list'  => $rqsn_list
+        );
+
+        return $CI->parser->parse('purchase/purchase_list_form', $data, true);
+
+    }
+
 }
 
 ?>

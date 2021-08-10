@@ -162,6 +162,7 @@ class Rqsn extends CI_Model {
                 'quantity'                => $qty,
             //    'unit'                => $un,
                 'status'                => 1,
+                'purchase_status'       => 1
 
             );
             if (!empty($quantity)) {
