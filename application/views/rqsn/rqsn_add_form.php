@@ -54,21 +54,21 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
+                            <table class="datatable table table-striped table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
                                 <thead>
-                                    <tr>
-                                        <th><?php echo display('sl') ?></th>
-                                        <th><?php echo display('image') ?>s</th>
-                                        <th>Category</th>
-                                        <th>Sub Category</th>
-                                        <th class="col-md-2"><?php echo display('product_name') ?></th>
-                                        <th>Parts No.</th>
-                                        <th>SKU</th>
-                                        <th>Brand</th>
-                                        <th><?php echo display('product_model') ?></th>
-                                        <th>Quantity</th>
-                                        <th><?php echo display('action') ?></th>
-                                    </tr>
+                                <tr>
+                                    <th><?php echo display('sl') ?></th>
+                                    <th><?php echo display('image') ?>s</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th class="col-md-2"><?php echo display('product_name') ?></th>
+                                    <th>Parts No.</th>
+                                    <th>SKU</th>
+                                    <th>Brand</th>
+                                    <th><?php echo display('product_model') ?></th>
+                                    <th>Quantity</th>
+                                    <th><?php echo display('action') ?></th>
+                                </tr>
                                 </thead>
                                 <tbody>
 
@@ -91,7 +91,7 @@
                                         data-category="<?php echo $row['category_name']?>" data-subcat="<?php echo $row['subcat_name']?>" data-productname="<?php echo $row['product_name']?>" data-parts="<?php echo $row['parts']?>" data-sku="<?php echo $row['sku']?>" data-brand="<?php echo $row['brand_name']?>" data-model="<?php echo $row['model_name']?>" data-productid="<?php echo $row['product_id']?>"><i class="fa fa-plus" aria-hidden="true"></i>
 
 
-</button></td>
+                                            </button></td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
@@ -110,11 +110,11 @@
     $(document).ready(function(){
 
 
-        $("#add_rqsn_table").dataTable({
-            "columnDefs": [
-                { "width": "5%", "targets": 9 }
-            ]
-        });
+        // $("#add_rqsn_table").dataTable({
+        //     "columnDefs": [
+        //         { "width": "5%", "targets": 9 }
+        //     ]
+        // });
 
 
 
@@ -167,11 +167,11 @@
                         btn.removeClass("btn-success");
                         btn.addClass("btn-warning");
                         setTimeout(function(){
-                            btn.html('<i class="fa fa-plus"></i>')
-                            btn.removeClass("btn-warning");
-                            btn.addClass("btn-success");
-                        },
-                        4000
+                                btn.html('<i class="fa fa-plus"></i>')
+                                btn.removeClass("btn-warning");
+                                btn.addClass("btn-success");
+                            },
+                            4000
                         );
                     }
                     // error:function (e) {

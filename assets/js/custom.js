@@ -388,7 +388,7 @@ $(function($){
 
         "aaSorting": [[ 0, "asc" ]],
         "columnDefs": [
-            { "bSortable": false, "aTargets": [1,2,3,4,5,6,7] },
+            { "bSortable": false, "aTargets": [1,2,3,4,5,6] },
 
         ],
         'processing': true,
@@ -433,9 +433,9 @@ $(function($){
             { data: 'supplier_name' },
             { data: 'address'},
             { data: 'mobile' },
-            { data: 'phone' },
+            //{ data: 'phone' },
             { data: 'emailnumber' },
-            { data: 'city' },
+          //  { data: 'city' },
             { data: 'country' },
             { data: 'balance',class:"balance",render: $.fn.dataTable.render.number( ',', '.', 2, currency ) },
             { data: 'button'},

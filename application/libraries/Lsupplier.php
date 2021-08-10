@@ -111,12 +111,17 @@ class Lsupplier {
         $CI = & get_instance();
         $CI->load->model('Suppliers');
         $supplier_detail = $CI->Suppliers->retrieve_supplier_editdata($supplier_id);
+        $email_data = $CI->Suppliers->retrieve_email_editdata($supplier_id);
+        $address_data = $CI->Suppliers->retrieve_address_editdata($supplier_id);
+        $mobile_data = $CI->Suppliers->retrieve_mobile_editdata($supplier_id);
+        $phone_data = $CI->Suppliers->retrieve_phone_editdata($supplier_id);
+        $contact_data = $CI->Suppliers->retrieve_contact_editdata($supplier_id);
         $data = array(
             'title'         => display('supplier_edit'),
             'supplier_id'   => $supplier_detail[0]['supplier_id'],
             'supplier_name' => $supplier_detail[0]['supplier_name'],
             'address'       => $supplier_detail[0]['address'],
-            'address2'      => $supplier_detail[0]['address2'],
+            'bank_details'      => $supplier_detail[0]['bank_details'],
             'mobile'        => $supplier_detail[0]['mobile'],
             'emailnumber'   => $supplier_detail[0]['emailnumber'],
             'email_address' => $supplier_detail[0]['email_address'],
@@ -128,8 +133,16 @@ class Lsupplier {
             'zip'           => $supplier_detail[0]['zip'],
             'country'       => $supplier_detail[0]['country'],
             'details'       => $supplier_detail[0]['details'],
-            'status'        => $supplier_detail[0]['status']
+            'supplier_type'       => $supplier_detail[0]['supplier_type'],
+            'email_data'        => $email_data,
+            'phone_data'        => $phone_data,
+            'mobile_data'        => $mobile_data,
+            'address_data'        => $address_data,
+            'contact_data'        => $contact_data,
+
         );
+
+      //  echo '<pre>';print_r($data);exit();
         $chapterList = $CI->parser->parse('supplier/edit_supplier_form', $data, true);
         return $chapterList;
     }
