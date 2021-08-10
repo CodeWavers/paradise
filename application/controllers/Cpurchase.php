@@ -136,12 +136,13 @@ class Cpurchase extends CI_Controller {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Purchases');
-        $CI->Purchases->purchase_entry_new();
         $this->session->set_userdata(array('message' => display('successfully_added')));
-        if (isset($_POST['add-purchase'])) {
-            redirect(base_url('Cpurchase/manage_purchase'));
+        if (isset($_POST['save_as_draft'])) {
+            $CI->Purchases->PO_cart_update();
+            redirect(base_url('Cpurchase'));
             exit;
-        } elseif (isset($_POST['add-purchase-another'])) {
+        } elseif (isset($_POST['finalize'])) {
+            $CI->Purchases->purchase_entry_new();
             redirect(base_url('Cpurchase'));
             exit;
         }
@@ -405,7 +406,7 @@ class Cpurchase extends CI_Controller {
             );
             $this->db->insert('purchase_order_cart',$data);
 
-            $p_id = $_POST["product_id"];
+            $rq_d_id = $_POST["rq_d_id"];
 
             // $data2 = array(
             //     'purchase_status' => 2
@@ -413,9 +414,11 @@ class Cpurchase extends CI_Controller {
 
             $sq = "UPDATE rqsn_details
             SET purchase_status = 2
-            WHERE product_id = ".$p_id.";";
+            WHERE rqsn_detail_id = ".$rq_d_id.";";
 
             $this->db->query($sq);
+
+
 
             json_encode($data);
         }
@@ -429,7 +432,7 @@ class Cpurchase extends CI_Controller {
         {
             $this->load->model("Purchases");
             $this->load->model("Products");
-            // $this->load->model("Suppliers");
+            $this->load->model("Suppliers");
          //   $product_id=$_POST["product_id"];
             $cart_list = $this->Purchases->purchase_cart_data();
 
@@ -437,6 +440,10 @@ class Cpurchase extends CI_Controller {
             $output .= '
 
             <div class="table-responsive">
+            <div align="right">
+            <button type="button" id="clear_cart" class="btn btn-warning">Clear Purchase Order</button>
+            </div>
+            <br />
             <table class="table table-bordered table-hover" id="purchaseTable">
                 <thead>
                      <tr>
@@ -495,14 +502,22 @@ class Cpurchase extends CI_Controller {
                             </td>
 
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_'.$count.'" class="form-control product_rate_1 text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" placeholder="1234" value="" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_'.$count.'" class="form-control product_rate_1 text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" placeholder="1234" value="'.($items['order_qty'] ? $items['order_qty'] : "").'" min="0" tabindex="7"/>
                             </td>
 
                             <td>
-                                <select name="supplier_name[]" id="supplier_drop_'.$count.'" class="form-control text-center" onchange="get_price('.$count.')">';
+                                <select name="supplier_name[]" id="supplier_drop_'.$count.'" class="form-control text-center" onchange="get_price('.$count.')">
+                                ';
 
                 foreach ($supplier_list as $supp) {
-                    $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                    if($items['supplier_id']){
+                        if($items['supplier_id'] == $supp['supplier_id']){
+                            $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
+                        }
+                    }
+                    else{
+                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                    }
                 }
 
 
@@ -510,19 +525,19 @@ class Cpurchase extends CI_Controller {
                             </td>
 
                             <td>
-                            <input type="date" class="form-control" style="width: 110px" id="warrenty_date" name="warrenty_date[]"  />
+                            <input type="date" class="form-control" style="" id="warrenty_date_'.$count.'" name="warrenty_date[]"  required/>
                         </td>
 
 
                         <td class="wt">'.$product_info['country'].'</td>
 
                                 <td class="text-right">
-                                    <input type="text" name="price[]" id="product_rate_'.$count.'" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value=""  tabindex="6"/>
+                                    <input type="text" name="price[]" id="product_rate_'.$count.'" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="'.($items['rate'] ? $items['rate'] : "").'"  tabindex="6"/>
                                 </td>
 
 
                                 <td class="text-right">
-                                    <input class="form-control discount text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" type="text" name="discount[]" id="discount_'.$count.'" value="00"/>
+                                    <input class="form-control discount text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" type="text" name="discount[]" id="discount_'.$count.'" value="'.($items['discount'] ? $items['discount'] : "00").'"/>
 
                                 </td>
 
@@ -531,7 +546,7 @@ class Cpurchase extends CI_Controller {
                                 </td>
 
                                 <td>
-                                    <button  class="btn btn-danger text-right red" type="button"  onclick="deleteRow(this)" tabindex="8"><i class="fa fa-close"></i></button>
+                                    <button  class="remove_inventory btn btn-danger text-right" type="button"  id="'.$items["product_id"].'" tabindex="8"><i class="fa fa-close"></i></button>
                                 </td>
                         </tr>
                         ';
@@ -539,36 +554,6 @@ class Cpurchase extends CI_Controller {
             $output .= '
 
             </tbody>
-            <tfoot>
-                <tr>
-
-                    <td class="text-right" colspan="11"><b>Total:</b></td>
-                    <td class="text-right" colspan="2">
-                        <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" readonly="readonly" />
-                    </td>
-
-                    <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/></td>
-                </tr>
-
-                <tr>
-                    <td class="text-right" colspan="11"><b>Paid Amount:</b></td>
-                    <td class="text-right" colspan="2">
-                        <input type="text" id="paidAmount" class="text-right form-control" onKeyup="invoice_paidamount()" name="paid_amount" value="" />
-                    </td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="text-right">
-                         <input type="button" id="full_paid_tab" class="btn btn-warning" value="Full Paid" tabindex="16" onClick="full_paid()"/>
-                    </td>
-                    <td class="text-right" colspan="9"><b>Due Amount:</b></td>
-                    <td class="text-right" colspan="2">
-                        <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="0.00" readonly="readonly" />
-                    </td>
-                    <td></td>
-                </tr>
-            </tfoot>
         </table>
                             ';
 
@@ -577,5 +562,21 @@ class Cpurchase extends CI_Controller {
                 $output = '<h3 align="center">Purchase list is empty</h3>';
             }
             return $output;
+        }
+
+
+        public function clear_po_cart()
+        {
+            $this->db->empty_table('purchase_order_cart');
+            echo $this->load();
+        }
+
+        public function remove()
+        {
+            $row_id = $_POST["row_id"];
+
+            $this->db->where('product_id', $row_id);
+            $this->db->delete('purchase_order_cart');
+            echo $this->load();
         }
 }
