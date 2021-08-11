@@ -388,13 +388,14 @@ class Lpurchase {
         $i = 0;
         foreach ($rqsn_list as $k => $v) {
             $i++;
-            $rqsn_list[$k]['sl'] = $i;
+            $rqsn_list[$k]['sl'] = $i + $CI->uri->segment(3);
         }
 
         $data = array(
             'title'     => 'Purchases List',
             'pur_list'  => $rqsn_list
         );
+        // echo '<pre>'; print_r($data); die();
 
         return $CI->parser->parse('purchase/purchase_list_form', $data, true);
 

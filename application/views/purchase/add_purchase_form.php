@@ -116,6 +116,7 @@
                         </div>
 
 
+
 <br>
                         <div id="cart_details">
                             <h3 align="center">No Purchase Order</h3>
@@ -123,8 +124,8 @@
 
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <input type="submit" id="add_purchase" class="btn btn-primary btn-large" name="add-purchase" value="<?php echo display('submit') ?>" />
-                                <input type="submit" value="<?php echo display('submit_and_add_another') ?>" name="add-purchase-another" class="btn btn-large btn-success" id="add_purchase_another" >
+                                <input type="submit" id="save_as_draft" class="btn btn-warning btn-large" name="save_as_draft" value="Save As Draft" />
+                                <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="finalize" >
                             </div>
                         </div>
                     <?php echo form_close()?>

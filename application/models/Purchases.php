@@ -1264,13 +1264,14 @@ class Purchases extends CI_Model {
     }
 
     public function purchase_entry_new() {
+
         $purchase_id = date('YmdHis');
 
 
         $p_id = $this->input->post('product_id',TRUE);
-        $supinfo =$this->db->select('*')->from('supplier_information')->where('supplier_id',$supplier_id)->get()->row();
-        $sup_head = $supinfo->supplier_id.'-'.$supinfo->supplier_name;
-        $sup_coa = $this->db->select('*')->from('acc_coa')->where('HeadName',$sup_head)->get()->row();
+        // $supinfo =$this->db->select('*')->from('supplier_information')->where('supplier_id',$supplier_id)->get()->row();
+        // $sup_head = $supinfo->supplier_id.'-'.$supinfo->supplier_name;
+        // $sup_coa = $this->db->select('*')->from('acc_coa')->where('HeadName',$sup_head)->get()->row();
         $receive_by=$this->session->userdata('user_id');
         $receive_date=date('Y-m-d');
         $createdate=date('Y-m-d H:i:s');
@@ -1346,7 +1347,7 @@ class Purchases extends CI_Model {
             $product_quantity = $quantity[$i];
             $prop_qty = $proposed_quantity[$i];
             // $sn_number = $sn[$i];
-            $origin_t = $origin[$i];
+            $origin_t = isset($origin[$i]) ? $origin[$i]: "";
             $warrenty_date = $warrenty[$i];
             $product_rate = $rate[$i];
             $product_id = $p_id[$i];
@@ -1374,6 +1375,9 @@ class Purchases extends CI_Model {
                 $this->db->insert('product_purchase_details', $data1);
             }
         }
+
+        $this->db->empty_table('purchase_order_cart');
+
 
         return true;
     }
@@ -1427,17 +1431,17 @@ class Purchases extends CI_Model {
 
     public function get_rqsn_approved_list()
     {
-        $this->db->select('a.*, b.*, sum(b.quantity) as qty, c.*,d.*, e.*, f.*, g.*');
+        $this->db->select('a.*, b.*, c.*,d.*, e.*, f.*, g.*');
         $this->db->from('rqsn a');
-        $this->db->where('a.status', 2);
-        $this->db->where('b.purchase_status', 1);
-        $this->db->group_by('b.product_id');
         $this->db->join('rqsn_details b', 'b.rqsn_id = a.rqsn_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
         $this->db->join('product_category d', 'd.category_id = c.category_id');
         $this->db->join('product_subcat e', 'e.sub_cat_id = c.sub_cat_id');
         $this->db->join('product_brand f', 'f.brand_id = c.brand_id');
         $this->db->join('product_model g', 'g.model_id = c.product_model');
+        $this->db->where('a.status', 2);
+        $this->db->where('b.purchase_status', 1);
+        $this->db->group_by('b.product_id');
 
         // $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
 
@@ -1463,6 +1467,37 @@ class Purchases extends CI_Model {
         $query = $this->db->get();
         // echo '<pre>'; print_r($query->result_array()); die();
         return $query->result_array();
+    }
+
+    public function PO_cart_update()
+    {
+        $p_id = $this->input->post('product_id',TRUE);
+        $qty = $this->input->post('order_quantity',TRUE);
+        $supp_id= $this->input->post('supplier_name',TRUE);
+        $warrenty_date = $this->input->post('warrenty_date',TRUE);
+        $price= $this->input->post('price',TRUE);
+        $discount= $this->input->post('discount',TRUE);
+
+
+
+        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+
+            $item_pid = $p_id[$i];
+            $item_qty = $qty[$i];
+            $item_supp = $supp_id[$i];
+            $item_warr = $warrenty_date[$i];
+            $item_price = $price[$i];
+            $item_dis = $discount[$i];
+
+            $sq = "UPDATE purchase_order_cart
+            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", warrenty_date = ".$item_warr.", rate = ".$item_price.", discount = ".$item_dis."
+            WHERE product_id = ".$item_pid.";";
+
+            $this->db->query($sq);
+
+        }
+
+
     }
 
 }

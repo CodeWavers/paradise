@@ -341,13 +341,46 @@ function get_price(sl) {
     document.getElementById('bank_div').style.display = style;
     }
 
-    $( document ).ready(function() {
-        var paytype = $("#editpayment_type").val();
-        if(paytype == 2){
-          $("#bank_div").css("display", "block");
-      }else{
-       $("#bank_div").css("display", "none");
-      }
+    $(document).ready(function(){
 
-      $(".bankpayment").css("width", "100%");
+      $(document).on('click', '#clear_cart', function(){
+            if(confirm("Are you sure you want to clear cart?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cpurchase/clear_po_cart",
+                    success:function(data)
+                    {
+                        toastr.success("Your cart has been cleared");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+        });
+
+        $(document).on('click', '.remove_inventory', function(){
+            var row_id = $(this).attr("id");
+            var csrf_test_name = $('[name="csrf_test_name"]').val();
+            if(confirm("Are you sure you want to remove this?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cpurchase/remove",
+                    method:"POST",
+                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
+                    success:function(data)
+                    {
+                        toastr.success("Product removed from Cart!");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+        });
+
     });
