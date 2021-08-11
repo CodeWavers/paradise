@@ -101,7 +101,9 @@
                                                 data-brand="<?php echo $row['brand_name']?>"
                                                 data-model="<?php echo $row['model_name']?>"
                                                 data-productid="<?php echo $row['product_id']?>"
-                                                data-rqstdetails="<?php echo $row['rqsn_detail_id']?>">
+                                                data-rqstdetails="<?php echo $row['rqsn_detail_id']?>"
+                                                onclick="add_and_delete(this)"
+                                                >
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </td>
@@ -120,30 +122,22 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+
+function add_and_delete(e) {
+    var a = e.parentNode.parentNode;
 
 
-        $("#add_rqsn_table").dataTable({
-            "columnDefs": [
-                { "width": "5%", "targets": 9 }
-            ]
-        });
-
-
-
-
-        $('.add_cart').click(function(){
-            var product_id = $(this).data("productid");
-            var product_name = $(this).data("productname");
-            var category_name = $(this).data("category");
-            var subcat = $(this).data("subcat");
-            var parts = $(this).data("parts");
-            var sku = $(this).data("sku");
-            var brand = $(this).data("brand");
-            var model = $(this).data("model");
+    var product_id = $(e).data("productid");
+            var product_name = $(e).data("productname");
+            var category_name = $(e).data("category");
+            var subcat = $(e).data("subcat");
+            var parts = $(e).data("parts");
+            var sku = $(e).data("sku");
+            var brand = $(e).data("brand");
+            var model = $(e).data("model");
             var quantity = $('#' + product_id).val();
-            var sl = $(this).data("sl");
-            var rqsn_details = $(this).data('rqsndetail');
+            var sl = $(e).data("sl");
+            var rqsn_details = $(e).data('rqsndetail');
             var btn = $("#add_btn" + sl);
             // console.log(product_id)
             // console.log(product_name)
@@ -177,6 +171,7 @@
                         btn.html('<i class="fa fa-check"></i>');
                         btn.removeClass("btn-success");
                         btn.addClass("btn-warning");
+                        a.parentNode.removeChild(a);
                         // setTimeout(function(){
                         //     btn.html('<i class="fa fa-plus"></i>')
                         //     btn.removeClass("btn-warning");
@@ -184,6 +179,7 @@
                         // },
                         // 4000
                         // );
+
                     }
                     // error:function (e) {
                     //
@@ -191,7 +187,83 @@
                     //
                     // }
                 });
+}
+
+
+
+    $(document).ready(function(){
+
+
+        $("#add_rqsn_table").dataTable({
+            "columnDefs": [
+                { "width": "5%", "targets": 9 }
+            ]
         });
+
+
+
+
+        // $('.add_cart').click(function(){
+        //     var product_id = $(this).data("productid");
+        //     var product_name = $(this).data("productname");
+        //     var category_name = $(this).data("category");
+        //     var subcat = $(this).data("subcat");
+        //     var parts = $(this).data("parts");
+        //     var sku = $(this).data("sku");
+        //     var brand = $(this).data("brand");
+        //     var model = $(this).data("model");
+        //     var quantity = $('#' + product_id).val();
+        //     var sl = $(this).data("sl");
+        //     var rqsn_details = $(this).data('rqsndetail');
+        //     var btn = $("#add_btn" + sl);
+        //     // console.log(product_id)
+        //     // console.log(product_name)
+        //     // console.log(category_name)
+        //     // console.log(quantity)
+        //     var csrf_test_name = $('[name="csrf_test_name"]').val();
+
+        //     $.ajax({
+        //             url:"<?php echo base_url(); ?>Cpurchase/add_to_draft",
+        //             method:"POST",
+        //             data:{
+        //                 csrf_test_name:csrf_test_name,
+        //                 product_id:product_id,
+        //                 product_name:product_name,
+        //                 category_name:category_name,
+        //                 subcat:subcat,
+        //                 parts:parts,
+        //                 sku:sku,
+        //                 brand:brand,
+        //                 model:model,
+        //                 quantity:quantity
+        //             },
+        //             success:function(data)
+        //             {
+
+        //                 console.log(data);
+        //                 toastr.success("Added to purchase order");
+        //                 $('#cart_details').html(data);
+        //                 $('#' + product_id).val('');
+        //                 // $('.add_cart').attr()
+        //                 btn.html('<i class="fa fa-check"></i>');
+        //                 btn.removeClass("btn-success");
+        //                 btn.addClass("btn-warning");
+        //                 // setTimeout(function(){
+        //                 //     btn.html('<i class="fa fa-plus"></i>')
+        //                 //     btn.removeClass("btn-warning");
+        //                 //     btn.addClass("btn-success");
+        //                 // },
+        //                 // 4000
+        //                 // );
+
+        //             }
+        //             // error:function (e) {
+        //             //
+        //             //     console.log(e)
+        //             //
+        //             // }
+        //         });
+        // });
 
 
 

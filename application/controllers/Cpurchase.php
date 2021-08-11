@@ -483,9 +483,9 @@ class Cpurchase extends CI_Controller {
                         <th class="text-center">Order Quantity</th>
                         <th class="text-center">Supplier Name</th>
                         <th class="text-center" width="8%">Warranty</th>
-                     
+
                         <th class="text-center">Price</th>
-                        <th class="text-center">Discount</th>
+                        <th class="text-center">Discount (%)</th>
                         <th class="text-center">Total</th>
 
                         <th class="text-center">Action</th>
@@ -499,6 +499,14 @@ class Cpurchase extends CI_Controller {
             $count = 0;
             foreach($cart_list as $items)
             {
+
+                $tot = "";
+
+                if ($items['total']){
+                    $tot = $items['total'];
+                }
+
+
                 $product_id = $items['product_id'];
                 $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
                 $supplier_list = $this->Products->supplier_product_editdata($product_id);
@@ -538,15 +546,17 @@ class Cpurchase extends CI_Controller {
                                 ';
 
                 foreach ($supplier_list as $supp) {
-                    $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-//                    if($items['supplier_id']){
-//                        if($items['supplier_id'] == $supp['supplier_id']){
-//                            $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
-//                        }
-//                    }
-//                    else{
-//                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-//                    }
+                    // $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                   if($items['supplier_id']){
+                       if($items['supplier_id'] == $supp['supplier_id']){
+                           $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
+                       }
+                       else{
+                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                        }
+                   }else{
+                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                   }
                 }
 
 
@@ -571,7 +581,7 @@ class Cpurchase extends CI_Controller {
                                 </td>
 
                                 <td class="text-right">
-                                    <input type="text" class="form-control row_total" name="row_total[]" value="" id = "row_total_'.$count.'" class="row_total" readonly>
+                                    <input type="text" class="form-control row_total" name="row_total[]" value="'.$tot.'" id = "row_total_'.$count.'" class="row_total" readonly>
                                 </td>
 
                                 <td>

@@ -125,7 +125,7 @@ header('Content-Type: text/javascript; charset=utf8');
         var item_ctn_qty    = $("#order_quantity_"+sl).val();
         var vendor_rate = $("#product_rate_"+sl).val();
 
-        var total_price     = ((item_ctn_qty * vendor_rate) - discount);
+        var total_price     = ((item_ctn_qty * vendor_rate) - ((item_ctn_qty * vendor_rate) * (discount / 100)));
         $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
@@ -365,5 +365,3 @@ function get_price(sl) {
 
     document.getElementById('bank_div').style.display = style;
     }
-
-

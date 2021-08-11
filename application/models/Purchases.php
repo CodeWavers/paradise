@@ -1477,6 +1477,8 @@ class Purchases extends CI_Model {
         $warrenty_date = $this->input->post('warrenty_date',TRUE);
         $price= $this->input->post('price',TRUE);
         $discount= $this->input->post('discount',TRUE);
+        $row_total = $this->input->post('row_total',TRUE);
+
 
 
 
@@ -1488,9 +1490,10 @@ class Purchases extends CI_Model {
             $item_warr = $warrenty_date[$i];
             $item_price = $price[$i];
             $item_dis = $discount[$i];
+            $total = $row_total[$i];
 
             $sq = "UPDATE purchase_order_cart
-            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", warrenty_date = ".$item_warr.", rate = ".$item_price.", discount = ".$item_dis."
+            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", warrenty_date = ".$item_warr.", rate = ".$item_price.", discount = ".$item_dis.", total = ".$total."
             WHERE product_id = ".$item_pid.";";
 
             $this->db->query($sq);
