@@ -5,12 +5,12 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Add Requisition</h1>
-            <small>Add product to requisition</small>
+            <h1>Purchase List</h1>
+            <small>Purchase List</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
-                <li><a href="#">Requisition</a></li>
-                <li class="active">Add Requisition</li>
+                <li><a href="#">Purchase List</a></li>
+                <li class="active">Purchase List</li>
             </ol>
         </div>
     </section>
@@ -49,7 +49,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4>Add Requisition</h4>
+                            <h4>Purchase List</h4>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -119,7 +119,7 @@
     </section>
 </div>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function(){
 
 
@@ -177,13 +177,13 @@
                         btn.html('<i class="fa fa-check"></i>');
                         btn.removeClass("btn-success");
                         btn.addClass("btn-warning");
-                        setTimeout(function(){
-                            btn.html('<i class="fa fa-plus"></i>')
-                            btn.removeClass("btn-warning");
-                            btn.addClass("btn-success");
-                        },
-                        4000
-                        );
+                        // setTimeout(function(){
+                        //     btn.html('<i class="fa fa-plus"></i>')
+                        //     btn.removeClass("btn-warning");
+                        //     btn.addClass("btn-success");
+                        // },
+                        // 4000
+                        // );
                     }
                     // error:function (e) {
                     //

@@ -363,11 +363,18 @@ class Lpurchase {
         foreach ($all_purchase_list as $k => $v) {
             $i++;
             $all_purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
+
+         //   $closing_inventory = array_sum(array_column($data,'purchase_total'));
         }
+
+        $total = array_sum(array_column($all_purchase_list,'total_amount'));
+
+
 
         $data = array(
             'title'     => 'Edit Approve Order Purchases',
             'all_purchase_list' => $all_purchase_list,
+            'total' => $total,
         );
 
 

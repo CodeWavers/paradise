@@ -144,6 +144,46 @@
 
         $('#cart_details').load("<?php echo base_url(); ?>Cpurchase/load");
 
+        $(document).on('click', '.remove_inventory', function(){
+            var row_id = $(this).attr("id");
+            var csrf_test_name = $('[name="csrf_test_name"]').val();
+            if(confirm("Are you sure you want to remove this?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cpurchase/remove",
+                    method:"POST",
+                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
+                    success:function(data)
+                    {
+                        toastr.success("Product removed from Purchase Order!");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+        });
+
+        $(document).on('click', '#clear_cart', function(){
+            if(confirm("Are you sure you want to clear cart?"))
+            {
+                $.ajax({
+                    url:"<?php echo base_url(); ?>Cpurchase/clear",
+                    success:function(data)
+                    {
+                        toastr.success("Your purchase order has been clear...");
+                        $('#cart_details').html(data);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+        });
+
     });
 
 </script>

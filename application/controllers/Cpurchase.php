@@ -1,3 +1,4 @@
+
 <?php
 
 if (!defined('BASEPATH'))
@@ -52,6 +53,28 @@ class Cpurchase extends CI_Controller {
         $content = $this->lpurchase->purchase_list();
         $this->template->full_admin_html_view($content);
     }
+
+   public function remove()
+    {
+
+        $row_id = $_POST["row_id"];
+//        $data = array(
+//            'rowid'  => $row_id,
+//            'qty'  => 0
+//        );
+        $this->db->where('product_id', $row_id);
+        $this->db->delete('purchase_order_cart');
+        echo $this->PO_live_data();
+    }
+
+    public function clear()
+    {
+        $this->load->library("cart");
+        $this->db->empty_table('purchase_order_cart');
+        echo $this->PO_live_data();
+    }
+
+
 
 
 
@@ -407,16 +430,20 @@ class Cpurchase extends CI_Controller {
             $this->db->insert('purchase_order_cart',$data);
 
             $rq_d_id = $_POST["rq_d_id"];
+            $product_id = $_POST["product_id"];
 
             // $data2 = array(
             //     'purchase_status' => 2
             // );
+            $this->db->where('product_id',$product_id);
+            $this->db->set('purchase_status',2);
+            $this->db->update('rqsn_details');
 
-            $sq = "UPDATE rqsn_details
-            SET purchase_status = 2
-            WHERE rqsn_detail_id = ".$rq_d_id.";";
-
-            $this->db->query($sq);
+//            $sq = "UPDATE rqsn_details
+//            SET purchase_status = 2
+//            WHERE rqsn_detail_id = ".$product_id.";";
+//
+//            $this->db->query($sq);
 
 
 
@@ -455,8 +482,8 @@ class Cpurchase extends CI_Controller {
                         <th class="text-center">Proposed Quantity</th>
                         <th class="text-center">Order Quantity</th>
                         <th class="text-center">Supplier Name</th>
-                        <th class="text-center">Warranty</th>
-                        <th class="text-center">Origin</th>
+                        <th class="text-center" width="8%">Warranty</th>
+                     
                         <th class="text-center">Price</th>
                         <th class="text-center">Discount</th>
                         <th class="text-center">Total</th>
@@ -502,34 +529,36 @@ class Cpurchase extends CI_Controller {
                             </td>
 
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_'.$count.'" class="form-control product_rate_1 text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" placeholder="1234" value="'.($items['order_qty'] ? $items['order_qty'] : "").'" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_'.$count.'" class="form-control product_rate_1 text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" placeholder="1234" value="'.($items['order_qty'] ? $items['order_qty'] : "1").'" min="0" tabindex="7"/>
                             </td>
 
                             <td>
-                                <select name="supplier_name[]" id="supplier_drop_'.$count.'" class="form-control text-center" onchange="get_price('.$count.')">
+                                <select name="supplier_name[]" id="supplier_drop_'.$count.'" class="form-control text-center"  onchange="get_price('.$count.')" >
+                                <option value="">Select Option</option>
                                 ';
 
                 foreach ($supplier_list as $supp) {
-                    if($items['supplier_id']){
-                        if($items['supplier_id'] == $supp['supplier_id']){
-                            $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
-                        }
-                    }
-                    else{
-                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-                    }
+                    $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+//                    if($items['supplier_id']){
+//                        if($items['supplier_id'] == $supp['supplier_id']){
+//                            $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
+//                        }
+//                    }
+//                    else{
+//                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+//                    }
                 }
 
 
                 $output .= '</select>
                             </td>
 
-                            <td>
-                            <input type="date" class="form-control" style="" id="warrenty_date_'.$count.'" name="warrenty_date[]"  required/>
+                            <td >
+                            <input type="date" class="form-control" style="width: 110px" id="warrenty_date_'.$count.'" name="warrenty_date[]"  required/>
                         </td>
 
 
-                        <td class="wt">'.$product_info['country'].'</td>
+
 
                                 <td class="text-right">
                                     <input type="text" name="price[]" id="product_rate_'.$count.'" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="'.($items['rate'] ? $items['rate'] : "").'"  tabindex="6"/>
@@ -565,18 +594,5 @@ class Cpurchase extends CI_Controller {
         }
 
 
-        public function clear_po_cart()
-        {
-            $this->db->empty_table('purchase_order_cart');
-            echo $this->load();
-        }
 
-        public function remove()
-        {
-            $row_id = $_POST["row_id"];
-
-            $this->db->where('product_id', $row_id);
-            $this->db->delete('purchase_order_cart');
-            echo $this->load();
-        }
 }

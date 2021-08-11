@@ -1401,7 +1401,7 @@ class Purchases extends CI_Model {
         $this->db->from('product_purchase a');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
         $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
-        $this->db->where('a.isAprv',2)->order_by('a.purchase_order', 'desc');
+        $this->db->where('a.isAprv',2)->order_by('a.purchase_order', 'desc')->group_by('b.supplier_id');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -1431,14 +1431,14 @@ class Purchases extends CI_Model {
 
     public function get_rqsn_approved_list()
     {
-        $this->db->select('a.*, b.*, c.*,d.*, e.*, f.*, g.*');
+        $this->db->select('a.*, sum(b.quantity)as qty, b.*, c.*,d.*, e.*, f.*, g.*');
         $this->db->from('rqsn a');
         $this->db->join('rqsn_details b', 'b.rqsn_id = a.rqsn_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
-        $this->db->join('product_category d', 'd.category_id = c.category_id');
-        $this->db->join('product_subcat e', 'e.sub_cat_id = c.sub_cat_id');
-        $this->db->join('product_brand f', 'f.brand_id = c.brand_id');
-        $this->db->join('product_model g', 'g.model_id = c.product_model');
+        $this->db->join('product_category d', 'd.category_id = c.category_id','left');
+        $this->db->join('product_subcat e', 'e.sub_cat_id = c.sub_cat_id','left');
+        $this->db->join('product_brand f', 'f.brand_id = c.brand_id','left');
+        $this->db->join('product_model g', 'g.model_id = c.product_model','left');
         $this->db->where('a.status', 2);
         $this->db->where('b.purchase_status', 1);
         $this->db->group_by('b.product_id');

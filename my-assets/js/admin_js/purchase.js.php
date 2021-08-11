@@ -130,38 +130,63 @@ header('Content-Type: text/javascript; charset=utf8');
 
 
         //Total Price
-        $(".row_total").each(function() {
-            isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
-        });
-         $(".discount").each(function() {
-            isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
-        });
+        //$(".row_total").each(function() {
+        //    isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
+        //});
+        // $(".discount").each(function() {
+        //    isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
+        //});
 
         // $("#Total").val(gr_tot.toFixed(2,2));
-        var grandtotal = gr_tot;
-        $("#Total").val(grandtotal.toFixed(2,2));
-        invoice_paidamount();
+        //var grandtotal = gr_tot;
+        //$("#Total").val(grandtotal.toFixed(2,2));
+        //invoice_paidamount();
+    }
+
+function calculate_total() {
+
+
+    var total = parseFloat($("#total").val());
+    var total_charge = parseFloat($("#total_charge").val());
+    var total_dis = parseFloat($("#total_dis").val());
+    var paid_amount = parseFloat($("#paidAmount").val());
+
+    var grand_total=(total_charge+total)-total_dis;
+
+    $("#grand_total").val(grand_total.toFixed(2,2));
+
+    $("#dueAmmount").val(grand_total.toFixed(2,2));
+
+    // console.log(parseFloat(grand_total))
+
+
+    // $("#Total").val(gr_tot.toFixed(2,2));
+    //var grandtotal = gr_tot;
+    //$("#Total").val(grandtotal.toFixed(2,2));
+      invoice_paidamount();
     }
 
 
-        function invoice_paidamount() {
-      var t = $("#Total").val(),
+
+
+    function invoice_paidamount() {
+      var t = $("#grand_total").val(),
             a = $("#paidAmount").val(),
             e = t - a;
      if(e > 0){
     $("#dueAmmount").val(e.toFixed(2,2))
-}else{
-  $("#dueAmmount").val(0)
-}
+    }else{
+    $("#dueAmmount").val(0)
+    }
 }
 
     "use strict";
     function full_paid() {
-    var grandTotal = $("#Total").val();
+    var grandTotal = $("#grand_total").val();
     $("#paidAmount").val(grandTotal);
     invoice_paidamount();
-    calculate_store();
-}
+    calculate_total();
+    }
 
     //Delete row
         "use strict";
@@ -341,46 +366,4 @@ function get_price(sl) {
     document.getElementById('bank_div').style.display = style;
     }
 
-    $(document).ready(function(){
 
-      $(document).on('click', '#clear_cart', function(){
-            if(confirm("Are you sure you want to clear cart?"))
-            {
-                $.ajax({
-                    url:"<?php echo base_url(); ?>Cpurchase/clear_po_cart",
-                    success:function(data)
-                    {
-                        toastr.success("Your cart has been cleared");
-                        $('#cart_details').html(data);
-                    }
-                });
-            }
-            else
-            {
-                return false;
-            }
-        });
-
-        $(document).on('click', '.remove_inventory', function(){
-            var row_id = $(this).attr("id");
-            var csrf_test_name = $('[name="csrf_test_name"]').val();
-            if(confirm("Are you sure you want to remove this?"))
-            {
-                $.ajax({
-                    url:"<?php echo base_url(); ?>Cpurchase/remove",
-                    method:"POST",
-                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
-                    success:function(data)
-                    {
-                        toastr.success("Product removed from Cart!");
-                        $('#cart_details').html(data);
-                    }
-                });
-            }
-            else
-            {
-                return false;
-            }
-        });
-
-    });

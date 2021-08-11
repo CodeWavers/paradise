@@ -208,10 +208,12 @@
 
                                             <td class="text-right">
                                                 {discount}
+
                                                 <input type="hidden" name="row_total[]" value="" id = "row_total_1" class="row_total">
                                             </td>
                                             <td class="text-right">
                                                 {total_amount}
+<!--                                                <input type="text" name="total" value="{total_amount}" id = "" class="form-control" readonly>-->
                                             </td>
                                     </tr>
                                     {/all_purchase_list}
@@ -221,7 +223,7 @@
 
                                         <td class="text-right" colspan="8"><b><?php echo display('total') ?>:</b></td>
                                         <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value="<?= $all_purchase_list[0]['grand_total_amount']?>" readonly="readonly" />
+                                            <input type="text" id="total" class="text-right form-control" name="total" value="<?= $total?>" readonly= />
                                             <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
                                         </td>
                                     </tr>
@@ -230,7 +232,7 @@
 
                                         <td class="text-right" colspan="8"><b>Total Discount (If any):</b></td>
                                         <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
+                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="total_dis" class="text-right form-control" name="total_dis" value="0.00"/>
                                         </td>
 
                                     </tr>
@@ -239,7 +241,7 @@
 
                                         <td class="text-right" colspan="8"><b>Other Charges (If any):</b></td>
                                         <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
+                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="total_charge" class="text-right form-control" name="total_charge" value="0.00"/>
                                         </td>
 
                                     </tr>
@@ -248,7 +250,7 @@
 
                                         <td class="text-right" colspan="8"><b>Grand Total</b></td>
                                         <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" />
+                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="<?= $total?>" />
                                         </td>
 
                                     </tr>
@@ -256,7 +258,7 @@
                                     <tr>
                                         <td class="text-right" colspan="8"><b><?php echo display('paid_amount') ?>:</b></td>
                                         <td class="text-right" >
-                                            <input type="text" id="paidAmount" class="text-right form-control"  name="paid_amount" value="<?= $all_purchase_list[0]['paid_amount'] ?>" readonly/>
+                                            <input type="text" id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="0.00" />
                                         </td>
 
                                     </tr>
@@ -265,11 +267,17 @@
 
                                         <td class="text-right" colspan="8"><b><?php echo display('due_amount') ?>:</b></td>
                                         <td class="text-right">
-                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $all_purchase_list[0]['$due_amount'] ?>" readonly="readonly" />
+                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $total?>" readonly="readonly" />
                                         </td>
 
 
 
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center">
+                                            <input type="button" id="full_paid_tab" class="btn btn-warning" value="<?php echo display('full_paid') ?>" tabindex="16" onClick="full_paid()"/>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -277,6 +285,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm-6">
+
                                 <input type="submit" id="add_purchase" class="btn btn-primary btn-large" name="add-purchase" value="<?php echo display('submit') ?>" />
                             </div>
                         </div>
@@ -294,6 +303,12 @@
 
 $( document ).ready(function() {
     change_cat(1);
+
+
+
+
 });
+
+
 
 </script>
