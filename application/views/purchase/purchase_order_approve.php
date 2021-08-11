@@ -5,12 +5,12 @@
 	        <i class="pe-7s-note2"></i>
 	    </div>
 	    <div class="header-title">
-	        <h1><?php echo display('manage_purchase') ?></h1>
-	        <small><?php echo display('manage_your_purchase') ?></small>
+	        <h1>PO Approve</h1>
+	        <small>PO Approve</small>
 	        <ol class="breadcrumb">
 	            <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
 	            <li><a href="#"><?php echo display('purchase') ?></a></li>
-	            <li class="active"><?php echo display('manage_purchase') ?></li>
+	            <li class="active">PO Approve</li>
 	        </ol>
 	    </div>
 	</section>
@@ -53,7 +53,7 @@
 		        <div class="panel panel-bd lobidrag">
 		            <div class="panel-heading">
 		                <div class="panel-title">
-                            Purchases List
+                            PO Approve
 		                </div>
 
 		            </div>
@@ -64,6 +64,7 @@
 									<tr>
 										<th class="text-center"><?php echo display('sl') ?></th>
 										<th class="text-center">Purchase Order No.</th>
+										<th class="text-center">Supplier Name.</th>
 										<th class="text-center"><?php echo display('action') ?></th>
 									</tr>
 								</thead>
@@ -72,8 +73,9 @@
                                     <tr>
                                         <td class="text-center">{sl}</td>
                                         <td class="text-center">{purchase_order}</td>
+                                        <td class="text-center">{supplier_name}</td>
                                         <td class="text-center">
-                                            <a href="<?= base_url()?>Cpurchase/edit_purchase_order/{purchase_order}/">
+                                            <a href="<?= base_url()?>Cpurchase/edit_purchase_order/{purchase_order}/{supplier_id}">
                                             <button type="button" class="btn btn-success"><i class="fa fa-pencil"></i></button>
                                             </a>
                                         </td>

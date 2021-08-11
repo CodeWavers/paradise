@@ -210,6 +210,7 @@
                                               {/ptype_list} -->
                                             <option value="Import">Import</option>
                                             <option value="Local">Local</option>
+                                            <option value="Both">Both</option>
                                             <?php
                                             if ($ptype_id) {
                                                 ?>

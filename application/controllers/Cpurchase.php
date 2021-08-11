@@ -372,12 +372,12 @@ class Cpurchase extends CI_Controller {
             $this->template->full_admin_html_view($content);
         }
 
-        public function edit_purchase_order($PO_No)
+        public function edit_purchase_order($PO_No,$supplier_id)
         {
             $CI = & get_instance();
             $CI->auth->check_admin_auth();
             $CI->load->library('lpurchase');
-            $content = $CI->lpurchase->purchase_order_edit_form($PO_No);
+            $content = $CI->lpurchase->purchase_order_edit_form($PO_No,$supplier_id);
             $this->template->full_admin_html_view($content);
         }
 

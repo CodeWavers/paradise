@@ -1393,20 +1393,24 @@ class Purchases extends CI_Model {
 
     public function purchase_list_by_po_no()
     {
-        $this->db->select('*')->where('isAprv',2)->order_by('purchase_order', 'desc');
-        $query = $this->db->get('product_purchase');
-        $result = $query->result_array();
-        return $result;
+        $this->db->select('*');
+        $this->db->from('product_purchase a');
+        $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
+        $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
+        $this->db->where('a.isAprv',2)->order_by('a.purchase_order', 'desc');
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
-    public function purchase_list_details_by_po_no($PO_no)
+    public function purchase_list_details_by_po_no($PO_no,$supplier_id)
     {
         $this->db->select('a.*, b.*, c.product_name, c.parts, d.supplier_name');
         $this->db->from('product_purchase a');
-        $this->db->where('purchase_order', $PO_no);
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
         $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
+        $this->db->where('a.purchase_order', $PO_no);
+        $this->db->where('b.supplier_id', $supplier_id);
 
         $query = $this->db->get();
 

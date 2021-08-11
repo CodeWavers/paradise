@@ -98,14 +98,6 @@
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group row">
-                                    <label for="pur_order_no" class="col-sm-4 col-form-label">Supplier Name</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" readonly class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['supplier_name'] ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="form-group row">
                                     <label for="pur_order_no" class="col-sm-4 col-form-label">Purchase Order No.</label>
                                     <div class="col-sm-8">
                                         <input type="text" readonly class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['purchase_order'] ?>">
@@ -113,7 +105,14 @@
                                 </div>
                             </div>
 
-
+                            <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="supp_file" class="col-sm-4 col-form-label">Suppliers Invoice</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" class="form-control" id="supp_file" name="supp_file" value="<?= $order_no ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -141,14 +140,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-5">
-                                <div class="form-group row">
-                                    <label for="supp_file" class="col-sm-4 col-form-label">Suppliers Invoice</label>
-                                    <div class="col-sm-8">
-                                        <input type="file" class="form-control" id="supp_file" name="supp_file" value="<?= $order_no ?>" readonly>
-                                    </div>
-                                </div>
-                            </div>
 
                             <!-- <div class="col-sm-1">
                                 <button class="btn btn-success" onclick="add_payment_opt(1)"><i class="fa fa-plus"></i></button>
@@ -170,6 +161,7 @@
                                         <th class="text-center" width="12%">Product Name</th>
                                         <th class="text-center" width="8%">Parts No.</th>
                                         <th class="text-center">Order Quantity</th>
+                                        <th class="text-center">Supplier Name</th>
                                         <th class="text-center">Origin</th>
                                         <th class="text-center">Warranty</th>
                                         <th class="text-center">Unit Price</th>
@@ -193,6 +185,10 @@
 
                                         <td class="test">
                                             {quantity}
+                                        </td>
+
+                                        <td>
+                                            {supplier_name}
                                         </td>
 
                                         <td class="wt"> {origin}</td>
@@ -219,7 +215,7 @@
                                 <tfoot>
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b><?php echo display('total') ?>:</b></td>
+                                        <td class="text-right" colspan="9"><b><?php echo display('total') ?>:</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="Total" class="text-right form-control" name="total" value="<?= $all_purchase_list[0]['grand_total_amount']?>" readonly="readonly" />
                                             <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
@@ -228,7 +224,7 @@
 
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b>Total Discount (If any):</b></td>
+                                        <td class="text-right" colspan="9"><b>Total Discount (If any):</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
                                         </td>
@@ -237,7 +233,7 @@
 
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b>Other Charges (If any):</b></td>
+                                        <td class="text-right" colspan="9"><b>Other Charges (If any):</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
                                         </td>
@@ -246,7 +242,7 @@
 
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b>Grand Total</b></td>
+                                        <td class="text-right" colspan="9"><b>Grand Total</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" />
                                         </td>
@@ -254,7 +250,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td class="text-right" colspan="8"><b><?php echo display('paid_amount') ?>:</b></td>
+                                        <td class="text-right" colspan="9"><b><?php echo display('paid_amount') ?>:</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="paidAmount" class="text-right form-control"  name="paid_amount" value="<?= $all_purchase_list[0]['paid_amount'] ?>" readonly/>
                                         </td>
@@ -263,7 +259,7 @@
 
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b><?php echo display('due_amount') ?>:</b></td>
+                                        <td class="text-right" colspan="9"><b><?php echo display('due_amount') ?>:</b></td>
                                         <td class="text-right">
                                             <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $all_purchase_list[0]['$due_amount'] ?>" readonly="readonly" />
                                         </td>

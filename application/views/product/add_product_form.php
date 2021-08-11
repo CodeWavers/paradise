@@ -258,6 +258,7 @@
                                             <option value=""></option>
                                             <option value="Import">Import</option>
                                             <option value="Local">Local</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
