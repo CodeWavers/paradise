@@ -945,9 +945,14 @@ class Purchases extends CI_Model {
 
     public function update_po() {
           $purchase_id  = $this->input->post('purchase_id',TRUE);
+
           $po_no  = $this->input->post('pur_order_no',TRUE);
+          $invoice_no  = $this->input->post('invoice_no',TRUE);
           $paid_amount  = $this->input->post('paid_amount',TRUE);
           $due_amount   = $this->input->post('due_amount',TRUE);
+          $grand_total   = $this->input->post('grand_total',TRUE);
+          $total_discount   = $this->input->post('total_dis',TRUE);
+          $pay_type   = $this->input->post('pay_type',TRUE);
           $bank_id      = $this->input->post('bank_id',TRUE);
         if(!empty($bank_id)){
        $bankname = $this->db->select('bank_name')->from('bank_add')->where('bank_id',$bank_id)->get()->row()->bank_name;
@@ -966,7 +971,14 @@ class Purchases extends CI_Model {
 
         $data = array(
 
-            'isaprv' =>1
+            'invoice_no'=>$invoice_no,
+            'supplier_id'=>$supplier_id,
+            'grand_total_amount'=>$grand_total,
+            'paid_amount'=>$paid_amount,
+            'due_amount'=>$due_amount,
+            'total_discount'=>$total_discount,
+            'payment_type'=>$pay_type,
+            'isaprv' =>1,
         );
 
             $this->db->where('purchase_order', $po_no);

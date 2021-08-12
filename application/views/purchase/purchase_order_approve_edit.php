@@ -101,6 +101,7 @@
                                     <label for="pur_order_no" class="col-sm-4 col-form-label">Supplier Name</label>
                                     <div class="col-sm-8">
                                         <input type="text" readonly class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['supplier_name'] ?>">
+                                        <input type="hidden" readonly class="form-control" id="supplier_id" name="supplier_id" value="<?= $all_purchase_list[0]['supplier_id'] ?>">
                                     </div>
                                 </div>
                             </div>
@@ -120,13 +121,13 @@
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group row">
-                                    <label for="pay_type" class="col-sm-4 col-form-label">Payment Type</label>
+                                    <label for="pay_type" class="col-sm-4 col-form-label">Payment Type <i class="text-danger">*</i></label>
                                     <div class="col-sm-8">
                                         <select name="pay_type" id="pay_type" class="form-control">
-                                            <option value="1"><?php echo display('cash_payment') ?></option>
-                                            <option value="2"><?php echo display('bank_payment') ?></option>
-                                            <option value="3">Bkash Payment</option>
-                                            <option value="4">Nagad Payment</option>
+                                            <option value="1">Cash</option>
+                                            <option value="2">Credit</option>
+                                            <option value="3">LC</option>
+                                            <option value="4">TT</option>
                                         </select>
                                     </div>
                                 </div>
@@ -134,10 +135,10 @@
 
                             <div class="col-sm-5">
                                 <div class="form-group row">
-                                    <label for="pay_date" class="col-sm-4 col-form-label">Payment Date</label>
+                                    <label for="pay_date" class="col-sm-4 col-form-label">Payment Date<i class="text-danger">*</i></label>
                                     <div class="col-sm-8">
                                         <?php $date = date('Y-m-d'); ?>
-                                        <input type="text" class="form-control datepicker" id="pay_date" name="pay_date" value="<?= $date ?>" >
+                                        <input type="text" class="form-control datepicker" id="pay_date" name="pay_date" value="<?= $date ?>" required >
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +146,7 @@
                                 <div class="form-group row">
                                     <label for="supp_file" class="col-sm-4 col-form-label">Suppliers Invoice</label>
                                     <div class="col-sm-8">
-                                        <input type="file" class="form-control" id="supp_file" name="supp_file" value="<?= $order_no ?>" readonly>
+                                        <input type="file" class="form-control" id="supp_file" name="supp_file" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +174,7 @@
                                         <th class="text-center">Origin</th>
                                         <th class="text-center">Warranty</th>
                                         <th class="text-center">Unit Price</th>
-                                        <th class="text-center">Discount Per Item</th>
+                                        <th class="text-center">Discount(%)</th>
                                         <th class="text-center">Total Price</th>
                                     </tr>
                                 </thead>
