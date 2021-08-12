@@ -37,6 +37,8 @@ class Lproduct {
         $ptype_list = $CI->Ptype->category_list_product();
         $unit_list     = $CI->Units->unit_list();
 
+        $currency=$CI->db->select('*')->from('currency_tbl')->get()->result_array();
+
         $taxfield = $CI->db->select('tax_name,default_value')
             ->from('tax_settings')
             ->get()
@@ -44,6 +46,7 @@ class Lproduct {
         $data = array(
             'title'        => display('add_product'),
             'supplier'     => $supplier,
+            'currency'     => $currency,
             'category_list'=> $category_list,
             'model_list'=> $model_list,
             'sub_cat_list'=> $sub_cat_list,
@@ -78,6 +81,7 @@ class Lproduct {
         $CI->load->model('Ptype');
         $CI->load->model('Units');
 
+        $currency=$CI->db->select('*')->from('currency_tbl')->get()->result_array();
         $product_detail = $CI->Products->retrieve_product_editdata($product_id);
         $supplier_product_detail = $CI->Products->supplier_product_editdata($product_id);
         @$supplier_id = $product_detail[0]['supplier_id'];
@@ -147,6 +151,7 @@ class Lproduct {
         $data['sub_cat_id']     = $sub_cat_id;
         $data['sub_cat_list'] = $sub_cat_list;
         $data['category_id'] = $category_id;
+        $data['currency'] = $currency;
 
         $chapterList = $CI->parser->parse('product/edit_product_form', $data, true);
 

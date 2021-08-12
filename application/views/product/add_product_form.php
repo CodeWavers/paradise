@@ -366,6 +366,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center"><?php echo display('supplier') ?> </th>
+                                    <th class="text-center">Currency </th>
                                     <th class="text-center"><?php echo display('supplier_price') ?> </th>
 
                                     <th class="text-center"><?php echo display('action') ?> <i class="text-danger"></i></th>
@@ -381,6 +382,16 @@
                                                 {supplier}
                                                 <option value="{supplier_id}">{supplier_name}</option>
                                                 {/supplier}
+                                            <?php } ?>
+                                        </select>
+                                    </td>
+                                    <td width="300">
+                                        <select name="currency[]" class="form-control"  >
+                                            <option value=""> Select Currency</option>
+                                            <?php if ($currency) { ?>
+                                                {currency}
+                                                <option value="{currency_name}">{currency_name}</option>
+                                                {/currency}
                                             <?php } ?>
                                         </select>
                                     </td>
@@ -411,6 +422,7 @@
                     <?php echo form_close() ?>
                 </div>
                 <input type="hidden" id="supplier_list" value='<?php if ($supplier) { ?>{supplier}<option value="{supplier_id}">{supplier_name}</option>{/supplier}<?php }?>' name="">
+                <input type="hidden" id="currency_list" value='<?php if ($currency) { ?>{currency}<option value="{currency_name}">{currency_name}</option>{/currency}<?php }?>' name="">
             </div>
         </div>
     </section>
