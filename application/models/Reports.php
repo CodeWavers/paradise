@@ -484,7 +484,7 @@ class reports extends CI_Model {
             $warrenty_stock = $this->db->select('sum(ret_qty) as totalWarrentyQnty')->from('warrenty_return')->where('product_id',$record->product_id)->get()->row();
             $wastage_stock = $this->db->select('sum(ret_qty) as totalWastageQnty')->from('rqsn_return')->where('product_id',$record->product_id)->where('usablity',3)->get()->row();
             $return_rcv = $this->db->select('sum(ret_qty) as totalReturnQnty')->from('rqsn_return')->where('product_id',$record->product_id)->get()->row();
-            $stockout = $this->db->select('sum(qty) as totalPurchaseQnty,Avg(rate) as purchaseprice')->from('product_purchase_details')->join('product_purchase','product_purchase.purchase_id=product_purchase_details.purchase_id')->where('product_purchase_details.product_id',$record->product_id)->where('product_purchase.isaprv',1)->get()->row();
+            $stockout = $this->db->select('sum(qty) as totalPurchaseQnty,Avg(rate) as purchaseprice')->from('product_purchase_details')->join('product_purchase','product_purchase.purchase_id=product_purchase_details.purchase_id')->where('product_purchase_details.product_id',$record->product_id)->where('product_purchase_details.isaprv',1)->get()->row();
 
 
 

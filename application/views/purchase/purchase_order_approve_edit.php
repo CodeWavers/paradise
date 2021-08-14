@@ -77,6 +77,7 @@
                                     <div class="col-sm-8">
 
                                         <input type="text" tabindex="2" class="form-control" name="purchase_date" value="<?php echo $all_purchase_list[0]['purchase_date']; ?>" id="pur_date"  readonly/>
+                                        <input type="hidden" tabindex="2" class="form-control" name="purchase_id" value="<?php echo $all_purchase_list[0]['purchase_id']; ?>" id="pur_date"  readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +187,7 @@
 
                                     <td class="span3 supplier">
                                        <span>{product_name}</span>
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1" name="product_id[]" id="SchoolHiddenId"/>
+                                        <input type="hidden" class="autocomplete_hidden_value product_id_1" value="{product_id}" name="product_id[]" id="SchoolHiddenId"/>
                                         <input type="hidden" class="sl" value="1">
                                     </td>
 
@@ -204,6 +205,7 @@
 
                                             <td class="text-right">
                                                 {rate}
+                                                <input type="hidden" name="price[]" value="{rate}" id = "price_1" class="row_total">
                                             </td>
 
 

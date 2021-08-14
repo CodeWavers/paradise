@@ -124,8 +124,15 @@ header('Content-Type: text/javascript; charset=utf8');
         var discount = $("#discount_"+sl).val()
         var item_ctn_qty    = $("#order_quantity_"+sl).val();
         var vendor_rate = $("#product_rate_"+sl).val();
+        var currency_value = $("#currency_value_"+sl).val();
 
-        var total_price     = ((item_ctn_qty * vendor_rate) - ((item_ctn_qty * vendor_rate) * (discount / 100)));
+        var bdt_price=currency_value*vendor_rate;
+        $("#bdt_price_" + sl).val(bdt_price.toFixed(2));
+
+        //console.log(currency_value);
+        //console.log(bdt_price);
+
+        var total_price     = ((item_ctn_qty * bdt_price) - ((item_ctn_qty * bdt_price) * (discount / 100)));
         $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
@@ -205,6 +212,7 @@ function calculate_total() {
 function get_price(sl) {
     var supplier_id = $("#supplier_drop_" + sl).val();
     var product_rate    = 'product_rate_'+sl;
+    var currency    = 'currency_'+sl;
     var product_id = $('#product_id_' + sl).val();
     var base_url = $('#base_url').val();
     var csrf_test_name = $('[name="csrf_test_name"]').val();
@@ -220,6 +228,7 @@ function get_price(sl) {
         success: function (data) {
             obj = JSON.parse(data);
             $('#' + product_rate).val(obj.price);
+            $('#' + currency).val(obj.currency);
             calculate_store(sl);
         }
     });

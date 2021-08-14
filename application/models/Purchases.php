@@ -944,14 +944,15 @@ class Purchases extends CI_Model {
     }
 
     public function update_po() {
+          date_default_timezone_set("Asia/Dhaka");
           $purchase_id  = $this->input->post('purchase_id',TRUE);
-
           $po_no  = $this->input->post('pur_order_no',TRUE);
           $invoice_no  = $this->input->post('invoice_no',TRUE);
           $paid_amount  = $this->input->post('paid_amount',TRUE);
           $due_amount   = $this->input->post('due_amount',TRUE);
           $grand_total   = $this->input->post('grand_total',TRUE);
           $total_discount   = $this->input->post('total_dis',TRUE);
+          $purchase_date   = $this->input->post('purchase_date',TRUE);
           $pay_type   = $this->input->post('pay_type',TRUE);
           $bank_id      = $this->input->post('bank_id',TRUE);
         if(!empty($bank_id)){
@@ -972,17 +973,24 @@ class Purchases extends CI_Model {
         $data = array(
 
             'invoice_no'=>$invoice_no,
-            'supplier_id'=>$supplier_id,
+           // 'supplier_id'=>$supplier_id,
             'grand_total_amount'=>$grand_total,
             'paid_amount'=>$paid_amount,
             'due_amount'=>$due_amount,
             'total_discount'=>$total_discount,
             'payment_type'=>$pay_type,
-            'isaprv' =>1,
+            //'isaprv' =>1,
         );
 
             $this->db->where('purchase_order', $po_no);
             $this->db->update('product_purchase',$data);
+
+
+        $this->db->set('isAprv',1);
+        $this->db->where('purchase_id',$purchase_id);
+        $this->db->where('supplier_id',$supplier_id);
+        $this->db->update('product_purchase_details');
+
 
 //         $cashinhand = array(
 //      'VNo'            =>  $purchase_id,
@@ -1098,56 +1106,26 @@ class Purchases extends CI_Model {
 //        }
 //        }
 //
-//        $rate = $this->input->post('product_rate',TRUE);
-//        $quantity = $this->input->post('product_quantity',TRUE);
-//        $lot = $this->input->post('lot_number',TRUE);
-//        $sn = $this->input->post('sn',TRUE);
-//        $origin = $this->input->post('origin',TRUE);
-//        $warehouse_t = $this->input->post('warehouse',TRUE);
-//        $warrenty = $this->input->post('warrenty_date',TRUE);
-//        $expired = $this->input->post('expired_date',TRUE);
-//        $t_price = $this->input->post('total_price',TRUE);
-//        $discount = $this->input->post('discount',TRUE);
-//        $this->db->where('purchase_id', $purchase_id);
-//        $this->db->delete('product_purchase_details');
-//        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
-//            $product_quantity = $quantity[$i];
-//            $lot_number = $lot[$i];
-//            $sn_number = $sn[$i];
-//            $origin_t = $origin[$i];
-//            $warehouse = $warehouse_t[$i];
-//            $warrenty_date = $warrenty[$i];
-//            $expired_date= $expired[$i];
-//            $product_rate = $rate[$i];
-//            $product_id = $p_id[$i];
-//            $total_price = $t_price[$i];
-//            $disc = $discount[$i];
-//
-//            $data1 = array(
-//                'purchase_detail_id' => $this->generator(15),
-//                'purchase_id'        => $purchase_id,
-//                'product_id'         => $product_id,
-//                'quantity'           => $product_quantity,
-//                'sn'           => $sn_number,
-//                'qty'           => $product_quantity,
-//                'lot_number'         => $lot_number,
-//                'origin'             => $origin_t,
-//                'warehouse'          => $warehouse,
-//                'warrenty_date'      => $warrenty_date,
-//                'expired_date'       => $expired_date,
-//                'rate'               => $product_rate,
-//                'total_amount'       => $total_price,
-//                'discount'           => $disc,
-//                'status'             => 1
-//            );
-//
-//
-//            if ((isset($quantity))) {
-//
-//                $this->db->insert('product_purchase_details', $data1);
-//            }
-//        }
-        //echo "<pre>";print_r($data1);exit();
+        $rate = $this->input->post('price',TRUE);
+
+        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+
+            $product_rate = $rate[$i];
+            $product_id = $p_id[$i];
+
+            $data1 = array(
+                'supplier_id' => $supplier_id,
+                'product_id'         => $product_id,
+                'update_price'         => $product_rate,
+                'date'         => $purchase_date,
+                'time'=>date("h:i:sa"),
+                'status'             => 1
+            );
+
+                $this->db->insert('supplier_product_price', $data1);
+
+        }
+       // echo "<pre>";print_r($data1);exit();
         return true;
     }
 
@@ -1308,35 +1286,18 @@ class Purchases extends CI_Model {
 
     //    $this->db->insert('product_purchase', $data);
     //    echo '<pre>';print_r($data);exit();
+        $data=array(
+            'purchase_id'        => $purchase_id,
+            'grand_total_amount' => $this->input->post('total',TRUE),
+            'purchase_order'     => $pur_order_no,
+            'purchase_date'      => $receive_date,
+            'paid_amount'        => $paid_amount,
+            'due_amount'         => $due_amount,
+            'status'             => 2,
+        );
+        // echo '<pre>';print_r($data);exit();
+        $this->db->insert('product_purchase', $data);
 
-
-        if($this->input->post('paid_amount')<=0){
-
-            $data=array(
-                'purchase_id'        => $purchase_id,
-                'grand_total_amount' => $this->input->post('total',TRUE),
-                'purchase_order'     => $pur_order_no,
-                'purchase_date'      => $receive_date,
-                'paid_amount'        => $paid_amount,
-                'due_amount'         => $due_amount,
-                'status'             => 2,
-                'isaprv'             => 2,
-            );
-            // echo '<pre>';print_r($data);exit();
-            $this->db->insert('product_purchase', $data);
-        }else{
-            $data=array(
-                'purchase_id'        => $purchase_id,
-                'grand_total_amount' => $this->input->post('total',TRUE),
-                'purchase_order'     => $pur_order_no,
-                'purchase_date'      => $receive_date,
-                'paid_amount'        => $paid_amount,
-                'due_amount'         => $due_amount,
-                'status'             => 1,
-                'isaprv'             => 2,
-            );
-            $this->db->insert('product_purchase', $data);
-        }
 
        // echo '<pre>';print_r($data);exit();
 
@@ -1351,7 +1312,7 @@ class Purchases extends CI_Model {
         // $warehouse = $this->input->post('warehouse',TRUE);
         $warrenty = $this->input->post('warrenty_date',TRUE);
         // $expired = $this->input->post('expired_date',TRUE);
-        // $t_price = $this->input->post('total',TRUE);
+         $t_price = $this->input->post('row_total',TRUE);
         $discount = $this->input->post('discount',TRUE);
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
@@ -1364,7 +1325,10 @@ class Purchases extends CI_Model {
             $product_rate = $rate[$i];
             $product_id = $p_id[$i];
             $disc = $discount[$i];
-            $t_price = ($product_rate * $product_quantity) - $disc;
+            $t_price = $t_price[$i];
+         //   $t_price = ($product_rate * $product_quantity) - $disc;
+
+          //  $old_rate=$this->db->select('*')->from('supplier_product')->where('supplier_id',$supp_id)->where('product_id',$product_id)->get()->row()->supplier_price;
 
             $data1 = array(
                 'purchase_detail_id' => $this->generator(15),
@@ -1378,10 +1342,13 @@ class Purchases extends CI_Model {
                 'rate'               => $product_rate,
                 'total_amount'       => $t_price,
                 'discount'           => $disc,
-                'status'             => 1
+                'status'             => 1,
+                'isAprv'             => 2,
+
             );
 
 
+         //   echo '<pre>';print_r($data1);
 
             if (!empty($quantity)) {
                 $this->db->insert('product_purchase_details', $data1);
@@ -1413,7 +1380,7 @@ class Purchases extends CI_Model {
         $this->db->from('product_purchase a');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
         $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
-        $this->db->where('a.isAprv',2)->order_by('a.purchase_order', 'desc')->group_by('b.supplier_id');
+        $this->db->where('b.isAprv',2)->order_by('a.purchase_order', 'desc')->group_by('b.supplier_id');
         $query = $this->db->get();
         return $query->result_array();
     }
