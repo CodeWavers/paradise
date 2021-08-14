@@ -103,6 +103,51 @@ class Lreport extends CI_Model
         return $reportList;
     }
 
+    public function product_price()
+    {
+        $CI = &get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Web_settings');
+        $CI->load->library('occational');
+
+        $product_price = $CI->Reports->product_price();
+
+
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $data = array(
+            'title' => 'Price Ledger',
+            'product_price' => $product_price,
+            'currency' => $currency_details[0]['currency'],
+            'position' => $currency_details[0]['currency_position'],
+        );
+      //   echo '<pre>';print_r($data);exit();
+        $reportList = $CI->parser->parse('product/product_price', $data, true);
+        return $reportList;
+    }
+
+
+    public function product_price_date_wise($start_date = null,$end_date = null)
+    {
+        $CI = &get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Web_settings');
+        $CI->load->library('occational');
+
+        $product_price = $CI->Reports->product_price_date_wise($start_date ,$end_date );
+
+
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $data = array(
+            'title' => 'Price Ledger',
+            'product_price' => $product_price,
+            'currency' => $currency_details[0]['currency'],
+            'position' => $currency_details[0]['currency_position'],
+        );
+      //  echo '<pre>';print_r($data);exit();
+        $reportList = $CI->parser->parse('product/product_price', $data, true);
+        return $reportList;
+    }
+
     public function trash_hold()
     {
         $CI = &get_instance();
