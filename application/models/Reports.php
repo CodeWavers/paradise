@@ -280,6 +280,7 @@ class reports extends CI_Model {
         $this->db->where('a.status', 1);
         $this->db->where('a.date >=',$start_date);
         $this->db->where('a.date <=',$end_date);
+        $this->db->order_by('a.date','desc');
 //
 //        if($start_date){
 //            $this->db->where('a.date',$start_date);

@@ -119,6 +119,7 @@ class Cproduct extends CI_Controller {
 
     //Insert Product and uload
     public function insert_product() {
+        date_default_timezone_set("Asia/Dhaka");
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('lproduct');
@@ -134,6 +135,8 @@ class Cproduct extends CI_Controller {
         $currency_name = $this->input->post('currency',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
         $product_model = $this->input->post('model_id',TRUE);
+
+        $date=date('Y-m-d');
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
@@ -149,7 +152,20 @@ class Cproduct extends CI_Controller {
             );
 
             $this->db->insert('supplier_product', $supp_prd);
+
+
+            $data1 = array(
+                'supplier_id' => $supp_id,
+                'product_id'         => $product_id,
+                'update_price'         => $supplier_price,
+                'date'         => $date,
+                'time'=>date("h:i:sa"),
+                'status'             => 1
+            );
+
+            $this->db->insert('supplier_product_price', $data1);
         }
+
 
         //Supplier check
         if ($this->input->post('supplier_id',TRUE) == null) {
@@ -436,6 +452,7 @@ class Cproduct extends CI_Controller {
 
     // Product Update
     public function product_update() {
+        date_default_timezone_set("Asia/Dhaka");
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Products');
@@ -447,6 +464,9 @@ class Cproduct extends CI_Controller {
         $sup_price = $this->input->post('supplier_price',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
         $currency_name = $this->input->post('currency',TRUE);
+
+
+        $date=date('Y-m-d');
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
@@ -461,6 +481,17 @@ class Cproduct extends CI_Controller {
             );
 
             $this->db->insert('supplier_product', $supp_prd);
+
+            $data1 = array(
+                'supplier_id' => $supp_id,
+                'product_id'         => $product_id,
+                'update_price'         => $supplier_price,
+                'date'         => $date,
+                'time'=>date("h:i:sa"),
+                'status'             => 1
+            );
+
+            $this->db->insert('supplier_product_price', $data1);
         }
         // configure for upload
         $config = array(

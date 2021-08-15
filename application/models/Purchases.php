@@ -1124,6 +1124,11 @@ class Purchases extends CI_Model {
 
                 $this->db->insert('supplier_product_price', $data1);
 
+
+                $this->db->set('supplier_price',$product_rate);
+                $this->db->where(array('product_id'=>$product_id,'supplier_id'=>$supplier_id));
+                $this->db->update('supplier_product');
+
         }
        // echo "<pre>";print_r($data1);exit();
         return true;

@@ -74,11 +74,7 @@ class Creport extends CI_Controller {
         $CI = & get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('lreport');
-
-
-
         $content = $CI->lreport->product_price();
-
         $this->template->full_admin_html_view($content);
     }
     public function product_price_date_wise() {
@@ -88,7 +84,6 @@ class Creport extends CI_Controller {
         $start_date=$this->input->post('from_date',TRUE);
         $end_date=$this->input->post('to_date',TRUE);
         $content = $CI->lreport->product_price_date_wise($start_date,$end_date);
-
         $this->template->full_admin_html_view($content);
     }
 
