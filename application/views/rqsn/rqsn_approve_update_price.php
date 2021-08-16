@@ -16,11 +16,11 @@
         </div>
         <div class="header-title">
             <h1>Requisition</h1>
-            <small>Requisition Form</small>
+            <small>List</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#">Requisition</a></li>
-                <li class="active">Requisition Form</li>
+                <li class="active">Requisition List</li>
             </ol>
         </div>
     </section>
@@ -70,15 +70,15 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4>Requisition Form</h4>
+                            <h4>Requisition List</h4>
 
                         </div>
                     </div>
 
 
 
-                    <div class="rqsn_panel" style="margin-top: 10px;">
-                        <?php echo form_open_multipart('Crqsn/insert_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
+                    <div class="rqsn_panel" style="margin-top: 10px; margin-bottom:10px;">
+<!--                        --><?php //echo form_open_multipart('Crqsn/update_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
                         <div class="row">
 
                             <div class="col-sm-8" id="payment_from_2">
@@ -97,6 +97,7 @@
 
 
                             </div>
+
                             <div class="col-sm-8" id="payment_from">
 
                                 <div class="form-group row rqsn-form-input">
@@ -106,14 +107,14 @@
 
                                         $date = date('Y-m-d');
                                         ?>
-                                        <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" />
+                                        <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo $rqsn_details[0]['date'] ?>" tabindex="4" readonly />
                                     </div>
                                 </div>
 
                                 <div class="form-group row rqsn-form-input">
                                     <label for="customer_name" class="col-sm-3 col-form-label text-right">Customer Name : </label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" name="customer_name" id="customer_name" >
+                                        <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['rqsn_customer_name'] ?>" readonly >
                                     </div>
                                 </div>
 
@@ -121,9 +122,16 @@
                                     <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Requisition For : </label>
                                     <div class="col-sm-9">
                                         <select name="rqsn_for" id="rqsn_for" class="form-control">
-                                            {outlet_list}
-                                                <option value="{outlet_id}">{outlet_name}</option>
-                                            {/outlet_list}
+                                            <?php foreach ($outlet_list as $ol){
+                                                if(($rqsn_details[0]['outlet_id']) == $ol['outlet_id']){?>
+                                                     <option value="<?= $ol['outlet_id'] ?>" selected><?= $ol['outlet_name'] ?></option>
+                                                <?php } else { ?>
+                                                    <option value="<?= $ol['outlet_id'] ?>"><?= $ol['outlet_name'] ?></option>
+                                            <?php }
+                                                }
+                                            ?>
+
+
                                         </select>
                                     </div>
                                 </div>
@@ -131,22 +139,10 @@
                                 <div class="form-group row rqsn-form-input">
                                     <label for="rqsn_no" class="col-sm-3 col-form-label text-right">Requisition No. : </label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" value="<?php echo $rqsn_no?>" name="rqsn_no" id="rqsn_no" readonly>
+                                        <input type="text" class="form-control" name="rqsn_no" id="rqsn_no" value="<?= $rqsn_details[0]['rqsn_no'] ?>" readonly>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label text-right">Product Name:</label>
-
-                                    <div class="col-sm-9">
-
-                                        <input type="text" autocomplete="off"  name="product_name" onkeypress="invoice_productList(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
-
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1"  id="SchoolHiddenId"/>
-                                        <input type="hidden" value="<?php echo base_url() ?>" class="baseUrl" name="" id="baseUrl"/>
-                                    </div>
-
-                                </div>
 
                             </div>
 
@@ -155,24 +151,61 @@
                         <br>
 
 
-                            <div id="cart_details">
-                                <h3 align="center">Requisition  is Empty</h3>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo display('sl') ?></th>
+                                        <th>Category</th>
+                                        <th>Sub Category</th>
+                                        <th class="col-md-2"><?php echo display('product_name') ?></th>
+                                        <th>Parts No.</th>
+                                        <th>SKU</th>
+                                        <th>Brand</th>
+                                        <th><?php echo display('product_model') ?></th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php foreach ($rqsn_details as $rqsn_detail) { ?>
+                                    <tr class="text-center">
+                                        <td><?php echo $rqsn_detail['sl']?> </td>
+                                        <td><?php echo $rqsn_detail['category_name']?></td>
+                                        <td><?php echo $rqsn_detail['subcat_name']?></td>
+                                        <td>
+                                            <?php echo $rqsn_detail['product_name']?>
+                                            <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="" >
+                                        </td>
+                                        <td><?php echo $rqsn_detail['parts']?></td>
+                                        <td><?php echo $rqsn_detail['sku']?></td>
+                                        <td><?php echo $rqsn_detail['brand_name']?></td>
+                                        <td><?php echo $rqsn_detail['model_name']?></td>
+                                        <td style="width: 5%;" ><?php echo $rqsn_detail['quantity']?></td>
+                                        <td style="width: 5%;" ><?php echo $rqsn_detail['total']?></td>
+
+
+                                    </tr>
+                                    <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
+                                <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="" >
-                                <input type="submit" value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="" >
+                                 <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
+                                 <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                             </div>
                         </div>
 
 
-                        <?php echo form_close()?>
+<!--                        --><?php //echo form_close()?>
                     </div>
 
                 </div>
             </div>
-
-
 
 
 
@@ -183,59 +216,28 @@
 </div>
 <!-- Invoice Report End -->
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        // setInterval(function(){
-        //
-        //$('#cart_details').load("<?php //echo base_url(); ?>//Cadd_rqsn/load");
-        //
-        // }, 1000);
+<script>
 
 
-
-        $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
-
-        $(document).on('click', '.remove_inventory', function(){
-            var row_id = $(this).attr("id");
-            var csrf_test_name = $('[name="csrf_test_name"]').val();
-            if(confirm("Are you sure you want to remove this?"))
-            {
-                $.ajax({
-                    url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
-                    method:"POST",
-                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
-                    success:function(data)
-                    {
-                        toastr.success("Product removed from Cart!");
-                        $('#cart_details').html(data);
-                    }
-                });
-            }
-            else
-            {
-                return false;
-            }
-        });
-
-        $(document).on('click', '#clear_cart', function(){
-            if(confirm("Are you sure you want to clear cart?"))
-            {
-                $.ajax({
-                    url:"<?php echo base_url(); ?>Cadd_rqsn/clear",
-                    success:function(data)
-                    {
-                        toastr.success("Your cart has been clear...");
-                        $('#cart_details').html(data);
-                    }
-                });
-            }
-            else
-            {
-                return false;
-            }
-        });
-
+    $(document).on('click', '.remove_inventory', function(){
+        var row_id = $(this).attr("id");
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+        if(confirm("Are you sure you want to remove this?"))
+        {
+            $.ajax({
+                url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
+                method:"POST",
+                data:{csrf_test_name:csrf_test_name,row_id:row_id},
+                success:function(data)
+                {
+                    toastr.success("Product removed from Cart!");
+                    $('#cart_details').html(data);
+                }
+            });
+        }
+        else
+        {
+            return false;
+        }
     });
-
-
 </script>

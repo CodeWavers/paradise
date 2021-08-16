@@ -29,42 +29,34 @@ class Cadd_rqsn extends CI_Controller {
    //     $this->load->library("cart");
       //  $rqsn_id = $this->db->select('id')->order_by('id','desc')->limit(1)->get('rqsn_details')->row('id');
         $rqsn_id = $this->db->select("*")->limit(1)->order_by('id',"DESC")->get("rqsn")->row();
+
         $product_id=$_POST["product_id"];
+
+        $cart_product = $this->db->select('*')->from('product_information a')
+            ->join('product_category b','b.category_id=a.category_id')
+            ->join('product_subcat e','e.sub_cat_id=a.sub_cat_id','left')
+            ->join('product_brand c','c.brand_id=a.brand_id','left')
+            ->join('product_model d','d.model_id=a.product_model','left')
+            ->where('a.product_id',$product_id)->get()->row();
         $data = array(
             "product_id"  => $_POST["product_id"],
-            "product_name"  => $_POST["product_name"],
-            "category"  => $_POST["category_name"],
-            "subcat"  => $_POST["subcat"],
-            "parts"  => $_POST["parts"],
-            "sku"  => $_POST["sku"],
-            "brand"  => $_POST["brand"],
-            "model"  => $_POST["model"],
-            "qty"  => $_POST["quantity"],
+            "product_name"  => $cart_product->product_name,
+            "category"  => $cart_product->category_name,
+            "subcat"  =>$cart_product->subcat_name,
+            "parts"  => $cart_product->parts,
+            "sku"  => $cart_product->sku,
+            "brand"  => $cart_product->brand_name,
+            "model"  => $cart_product->model_name,
+         //   "qty"  => $cart_product->product_name,
 //            "rqsn_id"  => $rqsn_id->rqsn_no,
 
         );
 
-        $cart_product = $this->db->select('*')->from('rqsn_cart')->where('product_id',$product_id)->get()->result();
 
 
 
-//        $total_qty=($cart_product->qty)+$_POST["quantity"];
-//        if($check_product > 0){
-//
-//            $this->db->set('qty',$total_qty );
-//            $this->db->where('product_id',$product_id);
-//            $this->db->update('rqsn_cart');
-//
-//        }else{
-//            $this->db->insert('rqsn_cart',$data);
-//        }
-//        $cart_list = $this->Rqsn->cart_list();
 
 
-
-      //  echo '<pre>';print_r($rqsn_id);exit();
-      //return rowid
-       // echo $rqsn_id->rqsn_id;
         $this->db->insert('rqsn_cart',$data);
         json_encode($data);
     }
