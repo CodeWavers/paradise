@@ -5,11 +5,11 @@
         </div>
         <div class="header-title">
             <h1>Requisition</h1>
-            <small>List</small>
+            <small>Approve</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#">Requisition</a></li>
-                <li class="active">Requisition List</li>
+                <li class="active">Approve Requisition</li>
             </ol>
         </div>
     </section>
