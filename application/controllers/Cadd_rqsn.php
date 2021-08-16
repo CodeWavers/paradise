@@ -34,15 +34,15 @@ class Cadd_rqsn extends CI_Controller {
 
         $cart_product = $this->db->select('*')->from('product_information a')
             ->join('product_category b','b.category_id=a.category_id')
+            ->join('product_subcat e','e.sub_cat_id=a.sub_cat_id','left')
             ->join('product_brand c','c.brand_id=a.brand_id','left')
             ->join('product_model d','d.model_id=a.product_model','left')
-            ->join('product_subcat e','e.sub_cat_id=a.sub_cat_id','left')
             ->where('a.product_id',$product_id)->get()->row();
         $data = array(
             "product_id"  => $_POST["product_id"],
             "product_name"  => $cart_product->product_name,
             "category"  => $cart_product->category_name,
-            "subcat"  =>$cart_product->sub_cat_name,
+            "subcat"  =>$cart_product->subcat_name,
             "parts"  => $cart_product->parts,
             "sku"  => $cart_product->sku,
             "brand"  => $cart_product->brand_name,
