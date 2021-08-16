@@ -154,13 +154,15 @@ class Rqsn extends CI_Model {
          //   $un  = $unit[$i];
             $product_id   = $p_id[$i];
 
+            $supplier_price=$this->db->select('supplier_price')->from('supplier_product')->where('product_id',$product_id)->get()->row();
 
+            $price=$qty*($supplier_price->supplier_price);
             $rqsn_details = array(
                 'rqsn_detail_id'     => mt_rand(),
                 'rqsn_id'     => $rqsn_id,
                 'product_id'         => $product_id,
                 'quantity'                => $qty,
-            //    'unit'                => $un,
+                'total'                => $price,
                 'status'                => 1,
                 'purchase_status'       => 1
 
@@ -1069,6 +1071,23 @@ class Rqsn extends CI_Model {
             ->join('product_information d','d.product_id=b.product_id')
             ->where('a.status',2)
             ->group_by('b.rqsn_id')
+            ->order_by('a.rqsn_no','desc')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function rqsn_details_data_price()
+    {
+        $records= $this->db->select('a.*, b.*, c.*, d.*')
+            ->from('rqsn a')
+            ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
+            ->join('outlet_warehouse c','c.outlet_id=a.from_id')
+            ->join('product_information d','d.product_id=b.product_id')
+            ->where('a.status',2)
+            ->group_by('b.rqsn_id')
+            ->order_by('a.rqsn_no','desc')
             ->get()
             ->result_array();
 
@@ -1082,10 +1101,30 @@ class Rqsn extends CI_Model {
             ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
             ->join('outlet_warehouse c','c.outlet_id=a.from_id')
             ->join('product_information d','d.product_id=b.product_id')
-            ->join('product_category e', 'e.category_id = d.category_id')
-            ->join('product_subcat f', 'f.category_id = e.category_id')
-            ->join('product_brand g', 'g.brand_id = d.brand_id')
-            ->join('product_model h', 'h.model_id = d.product_model')
+            ->join('product_category e', 'e.category_id = d.category_id','left')
+            ->join('product_subcat f', 'f.category_id = e.category_id','left')
+            ->join('product_brand g', 'g.brand_id = d.brand_id','left')
+            ->join('product_model h', 'h.model_id = d.product_model','left')
+            ->where('b.status',1)
+            ->where('b.rqsn_id', $rqsn_id)
+            ->group_by('b.product_id')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function rqsn_details_data_by_rqsn_id_price($rqsn_id)
+    {
+        $records= $this->db->select('a.*, b.*, c.*, d.*,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+            ->from('rqsn a')
+            ->join('rqsn_details b','a.rqsn_id=b.rqsn_id')
+            ->join('outlet_warehouse c','c.outlet_id=a.from_id')
+            ->join('product_information d','d.product_id=b.product_id')
+            ->join('product_category e', 'e.category_id = d.category_id','left')
+            ->join('product_subcat f', 'f.category_id = e.category_id','left')
+            ->join('product_brand g', 'g.brand_id = d.brand_id','left')
+            ->join('product_model h', 'h.model_id = d.product_model','left')
             ->where('b.status',1)
             ->where('b.rqsn_id', $rqsn_id)
             ->group_by('b.product_id')

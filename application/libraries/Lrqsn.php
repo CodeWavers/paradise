@@ -113,16 +113,45 @@ class Lrqsn {
 
 
         $data = array(
-            'title'             => 'Approve Requisition',
+            'title'             => 'Requisition List',
             'rqsn_details'      => $rqsn_details,
         );
 
         // echo '<pre>';print_r($data);exit();
 
 
-        return $CI->parser->parse('rqsn/rqsn_approve_edit', $data, true);
+        return $CI->parser->parse('rqsn/rqsn_approve_edit_price', $data, true);
 
     }
+    public function approve_rqsn_edit_price()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+
+        $rqsn_details = $CI->Rqsn->rqsn_details_data_price();
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+
+
+        $data = array(
+            'title'             => 'Requisition List',
+            'rqsn_details'      => $rqsn_details,
+        );
+
+        // echo '<pre>';print_r($data);exit();
+
+
+        return $CI->parser->parse('rqsn/rqsn_approve_edit_price', $data, true);
+
+    }
+
 
     public function edit_approve_rqsn($rqsn_id)
     {
@@ -150,6 +179,33 @@ class Lrqsn {
      //   echo '<pre>';print_r($rqsn_details);exit();
 
         return $CI->parser->parse('rqsn/rqsn_approve_update', $data, true);
+    }
+    public function edit_approve_rqsn_price($rqsn_id)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Warehouse');
+
+        $outlet_list    = $CI->Warehouse->branch_list();
+        $rqsn_details = $CI->Rqsn->rqsn_details_data_by_rqsn_id_price($rqsn_id);
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'Approve Requisition',
+            'rqsn_details'      => $rqsn_details,
+            'outlet_list'       => $outlet_list
+        );
+
+     //   echo '<pre>';print_r($rqsn_details);exit();
+
+        return $CI->parser->parse('rqsn/rqsn_approve_update_price', $data, true);
     }
 
 }

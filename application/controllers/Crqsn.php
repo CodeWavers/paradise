@@ -438,6 +438,16 @@ class Crqsn extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function aprove_rqsn_edit_price()
+    {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+
+        $content = $this->lrqsn->approve_rqsn_edit_price();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function edit_approve_rqsn($rqsn_id)
     {
         $CI = & get_instance();
@@ -445,6 +455,16 @@ class Crqsn extends CI_Controller {
         $CI->load->library('lrqsn');
 
         $content = $this->lrqsn->edit_approve_rqsn($rqsn_id);
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function edit_approve_rqsn_price($rqsn_id)
+    {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+
+        $content = $this->lrqsn->edit_approve_rqsn_price($rqsn_id);
         $this->template->full_admin_html_view($content);
     }
 }
