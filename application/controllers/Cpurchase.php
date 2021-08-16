@@ -466,6 +466,7 @@ class Cpurchase extends CI_Controller {
          //   $product_id=$_POST["product_id"];
             $cart_list = $this->Purchases->purchase_cart_data();
 
+            $total =array_sum(array_column($cart_list, 'total'));
             $output = '';
             $output .= '
 
@@ -612,7 +613,7 @@ class Cpurchase extends CI_Controller {
                 <tr>
                     <td colspan="13" class="text-right"><b>Grand Total:</b></td>
                     <td>
-                    <input class="form-control" id="grand_total" readonly/>
+                    <input class="form-control" id="grand_total" value='.$total.' readonly/>
                 </td>
                 </tr>
                 
