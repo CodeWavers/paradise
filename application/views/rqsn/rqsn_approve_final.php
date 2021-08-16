@@ -164,6 +164,7 @@
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Quantity</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -183,6 +184,7 @@
                                         <td><?php echo $rqsn_detail['brand_name']?></td>
                                         <td><?php echo $rqsn_detail['model_name']?></td>
                                         <td style="width: 5%;" ><?php echo $rqsn_detail['quantity']?></td>
+                                        <td style="width: 5%;" ><?php echo $rqsn_detail['total']?></td>
 
 
                                     </tr>
