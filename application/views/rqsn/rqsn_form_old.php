@@ -136,16 +136,12 @@
                                 </div>
 
                                 <div class="row">
-                                    <label class="col-sm-3 col-form-label text-right">Product Name:</label>
-
+                                    <div class="col-sm-3"></div>
+                                    <a href="<?= base_url()."Crqsn/add_rqsn_form" ?>">
                                     <div class="col-sm-9">
-
-                                        <input type="text" autocomplete="off"  name="product_name" onkeypress="invoice_productList(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
-
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1"  id="SchoolHiddenId"/>
-                                        <input type="hidden" value="<?php echo base_url() ?>" class="baseUrl" name="" id="baseUrl"/>
+                                        <input type="button" id="catalogue_link" class="btn btn-success form-control" name="catalogue_link" value="Go to Add Requisition">
                                     </div>
-
+                                    </a>
                                 </div>
 
                             </div>
@@ -190,8 +186,6 @@
         //$('#cart_details').load("<?php //echo base_url(); ?>//Cadd_rqsn/load");
         //
         // }, 1000);
-
-
 
         $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
 

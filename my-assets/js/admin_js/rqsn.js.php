@@ -620,7 +620,7 @@ $(document).ready(function(){
            return false;
        },
        select: function( event, ui ) {
-            $(this).parent().parent().find(".autocomplete_hidden_value").val(ui.item.value); 
+            $(this).parent().parent().find(".autocomplete_hidden_value").val(ui.item.value);
                 $(this).val(ui.item.label);
                 var id=ui.item.value;
                 var dataString = 'pro duct_id='+ id;
@@ -629,30 +629,22 @@ $(document).ready(function(){
                 $.ajax
                    ({
                         type: "POST",
-                        url: base_url+"Cinvoice/retrieve_product_data_inv",
+                        url: base_url+"Cadd_rqsn/add",
                         data: {product_id:id,csrf_test_name:csrf_test_name},
                         cache: false,
                         success: function(data)
                         {
-                            var obj = jQuery.parseJSON(data);
-                            for (var i = 0; i < (obj.txnmber); i++) {
-                            var txam = obj.taxdta[i];
-                            var txclass = 'total_tax'+i+'_'+sl;
-                           $('.'+txclass).val(obj.taxdta[i]);
-                            }
-                            $('.'+priceClass).val(obj.price);
-                            $('.'+available_quantity).val(obj.total_product.toFixed(2,2));
-                            $('.'+unit).val(obj.unit);
-                            $('.'+warrenty_date).val(obj.warrenty_date);
-                            $('.'+expiry_date).val(obj.expired_date);
-                            $('#'+warehouse).html(obj.warehouse);
-                            $('.'+tax).val(obj.tax);
-                            $('#txfieldnum').val(obj.txnmber);
-                            $('#'+serial_no).html(obj.serial);
-                            $('#'+discount_type).val(obj.discount_type);
-                                   quantity_calculate(sl);
-                            
-                        } 
+
+                            toastr.success("Requisition Added");
+                            $('#cart_details').load(base_url+"Cadd_rqsn/load");
+                            $('#' + id).val('');
+                           // $('#cart_details').html(data);
+                         //   var obj = jQuery.parseJSON(data);
+
+                          //  console.log(obj)
+
+
+                        }
                     });
 
             $(this).unbind("change");
