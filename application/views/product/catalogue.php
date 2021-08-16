@@ -94,7 +94,7 @@ Manage Category Start -->
         <div style="margin: 0; padding : 0;" id="main_pan">
         <?php foreach ($all_product as $product) { ?>
             <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-2">
 
                     <div class="image_box" >
 
@@ -104,11 +104,14 @@ Manage Category Start -->
                 </div>
 
 
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-12">
 
-                    <div class="col-sm-6 col-md-6 " >
 
-                        <table class="table" width="100%" id="myTable">
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-12 " >
+
+                        <table class="table" id="myTable">
 
 
                             <!--            <caption  class="resumehead">--><?php //echo display('positional_information')?><!--</caption>-->
@@ -117,40 +120,34 @@ Manage Category Start -->
                                 <th>Category</th>
                                 <!--                        <td>--><?php //echo html_escape($row[0]['designation']);?><!--</td>-->
                                 <td><?php echo html_escape($product->category_name); ?></td>
+                                <th>SKU</th>
+                                <td><?php echo html_escape($product->sku);?></td>
                             </tr>
 
                             <?php if($product->subcat_name):?>
                                 <tr>
                                     <th>Sub-category</th>
                                     <td><?php echo html_escape($product->subcat_name); ?></td>
+                                    <th>Unit Type</th>
+                                    <td><?php echo html_escape($product->unit); ?></td>
                                 </tr>
                             <?php endif;?>
                             <tr>
                                 <th>Product Name</th>
                                 <td><?php echo html_escape($product->product_name); ?></td>
+                                <th>Brand</th>
+                                <td><?php echo html_escape($product->brand_name); ?></td>
                             </tr>
 
 
                             <tr>
                                 <th>Parts No.</th>
                                 <td><?php echo html_escape($product->parts);?></td>
-                            </tr>
-                            <tr>
-                                <th>SKU</th>
-                                <td><?php echo html_escape($product->sku);?></td>
-                            </tr>
-                            <tr>
-                                <th>Unit Type</th>
-                                <td><?php echo html_escape($product->unit); ?></td>
-                            </tr>
-                            <tr>
-                                <th>Brand</th>
-                                <td><?php echo html_escape($product->brand_name); ?></td>
-                            </tr>
-                            <tr>
                                 <th>Model</th>
                                 <td><?php echo html_escape($product->model_name); ?></td>
+                                
                             </tr>
+
                             <tr>
                                 <th>Associated Tag</th>
                                 <td><?php echo html_escape($product->tag);?></td>
@@ -159,14 +156,9 @@ Manage Category Start -->
 
                         </table>
 
-
-
-
-
+                        </div>
 
                     </div>
-
-
                 </div>
 
 

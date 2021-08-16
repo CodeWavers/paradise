@@ -319,6 +319,32 @@ class Lproduct {
         return $productList;
     }
 
+    public function approve_changed_price()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Products');
+
+        $res = $CI->Products->get_changed_price();
+
+        $i = 0;
+        foreach ($res as $k => $v) {
+            $i++;
+            $res[$k]['sl'] = $i ;
+        }
+        
+
+        // echo '<pre>';print_r($res);exit();
+
+        $data = array(
+            'title' => 'Approve Price',
+            'res' => $res,
+        );
+
+        $view =  $CI->parser->parse('product/admin_approve_price', $data, true);
+
+        return $view;
+    }
+
 }
 
 ?>

@@ -137,14 +137,14 @@ header('Content-Type: text/javascript; charset=utf8');
 
 
         //Total Price
-        //$(".row_total").each(function() {
-        //    isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
-        //});
+        $(".row_total").each(function() {
+           isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
+        });
         // $(".discount").each(function() {
         //    isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
         //});
 
-        // $("#Total").val(gr_tot.toFixed(2,2));
+        $("#grand_total").val(gr_tot.toFixed(2,2));
         //var grandtotal = gr_tot;
         //$("#Total").val(grandtotal.toFixed(2,2));
         //invoice_paidamount();

@@ -282,7 +282,7 @@ class Cproduct extends CI_Controller {
         #
         $config["base_url"]       = base_url('Cproduct/catalogue/');
         $config["total_rows"]     = $this->db->count_all('product_information');
-        $config["per_page"]       = 4;
+        $config["per_page"]       = 6;
         $config["uri_segment"]    = 3;
         $config["num_links"]      = 1;
         /* This Application Must Be Used With BootStrap 3 * */
@@ -1116,5 +1116,48 @@ class Cproduct extends CI_Controller {
             force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
 
+
+    public function approve_price()
+    {
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+
+        $CI->load->library('lproduct');
+
+        $content = $CI->lproduct->approve_changed_price();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function update_new_price()
+    {
+        $CI = & get_instance();
+        // $this->auth->check_admin_auth();
+
+        $product_id = $this->input->post('product_id', TRUE);
+        $supplier_id = $this->input->post('supplier_id', TRUE);
+        $new_rate = $this->input->post('new_rate', TRUE);
+
+        $this->db->set('supplier_price', $new_rate);
+
+        $this->db->where(array('supplier_id' => $supplier_id, 'product_id' => $product_id));
+
+        $this->db->update('supplier_product');
+
+
+        //insert into ledger
+        $date=date('Y-m-d');
+        $data = array(
+            'supplier_id' => $supplier_id,
+            'product_id'         => $product_id,
+            'update_price'         => $new_rate,
+            'date'         => $date,
+            'time'=>date("h:i:sa"),
+            'status'             => 1
+        );
+
+        $this->db->insert('supplier_product_price', $data);
+
+
+    }
 
 }

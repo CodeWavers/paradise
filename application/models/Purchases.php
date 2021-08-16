@@ -865,7 +865,7 @@ class Purchases extends CI_Model {
             $this->db->where('purchase_id', $purchase_id);
             $this->db->update('product_purchase', $data);
             //account transaction update
-             $this->db->where('VNo', $purchase_id);
+            $this->db->where('VNo', $purchase_id);
             $this->db->update('acc_transaction');
 
             //supplier ledger update
@@ -1423,7 +1423,7 @@ class Purchases extends CI_Model {
         $this->db->join('product_subcat e', 'e.sub_cat_id = c.sub_cat_id','left');
         $this->db->join('product_brand f', 'f.brand_id = c.brand_id','left');
         $this->db->join('product_model g', 'g.model_id = c.product_model','left');
-        $this->db->where('a.status', 2);
+        $this->db->where('a.status', 3);
         $this->db->where('b.purchase_status', 1);
         $this->db->group_by('b.product_id');
 

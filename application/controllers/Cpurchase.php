@@ -608,6 +608,15 @@ class Cpurchase extends CI_Controller {
             $output .= '
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="13" class="text-right"><b>Grand Total:</b></td>
+                    <td>
+                    <input class="form-control" id="grand_total" readonly/>
+                </td>
+                </tr>
+                
+            </tfoot>
         </table>
                             ';
 

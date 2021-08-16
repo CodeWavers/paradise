@@ -1094,4 +1094,17 @@ class Rqsn extends CI_Model {
 
         return $records;
     }
+
+    public function rqsn_update_final($rqsn_id)
+    {
+
+
+        $sq = "UPDATE rqsn
+        SET status = 3
+        WHERE rqsn_id = ".$rqsn_id."
+        ";
+
+        $this->db->query($sq);
+
+    }
 }

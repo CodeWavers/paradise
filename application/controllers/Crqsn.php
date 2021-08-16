@@ -137,15 +137,15 @@ class Crqsn extends CI_Controller {
         $CI = & get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Rqsn');
-        $CI->load->model('Reports');
-        $data['title'] = 'Approve Requisition';
-        $data['t'] = $this->Rqsn->approve_rqsn();
-        //$data['t'] = $this->Reports->getCheckList_rqsn();
-       // $data = $this->Reports->getCheckLi st_rqsn();
+    //     $CI->load->model('Reports');
+    //     $data['title'] = 'Approve Requisition';
+    //     $data['t'] = $this->Rqsn->approve_rqsn();
+    //     //$data['t'] = $this->Reports->getCheckList_rqsn();
+    //    // $data = $this->Reports->getCheckLi st_rqsn();
 
 
       //  echo '<pre>';print_r($data);exit();
-        $content = $this->parser->parse('rqsn/rqsn_approve', $data, true);
+        $content = $this->lrqsn->approve_rqsn_new();
         $this->template->full_admin_html_view($content);
     }
 
@@ -446,5 +446,39 @@ class Crqsn extends CI_Controller {
 
         $content = $this->lrqsn->edit_approve_rqsn($rqsn_id);
         $this->template->full_admin_html_view($content);
+    }
+
+    public function approve_rqsn_final($rqsn_id)
+    {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+
+        $content = $this->lrqsn->approve_rqsn_final($rqsn_id);
+        $this->template->full_admin_html_view($content);
+
+    }
+
+    public function update_rqsn_final(){
+        $CI = & get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+
+        $rqsn_id = $this->input->post("rqsn_id", true);
+
+        $rqsn = $CI->Rqsn->rqsn_update_final($rqsn_id);
+
+
+
+
+
+     //   echo "ok";exit();
+
+     redirect(base_url('Crqsn/aprove_rqsn'));
+
+
     }
 }

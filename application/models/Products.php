@@ -495,4 +495,48 @@ class Products extends CI_Model {
     }
     return false;
    }
+
+   public function get_changed_price()
+   {
+
+        $CI = & get_instance();
+        $CI->load->Model('Suppliers');
+       $query = $this->db->select('a.*, b.product_name, c.supplier_name')
+                     ->from('product_purchase_details a')
+                     ->group_by('purchase_id')
+                     ->join('product_information b', 'b.product_id = a.product_id' , 'left')
+                     ->join('supplier_information c', 'c.supplier_id = a.supplier_id', 'left')
+                     ->get();
+
+       $res = $query->result_array();
+
+       $list = array();
+
+
+       foreach ($res as $row) {
+        //     echo '<pre>';print_r($row['rate']);
+        //    echo '<br>';
+        //     print_r($this->supplier_product_editdata($row['product_id'])[0]['supplier_price']);
+
+        $old_price = $CI->Suppliers->product_suppliers($row['supplier_id'], $row['product_id'])[0]['supplier_price'];
+            
+           if ($row['rate'] != $old_price){
+
+                // echo '<pre>';print_r($row);
+
+                $row['old_rate'] = $old_price;
+                
+                array_push($list, $row);
+           }
+       }
+
+       
+
+    //    echo '<pre>';print_r($list);exit();
+
+    return $list;
+
+   }
+
 }
+

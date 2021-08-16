@@ -1,3 +1,4 @@
+
 <!-- Product Purchase js -->
 <script src="<?php echo base_url()?>my-assets/js/admin_js/json/product_purchase.js.php" ></script>
 <!-- Supplier Js -->
