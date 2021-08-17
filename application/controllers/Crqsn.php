@@ -469,7 +469,7 @@ class Crqsn extends CI_Controller {
         $content = $this->lrqsn->edit_approve_rqsn_price($rqsn_id);
         $this->template->full_admin_html_view($content);
     }
-    
+
     public function approve_rqsn_final($rqsn_id)
     {
         $CI = & get_instance();
@@ -503,5 +503,32 @@ class Crqsn extends CI_Controller {
 
 
     }
-}
 
+    public function autosearch()
+    {
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+        $product_name   = $this->input->post('product_name',TRUE);
+        $category_id   = $this->input->post('cat_id',TRUE);
+        $brand_id   = $this->input->post('brand_id',TRUE);
+        $model_id   = $this->input->post('model_id',TRUE);
+
+
+        $subcat_id   = $this->input->post('subcat_id',TRUE);
+        $product_info   = $CI->Rqsn->autocompletproductdata($product_name, $category_id, $subcat_id, $brand_id, $model_id);
+
+        if(!empty($product_info)){
+            $list[''] = '';
+            foreach ($product_info as $value) {
+                $json_product[] = array(
+                    'label'=>$value['product_name'].'('.$value['model_name'].')'.' '.$value['brand_name'].' '.$value['sku'].' '.$value['parts'],
+                    'value'=>$value['product_id']
+                );
+            }
+        }else{
+            $json_product[] = 'No Product Found';
+        }
+        echo json_encode($json_product);
+    }
+}

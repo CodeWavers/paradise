@@ -902,6 +902,7 @@ class Cinvoice extends CI_Controller {
 
     }
 
+
     public function autocompleteproductsearch_dispatch(){
         $CI =& get_instance();
         $this->auth->check_admin_auth();

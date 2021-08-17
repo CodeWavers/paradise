@@ -43,11 +43,21 @@ class Lrqsn {
         $CI->load->model('Web_settings');
         $CI->load->model('Customers');
         $CI->load->model('Warehouse');
+        $CI->load->model('Categories');
+        $CI->load->model('Brands');
+        $CI->load->model('Models');
+
         $outlet_list    = $CI->Warehouse->branch_list();
         $outlet_list_to    = $CI->Rqsn->outlet_list_to();
         $rqsn_no    = $CI->Rqsn->number_generator();
         $customers = $CI->Customers->customer_list();
         $cw_list    = $CI->Rqsn->cw_list();
+
+        $cat_list    = $CI->Categories->category_list();
+        $subcat_list    = $CI->Categories->subcat_list();
+        $brand_list    = $CI->Brands->category_list();
+        $model_list    = $CI->Models->model_list();
+
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $taxfield = $CI->db->select('tax_name,default_value')
                 ->from('tax_settings')
@@ -59,6 +69,10 @@ class Lrqsn {
             'outlet_list_to'    => $outlet_list_to,
             'cw_list'           => $cw_list,
             'rqsn_no'           => $rqsn_no,
+            'cat_list'          => $cat_list,
+            'subcat_list'       => $subcat_list,
+            'brand_list'        => $brand_list,
+            'model_list'        => $model_list,
             'discount_type'     => $currency_details[0]['discount_type'],
             'taxes'             => $taxfield,
             'customers'         => $customers,

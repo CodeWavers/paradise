@@ -1146,4 +1146,92 @@ class Rqsn extends CI_Model {
         $this->db->query($sq);
 
     }
+
+    public function autocompletproductdata($product_name, $category_id=null, $subcat_id=null, $brand_id=null, $model_id=null){
+        $this->db->select('a.*, b.model_name, c.brand_name');
+        $this->db->from('product_information a');
+
+        $this->db->join('product_model b', 'b.model_id = a.product_model');
+        $this->db->join('product_brand c', 'c.brand_id = a.brand_id');
+            // ->where('a.category_id', $category_id)
+            // ->or_where('a.category_id', $category_id)
+            // ->or_where('a.sub_cat_id', $subcat_id)
+            // ->or_where('a.brand_id', $brand_id)
+            // ->or_where('a.product_model', $model_id)
+
+        if(!empty($category_id)){
+
+           $this->db->where('a.category_id', $category_id);
+
+        }elseif(!empty($subcat_id)){
+
+            $this->db->where('a.category_id', $category_id);
+
+        }elseif(!empty($brand_id)){
+
+            $this->db->where('a.brand_id', $brand_id);
+
+        }elseif(!empty($model_id)){
+
+            $this->db->where('a.product_model', $model_id);
+
+        }
+        // elseif (!empty($category_id) && !empty($subcat_id)) {
+        //     $this->db->db->where('a.category_id', $category_id);
+        //     $this->db->db->where('a.sub_cat_id', $subcat_id);
+        // }elseif(!empty($category_id) && !empty($brand_id)){
+        //     $this->db->where('a.category_id', $category_id)
+        //           ->where('a.brand_id', $brand_id);
+        // }elseif(!empty($category_id) && !empty($model_id)){
+        //     $this->db->where('a.category_id', $category_id)
+        //           ->where('a.product_model', $model_id);
+        // }elseif(!empty($subcat_id) && !empty($brand_id)){
+        //     $this->db->where('a.sub_cat_id', $subcat_id)
+        //           ->where('a.brand_id', $brand_id);
+        // }elseif(!empty($subcat_id) && !empty($model_id)){
+        //     $this->db->where('a.sub_cat_id', $subcat_id)
+        //           ->where('a.product_model', $model_id);
+        // }elseif(!empty($brand_id) && !empty($model_id)){
+        //     $this->db->where('a.brand_id', $brand_id)
+        //           ->where('a.product_model', $model_id);
+        // }elseif(!empty($category_id) && !empty($brand_id) && !empty($model_id)){
+        //     $this->db->where('a.brand_id', $brand_id)
+        //           ->where('a.product_model', $model_id)
+        //           ->where('a.category_id', $category_id);
+        // }elseif(!empty($category_id) && !empty($subcat_id) && !empty($model_id)){
+        //     $this->db->where('a.sub_cat_id', $subcat_id)
+        //           ->where('a.product_model', $model_id)
+        //           ->where('a.category_id', $category_id);
+        // }elseif(!empty($category_id) && !empty($subcat_id) && !empty($brand_id)){
+        //     $this->db->where('a.sub_cat_id', $subcat_id)
+        //           ->where('a.brand_id', $brand_id)
+        //           ->where('a.category_id', $category_id);
+        // }elseif(!empty($subcat_id) && !empty($brand_id) && !empty($model_id)){
+        //     $this->db->where('a.brand_id', $brand_id)
+        //           ->where('a.product_model', $model_id)
+        //           ->where('a.sub_cat_id', $subcat_id);
+        // }elseif(!empty($subcat_id) && !empty($brand_id) && !empty($model_id) && !empty($category_id)){
+        //     $this->db->where('a.brand_id', $brand_id)
+        //           ->where('a.product_model', $model_id)
+        //           ->where('a.sub_cat_id', $subcat_id)
+        //           ->where('a.category_id', $category_id);
+        // }
+
+        $this->db->like('a.product_name', $product_name, 'both')
+            // ->or_like('b.model_name', $product_name, 'both')
+            ->or_like('a.parts', $product_name, 'both')
+            ->or_like('a.sku', $product_name, 'both')
+            // ->or_like('c.brand_name', $product_name, 'both')
+            ->order_by('product_name','asc')
+            ->limit(15);
+            $query=$this->db->get();
+
+
+
+    // echo '<pre>'; print_r($query->result_array()); exit();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
 }

@@ -135,12 +135,60 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row rqsn-form-input">
+                                    <label for="select_cat" class="col-sm-3 col-form-label text-right">Category : </label>
+                                    <div class="col-sm-9" >
+                                        <select name="select_cat" id="select_cat" class="form-control"">
+                                            <option value="">Select One</option>
+                                            {cat_list}
+                                            <option value="{category_id}">{category_name}</option>
+                                            {/cat_list}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row rqsn-form-input" id="subCat_div">
+                                    <label for="select_subcat" class="col-sm-3 col-form-label text-right">Sub Category : </label>
+                                    <div class="col-sm-9" >
+                                        <select name="selct_subcat" id="select_subcat" class="form-control">
+                                            <option value="">Select One</option>
+                                            {subcat_list}
+                                                <option value="{sub_cat_id}">{subcat_name}</option>
+                                            {/subcat_list}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row rqsn-form-input" >
+                                    <label for="select_brand" class="col-sm-3 col-form-label text-right">Brand : </label>
+                                    <div class="col-sm-9" >
+                                        <select name="selct_brand" id="select_brand" class="form-control">
+                                            <option value="">Select One</option>
+                                            {brand_list}
+                                                <option value="{brand_id}">{brand_name}</option>
+                                            {/brand_list}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row rqsn-form-input" >
+                                    <label for="select_model" class="col-sm-3 col-form-label text-right">Model : </label>
+                                    <div class="col-sm-9" >
+                                        <select name="selct_model" id="select_model" class="form-control">
+                                            <option value="">Select One</option>
+                                            {model_list}
+                                                <option value="{model_id}">{model_name}</option>
+                                            {/model_list}
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="row">
-                                    <label class="col-sm-3 col-form-label text-right">Product Name:</label>
+                                    <label class="col-sm-3 col-form-label text-right">Product Name : </label>
 
                                     <div class="col-sm-9">
 
-                                        <input type="text" autocomplete="off"  name="product_name" onkeypress="invoice_productList(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
+                                        <input type="text" autocomplete="off"  name="product_name" onkeypress="productList_with_cat_subcat(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
 
                                         <input type="hidden" class="autocomplete_hidden_value product_id_1"  id="SchoolHiddenId"/>
                                         <input type="hidden" value="<?php echo base_url() ?>" class="baseUrl" name="" id="baseUrl"/>
@@ -236,6 +284,124 @@
         });
 
     });
+
+    // function get_subcat() {
+    //     var category_id = $("#select_cat").val();
+
+    //     var base_url = "<?= base_url() ?>";
+    //     var csrf_test_name = $('[name="csrf_test_name"]').val();
+    //     var sub_cat_selected = "";
+
+
+    //     $.ajax( {
+    //         url: base_url + "Cproduct/sub_cat_by_category",
+    //         method: 'post',
+    //         data: {
+    //             category_id:category_id,
+    //             sub_cat_selected: sub_cat_selected,
+    //             csrf_test_name:csrf_test_name
+    //         },
+    //         cache: false,
+    //         success: function( data ) {
+    //             var obj = jQuery.parseJSON(data);
+    //             $('#select_subcat').html(obj.sub_cat);
+    //             // $('#cat_id').val(obj.c_id);
+    //             // var cat_id = $("#cat_id").val();
+
+    //             if(category_id == obj.c_id ){
+    //                 $("#subCat_div").css("display", "block");
+    //             }else{
+    //                 $("#subCat_div").css("display", "none");
+    //             }
+    //         }
+    //     })
+
+    // }
+
+    function productList_with_cat_subcat(sl) {
+        var priceClass = 'price_item'+sl;
+        var available_quantity = 'available_quantity_'+sl;
+        var unit = 'unit_'+sl;
+        var tax = 'total_tax_'+sl;
+        var serial_no = 'serial_no_'+sl;
+        var warehouse = 'warehouse_'+sl;
+        var warrenty_date='warrenty_date_'+sl;
+        var expiry_date='expiry_date_'+sl;
+        var discount_type = 'discount_type_'+sl;
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+        var base_url = $("#base_url").val();
+        var cat_id = $("#select_cat").val();
+        var subcat_id = $("#select_subcat").val();
+        var brand_id = $("#select_brand").val();
+        var model_id = $("#select_model").val();
+
+
+        // Auto complete
+        var options = {
+            minLength: 0,
+            source: function( request, response ) {
+                var product_name = $('#product_name_'+sl).val();
+            $.ajax( {
+            url: base_url + "Crqsn/autosearch",
+            method: 'post',
+            dataType: "json",
+            data: {
+                term: request.term,
+                product_name:product_name,
+                cat_id:cat_id,
+                subcat_id:subcat_id,
+                brand_id:brand_id,
+                mdoel_id:model_id,
+                csrf_test_name:csrf_test_name,
+
+            },
+            success: function( data ) {
+                response( data );
+
+            }
+            });
+        },
+        focus: function( event, ui ) {
+            $(this).val(ui.item.label);
+            return false;
+        },
+        select: function( event, ui ) {
+                $(this).parent().parent().find(".autocomplete_hidden_value").val(ui.item.value);
+                    $(this).val(ui.item.label);
+                    var id=ui.item.value;
+                    var dataString = 'pro duct_id='+ id;
+                    var base_url = $('.baseUrl').val();
+
+                    $.ajax
+                    ({
+                            type: "POST",
+                            url: base_url+"Cadd_rqsn/add",
+                            data: {product_id:id,csrf_test_name:csrf_test_name},
+                            cache: false,
+                            success: function(data)
+                            {
+
+                                toastr.success("Requisition Added");
+                                $('#cart_details').load(base_url+"Cadd_rqsn/load");
+                                $('#' + id).val('');
+                            // $('#cart_details').html(data);
+                            //   var obj = jQuery.parseJSON(data);
+
+                            //  console.log(obj)
+
+
+                            }
+                        });
+
+                $(this).unbind("change");
+                return false;
+        }
+    }
+
+        $('body').on('keypress.autocomplete', '.productSelection', function() {
+            $(this).autocomplete(options);
+        });
+    }
 
 
 </script>
