@@ -117,7 +117,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                 <?php else:?>
                     <li class="dropdown notifications-menu">
-                        <a href="<?php echo base_url('Crqsn/aprove_rqsn_outlet') ?>" >
+                        <a href="<?php echo base_url('Crqsn/aprove_rqsn') ?>" >
                             <i class="glyphicon glyphicon-circle-arrow-down" title="Requisition"></i>
                             <span class="label label-danger"><?php echo html_escape($rqsn_outlet) ?></span>
                         </a>

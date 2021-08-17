@@ -322,7 +322,7 @@ class Rqsn extends CI_Model {
         return $rqsn_id;
     }
     public function number_generator() {
-        $this->db->select_max('rqsn_no', 'rqsn_no')->where('status',2);
+        $this->db->select_max('rqsn_no', 'rqsn_no')->where('status',3);
         $query = $this->db->get('rqsn');
         $result = $query->result_array();
         $rqsn_no = $result[0]['rqsn_no'];
