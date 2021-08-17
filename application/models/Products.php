@@ -132,6 +132,7 @@ class Products extends CI_Model {
                 c.supplier_price,
                 c.supplier_id,
                 m.supplier_name,
+                c.currency,
               x.category_name,
              d.model_name,
               e.subcat_name
@@ -178,6 +179,7 @@ class Products extends CI_Model {
                 'product_type'    =>$record->ptype_id,
                 'product_model'    =>$record->model_name,
                 'supplier_name'    =>$supplier,
+                'currency'    =>$record->currency,
                 'price'            =>$record->price,
                 'purchase_p'       =>$record->supplier_price,
                 'image'            =>$image,

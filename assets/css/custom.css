@@ -40,6 +40,11 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#productList{
+
+  overflow-x:scroll;
+}
+
 .wrapper {
   overflow: hidden;
 }
