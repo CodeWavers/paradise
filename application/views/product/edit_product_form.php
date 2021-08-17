@@ -328,8 +328,9 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center"><?php echo display('supplier') ?> </th>
-                                    <th class="text-center"><?php echo display('supplier_price') ?></th>
                                     <th class="text-center">Currency</th>
+                                    <th class="text-center"><?php echo display('supplier_price') ?></th>
+
                                     <th class="text-center"><?php echo display('action') ?> </th>
                                 </tr>
                                 </thead>
@@ -363,7 +364,10 @@
 
                                             <?php foreach ($currency as $currency) { ?>
                                                 <option value="<?php echo $currency['currency_name'] ?>"><?php echo $currency['currency_name'] ?> </option>
+
+
                                             <?php } ?>
+
                                             <?php
                                             if ($supplier_selected) {
                                                 ?>
@@ -408,7 +412,10 @@
                     <?php echo form_close() ?>
                 </div>
             </div>
-            <input type="hidden" id="supplier_list" value='<?php if ($supplier_list) { ?>{supplier_list}<option value="{supplier_id}">{supplier_name}</option>{/supplier_list}<?php }?>' name="">
+            <input type="text" id="supplier_list" value='<?php if ($supplier_list) { ?>{supplier_list}<option value="{supplier_id}">{supplier_name}</option>{/supplier_list}<?php }?>' name="">
+            
+            <input type="text" id="currency_list" value='<?php if ($currency) { ?>{currency}<option value="{currency}">{currency_name}</option>{/currency}<?php }?>' name="">
+
         </div>
     </section>
 </div>

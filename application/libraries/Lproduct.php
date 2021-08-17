@@ -81,7 +81,7 @@ class Lproduct {
         $CI->load->model('Ptype');
         $CI->load->model('Units');
 
-        $currency=$CI->db->select('*')->from('currency_tbl')->get()->result_array();
+      //  $currency=$CI->db->select('*')->from('currency_tbl')->get()->result_array();
         $product_detail = $CI->Products->retrieve_product_editdata($product_id);
         $supplier_product_detail = $CI->Products->supplier_product_editdata($product_id);
         @$supplier_id = $product_detail[0]['supplier_id'];
@@ -92,6 +92,7 @@ class Lproduct {
         @$ptype_id = $product_detail[0]['ptype_id'];
         $sub_cat_id     = $product_detail[0]['sub_cat_id'];
         $supplier_list = $CI->Suppliers->supplier_list();
+        $currency = $CI->Suppliers->currency_list();
         $supplier_selected = $CI->Products->supplier_selected($product_id);
 
         $category_list = $CI->Categories->category_list_product();
@@ -136,6 +137,7 @@ class Lproduct {
         $data['unit']             = $product_detail[0]['unit'];
         $data['supplier_list']    = $supplier_list;
         $data['supplier_selected']= $supplier_selected;
+        $data['currency'] = $currency;
         $data['unit_list']        = $unit_list;
         $data['category_list']    = $category_list;
         $data['model_list']    = $model_list;

@@ -159,6 +159,16 @@ class Suppliers extends CI_Model {
         }
         return false;
     }
+    public function currency_list() {
+        $this->db->select('*');
+        $this->db->from('currency_tbl');
+
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
 
     //supplier List For Report
     public function supplier_list_report() {
