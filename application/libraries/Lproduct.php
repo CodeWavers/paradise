@@ -153,7 +153,9 @@ class Lproduct {
         $data['sub_cat_id']     = $sub_cat_id;
         $data['sub_cat_list'] = $sub_cat_list;
         $data['category_id'] = $category_id;
-        $data['currency'] = $currency;
+        $data['curr'] = $currency;
+
+        // echo '<pre>';print_r($data);exit();
 
         $chapterList = $CI->parser->parse('product/edit_product_form', $data, true);
 
@@ -333,7 +335,7 @@ class Lproduct {
             $i++;
             $res[$k]['sl'] = $i ;
         }
-        
+
 
         // echo '<pre>';print_r($res);exit();
 

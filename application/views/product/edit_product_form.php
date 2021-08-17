@@ -412,9 +412,9 @@
                     <?php echo form_close() ?>
                 </div>
             </div>
-            <input type="text" id="supplier_list" value='<?php if ($supplier_list) { ?>{supplier_list}<option value="{supplier_id}">{supplier_name}</option>{/supplier_list}<?php }?>' name="">
-            
-            <input type="text" id="currency_list" value='<?php if ($currency) { ?>{currency}<option value="{currency}">{currency_name}</option>{/currency}<?php }?>' name="">
+            <input type="hidden" id="supplier_list" value='<?php if ($supplier_list) { ?>{supplier_list}<option value="{supplier_id}">{supplier_name}</option>{/supplier_list}<?php }?>' name="">
+
+            <input type="hidden" id="currency_list" value='<?php if ($curr) { ?> {curr}<option value="{currency_name}">{currency_name}</option>{/curr}<?php }?>' name="">
 
         </div>
     </section>
