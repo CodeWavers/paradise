@@ -197,6 +197,7 @@
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
                                  <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
+                                 <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="button" value="Print" name="print_btn" class="btn btn-large btn-warning" id="" ></a>
                             </div>
                         </div>
 

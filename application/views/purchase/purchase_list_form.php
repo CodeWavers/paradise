@@ -59,8 +59,8 @@
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
                                         <th><?php echo display('image') ?>s</th>
-                                        <th>Category</th>
-                                        <th>Sub Category</th>
+<!--                                        <th>Category</th>-->
+<!--                                        <th>Sub Category</th>-->
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
                                         <th>Parts No.</th>
                                         <th>SKU</th>
@@ -76,8 +76,8 @@
                                     <tr class="text-center">
                                         <td><?php echo $row['sl']?> </td>
                                         <td class="text-center"><img src="<?php echo $row['image']?>" class="img-zoom" alt="Product Photo"></td>
-                                        <td><?php echo $row['category_name']?></td>
-                                        <td><?php echo $row['subcat_name']?></td>
+<!--                                        <td>--><?php //echo $row['category_name']?><!--</td>-->
+<!--                                        <td>--><?php //echo $row['subcat_name']?><!--</td>-->
                                         <td>
                                             <?php echo $row['product_name']?>
                                         </td>
@@ -86,7 +86,7 @@
                                         <td><?php echo $row['brand_name']?></td>
                                         <td><?php echo $row['model_name']?></td>
                                         <td>
-                                            <input type="text" class="form-control quantity" value="<?php echo $row['qty'];?>" style="width:100%;" name="quantity" id="<?php echo $row['product_id']?>">
+                                            <input style="text-align: center" size="10" type="text" class="form-control quantity" value="<?php echo $row['qty'];?>" style="width:100%;" name="quantity" id="<?php echo $row['product_id']?>">
                                         </td>
                                         <td>
                                             <button type="button" id="add_btn<?=$row['sl']?>" name="add_cart" title="Add to requisition"
