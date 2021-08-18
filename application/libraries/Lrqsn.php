@@ -214,7 +214,8 @@ class Lrqsn {
         $data = array(
             'title'             => 'Approve Requisition',
             'rqsn_details'      => $rqsn_details,
-            'outlet_list'       => $outlet_list
+            'outlet_list'       => $outlet_list,
+            'rqsn_id'           => $rqsn_id
         );
 
      //   echo '<pre>';print_r($rqsn_details);exit();
@@ -269,7 +270,7 @@ class Lrqsn {
         }
 
         $data = array(
-            'title'             => 'Approve Requisition',
+            'title'             => 'Print Requisition',
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list
         );
@@ -278,6 +279,8 @@ class Lrqsn {
 
         return $CI->parser->parse('rqsn/rqsn_approve_final', $data, true);
     }
+
+
 
 }
 

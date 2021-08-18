@@ -107,7 +107,7 @@
 
                                         $date = date('Y-m-d');
                                         ?>
-                                        <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo $rqsn_details[0]['date'] ?>" tabindex="4" readonly />
+                                        <input class="form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo $rqsn_details[0]['date'] ?>" tabindex="4" readonly />
                                     </div>
                                 </div>
 
@@ -121,7 +121,9 @@
                                 <div class="form-group row  rqsn-form-input">
                                     <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Requisition For : </label>
                                     <div class="col-sm-9">
-                                        <select name="rqsn_for" id="rqsn_for" class="form-control">
+                                        <input type="text" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['outlet_name'] ?>" readonly >
+
+                                        <!-- <select name="rqsn_for" id="rqsn_for" class="form-control">
                                             <?php foreach ($outlet_list as $ol){
                                                 if(($rqsn_details[0]['outlet_id']) == $ol['outlet_id']){?>
                                                      <option value="<?= $ol['outlet_id'] ?>" selected><?= $ol['outlet_name'] ?></option>
@@ -132,7 +134,7 @@
                                             ?>
 
 
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
 
@@ -195,6 +197,7 @@
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
                                  <a href="<?= base_url().'Crqsn/aprove_rqsn_edit'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
+                                 <a href="<?= base_url().'Crqsn/rqsn_printnp/'.$rqsn_detail['rqsn_id']?>"><input type="button" value="Print" name="print_btn" class="btn btn-large btn-warning" id="" ></a>
                             </div>
                         </div>
 
