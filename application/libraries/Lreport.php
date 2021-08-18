@@ -110,7 +110,7 @@ class Lreport extends CI_Model
         $CI->load->model('Web_settings');
         $CI->load->library('occational');
 
-        $product_price = $CI->Reports->product_price();
+        $product_price = $CI->Reports->product_price_led();
 
 
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();

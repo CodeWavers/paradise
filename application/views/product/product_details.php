@@ -86,7 +86,61 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-bd lobidrag">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>Price Ledger </h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="" class="datatable table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="text-center"><?php echo display('sl') ?></th>
+                                    <th class="text-center"><?php echo display('product_name') ?></th>
+                                    <th class="text-center">Supplier Name</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                if ($product_price) {
+                                    ?>
+                                    <?php $sl=1;?>
+                                    <?php foreach ($product_price as $price) {
 
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $sl;?></td>
+                                            <td class="text-center">
+                                                <a href="<?php echo base_url().'Cproduct/product_details/'.$price['product_id']; ?>">
+                                                    <?php echo $price['product_name'];?>
+                                                </a>
+                                            </td>
+                                            <td class="text-center"><?php echo $price['supplier_name'];?></td>
+                                            <td class="text-center"><?php echo $price['update_price'];?></td>
+                                            <td class="text-center"><?php echo $price['date'];?></td>
+                                            <td class="text-center"><?php echo $price['time'];?></td>
+                                        </tr>
+                                        <?php 	$sl++;
+                                        ?>
+                                        <?php
+                                    } ?>
+                                    <?php
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Total Purchase report -->
         <div class="row">
             <div class="col-sm-12">

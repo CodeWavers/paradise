@@ -200,6 +200,9 @@ class Lproduct {
         $CI->load->model('Products');
         $CI->load->library('occational');
         $CI->load->model('Web_settings');
+        $CI->load->model('Reports');
+
+        $product_price = $CI->Reports->product_price($product_id);
         $details_info = $CI->Products->product_details_info($product_id);
         $purchaseData = $CI->Products->product_purchase_info($product_id);
 
@@ -239,6 +242,7 @@ class Lproduct {
             'total_purchase'      => $totalPurchase,
             'total_sales'         => $totalSales,
             'purchaseData'        => $purchaseData,
+            'product_price'        => $product_price,
             'salesData'           => $salesData,
             'stock'               => $stock,
             'product_statement'   => 'Cproduct/product_sales_supplier_rate/' . $product_id,

@@ -18,33 +18,33 @@
     <section class="content">
 
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <?php echo form_open('Creport/product_price_date_wise', array('class' => 'form-inline', 'method' => 'post')) ?>
-                        <?php
-                        date_default_timezone_set("Asia/Dhaka");
-                        $today = date('Y-m-d');
-                        ?>
-
-                        <div class="form-group">
-                            <label class="" for="from_date"><?php echo display('start_date') ?></label>
-                            <input autocomplete="off" type="text" name="from_date" class="form-control datepicker" id="from_date" placeholder="<?php echo display('start_date') ?>" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="" for="to_date"><?php echo display('end_date') ?></label>
-                            <input autocomplete="off" type="text" name="to_date" class="form-control datepicker" id="to_date" placeholder="<?php echo display('end_date') ?>" value="">
-                        </div>
-
-                        <button type="submit" class="btn btn-success"><?php echo display('search') ?></button>
-
-                        <?php echo form_close() ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-sm-12">-->
+<!--                <div class="panel panel-default">-->
+<!--                    <div class="panel-body">-->
+<!--                        --><?php //echo form_open('Creport/product_price_date_wise', array('class' => 'form-inline', 'method' => 'post')) ?>
+<!--                        --><?php
+//                        date_default_timezone_set("Asia/Dhaka");
+//                        $today = date('Y-m-d');
+//                        ?>
+<!---->
+<!--                        <div class="form-group">-->
+<!--                            <label class="" for="from_date">--><?php //echo display('start_date') ?><!--</label>-->
+<!--                            <input autocomplete="off" type="text" name="from_date" class="form-control datepicker" id="from_date" placeholder="--><?php //echo display('start_date') ?><!--" value="">-->
+<!--                        </div>-->
+<!---->
+<!--                        <div class="form-group">-->
+<!--                            <label class="" for="to_date">--><?php //echo display('end_date') ?><!--</label>-->
+<!--                            <input autocomplete="off" type="text" name="to_date" class="form-control datepicker" id="to_date" placeholder="--><?php //echo display('end_date') ?><!--" value="">-->
+<!--                        </div>-->
+<!---->
+<!--                        <button type="submit" class="btn btn-success">--><?php //echo display('search') ?><!--</button>-->
+<!---->
+<!--                        --><?php //echo form_close() ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-bd lobidrag">
@@ -61,9 +61,7 @@
                                     <th class="text-center"><?php echo display('sl') ?></th>
                                     <th class="text-center"><?php echo display('product_name') ?></th>
                                     <th class="text-center">Supplier Name</th>
-                                    <th class="text-center">Price</th>
-                                    <th class="text-center">Date</th>
-                                    <th class="text-center">Time</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -75,16 +73,14 @@
 
                                         ?>
                                         <tr>
-                                            <td><?php echo $sl;?></td>
+                                            <td class="text-center"><?php echo $sl;?></td>
                                             <td class="text-center">
                                                 <a href="<?php echo base_url().'Cproduct/product_details/'.$price['product_id']; ?>">
                                                     <?php echo $price['product_name'];?>
                                                 </a>
                                             </td>
                                             <td class="text-center"><?php echo $price['supplier_name'];?></td>
-                                            <td class="text-center"><?php echo $price['update_price'];?></td>
-                                            <td class="text-center"><?php echo $price['date'];?></td>
-                                            <td class="text-center"><?php echo $price['time'];?></td>
+
                                         </tr>
                                         <?php 	$sl++;
                                         ?>
