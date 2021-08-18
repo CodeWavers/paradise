@@ -61,6 +61,7 @@
                                     <th class="text-center"><?php echo display('sl') ?></th>
                                     <th class="text-center"><?php echo display('product_name') ?></th>
                                     <th class="text-center">Supplier Name</th>
+                                    <th class="text-center" width=20%>Status</th>
 
                                 </tr>
                                 </thead>
@@ -80,6 +81,20 @@
                                                 </a>
                                             </td>
                                             <td class="text-center"><?php echo $price['supplier_name'];?></td>
+                                            <td class="text-center">
+                                                <?php
+                                                    $class = "";
+                                                    if ($price['price_status'] > 0){
+                                                        $class = 'text-danger fa fa-arrow-up';
+                                                    } else {
+                                                        $class = 'text-success fa fa-arrow-down';
+                                                    }
+                                                    if ($price['price_status'] != 0){?>
+                                                        <span style="font-size: 1.2em;"><?= $price['price_status'] ?> <i class="<?= $class ?>" ></i></span>
+                                                    <?php } else { ?>
+                                                        <span style="font-size: 1.2em;"> No price changes </span>
+                                                    <?php } ?>
+                                            </td>
 
                                         </tr>
                                         <?php 	$sl++;
