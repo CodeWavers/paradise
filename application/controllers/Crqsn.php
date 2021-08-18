@@ -499,7 +499,7 @@ class Crqsn extends CI_Controller {
 
      //   echo "ok";exit();
 
-     redirect(base_url('Crqsn/aprove_rqsn'));
+     redirect(base_url('Crqsn/rqsn_print_cw/'.$rqsn_id));
 
 
     }
@@ -713,6 +713,99 @@ class Crqsn extends CI_Controller {
         );
 
         $content =  $CI->parser->parse('rqsn/rqsn_list_printnp', $data, true);
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function rqsn_print_cw($rqsn_id)
+    {
+        $CI =& get_instance();
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Warehouse');
+
+        $CI->load->model('Invoices');
+        $CI->load->model('Web_settings');
+        $CI->load->library('occational');
+        $CI->load->library('numbertowords');
+        $taxfield = $CI->db->select('*')
+                ->from('tax_settings')
+                ->where('is_show',1)
+                ->get()
+                ->result_array();
+        $txregname ='';
+        foreach($taxfield as $txrgname){
+        $regname = $txrgname['tax_name'].' Reg No  - '.$txrgname['reg_no'].', ';
+        $txregname .= $regname;
+        }
+        $subTotal_quantity = 0;
+        $subTotal_cartoon = 0;
+        $subTotal_discount = 0;
+        $subTotal_ammount = 0;
+        $descript = 0;
+        $isserial = 0;
+        $isunit = 0;
+        if (!empty($invoice_detail)) {
+            foreach ($invoice_detail as $k => $v) {
+                $invoice_detail[$k]['final_date'] = $CI->occational->dateConvert($invoice_detail[$k]['date']);
+                $subTotal_quantity = $subTotal_quantity + $invoice_detail[$k]['quantity'];
+                $subTotal_ammount = $subTotal_ammount + $invoice_detail[$k]['total_price'];
+            }
+
+            $i = 0;
+            foreach ($invoice_detail as $k => $v) {
+                $i++;
+                $invoice_detail[$k]['sl'] = $i;
+                  if(!empty($invoice_detail[$k]['description'])){
+                    $descript = $descript+1;
+
+                }
+                 if(!empty($invoice_detail[$k]['serial_no'])){
+                    $isserial = $isserial+1;
+
+                }
+                 if(!empty($invoice_detail[$k]['unit'])){
+                    $isunit = $isunit+1;
+
+                }
+
+            }
+        }
+
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $company_info = $CI->Invoices->retrieve_company();
+
+
+        $outlet_list    = $CI->Warehouse->branch_list();
+        $rqsn_details = $CI->Rqsn->rqsn_details_data_by_rqsn_id_price($rqsn_id);
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'Approve Requisition',
+            'rqsn_details'      => $rqsn_details,
+            'outlet_list'       => $outlet_list,
+
+        'subTotal_quantity' => $subTotal_quantity,
+
+        'company_info'      => $company_info,
+        'currency'          => $currency_details[0]['currency'],
+        'position'          => $currency_details[0]['currency_position'],
+        'discount_type'     => $currency_details[0]['discount_type'],
+        'tax_regno'         => $txregname,
+        'is_desc'           => $descript,
+        'is_serial'         => $isserial,
+        'is_unit'           => $isunit,
+        );
+
+        // echo '<pre>';print_r($data);exit();
+
+        $content =  $CI->parser->parse('rqsn/rqsn_list_print_cw', $data, true);
         $this->template->full_admin_html_view($content);
     }
 }
