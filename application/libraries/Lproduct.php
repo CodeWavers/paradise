@@ -234,7 +234,10 @@ class Lproduct {
         $data = array(
             'title'               => display('product_report'),
             'product_name'        => $details_info[0]['product_name'],
-            'product_model'       => $details_info[0]['product_model'],
+//            'product_model'       => $details_info[0]['product_model'],
+            'model_name'       => $details_info[0]['model_name'],
+            'sku'       => $details_info[0]['sku'],
+            'parts'       => $details_info[0]['parts'],
             'price'               => $details_info[0]['price'],
             'purchaseTotalAmount' => number_format($totalPrcsAmnt, 2, '.', ','),
             'salesTotalAmount'    => number_format($totaSalesAmt, 2, '.', ','),
