@@ -493,7 +493,7 @@ class reports extends CI_Model {
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
         $this->db->from('product_information a');
-//        $this->db->join('product_model b','a.product_model=b.model_id');
+        $this->db->join('product_model b','a.product_model=b.model_id');
         if($searchValue != ''){
             $this->db->where($searchQuery);
         }
@@ -504,6 +504,7 @@ class reports extends CI_Model {
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
         $this->db->from('product_information a');
+        $this->db->join('product_model b','a.product_model=b.model_id');
         if($searchValue != ''){
             $this->db->where($searchQuery);
         }
