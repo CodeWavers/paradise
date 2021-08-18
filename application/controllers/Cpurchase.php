@@ -480,17 +480,17 @@ class Cpurchase extends CI_Controller {
                      <tr>
                         <th class="text-center" width="4%">SN</th>
                         <th class="text-center" width="8%">Product Name</th>
-                        <th class="text-center" width="8%">Parts No.</th>
                         <th class="text-center" width="8%">SKU</th>
                         <th class="text-center">Stock</th>
                         <th class="text-center">Proposed Quantity</th>
                         <th class="text-center">Order Quantity</th>
                         <th class="text-center">Supplier Name</th>
-                        <th class="text-center" width="8%">Warranty</th>
                         <th class="text-center" >Currency</th>
                         <th class="text-center" >Currency Value</th>
+
                         <th class="text-center">Price</th>
-              
+                        <th class="text-center">Additional Cost</th>
+
                         <th class="text-center">Discount (%)</th>
                         <th class="text-center">Total(BDT)</th>
 
@@ -530,7 +530,6 @@ class Cpurchase extends CI_Controller {
                             <input type="hidden" class="sl" value="'.$count.'">
                         </td>
 
-                            <td class="wt">'.$items['parts'].'</td>
 
                             <td class="wt">'.$items['sku'].'</td>
 
@@ -548,7 +547,7 @@ class Cpurchase extends CI_Controller {
 
                             <td>
                                 <select style="width: 100px" name="supplier_name[]" id="supplier_drop_'.$count.'" class="form-control text-center"  onchange="get_price('.$count.')" >
-                                <option value="">Select Option</option>
+
                                 ';
 
                 foreach ($supplier_list as $supp) {
@@ -561,24 +560,21 @@ class Cpurchase extends CI_Controller {
                         $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
                         }
                    }else{
-                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                        $output .= '
+                        <option value="">Select Option</option>
+                        <option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
                    }
                 }
 
 
                 $output .= '</select>
                             </td>
-
-                            <td >
-                            <input type="date" class="form-control" style="width: 110px" id="warrenty_date_'.$count.'" name="warrenty_date[]"  required/>
+                         <td >
+                            <input type="text" class="form-control" value="'.($items['currency'] ? $items['currency'] : '').'"  id="currency_'.$count.'" name="currency[]"  readonly/>
                         </td>
                          <td >
-                            <input type="text" class="form-control"  id="currency_'.$count.'" name="currency[]"  readonly/>
+                            <input type="text" class="form-control" id="currency_value_'.$count.'" name="currency_value[]" value="'.($items['currency_value'] ? $items['currency_value'] : '').'"  onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');"required/>
                         </td>
-                         <td >
-                            <input type="text" class="form-control" id="currency_value_'.$count.'" name="currency_value[]"  onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');"required/>
-                        </td>
-                        
 
 
 
@@ -587,9 +583,10 @@ class Cpurchase extends CI_Controller {
                                     <input type="hidden" style="width: 100px" name="bdt_price[]" id="bdt_price_'.$count.'" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="0.00"  tabindex="6"/>
                                     <input type="text" style="width: 100px" name="price[]" id="product_rate_'.$count.'" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="'.($items['rate'] ? $items['rate'] : "").'"  tabindex="6"/>
                                 </td>
-                                
-                               
 
+                                <td >
+                                    <input type="text" class="form-control text-right" id="additional_cost_'.$count.'" name="additional_cost[]" value="00" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" />
+                                </td>
 
                                 <td class="text-right">
                                     <input class="form-control discount text-right" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" type="text" name="discount[]" id="discount_'.$count.'" value="'.($items['discount'] ? $items['discount'] : "00").'"/>
@@ -616,7 +613,7 @@ class Cpurchase extends CI_Controller {
                     <input class="form-control" id="grand_total" value='.$total.' readonly/>
                 </td>
                 </tr>
-                
+
             </tfoot>
         </table>
                             ';

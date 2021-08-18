@@ -1462,6 +1462,11 @@ class Purchases extends CI_Model {
         $price= $this->input->post('price',TRUE);
         $discount= $this->input->post('discount',TRUE);
         $row_total = $this->input->post('row_total',TRUE);
+        $currency = $this->input->post('currency',TRUE);
+        $currency_value = $this->input->post('currency_value',TRUE);
+
+        // echo '<pre>'; print_r($currency_value); exit();
+
 
 
 
@@ -1475,13 +1480,16 @@ class Purchases extends CI_Model {
             $item_price = $price[$i];
             $item_dis = $discount[$i];
             $total = $row_total[$i];
+            $curr = $currency[$i];
+            $curr_val = $currency_value[$i];
+
+            // echo '<pre>'; print_r($curr); exit();
 
             $sq = "UPDATE purchase_order_cart
-            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", warrenty_date = ".$item_warr.", rate = ".$item_price.", discount = ".$item_dis.", total = ".$total."
+            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", warrenty_date = ".$item_warr.", rate = ".$item_price.", discount = ".$item_dis.", total = ".$total.", currency = '".$curr."', currency_value = ".$curr_val."
             WHERE product_id = ".$item_pid.";";
 
             $this->db->query($sq);
-
         }
 
 

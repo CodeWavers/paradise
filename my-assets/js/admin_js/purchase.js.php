@@ -126,13 +126,15 @@ header('Content-Type: text/javascript; charset=utf8');
         var vendor_rate = $("#product_rate_"+sl).val();
         var currency_value = $("#currency_value_"+sl).val();
 
+        var additional_cost = parseFloat($("#additional_cost_"+sl).val());
+
         var bdt_price=currency_value*vendor_rate;
         $("#bdt_price_" + sl).val(bdt_price.toFixed(2));
 
         //console.log(currency_value);
         //console.log(bdt_price);
 
-        var total_price     = ((item_ctn_qty * bdt_price) - ((item_ctn_qty * bdt_price) * (discount / 100)));
+        var total_price     = ((item_ctn_qty * bdt_price) - ((item_ctn_qty * bdt_price) * (discount / 100))) + additional_cost;
         $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
