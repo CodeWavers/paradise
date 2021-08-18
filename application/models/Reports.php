@@ -257,13 +257,27 @@ class reports extends CI_Model {
         return $stock;
     }
 
-    public function product_price() {
+    public function product_price_led() {
 
         $this->db->select("a.*,b.*,c.*");
         $this->db->from('supplier_product_price a');
         $this->db->join('product_information b','a.product_id=b.product_id');
         $this->db->join('supplier_information c','c.supplier_id=a.supplier_id');
         $this->db->where(array('a.status' => 1));
+        $this->db->group_by('a.product_id');
+        $query = $this->db->get();
+        $result = $query->result_array();
+
+        return $result;
+    }
+
+    public function product_price($product_id) {
+
+        $this->db->select("a.*,b.*,c.*");
+        $this->db->from('supplier_product_price a');
+        $this->db->join('product_information b','a.product_id=b.product_id');
+        $this->db->join('supplier_information c','c.supplier_id=a.supplier_id');
+        $this->db->where(array('a.status' => 1,'a.product_id'=>$product_id));
         // $this->db->group_by('a.product_id');
         $query = $this->db->get();
         $result = $query->result_array();

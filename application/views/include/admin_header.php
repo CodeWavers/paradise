@@ -480,15 +480,17 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Cproduct/manage_product') ?>"><?php echo display('manage_product') ?></a></li>
                         <?php }?>
-                        <?php if($this->permission1->method('manage_product','read')->access()){ ?>
-                            <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("product_price")) {
-                                echo "active";
-                            } else {
-                                echo " ";
-                            }
-                            ?>"><a href="<?php echo base_url('Creport/product_price') ?>">Price Ledger</a></li>
-                        <?php }?>
+
+<!--                        --><?php //if($this->permission1->method('manage_product','read')->access()){ ?>
+<!--                            <li class="treeview --><?php
+//                            if ($this->uri->segment('2') == ("product_price")) {
+//                                echo "active";
+//                            } else {
+//                                echo " ";
+//                            }
+//                            ?><!--"><a href="--><?php //echo base_url('Creport/product_price') ?><!--">Price Ledger</a></li>-->
+<!--                        --><?php //}?>
+
                         <?php if($this->permission1->method('manage_product','read')->access()){ ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('2') == ("approve_price")) {
@@ -1112,6 +1114,15 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                     </span>
                     </a>
                     <ul class="treeview-menu">
+                        <?php if($this->permission1->method('manage_product','read')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("product_price")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Creport/product_price') ?>">Price Ledger</a></li>
+                        <?php }?>
                         <?php if($this->permission1->method('add_closing','create')->access()){ ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("closing")){
                                 echo "active";
