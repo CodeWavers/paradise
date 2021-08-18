@@ -71,7 +71,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="productList"> 
+                            <table class="table table-striped table-bordered" cellspacing="0" width="100%" id="productList">
                                 <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
@@ -81,6 +81,7 @@
                                         <th>Purchase Type</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th><?php echo display('supplier_name') ?></th>
+                                        <th>Currency</th>
                                         <th>Unit Price</th>
                                         <th><?php echo display('supplier_price') ?></th>
                                         <th><?php echo display('image') ?>s</th>
