@@ -134,7 +134,7 @@ class Lrqsn {
         // echo '<pre>';print_r($data);exit();
 
 
-        return $CI->parser->parse('rqsn/rqsn_approve_edit_price', $data, true);
+        return $CI->parser->parse('rqsn/rqsn_approve_edit', $data, true);
 
     }
     public function approve_rqsn_edit_price()

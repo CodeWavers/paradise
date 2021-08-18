@@ -74,7 +74,7 @@
                                 <td><?php echo $rqsn_details['rqsn_customer_name']?> </td>
                                 <td><?php echo $rqsn_details['date']?> </td>
                                 <td>
-                                    <a href="<?= base_url().'Crqsn/edit_approve_rqsn/'.$rqsn_details['rqsn_id']?>">
+                                    <a href="<?= base_url().'Crqsn/edit_approve_rqsn_price/'.$rqsn_details['rqsn_id']?>">
                                         <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
                                     </a>
                                 </td>
