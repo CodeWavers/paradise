@@ -68,8 +68,10 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                         <h2> <span><?php echo display('product_name') ?>: </span><span>{product_name}</span></h2>
-                        <h4> <span ><?php echo display('model') ?>:</span> <span>{product_model}</span></h4>
-                        <h4> <span><?php echo display('price') ?>:</span> <span> 
+                        <h4> <span ><?php echo display('model') ?>:</span> <span>{model_name}</span></h4>
+                        <h4> <span >Parts No:</span> <span>{parts}</span></h4>
+                        <h4> <span >SKU:</span> <span>{sku}</span></h4>
+                        <h4> <span><?php echo display('price') ?>:</span> <span>
                                 <?php echo (($position == 0) ? "$currency {price}" : "{price} $currency") ?></span></h4>
                             </div>
                             <div class="col-sm-6 text-right">
