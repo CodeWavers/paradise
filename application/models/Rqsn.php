@@ -1159,13 +1159,56 @@ class Rqsn extends CI_Model {
             // ->or_where('a.brand_id', $brand_id)
             // ->or_where('a.product_model', $model_id)
 
-        if(!empty($category_id)){
+        if(!empty($subcat_id) && !empty($brand_id) && !empty($model_id) && !empty($category_id)){
+            $this->db->where('a.brand_id', $brand_id)
+                    ->where('a.product_model', $model_id)
+                    ->where('a.sub_cat_id', $subcat_id)
+                    ->where('a.category_id', $category_id);
+        }
+        elseif(!empty($category_id) && !empty($brand_id) && !empty($model_id)){
+            $this->db->where('a.brand_id', $brand_id)
+                  ->where('a.product_model', $model_id)
+                  ->where('a.category_id', $category_id);
+        }elseif(!empty($category_id) && !empty($subcat_id) && !empty($model_id)){
+            $this->db->where('a.sub_cat_id', $subcat_id)
+                  ->where('a.product_model', $model_id)
+                  ->where('a.category_id', $category_id);
+        }elseif(!empty($category_id) && !empty($subcat_id) && !empty($brand_id)){
+            $this->db->where('a.sub_cat_id', $subcat_id)
+                  ->where('a.brand_id', $brand_id)
+                  ->where('a.category_id', $category_id);
+        }elseif(!empty($subcat_id) && !empty($brand_id) && !empty($model_id)){
+            $this->db->where('a.brand_id', $brand_id)
+                  ->where('a.product_model', $model_id)
+                  ->where('a.sub_cat_id', $subcat_id);
+        }
+        elseif (!empty($category_id) && !empty($subcat_id)) {
+                $this->db->where('a.category_id', $category_id);
+                $this->db->where('a.sub_cat_id', $subcat_id);
+        }
+        elseif(!empty($category_id) && !empty($brand_id)){
+            $this->db->where('a.category_id', $category_id)
+                  ->where('a.brand_id', $brand_id);
+        }elseif(!empty($category_id) && !empty($model_id)){
+            $this->db->where('a.category_id', $category_id)
+                  ->where('a.product_model', $model_id);
+        }elseif(!empty($subcat_id) && !empty($brand_id)){
+            $this->db->where('a.sub_cat_id', $subcat_id)
+                  ->where('a.brand_id', $brand_id);
+        }elseif(!empty($subcat_id) && !empty($model_id)){
+            $this->db->where('a.sub_cat_id', $subcat_id)
+                  ->where('a.product_model', $model_id);
+        }elseif(!empty($brand_id) && !empty($model_id)){
+            $this->db->where('a.brand_id', $brand_id)
+                  ->where('a.product_model', $model_id);
+        }
+        elseif(!empty($category_id)){
 
            $this->db->where('a.category_id', $category_id);
 
         }elseif(!empty($subcat_id)){
 
-            $this->db->where('a.category_id', $category_id);
+            $this->db->where('a.sub_cat_id', $subcat_id);
 
         }elseif(!empty($brand_id)){
 
@@ -1176,51 +1219,13 @@ class Rqsn extends CI_Model {
             $this->db->where('a.product_model', $model_id);
 
         }
-        // elseif (!empty($category_id) && !empty($subcat_id)) {
-        //     $this->db->db->where('a.category_id', $category_id);
-        //     $this->db->db->where('a.sub_cat_id', $subcat_id);
-        // }elseif(!empty($category_id) && !empty($brand_id)){
-        //     $this->db->where('a.category_id', $category_id)
-        //           ->where('a.brand_id', $brand_id);
-        // }elseif(!empty($category_id) && !empty($model_id)){
-        //     $this->db->where('a.category_id', $category_id)
-        //           ->where('a.product_model', $model_id);
-        // }elseif(!empty($subcat_id) && !empty($brand_id)){
-        //     $this->db->where('a.sub_cat_id', $subcat_id)
-        //           ->where('a.brand_id', $brand_id);
-        // }elseif(!empty($subcat_id) && !empty($model_id)){
-        //     $this->db->where('a.sub_cat_id', $subcat_id)
-        //           ->where('a.product_model', $model_id);
-        // }elseif(!empty($brand_id) && !empty($model_id)){
-        //     $this->db->where('a.brand_id', $brand_id)
-        //           ->where('a.product_model', $model_id);
-        // }elseif(!empty($category_id) && !empty($brand_id) && !empty($model_id)){
-        //     $this->db->where('a.brand_id', $brand_id)
-        //           ->where('a.product_model', $model_id)
-        //           ->where('a.category_id', $category_id);
-        // }elseif(!empty($category_id) && !empty($subcat_id) && !empty($model_id)){
-        //     $this->db->where('a.sub_cat_id', $subcat_id)
-        //           ->where('a.product_model', $model_id)
-        //           ->where('a.category_id', $category_id);
-        // }elseif(!empty($category_id) && !empty($subcat_id) && !empty($brand_id)){
-        //     $this->db->where('a.sub_cat_id', $subcat_id)
-        //           ->where('a.brand_id', $brand_id)
-        //           ->where('a.category_id', $category_id);
-        // }elseif(!empty($subcat_id) && !empty($brand_id) && !empty($model_id)){
-        //     $this->db->where('a.brand_id', $brand_id)
-        //           ->where('a.product_model', $model_id)
-        //           ->where('a.sub_cat_id', $subcat_id);
-        // }elseif(!empty($subcat_id) && !empty($brand_id) && !empty($model_id) && !empty($category_id)){
-        //     $this->db->where('a.brand_id', $brand_id)
-        //           ->where('a.product_model', $model_id)
-        //           ->where('a.sub_cat_id', $subcat_id)
-        //           ->where('a.category_id', $category_id);
-        // }
 
-        $this->db->like('a.product_name', $product_name, 'both')
+        $this->db->group_start()
+            ->like('a.product_name', $product_name, 'both')
             // ->or_like('b.model_name', $product_name, 'both')
             ->or_like('a.parts', $product_name, 'both')
             ->or_like('a.sku', $product_name, 'both')
+            ->group_end()
             // ->or_like('c.brand_name', $product_name, 'both')
             ->order_by('product_name','asc')
             ->limit(15);

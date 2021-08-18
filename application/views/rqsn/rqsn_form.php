@@ -369,7 +369,7 @@
                 $(this).parent().parent().find(".autocomplete_hidden_value").val(ui.item.value);
                     $(this).val(ui.item.label);
                     var id=ui.item.value;
-                    var dataString = 'pro duct_id='+ id;
+                    var dataString = 'product_id='+ id;
                     var base_url = $('.baseUrl').val();
 
                     $.ajax

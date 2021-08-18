@@ -522,7 +522,7 @@ class Crqsn extends CI_Controller {
             $list[''] = '';
             foreach ($product_info as $value) {
                 $json_product[] = array(
-                    'label'=>$value['product_name'].'('.$value['model_name'].')'.' '.$value['brand_name'].' '.$value['sku'].' '.$value['parts'],
+                    'label'=>$value['product_name'].'('.$value['model_name'].')'.' ('.$value['brand_name'].') ('.$value['sku'].') ('.$value['parts'].')',
                     'value'=>$value['product_id']
                 );
             }
