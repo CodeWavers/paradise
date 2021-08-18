@@ -94,7 +94,7 @@ class Products extends CI_Model {
          ## Search
          $searchQuery = "";
          if($searchValue != ''){
-            $searchQuery = " (a.product_name like '%".$searchValue."%' or a.product_model like '%".$searchValue."%' or a.price like'%".$searchValue."%' or c.supplier_price like'%".$searchValue."%' or m.supplier_name like'%".$searchValue."%') ";
+            $searchQuery = " (a.product_name like '%".$searchValue."%' or d.model_name like '%".$searchValue."%' or a.price like'%".$searchValue."%' or c.supplier_price like'%".$searchValue."%' or m.supplier_name like'%".$searchValue."%'  or x.category_name like'%".$searchValue."%'or e.subcat_name like'%".$searchValue."%' ) ";
          }
 
          ## Total number of records without filtering
@@ -102,7 +102,7 @@ class Products extends CI_Model {
          $this->db->from('product_information a');
          $this->db->join('supplier_product c','c.product_id = a.product_id','left');
          $this->db->join('product_category x','x.category_id = a.category_id','left');
-      //  $this->db->join('product_type d','d.ptype_id = a.ptype_id','left');
+        $this->db->join('product_model d','d.model_id = a.product_model','left');
         $this->db->join('product_subcat e','a.sub_cat_id = e.sub_cat_id','left');
          $this->db->join('supplier_information m','m.supplier_id = c.supplier_id','left');
           if($searchValue != '')
@@ -133,8 +133,8 @@ class Products extends CI_Model {
                 c.supplier_id,
                 m.supplier_name,
                 c.currency,
-              x.category_name,
-             d.model_name,
+                  x.category_name,
+              d.model_name,
               e.subcat_name
                 ");
          $this->db->from('product_information a');
