@@ -119,7 +119,9 @@ class Lreport extends CI_Model
             $price_history = $CI->Reports->product_price($product_price[$pp]['product_id']);
             // echo '<pre>'; print_r(key($v));
             if(count($price_history) > 1){
-                $product_price[$pp]['price_status'] = $price_history[count($price_history) - 2]['update_price'] - $price_history[count($price_history) - 1]['update_price'];
+
+                $product_price[$pp]['price_status'] = $price_history[count($price_history) - 1]['update_price'] - $price_history[count($price_history) - 2]['update_price'];
+
             }else{
                 $product_price[$pp]['price_status'] = 0;
             }
@@ -134,8 +136,8 @@ class Lreport extends CI_Model
             'currency' => $currency_details[0]['currency'],
             'position' => $currency_details[0]['currency_position'],
         );
-        // echo '<pre>'; print_r($data);
-        // exit();
+      //   echo '<pre>'; print_r($data);
+      //   exit();
         $reportList = $CI->parser->parse('product/product_price', $data, true);
         return $reportList;
     }
