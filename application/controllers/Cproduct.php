@@ -1160,4 +1160,12 @@ class Cproduct extends CI_Controller {
 
     }
 
+    public function delete_approve_price()
+    {
+        $id = $this->input->post('id', TRUE);
+
+        $this->db->where('id', $id);
+        $this->db->delete('supplier_product_price');
+    }
+
 }

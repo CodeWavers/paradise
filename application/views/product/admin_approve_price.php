@@ -63,13 +63,13 @@
                                         <th>Old Price</th>
                                         <th>New Price</th>
                                         <th>Action</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                <?php foreach ($res as $row) { 
-                                    
+                                <?php foreach ($res as $row) {
+
                                     ?>
                                     <tr class="text-center">
                                         <td><?php echo $row['sl']?></td>
@@ -80,7 +80,7 @@
                                         <td>
                                             <?php echo $row['supplier_name']?>
                                         </td>
-                                       
+
                                         <td>
                                         <?php echo $row['old_rate']?>
                                         </td>
@@ -93,7 +93,8 @@
                                         <td>
                                             <button type="button" id="add_btn<?=$row['sl']?>" class="btn btn-success" data-proid = "<?php echo $row['product_id']?>" data-suppid = "<?php echo $row['supplier_id']?>" data-rate = "<?php echo $row['rate']?>" onclick="approve_price(this)">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            </button>
+                                        </button>
+                                        <button type="button" id="cancel_btn<?=$row['sl']?>" class="btn btn-danger" data-id = "<?php echo $row['real_id']?>" onclick="delete_row(this)"> <i class="fa fa-times" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
@@ -115,11 +116,11 @@
 function approve_price(e) {
     var a = e.parentNode.parentNode;
 
-    
+
     var product_id = $(e).data("proid");
     var supplier_id = $(e).data("suppid");
     var new_rate = $(e).data("rate");
-   
+
     var csrf_test_name = $('[name="csrf_test_name"]').val();
 
     $.ajax({
@@ -153,5 +154,31 @@ function approve_price(e) {
         });
 }
 
+
+function delete_row(e) {
+    var a = e.parentNode.parentNode;
+
+
+
+    var id = $(e).data("id");
+
+    var csrf_test_name = $('[name="csrf_test_name"]').val();
+
+    $.ajax({
+            url:"<?php echo base_url(); ?>Cproduct/delete_approve_price",
+            method:"POST",
+            data:{
+                csrf_test_name:csrf_test_name,
+                id: id
+            },
+            success:function(data)
+            {
+
+                toastr.error("Approval Declined.");
+                a.parentNode.removeChild(a);
+
+            }
+        });
+}
 
 </script>
