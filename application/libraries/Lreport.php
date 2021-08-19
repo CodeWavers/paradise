@@ -107,6 +107,7 @@ class Lreport extends CI_Model
     {
         $CI = &get_instance();
         $CI->load->model('Reports');
+        $CI->load->model('Suppliers');
         $CI->load->model('Web_settings');
         $CI->load->library('occational');
 
@@ -117,10 +118,11 @@ class Lreport extends CI_Model
 
         foreach ($product_price as $pp => $v) {
             $price_history = $CI->Reports->product_price($product_price[$pp]['product_id']);
-            // echo '<pre>'; print_r(key($v));
-            if(count($price_history) > 1){
+            $product_info = $CI->Suppliers->product_suppliers($product_price[$pp]['supplier_id'], $product_price[$pp]['product_id']);
+            echo '<pre>'; print_r($price_history[count($price_history) - 1]['update_price']); exit();
+            if(count($price_history) > 0){
 
-                $product_price[$pp]['price_status'] = $price_history[count($price_history) - 1]['update_price'] - $price_history[count($price_history) - 2]['update_price'];
+                $product_price[$pp]['price_status'] = $product_info[0]['supplier_price'] - $price_history[count($price_history) - 2]['update_price'];
 
             }else{
                 $product_price[$pp]['price_status'] = 0;

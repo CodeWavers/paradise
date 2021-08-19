@@ -168,13 +168,26 @@
         });
 
         $(document).on('click', '#clear_cart', function(){
+
+            var p_id = $("input[name='product_id[]']")
+              .map(function(){return $(this).val();}).get().join(',');
+
+
+            var csrf_test_name = $('[name="csrf_test_name"]').val();
+            // console.log(pid_count);
             if(confirm("Are you sure you want to clear cart?"))
             {
                 $.ajax({
                     url:"<?php echo base_url(); ?>Cpurchase/clear",
+                    method:"POST",
+                    data:{
+                        csrf_test_name : csrf_test_name,
+                        p_id : p_id
+                    },
                     success:function(data)
                     {
-                        toastr.success("Your purchase order has been clear...");
+                        console.log(p_id);
+                        toastr.success("Your purchase order has been cleared...");
                         $('#cart_details').html(data);
                     }
                 });

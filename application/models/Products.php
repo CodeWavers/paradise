@@ -509,11 +509,11 @@ class Products extends CI_Model {
 
                    //  ->group_by('purchase_id')
 
-                     ->group_by('product_id')
+                    //  ->group_by('product_id')
 
                      ->join('product_information b', 'b.product_id = a.product_id' , 'left')
                      ->join('supplier_information c', 'c.supplier_id = a.supplier_id', 'left')
-                     ->join('supplier_product_price d', 'd.product_id = a.product_id', 'right')
+                     ->join('supplier_product_price d', 'd.product_id = a.product_id', 'left')
                      ->get();
 
        $res = $query->result_array();
@@ -534,7 +534,7 @@ class Products extends CI_Model {
 
                 $row['old_rate'] = $old_price;
 
-                array_push($list, $row);
+            array_push($list, $row);
            }
        }
 

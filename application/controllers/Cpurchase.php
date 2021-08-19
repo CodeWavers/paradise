@@ -62,28 +62,36 @@ class Cpurchase extends CI_Controller {
 //            'rowid'  => $row_id,
 //            'qty'  => 0
 //        );
-        $this->db->where('product_id', $row_id);
-        $this->db->delete('purchase_order_cart');
 
         $this->db->where('product_id', $row_id);
         $this->db->set('purchase_status', 1);
         $this->db->update('rqsn_details');
+
+        $this->db->where('product_id', $row_id);
+        $this->db->delete('purchase_order_cart');
 
         echo $this->PO_live_data();
     }
 
     public function clear()
     {
-        $this->load->library("cart");
+        $p_id = $this->input->post('p_id', TRUE);
+        $each_pr = explode(",", $p_id);
+
+        // print_r($each_pr); exit();
+
+        foreach ($each_pr as $pr) {
+            $this->db->where('product_id', $pr);
+            $this->db->set('purchase_status', 1);
+            $this->db->update('rqsn_details');
+        }
+
         $this->db->empty_table('purchase_order_cart');
         echo $this->PO_live_data();
     }
 
 
-
-
-
-        public function CheckPurchaseList(){
+    public function CheckPurchaseList(){
         // GET data
         $this->load->model('Purchases');
         $postData = $this->input->post();
