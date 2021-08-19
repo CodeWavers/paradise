@@ -504,11 +504,16 @@ class Products extends CI_Model {
 
         $CI = & get_instance();
         $CI->load->Model('Suppliers');
-       $query = $this->db->select('a.*, b.product_name, c.supplier_name')
+       $query = $this->db->select('a.*, d.id as real_id, b.product_name, c.supplier_name')
                      ->from('product_purchase_details a')
+
                    //  ->group_by('purchase_id')
+
+                     ->group_by('product_id')
+
                      ->join('product_information b', 'b.product_id = a.product_id' , 'left')
                      ->join('supplier_information c', 'c.supplier_id = a.supplier_id', 'left')
+                     ->join('supplier_product_price d', 'd.product_id = a.product_id', 'right')
                      ->get();
 
        $res = $query->result_array();
@@ -522,18 +527,18 @@ class Products extends CI_Model {
         //     print_r($this->supplier_product_editdata($row['product_id'])[0]['supplier_price']);
 
         $old_price = $CI->Suppliers->product_suppliers($row['supplier_id'], $row['product_id'])[0]['supplier_price'];
-            
+
            if ($row['rate'] != $old_price){
 
                 // echo '<pre>';print_r($row);
 
                 $row['old_rate'] = $old_price;
-                
+
                 array_push($list, $row);
            }
        }
 
-       
+
 
     //    echo '<pre>';print_r($list);exit();
 
@@ -542,4 +547,3 @@ class Products extends CI_Model {
    }
 
 }
-

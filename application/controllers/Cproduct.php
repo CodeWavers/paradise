@@ -154,16 +154,16 @@ class Cproduct extends CI_Controller {
             $this->db->insert('supplier_product', $supp_prd);
 
 
-            $data1 = array(
-                'supplier_id' => $supp_id,
-                'product_id'         => $product_id,
-                'update_price'         => $supplier_price,
-                'date'         => $date,
-                'time'=>date("h:i:sa"),
-                'status'             => 1
-            );
+            // $data1 = array(
+            //     'supplier_id' => $supp_id,
+            //     'product_id'         => $product_id,
+            //     'update_price'         => $supplier_price,
+            //     'date'         => $date,
+            //     'time'=>date("h:i:sa"),
+            //     'status'             => 1
+            // );
 
-            $this->db->insert('supplier_product_price', $data1);
+            // $this->db->insert('supplier_product_price', $data1);
         }
 
 
@@ -1158,6 +1158,14 @@ class Cproduct extends CI_Controller {
         $this->db->insert('supplier_product_price', $data);
 
 
+    }
+
+    public function delete_approve_price()
+    {
+        $id = $this->input->post('id', TRUE);
+
+        $this->db->where('id', $id);
+        $this->db->delete('supplier_product_price');
     }
 
 }
