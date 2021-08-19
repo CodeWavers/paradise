@@ -90,7 +90,7 @@
                                                         $class = 'text-success fa fa-arrow-down';
                                                     }
                                                     if ($price['price_status'] != 0){?>
-                                                        <span class="label label-warning" style="font-size: 1em;"><?= $price['price_status'] ?> <i class="<?= $class ?>" ></i></span>
+                                                        <span class="label label-warning" style="font-size: 1em;"><?= abs($price['price_status']) ?> <i class="<?= $class ?>" ></i></span>
                                                     <?php } else { ?>
                                                         <span class="label label-info" style="font-size: 1em;"> No Changes </span>
                                                     <?php } ?>
