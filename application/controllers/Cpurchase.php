@@ -64,6 +64,11 @@ class Cpurchase extends CI_Controller {
 //        );
         $this->db->where('product_id', $row_id);
         $this->db->delete('purchase_order_cart');
+
+        $this->db->where('product_id', $row_id);
+        $this->db->set('purchase_status', 1);
+        $this->db->update('rqsn_details');
+
         echo $this->PO_live_data();
     }
 

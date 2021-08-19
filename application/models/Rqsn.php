@@ -1148,10 +1148,10 @@ class Rqsn extends CI_Model {
     }
 
     public function autocompletproductdata($product_name, $category_id=null, $subcat_id=null, $brand_id=null, $model_id=null){
-        $this->db->select('a.*, b.model_name, c.brand_name');
+        $this->db->select('a.*, c.brand_name');
         $this->db->from('product_information a');
 
-        $this->db->join('product_model b', 'b.model_id = a.product_model');
+        // $this->db->join('product_model b', 'b.model_id = a.product_model');
         $this->db->join('product_brand c', 'c.brand_id = a.brand_id');
             // ->where('a.category_id', $category_id)
             // ->or_where('a.category_id', $category_id)
