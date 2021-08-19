@@ -81,7 +81,7 @@
                         <?php echo form_open_multipart('Crqsn/insert_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
                         <div class="row">
 
-                            <div class="col-sm-8" id="payment_from_2">
+                            <div class="col-sm-" id="payment_from_2">
                                 <div class="form-group row  rqsn-form-input">
                                     <label for="customer_name_others" class="col-sm-3 col-form-label text-right"><?php echo display('customer_name') ?> <i class="text-danger">*</i></label>
                                     <div class="col-sm-6">
@@ -97,106 +97,153 @@
 
 
                             </div>
-                            <div class="col-sm-8" id="payment_from">
 
-                                <div class="form-group row rqsn-form-input">
-                                    <label for="date" class="col-sm-3 col-form-label text-right"><?php echo display('date') ?> : </label>
-                                    <div class="col-sm-9">
-                                        <?php
 
-                                        $date = date('Y-m-d');
-                                        ?>
-                                        <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" />
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group row">
+                                        <label for="date" class="col-sm-4 col-form-label text-right"><?php echo display('date') ?> : </label>
+                                        <div class="col-sm-8">
+                                            <?php
+
+                                            $date = date('Y-m-d');
+                                            ?>
+                                            <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" />
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group row rqsn-form-input">
-                                    <label for="customer_name" class="col-sm-3 col-form-label text-right">Customer Name : </label>
-                                    <div class="col-sm-9" >
-                                        <input type="text" class="form-control" name="customer_name" id="customer_name" >
-                                    </div>
-                                </div>
-
-                                <div class="form-group row  rqsn-form-input">
-                                    <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Requisition For : </label>
-                                    <div class="col-sm-9">
-                                        <select name="rqsn_for" id="rqsn_for" class="form-control">
-                                            {outlet_list}
-                                                <option value="{outlet_id}">{outlet_name}</option>
-                                            {/outlet_list}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row rqsn-form-input">
-                                    <label for="rqsn_no" class="col-sm-3 col-form-label text-right">Requisition No. : </label>
-                                    <div class="col-sm-9" >
-                                        <input type="text" class="form-control" value="<?php echo $rqsn_no?>" name="rqsn_no" id="rqsn_no" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row rqsn-form-input">
-                                    <label for="select_cat" class="col-sm-3 col-form-label text-right">Category : </label>
-                                    <div class="col-sm-9" >
-                                        <select name="select_cat" id="select_cat" class="form-control"">
+                                <div class="col-sm-6">
+                                    <div class="form-group row">
+                                        <label for="select_cat" class="col-sm-4 col-form-label text-right">Category : </label>
+                                        <div class="col-sm-6" >
+                                            <select name="select_cat" id="select_cat" class="form-control"">
                                             <option value="">Select One</option>
                                             {cat_list}
                                             <option value="{category_id}">{category_name}</option>
                                             {/cat_list}
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group row rqsn-form-input" id="subCat_div">
-                                    <label for="select_subcat" class="col-sm-3 col-form-label text-right">Sub Category : </label>
-                                    <div class="col-sm-9" >
-                                        <select name="selct_subcat" id="select_subcat" class="form-control">
-                                            <option value="">Select One</option>
-                                            {subcat_list}
-                                                <option value="{sub_cat_id}">{subcat_name}</option>
-                                            {/subcat_list}
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="form-group row rqsn-form-input" >
-                                    <label for="select_brand" class="col-sm-3 col-form-label text-right">Brand : </label>
-                                    <div class="col-sm-9" >
-                                        <select name="selct_brand" id="select_brand" class="form-control">
-                                            <option value="">Select One</option>
-                                            {brand_list}
-                                                <option value="{brand_id}">{brand_name}</option>
-                                            {/brand_list}
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="form-group row rqsn-form-input" >
-                                    <label for="select_model" class="col-sm-3 col-form-label text-right">Model : </label>
-                                    <div class="col-sm-9" >
-                                        <select name="selct_model" id="select_model" class="form-control">
-                                            <option value="">Select One</option>
-                                            {model_list}
-                                                <option value="{model_id}">{model_name}</option>
-                                            {/model_list}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label text-right">Product Name : </label>
-
-                                    <div class="col-sm-9">
-
-                                        <input type="text" autocomplete="off"  name="product_name" onkeypress="productList_with_cat_subcat(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
-
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1"  id="SchoolHiddenId"/>
-                                        <input type="hidden" value="<?php echo base_url() ?>" class="baseUrl" name="" id="baseUrl"/>
-                                    </div>
-
-                                </div>
 
                             </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group row">
+                                        <label for="customer_name" class="col-sm-4 col-form-label text-right">Customer Name : </label>
+                                        <div class="col-sm-8" >
+                                            <input type="text" class="form-control" name="customer_name" id="customer_name" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group row " id="subCat_div">
+                                        <label for="select_subcat" class="col-sm-4 col-form-label text-right">Sub Category : </label>
+                                        <div class="col-sm-6" >
+                                            <select name="selct_subcat" id="select_subcat" class="form-control">
+                                                <option value="">Select One</option>
+                                                {subcat_list}
+                                                <option value="{sub_cat_id}">{subcat_name}</option>
+                                                {/subcat_list}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group row ">
+                                        <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Requisition For : </label>
+                                        <div class="col-sm-8">
+                                            <select name="rqsn_for" id="rqsn_for" class="form-control">
+                                                {outlet_list}
+                                                <option value="{outlet_id}">{outlet_name}</option>
+                                                {/outlet_list}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group row" >
+                                        <label for="select_brand" class="col-sm-4 col-form-label text-right">Brand : </label>
+                                        <div class="col-sm-6" >
+                                            <select name="selct_brand" id="select_brand" class="form-control">
+                                                <option value="">Select One</option>
+                                                {brand_list}
+                                                <option value="{brand_id}">{brand_name}</option>
+                                                {/brand_list}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+
+                                    <div class="form-group row">
+                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : </label>
+                                        <div class="col-sm-8" >
+                                            <input type="text" class="form-control" value="<?php echo $rqsn_no?>" name="rqsn_no" id="rqsn_no" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group row " >
+                                        <label for="select_model" class="col-sm-4 col-form-label text-right">Model : </label>
+                                        <div class="col-sm-6" >
+                                            <select name="selct_model" id="select_model" class="form-control">
+                                                <option value="">Select One</option>
+                                                {model_list}
+                                                <option value="{model_id}">{model_name}</option>
+                                                {/model_list}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                            <div class="row">
+
+
+                                <div class="col-sm-6">
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label text-right">Product Name : </label>
+                                        <div class="col-sm-8" >
+                                            <input type="text" autocomplete="off"  name="product_name" onkeypress="productList_with_cat_subcat(1)" id="product_name_1" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>"   tabindex="5">
+
+                                            <input type="hidden" class="autocomplete_hidden_value product_id_1"  id="SchoolHiddenId"/>
+                                            <input type="hidden" value="<?php echo base_url() ?>" class="baseUrl" name="" id="baseUrl"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+
 
                         </div>
 
