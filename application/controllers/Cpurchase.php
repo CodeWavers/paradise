@@ -506,10 +506,18 @@ class Cpurchase extends CI_Controller {
             foreach($cart_list as $items)
             {
 
+
+                // echo '<pre>'; print_r($items['additional_cost']); exit();
                 $tot = "";
 
                 if ($items['total']){
                     $tot = $items['total'];
+                }
+
+                $add_cost = "00";
+
+                if($items['additional_cost']){
+                    $add_cost = $items['additional_cost'];
                 }
 
 
@@ -551,6 +559,7 @@ class Cpurchase extends CI_Controller {
                                 ';
 
                 foreach ($supplier_list as $supp) {
+
                     // $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
                    if($items['supplier_id']){
                        if($items['supplier_id'] == $supp['supplier_id']){
@@ -585,7 +594,7 @@ class Cpurchase extends CI_Controller {
                                 </td>
 
                                 <td >
-                                    <input type="text" class="form-control text-right" id="additional_cost_'.$count.'" name="additional_cost[]" value="00" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" />
+                                    <input type="text" class="form-control text-right" id="additional_cost_'.$count.'" name="additional_cost[]" onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');" value="'.$add_cost.'"/>
                                 </td>
 
                                 <td class="text-right">
@@ -594,7 +603,7 @@ class Cpurchase extends CI_Controller {
                                 </td>
 
                                 <td class="text-left">
-                                    <input type="text" style="width: 110px" class="form-control row_total" name="row_total[]" value="'.$tot.'" id = "row_total_'.$count.'" class="row_total" readonly>
+                                    <input type="text" class="form-control row_total" name="row_total[]" value="'.$tot.'" id = "row_total_'.$count.'" class="row_total" readonly>
                                 </td>
 
                                 <td>
@@ -608,7 +617,7 @@ class Cpurchase extends CI_Controller {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="13" class="text-right"><b>Grand Total:</b></td>
+                    <td colspan="12" class="text-right"><b>Grand Total:</b></td>
                     <td>
                     <input class="form-control" id="grand_total" value='.$total.' readonly/>
                 </td>
