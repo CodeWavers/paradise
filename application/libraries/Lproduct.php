@@ -356,6 +356,32 @@ class Lproduct {
         return $view;
     }
 
+    public function approve_changed_unit_cost()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Products');
+
+        $res = $CI->Products->get_changed_unit_cost();
+
+        $i = 0;
+        foreach ($res as $k => $v) {
+            $i++;
+            $res[$k]['sl'] = $i ;
+        }
+
+
+        // echo '<pre>';print_r($res);exit();
+
+        $data = array(
+            'title' => 'Approve Price',
+            'res' => $res,
+        );
+
+        $view =  $CI->parser->parse('product/admin_approve_unit_cost', $data, true);
+
+        return $view;
+    }
+
 }
 
 ?>

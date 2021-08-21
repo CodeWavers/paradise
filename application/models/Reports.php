@@ -263,7 +263,7 @@ class reports extends CI_Model {
         $this->db->from('supplier_product_price a');
         $this->db->join('product_information b','a.product_id=b.product_id');
         $this->db->join('supplier_information c','c.supplier_id=a.supplier_id');
-        $this->db->where(array('a.status' => 1));
+        $this->db->where(array('a.status' => 2));
         $this->db->group_by('a.product_id');
         $query = $this->db->get();
         $result = $query->result_array();
@@ -277,7 +277,7 @@ class reports extends CI_Model {
         $this->db->from('supplier_product_price a');
         $this->db->join('product_information b','a.product_id=b.product_id');
         $this->db->join('supplier_information c','c.supplier_id=a.supplier_id');
-        $this->db->where(array('a.status' => 1,'a.product_id'=>$product_id));
+        $this->db->where(array('a.status' => 2,'a.product_id'=>$product_id));
     //    $this->db->order_by('a.date', 'DESC');
         // $this->db->group_by('a.product_id');
         $query = $this->db->get();

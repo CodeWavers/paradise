@@ -500,6 +500,16 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Cproduct/approve_price') ?>">Approve Price</a></li>
                         <?php }?>
+
+                        <?php if($this->permission1->method('manage_product','read')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("approve_unit_cost")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cproduct/approve_unit_cost') ?>">Approve Unit Price</a></li>
+                        <?php }?>
                     </ul>
                 </li>
             <?php }?>

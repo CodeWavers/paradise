@@ -1351,6 +1351,7 @@ class Purchases extends CI_Model {
                 'rate'               => $product_rate,
                 'total_amount'       => $t_price,
                 'discount'           => $disc,
+                // 'unit_cost'          => $unit_cost,
                 'status'             => 1,
                 'isAprv'             => 2,
 
@@ -1363,9 +1364,26 @@ class Purchases extends CI_Model {
                 $this->db->insert('product_purchase_details', $data1);
             }
 
-            $this->db->where('product_id', $product_id);
-            $this->db->set('price', $unit_cost);
-            $this->db->update('product_information');
+            $data_price = array (
+                'product_id'    => $product_id,
+                'supplier_id'   => $supp_id,
+                'update_price' => $product_rate,
+                'date' => date('Y:m:d'),
+                'time' =>  date('h:i:sa'),
+                'status'        => 1
+            );
+
+            $this->db->insert('unit_cost_history', $data_price);
+
+            $data_unit = array (
+                'product_id'    => $product_id,
+                'supplier_id'   => $supp_id,
+                'update_unit_cost' => $unit_cost,
+                'date' => date('Y:m:d h:i:sa'),
+                'status'        => 1
+            );
+
+            $this->db->insert('unit_cost_history', $data_unit);
 
 
         }

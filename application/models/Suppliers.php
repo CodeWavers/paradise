@@ -258,6 +258,21 @@ class Suppliers extends CI_Model {
         return false;
     }
 
+    public function product_suppliers_and_unit_cost($supplier_id, $product_id)
+    {
+        $query = $this->db->select('a.*, b.*')
+                      ->from('supplier_product a')
+                      ->join('product_information b', 'b.product_id = a.product_id')
+                      ->where('a.product_id', $product_id)
+                      ->where('a.supplier_id', $supplier_id)
+                      ->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
     public function po_search_item($supplier_id, $product_name) {
       $query=$this->db->select('*')
                 //->from('supplier_product a')

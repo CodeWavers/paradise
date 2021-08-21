@@ -504,8 +504,9 @@ class Products extends CI_Model {
 
         $CI = & get_instance();
         $CI->load->Model('Suppliers');
-       $query = $this->db->select('a.*, d.id as real_id, b.product_name, c.supplier_name')
-                     ->from('product_purchase_details a')
+        $query = $this->db->select('a.*, a.id as real_id, b.product_name, c.supplier_name')
+                     ->from('supplier_product_price a')
+                     ->where('status', 1)
 
                    //  ->group_by('purchase_id')
 
@@ -513,7 +514,7 @@ class Products extends CI_Model {
 
                      ->join('product_information b', 'b.product_id = a.product_id' , 'left')
                      ->join('supplier_information c', 'c.supplier_id = a.supplier_id', 'left')
-                     ->join('supplier_product_price d', 'd.product_id = a.product_id', 'left')
+                    //  ->join('supplier_product_price d', 'd.product_id = a.product_id', 'left')
                      ->get();
 
        $res = $query->result_array();
@@ -544,6 +545,63 @@ class Products extends CI_Model {
 
     return $list;
 
+   }
+
+   public function get_changed_unit_cost()
+   {
+        $CI = & get_instance();
+        $CI->load->Model('Suppliers');
+        $query = $this->db->select('a.*, a.id as real_id, b.product_name, c.supplier_name')
+                    ->from('unit_cost_history a')
+
+                //  ->group_by('purchase_id')
+
+                    //  ->group_by('product_id')
+
+                    ->join('product_information b', 'b.product_id = a.product_id' , 'left')
+                    ->join('supplier_information c', 'c.supplier_id = a.supplier_id', 'left')
+                    ->where('a.status', 1)
+                    // ->join(' d', 'd.product_id = a.product_id', 'left')
+                    ->get();
+
+        if ($query->num_rows() > 0) {
+            $res = $query->result_array();
+        }
+        else{
+            $res = Null;
+        }
+
+        $list = array();
+
+
+        if($res){
+            foreach ($res as $row) {
+                //     echo '<pre>';print_r($row['rate']);
+                //    echo '<br>';
+                //     print_r($this->supplier_product_editdata($row['product_id'])[0]['supplier_price']);
+
+                $old_cost = $CI->Suppliers->product_suppliers_and_unit_cost($row['supplier_id'], $row['product_id'])[0]['price'];
+
+
+                if ($row['update_unit_cost'] != $old_cost){
+
+                        // echo '<pre>';print_r($row);
+                    if($old_cost){
+                        $row['old_cost'] = $old_cost;
+                    }else{
+                        $row['old_cost'] = "No previous unit cost";
+                    }
+
+                    array_push($list, $row);
+                }
+
+            }
+        }
+
+
+        //    echo '<pre>';print_r($list);exit();
+
+        return $list;
    }
 
 }

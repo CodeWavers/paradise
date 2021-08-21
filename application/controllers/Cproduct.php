@@ -1128,6 +1128,17 @@ class Cproduct extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function approve_unit_cost()
+    {
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+
+        $CI->load->library('lproduct');
+
+        $content = $CI->lproduct->approve_changed_unit_cost();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function update_new_price()
     {
         $CI = & get_instance();
@@ -1152,7 +1163,7 @@ class Cproduct extends CI_Controller {
             'update_price'         => $new_rate,
             'date'         => $date,
             'time'=>date("h:i:sa"),
-            'status'             => 1
+            'status'             => 2
         );
 
         $this->db->insert('supplier_product_price', $data);
@@ -1160,12 +1171,44 @@ class Cproduct extends CI_Controller {
 
     }
 
+
     public function delete_approve_price()
     {
         $id = $this->input->post('id', TRUE);
 
         $this->db->where('id', $id);
         $this->db->delete('supplier_product_price');
+    }
+
+    public function update_new_unit_cost()
+    {
+        $CI = & get_instance();
+        // $this->auth->check_admin_auth();
+
+        $product_id = $this->input->post('product_id', TRUE);
+        // $supplier_id = $this->input->post('supplier_id', TRUE);
+        $new_rate = $this->input->post('new_rate', TRUE);
+        $id = $this->input->post('id', TRUE);
+
+        $this->db->set('status', 2);
+        $this->db->where('id', $id);
+        $this->db->update('unit_cost_history');
+
+        $this->db->set('price', $new_rate);
+        // $this->db->join('supplier_product b', 'b.product_id = a.product_id', 'left');
+
+        $this->db->where(array('product_id' => $product_id));
+
+        $this->db->update('product_information');
+
+    }
+
+    public function decline_unit_cost()
+    {
+        $id = $this->input->post('id', TRUE);
+
+        $this->db->where('id', $id);
+        $this->db->delete('unit_cost_history');
     }
 
 }
