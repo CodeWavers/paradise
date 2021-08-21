@@ -210,63 +210,18 @@
                                                 {total_amount}
                                             </td>
                                     </tr>
-                                    {/all_purchase_list}
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
 
-                                        <td class="text-right" colspan="9"><b><?php echo display('total') ?>:</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value="<?= $all_purchase_list[0]['grand_total_amount']?>" readonly="readonly" />
-                                            <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="9"><b>Total Discount (If any):</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="9"><b>Other Charges (If any):</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value=""/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
                                         <td class="text-right" colspan="9"><b>Grand Total</b></td>
                                         <td class="text-right" >
-                                            <input type="text" id="Total" class="text-right form-control" name="total" value="0.00" />
+                                            <input type="text" id="Total" class="text-right form-control" name="total" value="{grand_total_amount}" readonly />
                                         </td>
 
                                     </tr>
-
-                                    <tr>
-                                        <td class="text-right" colspan="9"><b><?php echo display('paid_amount') ?>:</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="paidAmount" class="text-right form-control"  name="paid_amount" value="<?= $all_purchase_list[0]['paid_amount'] ?>" readonly/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="9"><b><?php echo display('due_amount') ?>:</b></td>
-                                        <td class="text-right">
-                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $all_purchase_list[0]['$due_amount'] ?>" readonly="readonly" />
-                                        </td>
-
-
-
-                                    </tr>
+                                    {/all_purchase_list}
                                 </tfoot>
                             </table>
                         </div>

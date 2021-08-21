@@ -5,12 +5,12 @@
 	        <i class="pe-7s-note2"></i>
 	    </div>
 	    <div class="header-title">
-	        <h1>PO Approve</h1>
-	        <small>PO Approve</small>
+	        <h1>Supplier Payment</h1>
+	        <small>Supplier Payment</small>
 	        <ol class="breadcrumb">
 	            <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
 	            <li><a href="#"><?php echo display('purchase') ?></a></li>
-	            <li class="active">PO Approve</li>
+	            <li class="active">Supplier Payment</li>
 	        </ol>
 	    </div>
 	</section>
@@ -53,7 +53,7 @@
 		        <div class="panel panel-bd lobidrag">
 		            <div class="panel-heading">
 		                <div class="panel-title">
-                            PO Approve
+                        Supplier Payment
 		                </div>
 
 		            </div>

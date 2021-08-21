@@ -89,7 +89,7 @@
                                             <input style="text-align: center" size="10" type="text" class="form-control quantity" value="<?php echo $row['qty'];?>" style="width:100%;" name="quantity" id="<?php echo $row['product_id']?>">
                                         </td>
                                         <td>
-                                            <button type="button" id="add_btn<?=$row['sl']?>" name="add_cart" title="Add to requisition"
+                                            <button type="button" id="add_btn<?=$row['sl']?>" name="add_cart" title="Add to PO"
                                                 class="btn btn-success add_cart"
                                                 style="border:none; outline:none"
                                                 data-sl="<?php echo $row['sl']?>"

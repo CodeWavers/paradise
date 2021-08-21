@@ -332,6 +332,26 @@ class Lpurchase {
         return $purchaseList;
     }
 
+    public function purchase_order_approve_form_new()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Purchases');
+        $purchase_list = $CI->Purchases->purchase_list_by_po_no_new();
+
+        $i = 0;
+        foreach ($purchase_list as $k => $v) {
+            $i++;
+            $purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
+        }
+
+        $data = array(
+            'title'     => 'Approve Order Purchases',
+            'purchase_list' => $purchase_list,
+        );
+        $purchaseList = $CI->parser->parse('purchase/purchase_order_approve_new', $data, true);
+        return $purchaseList;
+    }
+
     public function purchase_order_approve_form()
     {
         $CI = & get_instance();
@@ -345,7 +365,7 @@ class Lpurchase {
         }
 
         $data = array(
-            'title'     => 'Approve Order Purchases',
+            'title'     => 'Supplier Payment',
             'purchase_list' => $purchase_list,
         );
         $purchaseList = $CI->parser->parse('purchase/purchase_order_approve', $data, true);
@@ -381,6 +401,36 @@ class Lpurchase {
 
        // echo '<pre>'; print_r($data);exit();
         $purchaseList = $CI->parser->parse('purchase/purchase_order_approve_edit', $data, true);
+        return $purchaseList;
+    }
+
+    public function purchase_order_edit_form_new($PO_No,$supplier_id)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Purchases');
+
+        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no_new($PO_No,$supplier_id);
+
+        $i = 0;
+        foreach ($all_purchase_list as $k => $v) {
+            $i++;
+            $all_purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
+
+         //   $closing_inventory = array_sum(array_column($data,'purchase_total'));
+        }
+
+        $total = array_sum(array_column($all_purchase_list,'total_amount'));
+
+
+
+        $data = array(
+            'title'     => 'Edit Approve Order Purchases',
+            'all_purchase_list' => $all_purchase_list,
+            'total' => $total,
+        );
+
+       // echo '<pre>'; print_r($data);exit();
+        $purchaseList = $CI->parser->parse('purchase/purchase_order_approve_edit_new', $data, true);
         return $purchaseList;
     }
 

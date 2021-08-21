@@ -17,12 +17,12 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Supplier Payment</h1>
-            <small>Supplier Payment</small>
+            <h1>Approve Purchase Order</h1>
+            <small>Edit Approve Purchase Order</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#">Purchase</a></li>
-                <li class="active">Supplier Payment</li>
+                <li class="active">Edit Approve Purchase</li>
             </ol>
         </div>
     </section>
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="panel-body">
-                    <?php echo form_open_multipart('Cpurchase/update_po',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+                    <?php echo form_open_multipart('Cpurchase/update_po_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
 
@@ -77,7 +77,7 @@
                                     <div class="col-sm-8">
 
                                         <input type="text" tabindex="2" class="form-control" name="purchase_date" value="<?php echo $all_purchase_list[0]['purchase_date']; ?>" id="pur_date"  readonly/>
-                                        <input type="hidden" tabindex="2" class="form-control" name="purchase_id" value="<?php echo $all_purchase_list[0]['purchase_id']; ?>" id="pur_date"  readonly/>
+
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                         <i class="text-danger">*</i>
                                     </label>
                                     <div class="col-sm-8">
-
+                                        <input type="hidden" tabindex="2" class="form-control" name="purchase_id" value="<?php echo $all_purchase_list[0]['purchase_id']; ?>" id="pur_date"  readonly/>
                                         <input type="text"  tabindex="1" class="form-control" name="invoice_no" value="" id="invoice_no"  />
                                     </div>
                                 </div>
@@ -120,29 +120,29 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-5">
-                                <div class="form-group row">
-                                    <label for="pay_type" class="col-sm-4 col-form-label">Payment Type <i class="text-danger">*</i></label>
-                                    <div class="col-sm-8">
-                                        <select name="pay_type" id="pay_type" class="form-control">
-                                            <option value="1">Cash</option>
-                                            <option value="2">Credit</option>
-                                            <option value="3">LC</option>
-                                            <option value="4">TT</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <div class="form-group row">
-                                    <label for="pay_date" class="col-sm-4 col-form-label">Payment Date<i class="text-danger">*</i></label>
-                                    <div class="col-sm-8">
-                                        <?php $date = date('Y-m-d'); ?>
-                                        <input type="text" class="form-control datepicker" id="pay_date" name="pay_date" value="<?= $date ?>" required >
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="col-sm-5">-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="pay_type" class="col-sm-4 col-form-label">Payment Type <i class="text-danger">*</i></label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        <select name="pay_type" id="pay_type" class="form-control">-->
+<!--                                            <option value="1">Cash</option>-->
+<!--                                            <option value="2">Credit</option>-->
+<!--                                            <option value="3">LC</option>-->
+<!--                                            <option value="4">TT</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!---->
+<!--                            <div class="col-sm-5">-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="pay_date" class="col-sm-4 col-form-label">Payment Date<i class="text-danger">*</i></label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        --><?php //$date = date('Y-m-d'); ?>
+<!--                                        <input type="text" class="form-control datepicker" id="pay_date" name="pay_date" value="--><?//= $date ?><!--" required >-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="col-sm-5">
                                 <div class="form-group row">
                                     <label for="supp_file" class="col-sm-4 col-form-label">Suppliers Invoice</label>
@@ -201,7 +201,7 @@
 
                                         <td>
                                            {warrenty_date}
-                                       </td>
+                                        </td>
 
                                             <td class="text-right">
                                                 {rate}
@@ -224,64 +224,15 @@
                                 <tfoot>
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b><?php echo display('total') ?>:</b></td>
+                                        <td class="text-right" colspan="8"><b>Grand Total:</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="total" class="text-right form-control" name="total" value="<?= $total?>" readonly= />
                                             <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
                                         </td>
                                     </tr>
 
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b>Total Discount (If any):</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="total_dis" class="text-right form-control" name="total_dis" value="0.00"/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b>Other Charges (If any):</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="total_charge" class="text-right form-control" name="total_charge" value="0.00"/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b>Grand Total</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="<?= $total?>" />
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td class="text-right" colspan="8"><b><?php echo display('paid_amount') ?>:</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="0.00" />
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b><?php echo display('due_amount') ?>:</b></td>
-                                        <td class="text-right">
-                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $total?>" readonly="readonly" />
-                                        </td>
 
 
-
-                                    </tr>
-
-                                    <tr>
-                                        <td align="center">
-                                            <input type="button" id="full_paid_tab" class="btn btn-warning" value="<?php echo display('full_paid') ?>" tabindex="16" onClick="full_paid()"/>
-                                        </td>
-                                    </tr>
                                 </tfoot>
                             </table>
                         </div>

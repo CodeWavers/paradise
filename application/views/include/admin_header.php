@@ -500,16 +500,6 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Cproduct/approve_price') ?>">Approve Price</a></li>
                         <?php }?>
-
-                        <?php if($this->permission1->method('manage_product','read')->access()){ ?>
-                            <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("approve_unit_cost")) {
-                                echo "active";
-                            } else {
-                                echo " ";
-                            }
-                            ?>"><a href="<?php echo base_url('Cproduct/approve_unit_cost') ?>">Approve Unit Price</a></li>
-                        <?php }?>
                     </ul>
                 </li>
             <?php }?>
@@ -838,7 +828,17 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             } else {
                                 echo " ";
                             }
-                            ?>"><a href="<?php echo base_url('Cpurchase/purchase_order_approve') ?>">PO Approve</a></li>
+                            ?>"><a href="<?php echo base_url('Cpurchase/purchase_order_approve_new') ?>">PO Approve</a></li>
+                        <?php } ?>
+
+                        <?php if($this->permission1->method('purchase_order','create')->access()){ ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('1') == ("purchase_order_approve") && $this->uri->segment('2') == ("")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cpurchase/purchase_order_approve') ?>">Supplier Payment</a></li>
                         <?php } ?>
 
                         <?php if($this->permission1->method('manage_purchase','read')->access()){ ?>

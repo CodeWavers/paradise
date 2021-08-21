@@ -39,6 +39,16 @@ class Cpurchase extends CI_Controller {
         redirect(base_url('Cpurchase/purchase_order_approve'));
     }
 
+    public function update_po_new() {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Purchases');
+        $CI->Purchases->update_po_new();
+        $this->session->set_userdata(array('message' =>'Succesfully Approved'));
+
+        redirect(base_url('Cpurchase/purchase_order_approve_new'));
+    }
+
     public function product_receive() {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
@@ -58,17 +68,16 @@ class Cpurchase extends CI_Controller {
     {
 
         $row_id = $_POST["row_id"];
-        $pr_id = $_POST["pr_id"];
 //        $data = array(
 //            'rowid'  => $row_id,
 //            'qty'  => 0
 //        );
 
-        $this->db->where('product_id', $pr_id);
+        $this->db->where('product_id', $row_id);
         $this->db->set('purchase_status', 1);
         $this->db->update('rqsn_details');
 
-        $this->db->where('id', $row_id);
+        $this->db->where('product_id', $row_id);
         $this->db->delete('purchase_order_cart');
 
         echo $this->PO_live_data();
@@ -402,8 +411,18 @@ class Cpurchase extends CI_Controller {
 
         }
 
+        public function purchase_order_approve_new()
+        {
+            $CI = & get_instance();
+            $CI->auth->check_admin_auth();
+            $CI->load->library('lpurchase');
+            $content = $CI->lpurchase->purchase_order_approve_form_new();
+            $this->template->full_admin_html_view($content);
+        }
+
         public function purchase_order_approve()
         {
+
             $CI = & get_instance();
             $CI->auth->check_admin_auth();
             $CI->load->library('lpurchase');
@@ -411,12 +430,23 @@ class Cpurchase extends CI_Controller {
             $this->template->full_admin_html_view($content);
         }
 
+
+
         public function edit_purchase_order($PO_No,$supplier_id)
         {
             $CI = & get_instance();
             $CI->auth->check_admin_auth();
             $CI->load->library('lpurchase');
             $content = $CI->lpurchase->purchase_order_edit_form($PO_No,$supplier_id);
+            $this->template->full_admin_html_view($content);
+        }
+
+        public function edit_purchase_order_new($PO_No,$supplier_id)
+        {
+            $CI = & get_instance();
+            $CI->auth->check_admin_auth();
+            $CI->load->library('lpurchase');
+            $content = $CI->lpurchase->purchase_order_edit_form_new($PO_No,$supplier_id);
             $this->template->full_admin_html_view($content);
         }
 
@@ -501,7 +531,6 @@ class Cpurchase extends CI_Controller {
                         <th class="text-center">Supplier Name</th>
                         <th class="text-center" >Currency</th>
                         <th class="text-center" >Currency Value</th>
-                        <th class="text-center" >Warrenty Date</th>
 
                         <th class="text-center">Price</th>
                         <th class="text-center">Additional Cost</th>
@@ -509,7 +538,7 @@ class Cpurchase extends CI_Controller {
                         <th class="text-center">Discount (%)</th>
                         <th class="text-center">Total(BDT)</th>
 
-                        <th width=8% class="text-center">Action</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody id="addPurchaseItem">
@@ -539,7 +568,6 @@ class Cpurchase extends CI_Controller {
                 $product_id = $items['product_id'];
                 $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
                 $supplier_list = $this->Products->supplier_product_editdata($product_id);
-                // echo '<pre>'; print_r($items['warrenty_date']); exit();
                 $count++;
                 $output .= '
                         <tr>
@@ -552,10 +580,6 @@ class Cpurchase extends CI_Controller {
                             <span>'.$items['product_name'].'</span>
                             <input type="hidden" name="product_id[]" id="product_id_'.$count.'" value="'.$items['product_id'].'">
                             <input type="hidden" class="sl" value="'.$count.'">
-                            <input type="hidden" name="sl_id[]" id="sl_id_'.$count.'" value="'.$items['id'].'">
-                            <input type="hidden" id="product_name_'.$count.'" value="'.$items['product_name'].'">
-                            <input type="hidden" id="item_sku_'.$count.'" value="'.$items['sku'].'">
-
                         </td>
 
 
@@ -566,7 +590,7 @@ class Cpurchase extends CI_Controller {
                             </td>
 
                             <td class="test">
-                                <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_'.$count.'" class="form-control product_rate_1 text-right" value="'.$items['qty'].'" min="0" tabindex="7" readonly/>
+                                <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_1" class="form-control product_rate_1 text-right" value="'.$items['qty'].'" min="0" tabindex="7" readonly/>
                             </td>
 
                             <td class="test">
@@ -578,27 +602,22 @@ class Cpurchase extends CI_Controller {
 
                                 ';
 
+                foreach ($supplier_list as $supp) {
 
-
-
-
-                        // $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-                    if($items['supplier_id']){
-                        foreach ($supplier_list as $supp) {
-                            if($items['supplier_id'] == $supp['supplier_id']){
-                                $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
-                            }
-                            else{
-                                $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-                            }
+                    // $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                   if($items['supplier_id']){
+                       if($items['supplier_id'] == $supp['supplier_id']){
+                           $output .= '<option selected value='.$items['supplier_id'].'>'.$this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'].'<option>';
+                       }
+                       else{
+                        $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
                         }
-                    }else{
-                        $output .= '<option value="">Select Option</option>';
-                        foreach ($supplier_list as $supp) {
-                           $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-                        }
-                    }
-
+                   }else{
+                        $output .= '
+                        <option value="">Select Option</option>
+                        <option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
+                   }
+                }
 
 
                 $output .= '</select>
@@ -608,10 +627,6 @@ class Cpurchase extends CI_Controller {
                         </td>
                          <td >
                             <input type="text" class="form-control" id="currency_value_'.$count.'" name="currency_value[]" value="'.($items['currency_value'] ? $items['currency_value'] : '').'"  onkeyup="calculate_store('.$count.');" onchange="calculate_store('.$count.');"required/>
-                        </td>
-
-                        <td>
-                            <input type="date" class="form-control" id="warrenty_date_'.$count.'" name="warrenty_date[]" value="'.($items['warrenty_date'] ? $items['warrenty_date'] : '').'"/>
                         </td>
 
 
@@ -636,11 +651,9 @@ class Cpurchase extends CI_Controller {
                                 </td>
 
                                 <td>
-                                <button  class="remove_inventory btn btn-danger text-right" type="button"  id="'.$count.'" tabindex="8"><i class="fa fa-close"></i></button>
-                                    <button  class="add_row btn btn-success" type="button" onclick=add_row('.$count.')  id="" tabindex="8"><i class="fa fa-plus"></i></button>
+                                    <button  class="remove_inventory btn btn-danger text-right" type="button"  id="'.$items["product_id"].'" tabindex="8"><i class="fa fa-close"></i></button>
                                 </td>
                         </tr>
-
                         ';
             }
             $output .= '
@@ -648,9 +661,9 @@ class Cpurchase extends CI_Controller {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="13" class="text-right"><b>Grand Total:</b></td>
+                    <td colspan="12" class="text-right"><b>Grand Total:</b></td>
                     <td>
-                    <input class="form-control" id="grand_total" value='.$total.' readonly/>
+                    <input class="form-control" name="grand_total" id="grand_total" value='.$total.' readonly/>
                 </td>
                 </tr>
 
@@ -660,32 +673,11 @@ class Cpurchase extends CI_Controller {
 
             if($count == 0)
             {
-                $output = '<h3 align="center">Purchase list is empty</h3>';
+                $output = '<h3 align="center">Purchase Order is empty</h3>';
             }
             return $output;
         }
 
 
-        public function add_row()
-        {
-            $pr_id = $this->input->post('pr_id', TRUE);
-            $prop_qty = $this->input->post('prop_qty', TRUE);
-            $pr_name = $this->input->post('product_name', TRUE);
-            $sku = $this->input->post('sku', TRUE);
-
-            $data = array(
-                'product_id'    => $pr_id,
-                'product_name'  => $pr_name,
-                'qty'           => $prop_qty,
-                'sku'           => $sku
-            );
-
-            // echo '<pre>'; print_r($data); exit();
-
-            $this->db->insert('purchase_order_cart', $data);
-
-            echo $this->load();
-
-        }
 
 }
