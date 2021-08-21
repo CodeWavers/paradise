@@ -1474,7 +1474,7 @@ class Purchases extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from('purchase_order_cart');
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('product_id', 'desc');
 
         $query = $this->db->get();
         // echo '<pre>'; print_r($query->result_array()); die();
@@ -1483,10 +1483,11 @@ class Purchases extends CI_Model {
 
     public function PO_cart_update()
     {
+        $db_id = $this->input->post('sl_id',TRUE);
         $p_id = $this->input->post('product_id',TRUE);
         $qty = $this->input->post('order_quantity',TRUE);
         $supp_id= $this->input->post('supplier_name',TRUE);
-        // $warrenty_date = $this->input->post('warrenty_date',TRUE);
+        $warrenty_date = $this->input->post('warrenty_date',TRUE);
         $price= $this->input->post('price',TRUE);
         $discount= $this->input->post('discount',TRUE);
         $row_total = $this->input->post('row_total',TRUE);
@@ -1501,11 +1502,11 @@ class Purchases extends CI_Model {
 
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
-
+            $id = $db_id[$i];
             $item_pid = $p_id[$i];
             $item_qty = $qty[$i];
             $item_supp = $supp_id[$i];
-            // $item_warr = $warrenty_date[$i];
+            $item_warr = $warrenty_date[$i];
             $item_price = $price[$i];
             $item_dis = $discount[$i];
             $total = $row_total[$i];
@@ -1516,8 +1517,8 @@ class Purchases extends CI_Model {
             // echo '<pre>'; print_r($add_cost); exit();
 
             $sq = "UPDATE purchase_order_cart
-            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", rate = ".$item_price.", discount = ".$item_dis.", total = ".$total.", currency = '".$curr."', currency_value = ".$curr_val.", additional_cost = '".$add_cost."'
-            WHERE product_id = ".$item_pid.";";
+            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", rate = ".$item_price.", warrenty_date = '".$item_warr."', discount = ".$item_dis.", total = ".$total.", currency = '".$curr."', currency_value = ".$curr_val.", additional_cost = '".$add_cost."'
+            WHERE id = ".$id.";";
 
             $this->db->query($sq);
             // exit();

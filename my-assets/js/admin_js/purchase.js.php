@@ -177,7 +177,6 @@ function calculate_total() {
 
 
 
-
     function invoice_paidamount() {
       var t = $("#grand_total").val(),
             a = $("#paidAmount").val(),

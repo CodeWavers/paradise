@@ -141,22 +141,52 @@
 
 <script type="text/javascript">
 
+    function add_row(sl) {
+        var pr_id = $("#product_id_" + sl).val();
+        var prop_qty = $("#proposed_quantity_" + sl).val();
+        var product_name = $("#product_name_" + sl).val();
+        var sku = $("#item_sku_" + sl).val();
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+        console.log(product_name);;
+        $.ajax({
+            url:"<?php echo base_url(); ?>Cpurchase/add_row",
+            method:"POST",
+            data:{
+                csrf_test_name:csrf_test_name,
+                pr_id:pr_id,
+                prop_qty: prop_qty,
+                product_name : product_name,
+                sku: sku,
+            },
+            success:function(data)
+            {
+                $('#cart_details').html(data);
+            }
+        });
+    }
+
     $( document ).ready(function() {
 
         $('#cart_details').load("<?php echo base_url(); ?>Cpurchase/load");
 
         $(document).on('click', '.remove_inventory', function(){
-            var row_id = $(this).attr("id");
+            var sl = $(this).attr("id");
+            var pr_id = $("#product_id_" + sl).val();
+            var row_id = $("#sl_id_" + sl).val();
             var csrf_test_name = $('[name="csrf_test_name"]').val();
             if(confirm("Are you sure you want to remove this?"))
             {
                 $.ajax({
                     url:"<?php echo base_url(); ?>Cpurchase/remove",
                     method:"POST",
-                    data:{csrf_test_name:csrf_test_name,row_id:row_id},
+                    data:{
+                        csrf_test_name:csrf_test_name,
+                        row_id:row_id,
+                        pr_id : pr_id
+                    },
                     success:function(data)
                     {
-                        toastr.success("Product removed from Purchase Order!");
+                        toastr.warning("Product removed from Purchase Order!");
                         $('#cart_details').html(data);
                     }
                 });
@@ -166,6 +196,8 @@
                 return false;
             }
         });
+
+
 
         $(document).on('click', '#clear_cart', function(){
 
@@ -187,7 +219,7 @@
                     success:function(data)
                     {
                         console.log(p_id);
-                        toastr.success("Your purchase order has been cleared...");
+                        toastr.warning("Your purchase order has been cleared...");
                         $('#cart_details').html(data);
                     }
                 });
