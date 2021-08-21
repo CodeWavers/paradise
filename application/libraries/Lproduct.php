@@ -373,7 +373,7 @@ class Lproduct {
         // echo '<pre>';print_r($res);exit();
 
         $data = array(
-            'title' => 'Approve Price',
+            'title' => 'Approve Unit Cost',
             'res' => $res,
         );
 
