@@ -30,76 +30,76 @@ class Suppliers extends CI_Model {
 
     public function getSupplierList($postData=null){
 
-         $response = array();
+        $response = array();
 
-         ## Read value
-         $draw = $postData['draw'];
-         $start = $postData['start'];
-         $rowperpage = $postData['length']; // Rows display per page
-         $columnIndex = $postData['order'][0]['column']; // Column index
-         $columnName = $postData['columns'][$columnIndex]['data']; // Column name
-         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-         $searchValue = $postData['search']['value']; // Search value
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index
+        $columnName = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
 
-         ## Search
-         $searchQuery = "";
-         if($searchValue != ''){
+        ## Search
+        $searchQuery = "";
+        if($searchValue != ''){
             $searchQuery = " (a.supplier_name like '%".$searchValue."%' or a.mobile like '%".$searchValue."%' or a.country like '%".$searchValue."%' or a.state like '%".$searchValue."%' or a.zip like '%".$searchValue."%' or a.city like '%".$searchValue."%') ";
-         }
+        }
 
-         ## Total number of records without filtering
-         $this->db->select('count(*) as allcount');
-         $this->db->from('supplier_information a');
-         $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
-         $this->db->group_by('a.supplier_id');
-          if($searchValue != '')
-         $this->db->where($searchQuery);
-         $records = $this->db->get()->num_rows();
-         $totalRecords = $records;
-
-         ## Total number of record with filtering
-         $this->db->select('count(*) as allcount');
-         $this->db->from('supplier_information a');
-         $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
-         $this->db->group_by('a.supplier_id');
-         if($searchValue != '')
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->from('supplier_information a');
+        $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
+        $this->db->group_by('a.supplier_id');
+        if($searchValue != '')
             $this->db->where($searchQuery);
-         $records = $this->db->get()->num_rows();
-         $totalRecordwithFilter = $records;
+        $records = $this->db->get()->num_rows();
+        $totalRecords = $records;
 
-         ## Fetch records
-         $this->db->select("a.*,c.address,,d.contact,e.email_id,m.mobile_no,n.phone_no,b.HeadCode,((select ifnull(sum(Debit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)-(select ifnull(sum(Credit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)) as balance");
-         $this->db->from('supplier_information a');
-         $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
-         $this->db->join('supplier_address c','a.supplier_id = c.supplier_id','left');
-         $this->db->join('supplier_contact d','a.supplier_id = d.supplier_id','left');
-         $this->db->join('supplier_email e','a.supplier_id = e.supplier_id','left');
-         $this->db->join('supplier_mobile m','a.supplier_id = m.supplier_id','left');
-         $this->db->join('supplier_phone n','a.supplier_id = n.supplier_id','left');
-         $this->db->group_by('a.supplier_id');
-         if($searchValue != '')
-         $this->db->where($searchQuery);
-         $this->db->order_by($columnName, $columnSortOrder);
-         $this->db->limit($rowperpage, $start);
-         $records = $this->db->get()->result();
-         $data = array();
-         $sl =1;
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->from('supplier_information a');
+        $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
+        $this->db->group_by('a.supplier_id');
+        if($searchValue != '')
+            $this->db->where($searchQuery);
+        $records = $this->db->get()->num_rows();
+        $totalRecordwithFilter = $records;
 
-         foreach($records as $record ){
-          $button = '';
-          $base_url = base_url();
-          $jsaction = "return confirm('Are You Sure ?')";
+        ## Fetch records
+        $this->db->select("a.*,c.address,,d.contact,e.email_id,m.mobile_no,n.phone_no,b.HeadCode,((select ifnull(sum(Debit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)-(select ifnull(sum(Credit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)) as balance");
+        $this->db->from('supplier_information a');
+        $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
+        $this->db->join('supplier_address c','a.supplier_id = c.supplier_id','left');
+        $this->db->join('supplier_contact d','a.supplier_id = d.supplier_id','left');
+        $this->db->join('supplier_email e','a.supplier_id = e.supplier_id','left');
+        $this->db->join('supplier_mobile m','a.supplier_id = m.supplier_id','left');
+        $this->db->join('supplier_phone n','a.supplier_id = n.supplier_id','left');
+        $this->db->group_by('a.supplier_id');
+        if($searchValue != '')
+            $this->db->where($searchQuery);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get()->result();
+        $data = array();
+        $sl =1;
+
+        foreach($records as $record ){
+            $button = '';
+            $base_url = base_url();
+            $jsaction = "return confirm('Are You Sure ?')";
 
 
-        $balance = $record->balance;
+            $balance = $record->balance;
 
 
-   if($this->permission1->method('manage_supplier','update')->access()){
-    $button .='<a href="'.$base_url.'Csupplier/supplier_update_form/'.$record->supplier_id.'" class="btn btn-info btn-xs"  data-placement="left" title="'. display('update').'"><i class="fa fa-edit"></i></a> ';
-}
-   if($this->permission1->method('manage_supplier','delete')->access()){
-     $button .='<a href="'.$base_url.'Csupplier/supplier_delete/'.$record->supplier_id.'" class="btn btn-danger btn-xs" onclick="'.$jsaction.'"><i class="fa fa-trash"></i></a>';
- }
+            if($this->permission1->method('manage_supplier','update')->access()){
+                $button .='<a href="'.$base_url.'Csupplier/supplier_update_form/'.$record->supplier_id.'" class="btn btn-info btn-xs"  data-placement="left" title="'. display('update').'"><i class="fa fa-edit"></i></a> ';
+            }
+            if($this->permission1->method('manage_supplier','delete')->access()){
+                $button .='<a href="'.$base_url.'Csupplier/supplier_delete/'.$record->supplier_id.'" class="btn btn-danger btn-xs" onclick="'.$jsaction.'"><i class="fa fa-trash"></i></a>';
+            }
 
 
             $data[] = array(
@@ -123,17 +123,17 @@ class Suppliers extends CI_Model {
 
             );
             $sl++;
-         }
+        }
 
-         ## Response
-         $response = array(
+        ## Response
+        $response = array(
             "draw" => intval($draw),
             "iTotalRecords" => $totalRecordwithFilter,
             "iTotalDisplayRecords" => $totalRecords,
             "aaData" => $data
-         );
+        );
 
-         return $response;
+        return $response;
     }
 
     // supplier search
@@ -227,17 +227,17 @@ class Suppliers extends CI_Model {
 
     //Product search item
     public function product_search_item($supplier_id, $product_name) {
-      $query=$this->db->select('*')
-                ->from('supplier_product a')
-                ->join('product_information b','a.product_id = b.product_id')
-                ->where('a.supplier_id',$supplier_id)
-                ->like('b.product_model', $product_name, 'both')
-                ->or_where('a.supplier_id',$supplier_id)
-                ->like('b.product_name', $product_name, 'both')
-                ->group_by('a.product_id')
-                ->order_by('b.product_name','asc')
-                ->limit(15)
-                ->get();
+        $query=$this->db->select('*')
+            ->from('supplier_product a')
+            ->join('product_information b','a.product_id = b.product_id')
+            ->where('a.supplier_id',$supplier_id)
+            ->like('b.product_model', $product_name, 'both')
+            ->or_where('a.supplier_id',$supplier_id)
+            ->like('b.product_name', $product_name, 'both')
+            ->group_by('a.product_id')
+            ->order_by('b.product_name','asc')
+            ->limit(15)
+            ->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
         }
@@ -247,10 +247,10 @@ class Suppliers extends CI_Model {
     public function product_suppliers($supplier_id, $product_id)
     {
         $query = $this->db->select('*')
-                      ->from('supplier_product')
-                      ->where('product_id', $product_id)
-                      ->where('supplier_id', $supplier_id)
-                      ->get();
+            ->from('supplier_product')
+            ->where('product_id', $product_id)
+            ->where('supplier_id', $supplier_id)
+            ->get();
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -261,11 +261,11 @@ class Suppliers extends CI_Model {
     public function product_suppliers_and_unit_cost($supplier_id, $product_id)
     {
         $query = $this->db->select('a.*, b.*')
-                      ->from('supplier_product a')
-                      ->join('product_information b', 'b.product_id = a.product_id')
-                      ->where('a.product_id', $product_id)
-                      ->where('a.supplier_id', $supplier_id)
-                      ->get();
+            ->from('supplier_product a')
+            ->join('product_information b', 'b.product_id = a.product_id')
+            ->where('a.product_id', $product_id)
+            ->where('a.supplier_id', $supplier_id)
+            ->get();
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -274,24 +274,24 @@ class Suppliers extends CI_Model {
     }
 
     public function po_search_item($supplier_id, $product_name) {
-      $query=$this->db->select('*')
-                //->from('supplier_product a')
-                ->from('rqsn_details a')
-                ->join('product_information b','a.product_id = b.product_id')
-               // ->join('supplier_product c','c.product_id = b.product_id')
-                ->where('a.status',4)
-              //  ->where('c.supplier_id',$supplier_id)
-               // ->like('b.product_model', $product_name, 'both')
-             //   ->or_where('a.supplier_id',$supplier_id)
-             //   ->like('c.product_id', $product_name, 'both')
-              //  ->group_by('a.product_id')
-              //  ->order_by('b.product_name','asc')
-                ->limit(15)
-                ->get();
+        $query=$this->db->select('*')
+            //->from('supplier_product a')
+            ->from('rqsn_details a')
+            ->join('product_information b','a.product_id = b.product_id')
+            // ->join('supplier_product c','c.product_id = b.product_id')
+            ->where('a.status',4)
+            //  ->where('c.supplier_id',$supplier_id)
+            // ->like('b.product_model', $product_name, 'both')
+            //   ->or_where('a.supplier_id',$supplier_id)
+            //   ->like('c.product_id', $product_name, 'both')
+            //  ->group_by('a.product_id')
+            //  ->order_by('b.product_name','asc')
+            ->limit(15)
+            ->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
 
-           // echo '<pre>';print_r($query->result_array);
+            // echo '<pre>';print_r($query->result_array);
         }
         return false;
     }
@@ -333,42 +333,42 @@ class Suppliers extends CI_Model {
     }
 
     //Supplier Previous balance adjustment
-   public function previous_balance_add($balance, $supplier_id,$c_acc,$supplier_name) {
+    public function previous_balance_add($balance, $supplier_id,$c_acc,$supplier_name) {
         $this->load->library('auth');
         $transaction_id = $this->auth->generator(10);
-    $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName',$c_acc)->get()->row();
-    $supplier_headcode = $coainfo->HeadCode;
+        $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName',$c_acc)->get()->row();
+        $supplier_headcode = $coainfo->HeadCode;
 
-             $cosdr = array(
-      'VNo'            =>  $transaction_id,
-      'Vtype'          =>  'PR Balance',
-      'VDate'          =>  date("Y-m-d"),
-      'COAID'          =>  $supplier_headcode,
-      'Narration'      =>  'supplier debit For '.$supplier_name,
-      'Debit'          =>  0,
-      'Credit'         =>  $balance,
-      'IsPosted'       => 1,
-      'CreateBy'       => $this->session->userdata('user_id'),
-      'CreateDate'     => date('Y-m-d H:i:s'),
-      'IsAppove'       => 1
-    );
-       $inventory = array(
-      'VNo'            =>  $transaction_id,
-      'Vtype'          =>  'PR Balance',
-      'VDate'          =>  date("Y-m-d"),
-      'COAID'          =>  10107,
-      'Narration'      =>  'Inventory credit For  '.$supplier_name,
-      'Debit'          =>  $balance,
-      'Credit'         =>  0,//purchase price asbe
-      'IsPosted'       => 1,
-      'CreateBy'       => $this->session->userdata('user_id'),
-      'CreateDate'     => date('Y-m-d H:i:s'),
-      'IsAppove'       => 1
-    );
+        $cosdr = array(
+            'VNo'            =>  $transaction_id,
+            'Vtype'          =>  'PR Balance',
+            'VDate'          =>  date("Y-m-d"),
+            'COAID'          =>  $supplier_headcode,
+            'Narration'      =>  'supplier debit For '.$supplier_name,
+            'Debit'          =>  0,
+            'Credit'         =>  $balance,
+            'IsPosted'       => 1,
+            'CreateBy'       => $this->session->userdata('user_id'),
+            'CreateDate'     => date('Y-m-d H:i:s'),
+            'IsAppove'       => 1
+        );
+        $inventory = array(
+            'VNo'            =>  $transaction_id,
+            'Vtype'          =>  'PR Balance',
+            'VDate'          =>  date("Y-m-d"),
+            'COAID'          =>  10107,
+            'Narration'      =>  'Inventory credit For  '.$supplier_name,
+            'Debit'          =>  $balance,
+            'Credit'         =>  0,//purchase price asbe
+            'IsPosted'       => 1,
+            'CreateBy'       => $this->session->userdata('user_id'),
+            'CreateDate'     => date('Y-m-d H:i:s'),
+            'IsAppove'       => 1
+        );
 
         if(!empty($balance)){
-           $this->db->insert('acc_transaction', $cosdr);
-           $this->db->insert('acc_transaction', $inventory);
+            $this->db->insert('acc_transaction', $cosdr);
+            $this->db->insert('acc_transaction', $inventory);
         }
     }
 
@@ -553,13 +553,13 @@ class Suppliers extends CI_Model {
 								CAST(sum(b.quantity * b.supplier_rate) AS DECIMAL(16,2)) as total_taka,
 								c.date
 								')
-                ->from('product_information a')
-                ->join('invoice_details b', 'a.product_id = b.product_id', 'left')
-                ->join('invoice c', 'c.invoice_id = b.invoice_id', 'left')
-                ->where('a.supplier_id', $supplier_id)
-                ->group_by('c.date')
-                ->order_by('c.date')
-                ->get();
+            ->from('product_information a')
+            ->join('invoice_details b', 'a.product_id = b.product_id', 'left')
+            ->join('invoice c', 'c.invoice_id = b.invoice_id', 'left')
+            ->where('a.supplier_id', $supplier_id)
+            ->group_by('c.date')
+            ->order_by('c.date')
+            ->get();
 
 
 
@@ -705,7 +705,7 @@ class Suppliers extends CI_Model {
     }
 
 
-     public function supplier_sales_details_datewise_count($fromdate,$todate) {
+    public function supplier_sales_details_datewise_count($fromdate,$todate) {
         $this->db->select('
             b.date,
             b.invoice,
@@ -850,7 +850,7 @@ class Suppliers extends CI_Model {
         return false;
     }
 
-         public function headcode(){
+    public function headcode(){
 
         $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='3' And HeadCode LIKE '50200%'");
         return $query->row();
@@ -858,7 +858,7 @@ class Suppliers extends CI_Model {
     }
 
 
-      // Supplier list
+    // Supplier list
     public function supplier_list_advance(){
         $this->db->select('*');
         $this->db->from('supplier_information');
@@ -872,11 +872,11 @@ class Suppliers extends CI_Model {
     public function advance_details($receiptid,$supplier_id){
         $headcode = $this->db->select('HeadCode')->from('acc_coa')->where('supplier_id',$supplier_id)->get()->row();
         return $this->db->select('*')
-                        ->from('acc_transaction')
-                        ->where('VNo',$receiptid)
-                        ->where('COAID',$headcode->HeadCode)
-                        ->get()
-                        ->result_array();
+            ->from('acc_transaction')
+            ->where('VNo',$receiptid)
+            ->where('COAID',$headcode->HeadCode)
+            ->get()
+            ->result_array();
 
 
     }

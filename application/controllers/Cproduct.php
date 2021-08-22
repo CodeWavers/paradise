@@ -11,7 +11,7 @@ class Cproduct extends CI_Controller {
         parent::__construct();
         $this->db->query('SET SESSION sql_mode = ""');
         $this->load->model('Suppliers');
-         $this->load->library('auth');
+        $this->load->library('auth');
     }
 
     //Index page load
@@ -127,7 +127,7 @@ class Cproduct extends CI_Controller {
         $check_product = $this->db->select('*')->from('product_information')->where('product_id',$product_id)->get()->num_rows();
         if($check_product > 0){
             $this->session->set_userdata(array('error_message' => display('already_exists')));
-                redirect(base_url('Cproduct'));
+            redirect(base_url('Cproduct'));
 
         }
         $product_id_two = $this->input->post('$product_id_two',TRUE);
@@ -186,60 +186,60 @@ class Cproduct extends CI_Controller {
                 redirect(base_url('Cproduct'));
             } else {
 
-            $imgdata = $this->upload->data();
-            $image = $config['upload_path'].$imgdata['file_name'];
-            $config['image_library']  = 'gd2';
-            $config['source_image']   = $image;
-            $config['create_thumb']   = false;
-            $config['maintain_ratio'] = TRUE;
-            $config['width']          = 500;
-            $config['height']         = 500;
-            $this->load->library('image_lib', $config);
-            $this->image_lib->resize();
-            $image_url = base_url() . $image;
+                $imgdata = $this->upload->data();
+                $image = $config['upload_path'].$imgdata['file_name'];
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $image;
+                $config['create_thumb']   = false;
+                $config['maintain_ratio'] = TRUE;
+                $config['width']          = 500;
+                $config['height']         = 500;
+                $this->load->library('image_lib', $config);
+                $this->image_lib->resize();
+                $image_url = base_url() . $image;
             }
 
         }
 
-       //  $price = $this->input->post('cost_price',TRUE);
+        //  $price = $this->input->post('cost_price',TRUE);
 
-       //  $tax_percentage = $this->input->post('tax',TRUE);
-       //  $tax = $tax_percentage / 100;
+        //  $tax_percentage = $this->input->post('tax',TRUE);
+        //  $tax = $tax_percentage / 100;
 
-       //  $tablecolumn = $this->db->list_fields('tax_collection');
-       //  $num_column = count($tablecolumn)-4;
-       //  if($num_column > 0){
-       // $taxfield = [];
-       // for($i=0;$i<$num_column;$i++){
-       //  $taxfield[$i] = 'tax'.$i;
-       // }
-       // foreach ($taxfield as $key => $value) {
-       //  $data[$value] = $this->input->post($value)/100;
-       // }
-    // }
+        //  $tablecolumn = $this->db->list_fields('tax_collection');
+        //  $num_column = count($tablecolumn)-4;
+        //  if($num_column > 0){
+        // $taxfield = [];
+        // for($i=0;$i<$num_column;$i++){
+        //  $taxfield[$i] = 'tax'.$i;
+        // }
+        // foreach ($taxfield as $key => $value) {
+        //  $data[$value] = $this->input->post($value)/100;
+        // }
+        // }
 
-            $data['product_id']   = $product_id;
-            $data['product_id_two']   = $product_id_two;
-            $data['category_id']  = $this->input->post('category_id',TRUE);
-            $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
-            $data['brand_id']  = $this->input->post('brand_id',TRUE);
-            $data['product_name'] = $this->input->post('product_name',TRUE);
-            $data['country'] = $this->input->post('country',TRUE);
-            $data['parts'] = $this->input->post('parts',TRUE);
-            $data['tag'] = $this->input->post('tag',TRUE);
-            $data['sku'] = $this->input->post('sku',TRUE);
-            $data['price']        = $this->input->post('cost_price',TRUE);
-            $data['product_model']= $this->input->post('model_id',TRUE);
-            $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
-            $data['unit']         = $this->input->post('unit',TRUE);
-            $data['tax']          = 0;
-            // $data['serial_no']    = $this->input->post('serial_no',TRUE);
-            // $data['price']        = $price;
-            // $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
+        $data['product_id']   = $product_id;
+        $data['product_id_two']   = $product_id_two;
+        $data['category_id']  = $this->input->post('category_id',TRUE);
+        $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
+        $data['brand_id']  = $this->input->post('brand_id',TRUE);
+        $data['product_name'] = $this->input->post('product_name',TRUE);
+        $data['country'] = $this->input->post('country',TRUE);
+        $data['parts'] = $this->input->post('parts',TRUE);
+        $data['tag'] = $this->input->post('tag',TRUE);
+        $data['sku'] = $this->input->post('sku',TRUE);
+        $data['price']        = $this->input->post('cost_price',TRUE);
+        $data['product_model']= $this->input->post('model_id',TRUE);
+        $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
+        $data['unit']         = $this->input->post('unit',TRUE);
+        $data['tax']          = 0;
+        // $data['serial_no']    = $this->input->post('serial_no',TRUE);
+        // $data['price']        = $price;
+        // $data['re_order_level']    = $this->input->post('re_order_level',TRUE);
 
-            $data['product_details'] = $this->input->post('description',TRUE);
-            $data['image']        = (!empty($image_url) ? $image_url : base_url('my-assets/image/product.png'));
-            $data['status']       = 1;
+        $data['product_details'] = $this->input->post('description',TRUE);
+        $data['image']        = (!empty($image_url) ? $image_url : base_url('my-assets/image/product.png'));
+        $data['status']       = 1;
 
         $result = $CI->lproduct->insert_product($data);
 
@@ -317,7 +317,7 @@ class Cproduct extends CI_Controller {
 
 
 
-      //  echo '<pre>';print_r($data);exit();
+        //  echo '<pre>';print_r($data);exit();
         $content                  = $this->parser->parse('product/catalogue', $data, true);
         $this->template->full_admin_html_view($content);
     }
@@ -387,13 +387,13 @@ class Cproduct extends CI_Controller {
                                 <td>'.html_escape($product->category_name).'</td>
                             </tr>';
 
-                            if($product->subcat_name){
-                                $html_data .= '<tr>
+            if($product->subcat_name){
+                $html_data .= '<tr>
                                     <th>Sub-category</th>
                                     <td>'.html_escape($product->subcat_name).'</td>;
                                 </tr>';
-                            }
-                            $html_data .= '<tr>
+            }
+            $html_data .= '<tr>
                                 <th>Product Name</th>
                                 <td>'.html_escape($product->product_name).'</td>
                             </tr>
@@ -437,7 +437,7 @@ class Cproduct extends CI_Controller {
         // $html_data .= '</section>'.$links.'</div>';
         $data['html_data'] = $html_data;
         $data['links'] = $links;
-    //    echo '<pre>';print_r($data);exit();
+        //    echo '<pre>';print_r($data);exit();
         echo json_encode($data);
     }
 
@@ -498,7 +498,7 @@ class Cproduct extends CI_Controller {
             'upload_path'   => "./my-assets/image/product/",
             'allowed_types' => "png|jpg|jpeg|gif|bmp|tiff",
             'overwrite'     => TRUE,
-             'encrypt_name' => TRUE,
+            'encrypt_name' => TRUE,
             'max_size'      => '0',
         );
         $image_data = array();
@@ -524,53 +524,53 @@ class Cproduct extends CI_Controller {
 
 
 
-    //     $price = $this->input->post('price',TRUE);
+        //     $price = $this->input->post('price',TRUE);
 
-    //     $tablecolumn = $this->db->list_fields('tax_collection');
-    //     $num_column = count($tablecolumn)-4;
-    //     if($num_column > 0){
-    //    $taxfield = [];
-    //    for($i=0;$i<$num_column;$i++){
-    //     $taxfield[$i] = 'tax'.$i;
-    //    }
-    //    foreach ($taxfield as $key => $value) {
-    //     $data[$value] = $this->input->post($value)/100;
-    //    }
-    // }
+        //     $tablecolumn = $this->db->list_fields('tax_collection');
+        //     $num_column = count($tablecolumn)-4;
+        //     if($num_column > 0){
+        //    $taxfield = [];
+        //    for($i=0;$i<$num_column;$i++){
+        //     $taxfield[$i] = 'tax'.$i;
+        //    }
+        //    foreach ($taxfield as $key => $value) {
+        //     $data[$value] = $this->input->post($value)/100;
+        //    }
+        // }
 
         $price = $this->input->post('price',TRUE);
 
         $tablecolumn = $this->db->list_fields('tax_collection');
         $num_column = count($tablecolumn)-4;
         if($num_column > 0){
-       $taxfield = [];
-       for($i=0;$i<$num_column;$i++){
-        $taxfield[$i] = 'tax'.$i;
-       }
-       foreach ($taxfield as $key => $value) {
-        $data[$value] = $this->input->post($value)/100;
-       }
-    }
+            $taxfield = [];
+            for($i=0;$i<$num_column;$i++){
+                $taxfield[$i] = 'tax'.$i;
+            }
+            foreach ($taxfield as $key => $value) {
+                $data[$value] = $this->input->post($value)/100;
+            }
+        }
 
-            $data['product_name']   = $this->input->post('product_name',TRUE);
-            $data['category_id']    = $this->input->post('category_id',TRUE);
-            $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
-            $data['product_id_two']    = $this->input->post('product_id_two',TRUE);
-            $data['country'] = $this->input->post('country',TRUE);
-            $data['parts'] = $this->input->post('parts',TRUE);
-            $data['tag'] = $this->input->post('tag',TRUE);
-            $data['sku'] = $this->input->post('sku',TRUE);
-            $data['price']        = $this->input->post('cost_price',TRUE);
-            $data['product_model']= $this->input->post('model_id',TRUE);
-            $data['brand_id']    = $this->input->post('brand_id',TRUE);
-            $data['ptype_id']    = $this->input->post('ptype_id',TRUE);
-            // $data['serial_no']      = $this->input->post('serial_no',TRUE);
-            // $data['re_order_level']      = $this->input->post('re_order_level',TRUE);
-            // $data['product_model']  = $this->input->post('model',TRUE);
-            $data['product_details']= $this->input->post('description',TRUE);
-            $data['unit']           = $this->input->post('unit',TRUE);
-            $data['tax']            = 0;
-            $data['image']          = $image_name;
+        $data['product_name']   = $this->input->post('product_name',TRUE);
+        $data['category_id']    = $this->input->post('category_id',TRUE);
+        $data['sub_cat_id']  = $this->input->post('sub_cat_id',TRUE);
+        $data['product_id_two']    = $this->input->post('product_id_two',TRUE);
+        $data['country'] = $this->input->post('country',TRUE);
+        $data['parts'] = $this->input->post('parts',TRUE);
+        $data['tag'] = $this->input->post('tag',TRUE);
+        $data['sku'] = $this->input->post('sku',TRUE);
+        $data['price']        = $this->input->post('cost_price',TRUE);
+        $data['product_model']= $this->input->post('model_id',TRUE);
+        $data['brand_id']    = $this->input->post('brand_id',TRUE);
+        $data['ptype_id']    = $this->input->post('ptype_id',TRUE);
+        // $data['serial_no']      = $this->input->post('serial_no',TRUE);
+        // $data['re_order_level']      = $this->input->post('re_order_level',TRUE);
+        // $data['product_model']  = $this->input->post('model',TRUE);
+        $data['product_details']= $this->input->post('description',TRUE);
+        $data['unit']           = $this->input->post('unit',TRUE);
+        $data['tax']            = 0;
+        $data['image']          = $image_name;
 
         $result = $CI->Products->update_product($data, $product_id);
         if ($result == true) {
@@ -642,7 +642,7 @@ class Cproduct extends CI_Controller {
                         $insert_csv['category_id']    = (!empty($csv_line[7])?$csv_line[7]:null);
                         $insert_csv['ptype_id']    = (!empty($csv_line[8])?$csv_line[8]:null);
                         $insert_csv['unit']    = (!empty($csv_line[9])?$csv_line[9]:null);
-                       // $insert_csv['re_order_level']    = (!empty($csv_line[10])?$csv_line[10]:null);
+                        // $insert_csv['re_order_level']    = (!empty($csv_line[10])?$csv_line[10]:null);
                         $insert_csv['price']          = (!empty($csv_line[10])?$csv_line[10]:null);
                         $insert_csv['supplier_price'] = (!empty($csv_line[11])?$csv_line[11]:null);
                     }
@@ -754,7 +754,7 @@ class Cproduct extends CI_Controller {
                         'product_id_two' => $insert_csv['product_id_two'],
                         'product_model' => $insert_csv['product_model'],
                         'price'         => $insert_csv['price'],
-                       // 're_order_level'=> $insert_csv['re_order_level'],
+                        // 're_order_level'=> $insert_csv['re_order_level'],
                         'unit'          => $insert_csv['unit'],
                         'tax'           => '',
                         'product_details'=>'Csv Product',
@@ -788,7 +788,7 @@ class Cproduct extends CI_Controller {
                                 'product_model'  => $insert_csv['product_model'],
                                 'price'          => $insert_csv['price'],
                                 'unit'           => $insert_csv['unit'],
-                              //  're_order_level' => $insert_csv['re_order_level'],
+                                //  're_order_level' => $insert_csv['re_order_level'],
                                 'tax'            => '',
                                 'product_details'=> 'Csv Uploaded Product',
                                 'image'         => base_url('my-assets/image/product.png'),
@@ -830,7 +830,7 @@ class Cproduct extends CI_Controller {
                         $data_service=array(
 
                             'service_name' =>$insert_csv['product_name'],
-                           // 'description' =>$this->input->post('description',TRUE)
+                            // 'description' =>$this->input->post('description',TRUE)
 
 
                         );
@@ -974,10 +974,10 @@ class Cproduct extends CI_Controller {
             redirect(base_url('Cproduct/manage_product'));
 
         }else{
-        $result = $CI->Products->delete_product($product_id);
-         $this->session->set_userdata(array('message' => display('successfully_delete')));
-        redirect(base_url('Cproduct/manage_product'));
-    }
+            $result = $CI->Products->delete_product($product_id);
+            $this->session->set_userdata(array('message' => display('successfully_delete')));
+            redirect(base_url('Cproduct/manage_product'));
+        }
     }
 
     //Retrieve Single Item  By Search
@@ -1077,7 +1077,7 @@ class Cproduct extends CI_Controller {
     }
 
 // product pdf download
-        public function product_downloadpdf(){
+    public function product_downloadpdf(){
         $CI = & get_instance();
         $CI->load->model('Products');
         $CI->load->model('Invoices');
@@ -1094,7 +1094,7 @@ class Cproduct extends CI_Controller {
             }
         }
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
-           $company_info = $CI->Invoices->retrieve_company();
+        $company_info = $CI->Invoices->retrieve_company();
         $data = array(
             'title'         => display('manage_product'),
             'product_list'  => $product_list,
@@ -1103,17 +1103,17 @@ class Cproduct extends CI_Controller {
             'position'      => $currency_details[0]['currency_position'],
             'company_info'  => $company_info
         );
-            $this->load->helper('download');
-            $content = $this->parser->parse('product/product_list_pdf', $data, true);
-            $time = date('Ymdhi');
-            $dompdf = new DOMPDF();
-            $dompdf->load_html($content);
-            $dompdf->render();
-            $output = $dompdf->output();
-            file_put_contents('assets/data/pdf/'.'product'.$time.'.pdf', $output);
-            $file_path = 'assets/data/pdf/'.'product'.$time.'.pdf';
-           $file_name = 'product'.$time.'.pdf';
-            force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
+        $this->load->helper('download');
+        $content = $this->parser->parse('product/product_list_pdf', $data, true);
+        $time = date('Ymdhi');
+        $dompdf = new DOMPDF();
+        $dompdf->load_html($content);
+        $dompdf->render();
+        $output = $dompdf->output();
+        file_put_contents('assets/data/pdf/'.'product'.$time.'.pdf', $output);
+        $file_path = 'assets/data/pdf/'.'product'.$time.'.pdf';
+        $file_name = 'product'.$time.'.pdf';
+        force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
 
 

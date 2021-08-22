@@ -81,7 +81,7 @@ class Lproduct {
         $CI->load->model('Ptype');
         $CI->load->model('Units');
 
-      //  $currency=$CI->db->select('*')->from('currency_tbl')->get()->result_array();
+        //  $currency=$CI->db->select('*')->from('currency_tbl')->get()->result_array();
         $product_detail = $CI->Products->retrieve_product_editdata($product_id);
         $supplier_product_detail = $CI->Products->supplier_product_editdata($product_id);
         @$supplier_id = $product_detail[0]['supplier_id'];

@@ -1555,11 +1555,11 @@ class Purchases extends CI_Model {
         // }
 
 
-    //    $this->db->insert('product_purchase', $data);
-    //    echo '<pre>';print_r($data);exit();
+        //    $this->db->insert('product_purchase', $data);
+        //    echo '<pre>';print_r($data);exit();
         $data=array(
             'purchase_id'        => $purchase_id,
-            'grand_total_amount' => $this->input->post('grand_total',TRUE),
+            'grand_total_amount' => $this->input->post('total',TRUE),
             'purchase_order'     => $pur_order_no,
             'purchase_date'      => $receive_date,
             'paid_amount'        => $paid_amount,
@@ -1570,7 +1570,7 @@ class Purchases extends CI_Model {
         $this->db->insert('product_purchase', $data);
 
 
-       // echo '<pre>';print_r($data);exit();
+        // echo '<pre>';print_r($data);exit();
 
 
 
@@ -1583,7 +1583,7 @@ class Purchases extends CI_Model {
         // $warehouse = $this->input->post('warehouse',TRUE);
         $warrenty = $this->input->post('warrenty_date',TRUE);
         // $expired = $this->input->post('expired_date',TRUE);
-         $t_price = $this->input->post('row_total',TRUE);
+        $t_price = $this->input->post('row_total',TRUE);
         $discount = $this->input->post('discount',TRUE);
         $additional_cost = $this->input->post('additional_cost',TRUE);
 
@@ -1601,9 +1601,9 @@ class Purchases extends CI_Model {
             $unit_add_cost = $additional_cost[$i];
             $unit_cost = ($product_rate - ($product_rate * ($disc / 100)) + ($unit_add_cost / $product_quantity));
 
-         //   $t_price = ($product_rate * $product_quantity) - $disc;
+            //   $t_price = ($product_rate * $product_quantity) - $disc;
 
-          //  $old_rate=$this->db->select('*')->from('supplier_product')->where('supplier_id',$supp_id)->where('product_id',$product_id)->get()->row()->supplier_price;
+            //  $old_rate=$this->db->select('*')->from('supplier_product')->where('supplier_id',$supp_id)->where('product_id',$product_id)->get()->row()->supplier_price;
 
             $data1 = array(
                 'purchase_detail_id' => $this->generator(15),
@@ -1617,21 +1617,39 @@ class Purchases extends CI_Model {
                 'rate'               => $product_rate,
                 'total_amount'       => $t_price,
                 'discount'           => $disc,
+                // 'unit_cost'          => $unit_cost,
                 'status'             => 1,
                 'isAprv'             => 2,
 
             );
 
 
-         //   echo '<pre>';print_r($data1);
+            //   echo '<pre>';print_r($data1);
 
             if (!empty($quantity)) {
                 $this->db->insert('product_purchase_details', $data1);
             }
 
-            $this->db->where('product_id', $product_id);
-            $this->db->set('price', $unit_cost);
-            $this->db->update('product_information');
+            $data_price = array (
+                'product_id'    => $product_id,
+                'supplier_id'   => $supp_id,
+                'update_price' => $product_rate,
+                'date' => date('Y:m:d'),
+                'time' =>  date('h:i:sa'),
+                'status'        => 1
+            );
+
+            $this->db->insert('unit_cost_history', $data_price);
+
+            $data_unit = array (
+                'product_id'    => $product_id,
+                'supplier_id'   => $supp_id,
+                'update_unit_cost' => $unit_cost,
+                'date' => date('Y:m:d h:i:sa'),
+                'status'        => 1
+            );
+
+            $this->db->insert('unit_cost_history', $data_unit);
 
 
         }
@@ -1757,7 +1775,7 @@ class Purchases extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from('purchase_order_cart');
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('product_id', 'desc');
 
         $query = $this->db->get();
         // echo '<pre>'; print_r($query->result_array()); die();
@@ -1766,10 +1784,11 @@ class Purchases extends CI_Model {
 
     public function PO_cart_update()
     {
+        $db_id = $this->input->post('sl_id',TRUE);
         $p_id = $this->input->post('product_id',TRUE);
         $qty = $this->input->post('order_quantity',TRUE);
         $supp_id= $this->input->post('supplier_name',TRUE);
-        // $warrenty_date = $this->input->post('warrenty_date',TRUE);
+        $warrenty_date = $this->input->post('warrenty_date',TRUE);
         $price= $this->input->post('price',TRUE);
         $discount= $this->input->post('discount',TRUE);
         $row_total = $this->input->post('row_total',TRUE);
@@ -1784,11 +1803,11 @@ class Purchases extends CI_Model {
 
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
-
+            $id = $db_id[$i];
             $item_pid = $p_id[$i];
             $item_qty = $qty[$i];
             $item_supp = $supp_id[$i];
-            // $item_warr = $warrenty_date[$i];
+            $item_warr = $warrenty_date[$i];
             $item_price = $price[$i];
             $item_dis = $discount[$i];
             $total = $row_total[$i];
@@ -1799,8 +1818,8 @@ class Purchases extends CI_Model {
             // echo '<pre>'; print_r($add_cost); exit();
 
             $sq = "UPDATE purchase_order_cart
-            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", rate = ".$item_price.", discount = ".$item_dis.", total = ".$total.", currency = '".$curr."', currency_value = ".$curr_val.", additional_cost = '".$add_cost."'
-            WHERE product_id = ".$item_pid.";";
+            SET order_qty = ".$item_qty.", supplier_id = ".$item_supp.", rate = ".$item_price.", warrenty_date = '".$item_warr."', discount = ".$item_dis.", total = ".$total.", currency = '".$curr."', currency_value = ".$curr_val.", additional_cost = '".$add_cost."'
+            WHERE id = ".$id.";";
 
             $this->db->query($sq);
             // exit();
@@ -1808,5 +1827,4 @@ class Purchases extends CI_Model {
 
 
     }
-
 }

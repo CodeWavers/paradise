@@ -56,15 +56,15 @@
                         <div class="table-responsive">
                             <table class="table table-striped datatable table-bordered " cellspacing="0" width="100%" id="add_rqsn_table">
                                 <thead>
-                                    <tr>
-                                        <th><?php echo display('sl') ?></th>
-                                        <th>Product name</th>
-                                        <th>Supplier Name</th>
-                                        <th>Old Cost</th>
-                                        <th>New Cost</th>
-                                        <th>Action</th>
+                                <tr>
+                                    <th><?php echo display('sl') ?></th>
+                                    <th>Product name</th>
+                                    <th>Supplier Name</th>
+                                    <th>Old Cost</th>
+                                    <th>New Cost</th>
+                                    <th>Action</th>
 
-                                    </tr>
+                                </tr>
                                 </thead>
                                 <tbody>
 
@@ -82,19 +82,19 @@
                                         </td>
 
                                         <td>
-                                        <?php echo $row['old_cost']?>
+                                            <?php echo $row['old_cost']?>
                                         </td>
                                         <td>
 
-                                        <?php echo $row['update_unit_cost']?>
+                                            <?php echo $row['update_unit_cost']?>
 
                                         </td>
 
                                         <td>
                                             <button type="button" id="add_btn<?=$row['sl']?>" class="btn btn-success" data-id = "<?php echo $row['real_id']?>" data-proid = "<?php echo $row['product_id']?>" data-suppid = "<?php echo $row['supplier_id']?>" data-rate = "<?php echo $row['update_unit_cost']?>" onclick="approve_price(this)">
-                                            <i class="fa fa-check" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="button" id="cancel_btn<?=$row['sl']?>" class="btn btn-danger" data-id = "<?php echo $row['real_id']?>" onclick="delete_row(this)"> <i class="fa fa-times" aria-hidden="true"></i></button>
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" id="cancel_btn<?=$row['sl']?>" class="btn btn-danger" data-id = "<?php echo $row['real_id']?>" onclick="delete_row(this)"> <i class="fa fa-times" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
@@ -113,18 +113,18 @@
 
 <script type="text/javascript">
 
-function approve_price(e) {
-    var a = e.parentNode.parentNode;
+    function approve_price(e) {
+        var a = e.parentNode.parentNode;
 
 
-    var product_id = $(e).data("proid");
-    var supplier_id = $(e).data("suppid");
-    var new_rate = $(e).data("rate");
-    var id = $(e).data("id");
+        var product_id = $(e).data("proid");
+        var supplier_id = $(e).data("suppid");
+        var new_rate = $(e).data("rate");
+        var id = $(e).data("id");
 
-    var csrf_test_name = $('[name="csrf_test_name"]').val();
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
 
-    $.ajax({
+        $.ajax({
             url:"<?php echo base_url(); ?>Cproduct/update_new_unit_cost",
             method:"POST",
             data:{
@@ -154,19 +154,19 @@ function approve_price(e) {
             //
             // }
         });
-}
+    }
 
 
-function delete_row(e) {
-    var a = e.parentNode.parentNode;
+    function delete_row(e) {
+        var a = e.parentNode.parentNode;
 
 
 
-    var id = $(e).data("id");
+        var id = $(e).data("id");
 
-    var csrf_test_name = $('[name="csrf_test_name"]').val();
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
 
-    $.ajax({
+        $.ajax({
             url:"<?php echo base_url(); ?>Cproduct/decline_unit_cost",
             method:"POST",
             data:{
@@ -181,6 +181,6 @@ function delete_row(e) {
 
             }
         });
-}
+    }
 
 </script>

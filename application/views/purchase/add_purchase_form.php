@@ -31,26 +31,26 @@
     <section class="content">
         <!-- Alert Message -->
         <?php
-            $message = $this->session->userdata('message');
-            if (isset($message)) {
-        ?>
-        <div class="alert alert-info alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-            <?php echo $message ?>
-        </div>
-        <?php
+        $message = $this->session->userdata('message');
+        if (isset($message)) {
+            ?>
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                <?php echo $message ?>
+            </div>
+            <?php
             $this->session->unset_userdata('message');
-            }
-            $error_message = $this->session->userdata('error_message');
-            if (isset($error_message)) {
-        ?>
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $error_message ?>
-        </div>
-        <?php
+        }
+        $error_message = $this->session->userdata('error_message');
+        if (isset($error_message)) {
+            ?>
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php echo $error_message ?>
+            </div>
+            <?php
             $this->session->unset_userdata('error_message');
-            }
+        }
         ?>
 
         <!-- Purchase report -->
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="panel-body">
-                    <?php echo form_open_multipart('Cpurchase/insert_purchase_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+                        <?php echo form_open_multipart('Cpurchase/insert_purchase_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
                         <!-- <div class="row">
@@ -118,7 +118,7 @@
 
 
 
-<br>
+                        <br>
                         <div id="cart_details">
                             <h3 align="center">No Purchase Order</h3>
                         </div>
@@ -129,7 +129,7 @@
                                 <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="finalize" >
                             </div>
                         </div>
-                    <?php echo form_close()?>
+                        <?php echo form_close()?>
                     </div>
                 </div>
 
@@ -202,7 +202,7 @@
         $(document).on('click', '#clear_cart', function(){
 
             var p_id = $("input[name='product_id[]']")
-              .map(function(){return $(this).val();}).get().join(',');
+                .map(function(){return $(this).val();}).get().join(',');
 
 
             var csrf_test_name = $('[name="csrf_test_name"]').val();

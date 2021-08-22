@@ -71,7 +71,7 @@ class reports extends CI_Model {
 
         //$this->db->order_by($columnName, $columnSortOrder);
         $this->db->group_by('a.product_id');
-       // $this->db->limit($rowperpage, $start);
+        // $this->db->limit($rowperpage, $start);
         $records = $this->db->get()->result();
         $data = array();
         $stock=0;
@@ -134,7 +134,7 @@ class reports extends CI_Model {
 
         //$this->db->order_by($columnName, $columnSortOrder);
         $this->db->group_by('a.product_id');
-       // $this->db->limit($rowperpage, $start);
+        // $this->db->limit($rowperpage, $start);
         $records = $this->db->get()->result();
         $data = array();
 
@@ -187,7 +187,7 @@ class reports extends CI_Model {
 
                 );
             }
-                $sl++;
+            $sl++;
 
 
         }
@@ -278,7 +278,7 @@ class reports extends CI_Model {
         $this->db->join('product_information b','a.product_id=b.product_id');
         $this->db->join('supplier_information c','c.supplier_id=a.supplier_id');
         $this->db->where(array('a.status' => 2,'a.product_id'=>$product_id));
-    //    $this->db->order_by('a.date', 'DESC');
+        //    $this->db->order_by('a.date', 'DESC');
         // $this->db->group_by('a.product_id');
         $query = $this->db->get();
         $result = $query->result_array();
@@ -287,7 +287,7 @@ class reports extends CI_Model {
     }
 
     public function product_price_date_wise($start_date = null,$end_date = null) {
-      //  $datbetween = "(a.date BETWEEN '$start_date' AND '$end_date')";
+        //  $datbetween = "(a.date BETWEEN '$start_date' AND '$end_date')";
         $this->db->select("a.*,b.*,c.*");
         $this->db->from('supplier_product_price a');
         $this->db->join('product_information b','a.product_id=b.product_id');
@@ -550,7 +550,7 @@ class reports extends CI_Model {
                 ->from('rqsn_details a')
                 ->join('rqsn b','a.rqsn_id=b.rqsn_id')
                 ->where('a.product_id',$record->product_id)
-              //  ->where('b.to_id','HK7TGDT69VFMXB7')
+                //  ->where('b.to_id','HK7TGDT69VFMXB7')
                 ->where('a.iscw',1)->get()->row();
 
 
