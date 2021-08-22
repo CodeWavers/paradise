@@ -101,7 +101,7 @@
                                                 data-brand="<?php echo $row['brand_name']?>"
                                                 data-model="<?php echo $row['model_name']?>"
                                                 data-productid="<?php echo $row['product_id']?>"
-                                                data-rqstdetails="<?php echo $row['rqsn_detail_id']?>"
+                                                data-rqsndetail="<?php echo $row['rqsn_detail_id']?>"
                                                 onclick="add_and_delete(this)"
                                                 >
                                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -158,7 +158,8 @@ function add_and_delete(e) {
                         sku:sku,
                         brand:brand,
                         model:model,
-                        quantity:quantity
+                        quantity:quantity,
+                        rq_d_id:rqsn_details
                     },
                     success:function(data)
                     {
