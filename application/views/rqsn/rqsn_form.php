@@ -431,6 +431,7 @@
                                 toastr.success("Requisition Added");
                                 $('#cart_details').load(base_url+"Cadd_rqsn/load");
                                 $('#' + id).val('');
+                                $("#product_name_1").val('');
                             // $('#cart_details').html(data);
                             //   var obj = jQuery.parseJSON(data);
 
