@@ -146,6 +146,7 @@
         var prop_qty = $("#proposed_quantity_" + sl).val();
         var product_name = $("#product_name_" + sl).val();
         var sku = $("#item_sku_" + sl).val();
+        var rqsn_id = $("#rqsn_detail_id_" + sl).val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
         console.log(product_name);;
         $.ajax({
@@ -157,6 +158,7 @@
                 prop_qty: prop_qty,
                 product_name : product_name,
                 sku: sku,
+                rqsn_id: rqsn_id
             },
             success:function(data)
             {
@@ -173,6 +175,7 @@
             var sl = $(this).attr("id");
             var pr_id = $("#product_id_" + sl).val();
             var row_id = $("#sl_id_" + sl).val();
+            var rqsn_id = $("#rqsn_detail_id_" + sl).val();
             var csrf_test_name = $('[name="csrf_test_name"]').val();
             if(confirm("Are you sure you want to remove this?"))
             {
@@ -182,7 +185,8 @@
                     data:{
                         csrf_test_name:csrf_test_name,
                         row_id:row_id,
-                        pr_id : pr_id
+                        pr_id : pr_id,
+                        rqsn_id : rqsn_id
                     },
                     success:function(data)
                     {
