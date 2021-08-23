@@ -82,16 +82,16 @@
                                         </td>
 
                                         <td>
-                                        <?php echo $row['old_rate']?>
+                                        <?php echo $row['old_price']?>
                                         </td>
                                         <td>
 
-                                        <?php echo $row['rate']?>
+                                        <?php echo $row['update_price']?>
 
                                         </td>
 
                                         <td>
-                                            <button type="button" id="add_btn<?=$row['sl']?>" class="btn btn-success" data-proid = "<?php echo $row['product_id']?>" data-suppid = "<?php echo $row['supplier_id']?>" data-rate = "<?php echo $row['rate']?>" onclick="approve_price(this)">
+                                            <button type="button" id="add_btn<?=$row['sl']?>" class="btn btn-success" data-realid = "<?php echo $row['real_id']?>" data-proid = "<?php echo $row['product_id']?>" data-suppid = "<?php echo $row['supplier_id']?>" data-rate = "<?php echo $row['update_price']?>" onclick="approve_price(this)">
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                         </button>
                                         <button type="button" id="cancel_btn<?=$row['sl']?>" class="btn btn-danger" data-id = "<?php echo $row['real_id']?>" onclick="delete_row(this)"> <i class="fa fa-times" aria-hidden="true"></i></button>
@@ -120,6 +120,7 @@ function approve_price(e) {
     var product_id = $(e).data("proid");
     var supplier_id = $(e).data("suppid");
     var new_rate = $(e).data("rate");
+    var id = $(e).data("realid");
 
     var csrf_test_name = $('[name="csrf_test_name"]').val();
 
@@ -130,7 +131,8 @@ function approve_price(e) {
                 csrf_test_name:csrf_test_name,
                 product_id:product_id,
                 supplier_id:supplier_id,
-                new_rate:new_rate
+                new_rate:new_rate,
+                id:id
             },
             success:function(data)
             {

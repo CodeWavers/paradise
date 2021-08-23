@@ -1639,7 +1639,7 @@ class Purchases extends CI_Model {
                 'status'        => 1
             );
 
-            $this->db->insert('unit_cost_history', $data_price);
+            $this->db->insert('supplier_product_price', $data_price);
 
             $data_unit = array (
                 'product_id'    => $product_id,

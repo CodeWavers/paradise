@@ -1147,6 +1147,7 @@ class Cproduct extends CI_Controller {
         $product_id = $this->input->post('product_id', TRUE);
         $supplier_id = $this->input->post('supplier_id', TRUE);
         $new_rate = $this->input->post('new_rate', TRUE);
+        $id = $this->input->post('id', TRUE);
 
         $this->db->set('supplier_price', $new_rate);
 
@@ -1156,17 +1157,21 @@ class Cproduct extends CI_Controller {
 
 
         //insert into ledger
-        $date=date('Y-m-d');
-        $data = array(
-            'supplier_id' => $supplier_id,
-            'product_id'         => $product_id,
-            'update_price'         => $new_rate,
-            'date'         => $date,
-            'time'=>date("h:i:sa"),
-            'status'             => 2
-        );
+        // $date=date('Y-m-d');
+        // $data = array(
+        //     'supplier_id' => $supplier_id,
+        //     'product_id'         => $product_id,
+        //     'update_price'         => $new_rate,
+        //     'date'         => $date,
+        //     'time'=>date("h:i:sa"),
+        //     'status'             => 2
+        // );
 
-        $this->db->insert('supplier_product_price', $data);
+        $this->db->set('status', 2);
+
+        $this->db->where('id' , $id);
+
+        $this->db->update('supplier_product_price');
 
 
     }

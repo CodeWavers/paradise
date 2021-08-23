@@ -506,7 +506,7 @@ class Products extends CI_Model {
         $CI->load->Model('Suppliers');
         $query = $this->db->select('a.*, a.id as real_id, b.product_name, c.supplier_name')
             ->from('supplier_product_price a')
-            ->where('status', 1)
+            ->where('a.status', 1)
 
             //  ->group_by('purchase_id')
 
@@ -521,6 +521,8 @@ class Products extends CI_Model {
 
         $list = array();
 
+        // echo '<pre>';print_r($res);exit();
+
 
         foreach ($res as $row) {
             //     echo '<pre>';print_r($row['rate']);
@@ -529,11 +531,11 @@ class Products extends CI_Model {
 
             $old_price = $CI->Suppliers->product_suppliers($row['supplier_id'], $row['product_id'])[0]['supplier_price'];
 
-            if ($row['rate'] != $old_price){
+            if ($row['update_price'] != $old_price){
 
                 // echo '<pre>';print_r($row);
 
-                $row['old_rate'] = $old_price;
+                $row['old_price'] = $old_price;
 
                 array_push($list, $row);
             }
