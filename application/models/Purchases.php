@@ -1679,7 +1679,7 @@ class Purchases extends CI_Model {
         $this->db->from('product_purchase a');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
         $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
-        $this->db->where('b.isAprv',3)->order_by('a.purchase_order', 'desc')->group_by('b.supplier_id');
+        $this->db->where('b.isAprv',3)->order_by('a.purchase_order', 'desc');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -1690,7 +1690,7 @@ class Purchases extends CI_Model {
         $this->db->from('product_purchase a');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
         $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
-        $this->db->where('b.isAprv',2)->order_by('a.purchase_order', 'desc')->group_by('b.supplier_id');
+        $this->db->where('b.isAprv',2)->order_by('a.purchase_order', 'desc');
         $query = $this->db->get();
         return $query->result_array();
     }

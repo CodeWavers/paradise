@@ -44,13 +44,18 @@ class Suppliers extends CI_Model {
         ## Search
         $searchQuery = "";
         if($searchValue != ''){
-            $searchQuery = " (a.supplier_name like '%".$searchValue."%' or a.mobile like '%".$searchValue."%' or a.country like '%".$searchValue."%' or a.state like '%".$searchValue."%' or a.zip like '%".$searchValue."%' or a.city like '%".$searchValue."%') ";
+            $searchQuery = " (a.supplier_name like '%".$searchValue."%' or a.country like '%".$searchValue."%' or e.email_id like '%".$searchValue."%' or c.address like '%".$searchValue."%' or d.contact like '%".$searchValue."%' or m.mobile_no like '%".$searchValue."%'or n.phone_no like '%".$searchValue."%') ";
         }
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
         $this->db->from('supplier_information a');
         $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
+        $this->db->join('supplier_address c','a.supplier_id = c.supplier_id','left');
+        $this->db->join('supplier_contact d','a.supplier_id = d.supplier_id','left');
+        $this->db->join('supplier_email e','a.supplier_id = e.supplier_id','left');
+        $this->db->join('supplier_mobile m','a.supplier_id = m.supplier_id','left');
+        $this->db->join('supplier_phone n','a.supplier_id = n.supplier_id','left');
         $this->db->group_by('a.supplier_id');
         if($searchValue != '')
             $this->db->where($searchQuery);
@@ -61,6 +66,11 @@ class Suppliers extends CI_Model {
         $this->db->select('count(*) as allcount');
         $this->db->from('supplier_information a');
         $this->db->join('acc_coa b','a.supplier_id = b.supplier_id','left');
+        $this->db->join('supplier_address c','a.supplier_id = c.supplier_id','left');
+        $this->db->join('supplier_contact d','a.supplier_id = d.supplier_id','left');
+        $this->db->join('supplier_email e','a.supplier_id = e.supplier_id','left');
+        $this->db->join('supplier_mobile m','a.supplier_id = m.supplier_id','left');
+        $this->db->join('supplier_phone n','a.supplier_id = n.supplier_id','left');
         $this->db->group_by('a.supplier_id');
         if($searchValue != '')
             $this->db->where($searchQuery);
