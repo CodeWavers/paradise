@@ -29,6 +29,23 @@ class Cadd_rqsn extends CI_Controller {
    //     $this->load->library("cart");
       //  $rqsn_id = $this->db->select('id')->order_by('id','desc')->limit(1)->get('rqsn_details')->row('id');
         $rqsn_id = $this->db->select("*")->limit(1)->order_by('id',"DESC")->get("rqsn")->row();
+        $p_id = $this->input->post('all_pid', TRUE);
+
+        $qty = $this->input->post('qty', TRUE);
+        $each_pr = explode(",", $p_id);
+        $each_qty = explode(",", $qty);
+
+
+        // echo '<pre>'; print_r($each_pr);
+        //  print_r($each_qty); exit();
+
+        // $i = 0;
+
+        for($i = 0; $i < count($each_pr); $i++){
+                $this->db->where('product_id', $each_pr[$i]);
+                $this->db->set('qty', $each_qty[$i]);
+                $this->db->update('rqsn_cart');
+        }
 
         $product_id=$_POST["product_id"];
 
