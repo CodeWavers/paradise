@@ -312,7 +312,7 @@
                     data: {
                         csrf_test_name: csrf_test_name,
                         row_id: row_id
-                    },
+                        },
                     success: function(data) {
                         toastr.success("Product removed from Cart!");
                         $('#cart_details').html(data);

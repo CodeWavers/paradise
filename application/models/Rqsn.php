@@ -1152,6 +1152,28 @@ class Rqsn extends CI_Model {
     {
 
 
+        $quantity = $this->input->post("quantity", true);
+        $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
+
+        for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            $rq_id  = $rqsn_detail_id[$i];
+
+
+//            $rqsn_details = array(
+//
+//                'quantity'                => $qty,
+//            );
+            if (!empty($quantity)) {
+
+                $this->db->where('rqsn_detail_id',$rq_id);
+                $this->db->set('quantity',$qty);
+                $this->db->update('rqsn_details');
+            }
+
+
+        }
+
         $sq = "UPDATE rqsn
         SET status = 3
         WHERE rqsn_id = ".$rqsn_id."
