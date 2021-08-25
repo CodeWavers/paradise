@@ -366,7 +366,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center"><?php echo display('supplier') ?> </th>
-                                    <th class="text-center">Currency </th>
+<!--                                    <th class="text-center">Currency </th>-->
                                     <th class="text-center"><?php echo display('supplier_price') ?> </th>
 
                                     <th class="text-center"><?php echo display('action') ?> <i class="text-danger"></i></th>
@@ -385,21 +385,21 @@
                                             <?php } ?>
                                         </select>
                                     </td>
+<!--                                    <td width="300">-->
+<!--                                        <select name="currency[]" class="form-control"  >-->
+<!--                                            <option value=""> Select Currency</option>-->
+<!--                                            --><?php //if ($currency) { ?>
+<!--                                                {currency}-->
+<!--                                                <option value="{currency_name}">{currency_name}</option>-->
+<!--                                                {/currency}-->
+<!--                                            --><?php //} ?>
+<!--                                        </select>-->
+<!--                                    </td>-->
                                     <td width="300">
-                                        <select name="currency[]" class="form-control"  >
-                                            <option value=""> Select Currency</option>
-                                            <?php if ($currency) { ?>
-                                                {currency}
-                                                <option value="{currency_name}">{currency_name}</option>
-                                                {/currency}
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td class="">
                                         <input type="text" tabindex="6" class="form-control text-right" name="supplier_price[]" placeholder="0.00"    min="0"/>
                                     </td>
 
-                                    <td width="100"> <a  id="add_purchase_item" class="btn btn-info btn-sm" name="add-invoice-item" onClick="addpruduct('proudt_item');"  tabindex="9"/><i class="fa fa-plus-square" aria-hidden="true"></i></a> <a class="btn btn-danger btn-sm"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <td width="100" align="center"> <a  id="add_purchase_item" class="btn btn-info btn-sm" name="add-invoice-item" onClick="addpruduct('proudt_item');"  tabindex="9"/><i class="fa fa-plus-square" aria-hidden="true"></i></a> <a class="btn btn-danger btn-sm"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>

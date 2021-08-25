@@ -81,7 +81,7 @@
                                         <th>Purchase Type</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th><?php echo display('supplier_name') ?></th>
-                                        <th>Currency</th>
+<!--                                        <th>Currency</th>-->
                                         <th>Unit Cost Price</th>
                                         <th><?php echo display('supplier_price') ?></th>
                                         <th><?php echo display('image') ?>s</th>
