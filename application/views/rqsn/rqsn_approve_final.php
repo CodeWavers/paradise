@@ -166,6 +166,7 @@
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Quantity</th>
                                         <th>Total</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -184,10 +185,16 @@
                                         <td><?php echo $rqsn_detail['sku']?></td>
                                         <td><?php echo $rqsn_detail['brand_name']?></td>
                                         <td><?php echo $rqsn_detail['model_name']?></td>
-                                        <td style="width: 5%;" ><?php echo $rqsn_detail['quantity']?></td>
+                                        <td style="width: 5%;" >
+
+
+                                            <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control" id="quantity" >
+
+                                        </td>
                                         <td style="width: 5%;" ><?php echo $rqsn_detail['total']?></td>
 
-
+                                        <td width="100" align="center"> <a class="btn btn-danger btn-sm"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
