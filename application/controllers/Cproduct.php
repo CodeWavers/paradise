@@ -140,13 +140,13 @@ class Cproduct extends CI_Controller {
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
-            $currency = $currency_name[$i];
+         //   $currency = $currency_name[$i];
 
             $supp_prd = array(
                 'product_id'     => $product_id,
                 'product_id_two'     => $product_id_two,
                 'supplier_id'    => $supp_id,
-                'currency'    => $currency,
+              //  'currency'    => $currency,
                 'supplier_price' => $supplier_price,
                 'products_model' => $product_model = $this->input->post('model_id',TRUE)
             );
@@ -463,20 +463,20 @@ class Cproduct extends CI_Controller {
         $this->db->delete('supplier_product');
         $sup_price = $this->input->post('supplier_price',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
-        $currency_name = $this->input->post('currency',TRUE);
+       // $currency_name = $this->input->post('currency',TRUE);
 
 
         $date=date('Y-m-d');
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
-            $currency = $currency_name[$i];
+          //  $currency = $currency_name[$i];
 
             $supp_prd = array(
                 'product_id'     => $product_id,
                 'product_id_two'     => $product_id_two,
                 'supplier_id'    => $supp_id,
-                'currency'    => $currency,
+                //'currency'    => $currency,
                 'supplier_price' => $supplier_price
             );
 

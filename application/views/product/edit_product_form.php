@@ -328,7 +328,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center"><?php echo display('supplier') ?> </th>
-                                    <th class="text-center">Currency</th>
+<!--                                    <th class="text-center">Currency</th>-->
                                     <th class="text-center"><?php echo display('supplier_price') ?></th>
 
                                     <th class="text-center"><?php echo display('action') ?> </th>
@@ -359,36 +359,36 @@
                                             ?>
                                         </select>
                                     </td>
-                                    <td width="300">
-                                        <select name="currency[]" class="form-control"  tabindex="8">
+<!--                                    <td width="300">-->
+<!--                                        <select name="currency[]" class="form-control"  tabindex="8">-->
+<!---->
+<!--                                            --><?php //foreach ($currency as $currency) { ?>
+<!--                                                <option value="--><?php //echo $currency['currency_name'] ?><!--">--><?php //echo $currency['currency_name'] ?><!-- </option>-->
+<!---->
+<!---->
+<!--                                            --><?php //} ?>
+<!---->
+<!--                                            --><?php
+//                                            if ($supplier_selected) {
+//                                                ?>
+<!--                                                {supplier_selected}-->
+<!--                                                <option selected value="{currency}">{currency} </option>-->
+<!--                                                {/supplier_selected}-->
+<!--                                                --><?php
+//                                            } else {
+//                                                ?>
+<!--                                                <option selected value="0">Currency not selected</option>-->
+<!--                                                --><?php
+//                                            }
+//                                            ?>
+<!--                                        </select>-->
+<!--                                    </td>-->
 
-                                            <?php foreach ($currency as $currency) { ?>
-                                                <option value="<?php echo $currency['currency_name'] ?>"><?php echo $currency['currency_name'] ?> </option>
-
-
-                                            <?php } ?>
-
-                                            <?php
-                                            if ($supplier_selected) {
-                                                ?>
-                                                {supplier_selected}
-                                                <option selected value="{currency}">{currency} </option>
-                                                {/supplier_selected}
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <option selected value="0">Currency not selected</option>
-                                                <?php
-                                            }
-                                            ?>
-                                        </select>
-                                    </td>
-
-                                    <td class="">
+                                    <td  width="300">
                                         <input type="text" tabindex="6" class="form-control text-right" name="supplier_price[]" placeholder="0.00"    min="0" value="{supplier_price}"/>
                                     </td>
 
-                                    <td width="100"> <a  id="add_purchase_item" class="btn btn-info btn-sm" name="add-invoice-item" onClick="addpruduct('proudt_item');"  tabindex="9"/><i class="fa fa-plus-square" aria-hidden="true"></i></a> <a class="btn btn-danger btn-sm red"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <td width="100" align="center"> <a  id="add_purchase_item" class="btn btn-info btn-sm" name="add-invoice-item" onClick="addpruduct('proudt_item');"  tabindex="9"/><i class="fa fa-plus-square" aria-hidden="true"></i></a> <a class="btn btn-danger btn-sm red"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                                 {/supplier_product_data}
