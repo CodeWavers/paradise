@@ -128,13 +128,13 @@ function calculate_store(sl) {
 
     var additional_cost = parseFloat($("#additional_cost_"+sl).val());
 
-   // var bdt_price=currency_value*vendor_rate;
- //   $("#bdt_price_" + sl).val(bdt_price.toFixed(2));
+    var bdt_price=currency_value*vendor_rate;
+    $("#bdt_price_" + sl).val(bdt_price.toFixed(2));
 
     //console.log(currency_value);
     //console.log(bdt_price);
 
-    var total_price     = ((item_ctn_qty * vendor_rate) - ((item_ctn_qty * vendor_rate) * (discount / 100))) + additional_cost;
+    var total_price     = ((item_ctn_qty * bdt_price) - ((item_ctn_qty * bdt_price) * (discount / 100))) + additional_cost;
     $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
