@@ -11,6 +11,7 @@ class Cpurchase extends CI_Controller
     {
         parent::__construct();
         $this->db->query('SET SESSION sql_mode = ""');
+        $this->load->model('Purchases');
     }
 
 
@@ -99,7 +100,7 @@ class Cpurchase extends CI_Controller
                     $this->db->update('rqsn_details');
                 }
             }
-        }else{
+        } else {
 
             $this->db->where('product_id', $pr_id);
             $this->db->set('purchase_status', 1);
@@ -576,7 +577,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center">Stock</th>
                         <th class="text-center">Proposed Quantity</th>
                         <th class="text-center">Order Quantity</th>
-                        <th class="text-center">Supplier Name</th>                      
+                        <th class="text-center">Supplier Name</th>
                         <th class="text-center" >Warranty Date</th>
                         <th class="text-center">Price</th>
                         <th class="text-center">Additional Cost</th>
@@ -632,7 +633,7 @@ class Cpurchase extends CI_Controller
                                 <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right" value="' . $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "0.00") . '" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "00") . '" min="0" tabindex="7"/>
                             </td>
                             <td>
                                 <select style="width: 100px" name="supplier_name[]" id="supplier_drop_' . $count . '" class="form-control text-center"  onchange="get_price(' . $count . ')" >
@@ -662,7 +663,7 @@ class Cpurchase extends CI_Controller
 
             $output .= '</select>
                             </td>
-                      
+
                         <td>
                             <input type="date" class="form-control" id="warrenty_date_' . $count . '" name="warrenty_date[]" value="' . ($items['warrenty_date'] ? $items['warrenty_date'] : '') . '"/>
                         </td>
@@ -709,22 +710,43 @@ class Cpurchase extends CI_Controller
     public function add_row()
     {
         $pr_id = $this->input->post('pr_id', TRUE);
+        $supp_id = $this->input->post('supp_id', TRUE);
         $prop_qty = $this->input->post('prop_qty', TRUE);
         $pr_name = $this->input->post('product_name', TRUE);
         $sku = $this->input->post('sku', TRUE);
         $rq_id = $this->input->post('rqsn_id', TRUE);
+        $row_id = $this->input->post('row_id', TRUE);
 
-        $data = array(
-            'product_id'    => $pr_id,
-            'product_name'  => $pr_name,
-            'qty'           => $prop_qty,
-            'sku'           => $sku,
-            'rqsn_detail_id' => $rq_id
+        $data2 = array(
+            'order_qty' => $this->input->post('order_quantity', TRUE),
+            'warrenty_date' => $this->input->post('warrenty_date', TRUE),
+            'supplier_id'   => $supp_id,
+            'rate' => $this->input->post('price', TRUE),
+            'discount' => $this->input->post('discount', TRUE),
+            'total' => $this->input->post('row_total', TRUE),
+            'additional_cost' => $this->input->post('additional_cost', TRUE),
         );
+
+
+        // echo '<pre>'; print_r($supp_id); exit();
+
+        $this->db->where('id', $row_id);
+        // $this->db->where('supplier_id', $supp_id);
+        $this->db->update('purchase_order_cart', $data2);
+
+        // if (!($this->Purchases->cart_product($pr_id, $supp_id))) {
+            $data = array(
+                'product_id'    => $pr_id,
+                'product_name'  => $pr_name,
+                'qty'           => $prop_qty,
+                'sku'           => $sku,
+                'rqsn_detail_id' => $rq_id
+            );
+            $this->db->insert('purchase_order_cart', $data);
+        // }
 
         // echo '<pre>'; print_r($data); exit();
 
-        $this->db->insert('purchase_order_cart', $data);
 
         echo $this->load();
     }

@@ -1827,4 +1827,23 @@ class Purchases extends CI_Model {
 
 
     }
+
+    public function cart_product($product_id, $supplier_id)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order_cart');
+        $this->db->where('product_id', $product_id);
+        $this->db->where('supplier_id', $supplier_id);
+        $query = $this->db->get();
+
+        // echo '<pre>'; print_r($query->result_array()); die();
+
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+    }
+
 }

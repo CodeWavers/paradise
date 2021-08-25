@@ -145,6 +145,16 @@
         var pr_id = $("#product_id_" + sl).val();
         var prop_qty = $("#proposed_quantity_" + sl).val();
         var product_name = $("#product_name_" + sl).val();
+        var supplier_id = $("#supplier_drop_" + sl).val();
+        var row_id = $("#sl_id_" + sl).val();
+
+        var order_quantity = $("#order_quantity_" + sl).val();
+        var warrenty_date = $("#warrenty_date_" + sl).val();
+        var price = $("#product_rate_" + sl).val();
+        var discount = $("#discount_" + sl).val();
+        var row_total = $("#row_total_" + sl).val();
+        var additional_cost = $("#additional_cost_" + sl).val();
+
         var sku = $("#item_sku_" + sl).val();
         var rqsn_id = $("#rqsn_detail_id_" + sl).val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
@@ -157,8 +167,16 @@
                 pr_id:pr_id,
                 prop_qty: prop_qty,
                 product_name : product_name,
+                supp_id:supplier_id,
+                order_quantity : order_quantity,
+                warrenty_date: warrenty_date,
+                price: price,
+                discount: discount,
+                row_total: row_total,
+                additional_cost: additional_cost,
                 sku: sku,
-                rqsn_id: rqsn_id
+                rqsn_id: rqsn_id,
+                row_id: row_id
             },
             success:function(data)
             {
