@@ -76,8 +76,6 @@
                                                 <td class="text-center">{total_amount}</td>
                                             </tr>
                                             {/purchase_list}
-                                        <?php } else { ?>
-                                            <span class="text-center">No report to show</span>
                                         <?php } ?>
                                     </tbody>
 
