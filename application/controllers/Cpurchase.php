@@ -56,6 +56,59 @@ class Cpurchase extends CI_Controller
         redirect(base_url('Cpurchase/purchase_order_approve_new'));
     }
 
+    public function po_print($po_no)
+    {
+
+        $CI = & get_instance();
+        $CI->load->model('Web_settings');
+        $CI->load->model('Invoices');
+        $CI->load->model('Purchases');
+        $CI->load->library('occational');
+        $CI->load->library('numbertowords');
+        $taxfield = $CI->db->select('*')
+            ->from('tax_settings')
+            ->where('is_show',1)
+            ->get()
+            ->result_array();
+        $txregname ='';
+        foreach($taxfield as $txrgname){
+            $regname = $txrgname['tax_name'].' Reg No  - '.$txrgname['reg_no'].', ';
+            $txregname .= $regname;
+        }
+
+
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $company_info = $CI->Invoices->retrieve_company();
+
+
+        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no_new($po_no);
+
+        $i = 0;
+        foreach ($all_purchase_list as $k => $v) {
+            $i++;
+            $all_purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
+
+            //   $closing_inventory = array_sum(array_column($data,'purchase_total'));
+        }
+        $total = array_sum(array_column($all_purchase_list,'total_amount'));
+
+        $data = array(
+            'title'             => 'Approve PO',
+            'all_purchase_list'      => $all_purchase_list,
+            'total'      => $total,
+            'company_info'      => $company_info,
+            'currency'          => $currency_details[0]['currency'],
+            'position'          => $currency_details[0]['currency_position'],
+            'tax_regno'         => $txregname,
+
+        );
+
+         //echo '<pre>';print_r($data);exit();
+
+        $content =  $CI->parser->parse('purchase/po_print', $data, true);
+        $this->template->full_admin_html_view($content);
+    }
+
     public function product_receive()
     {
         $CI = &get_instance();
@@ -458,6 +511,35 @@ class Cpurchase extends CI_Controller
         echo json_encode($data);
     }
 
+    function purchase_remove()
+    {
+
+        $row_id = $_POST["row_id"];
+
+
+        $this->db->where('purchase_detail_id', $row_id);
+        $this->db->delete('product_purchase_details');
+
+        var_dump($row_id); ;
+        //   echo $this->view();
+    }
+
+    function purchase_approve()
+    {
+
+        $row_id = $_POST["row_id"];
+        $qty = $_POST["qty"];
+        $rate = $_POST["rate"];
+        $total_amount = $_POST["total_amount"];
+
+        $this->db->set(array('qty'=>$qty,'rate'=>$rate,'total_amount'=>$total_amount,'isAprv'=>3));
+        $this->db->where('purchase_detail_id', $row_id);
+        $this->db->update('product_purchase_details');
+
+        var_dump($row_id); ;
+        //   echo $this->view();
+    }
+
     public function purchase_order_approve_new()
     {
         $CI = &get_instance();
@@ -488,12 +570,12 @@ class Cpurchase extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
-    public function edit_purchase_order_new($PO_No, $supplier_id)
+    public function edit_purchase_order_new($PO_No)
     {
         $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('lpurchase');
-        $content = $CI->lpurchase->purchase_order_edit_form_new($PO_No, $supplier_id);
+        $content = $CI->lpurchase->purchase_order_edit_form_new($PO_No);
         $this->template->full_admin_html_view($content);
     }
 
