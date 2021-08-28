@@ -859,7 +859,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center">Current Stock</th>
                         <th class="text-center">Proposed Quantity</th>
                         <th class="text-center">Order Quantity</th>
-                        <th class="text-center">Supplier Name</th>
+                        <th class="text-center" >Supplier Name</th>
                         <th class="text-center">Warranty</th>
                         <th class="text-center">Unit Cost</th>
                         <th class="text-center">Discount</th>
@@ -880,9 +880,9 @@ class Cpurchase extends CI_Controller
             // echo '<pre>'; print_r($items['additional_cost']); exit();
             $tot = "";
 
-            // if ($items['total']) {
-            //     $tot = $items['total'];
-            // }
+            if ($items['total_amount']) {
+                $tot = $items['total_amount'];
+            }
 
             $add_cost = "00";
 
@@ -919,7 +919,7 @@ class Cpurchase extends CI_Controller
                             </td>
 
                             <td>
-                            <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control">
+                            <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control" >
                                 ';
 
 
@@ -1114,7 +1114,7 @@ class Cpurchase extends CI_Controller
             $this->db->where('id', $row_id);
             $this->db->delete('product_purchase_details');
 
-           $this->get_purchase_details();
+            return $this->get_purchase_details();
 
     }
 }

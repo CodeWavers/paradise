@@ -68,12 +68,12 @@
                                         <?php if ($purchase_list) { ?>
                                             {purchase_list}
                                             <tr>
-                                                <td>{sl}</td>
-                                                <td>{purchase_date}</td>
-                                                <td>{product_name}</td>
-                                                <td>{purchase_order}</td>
-                                                <td>{qty}</td>
-                                                <td>{total_amount}</td>
+                                                <td class="text-center">{sl}</td>
+                                                <td class="text-center">{purchase_date}</td>
+                                                <td class="text-center">{product_name}</td>
+                                                <td class="text-center">{purchase_order}</td>
+                                                <td class="text-center">{qty}</td>
+                                                <td class="text-center">{total_amount}</td>
                                             </tr>
                                             {/purchase_list}
                                         <?php } else { ?>

@@ -200,7 +200,7 @@ $(document).on('click', '.remove_inventory', function(){
                     success:function(data)
                     {
                         toastr.warning("Product removed from Purchase!");
-                        $('#cart_details').html(data);
+                        get_purchase_details();
                     }
                 });
             }

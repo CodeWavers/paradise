@@ -474,9 +474,9 @@ function productList_with_cat_subcat(sl) {
                 },
                 cache: false,
                 success: function() {
-                    console.log('ok');
+                    toastr.success('Product Added.');
                     get_purchase_details();
-
+                    $("#product_name_1").val('');
                 }
             });
 
