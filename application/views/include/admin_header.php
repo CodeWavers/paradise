@@ -877,8 +877,16 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
 
                             }
-                            ?>"><a href="<?php echo base_url('Admin_dashboard/purchase_cheque_report') ?>">Manage Cheque</a></li>
+                            ?>"><a href="<?php echo base_url('Creport/purchase_cheque_report') ?>">Manage Cheque</a></li>
 
+                                                    <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("approval_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+
+                            }
+                            ?>"><a href="<?php echo base_url('Creport/approval_report') ?>">Approval Report</a></li>
                         <?php } ?>
 
                         <?php if($this->permission1->method('purchase_cheque_report','create')->access()){ ?>

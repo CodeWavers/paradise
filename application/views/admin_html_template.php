@@ -27,7 +27,7 @@
 
        <!-- jquery ui css -->
         <link href="<?php echo base_url('assets/css/jquery-ui.min.css') ?>" rel="stylesheet" type="text/css"/>
-        <!-- Bootstrap --> 
+        <!-- Bootstrap -->
         <link href="<?php echo base_url("assets/css/bootstrap.min.css"); ?>" rel="stylesheet" type="text/css"/>
         <?php if (!empty($Web_settings[0]['rtr']) && $Web_settings[0]['rtr'] == 1) {  ?>
         <!-- THEME RTL -->
@@ -36,29 +36,29 @@
         <?php } ?>
         <!-- Font Awesome 4.7.0 -->
         <link href="<?php echo base_url('assets/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"/>
-  
+
         <!-- sliderAccess css -->
-        <link href="<?php echo base_url(); ?>assets/css/jquery-ui-timepicker-addon.min.css" rel="stylesheet" type="text/css"/> 
+        <link href="<?php echo base_url(); ?>assets/css/jquery-ui-timepicker-addon.min.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo base_url() ?>assets/css/wickedpicker.min.css" rel="stylesheet" type="text/css"/>
         <!-- slider  -->
-        <link href="<?php echo base_url(); ?>assets/css/select2.min.css" rel="stylesheet" type="text/css"/> 
+        <link href="<?php echo base_url(); ?>assets/css/select2.min.css" rel="stylesheet" type="text/css"/>
         <!-- DataTables CSS -->
-        <link href="<?php echo base_url('assets/datatables/dataTables.min.css') ?>" rel="stylesheet" type="text/css"/> 
+        <link href="<?php echo base_url('assets/datatables/dataTables.min.css') ?>" rel="stylesheet" type="text/css"/>
           <!-- pe-icon-7-stroke -->
-        <link href="<?php echo base_url('assets/css/pe-icon-7-stroke.css') ?>" rel="stylesheet" type="text/css"/> 
+        <link href="<?php echo base_url('assets/css/pe-icon-7-stroke.css') ?>" rel="stylesheet" type="text/css"/>
         <!-- themify icon css -->
-        <link href="<?php echo base_url('assets/css/themify-icons.css') ?>" rel="stylesheet" type="text/css"/> 
+        <link href="<?php echo base_url('assets/css/themify-icons.css') ?>" rel="stylesheet" type="text/css"/>
         <!-- Pace css -->
         <link href="<?php echo base_url('assets/plugins/toastr/toastr.css'); ?>" rel=stylesheet type="text/css"/>
-   
+
         <link href="<?php echo base_url('assets/css/bootstrap-toggle.min.css') ?>" rel="stylesheet" type="text/css"/>
         <!-- Theme style -->
         <link href="<?php echo base_url('assets/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo base_url('assets/css/style.css') ?>" rel="stylesheet" type="text/css"/>
-        
+
         <link href="<?php echo base_url('assets/js/sweetalert/sweetalert.css') ?>" rel="stylesheet" type="text/css"/>
         <!-- summernote css -->
-       
+
         <?php if (!empty($Web_settings[0]['rtr']) && $Web_settings[0]['rtr'] == 1) {  ?>
             <!-- THEME RTL -->
             <link href="<?php echo base_url('assets/css/custom-rtl.css') ?>" rel="stylesheet" type="text/css"/>
@@ -107,23 +107,23 @@
         <!-- ./wrapper -->
 
         <!-- Start Core Plugins-->
-        <!-- jquery-ui --> 
-        
+        <!-- jquery-ui -->
+
           <!-- jquery-ui js -->
 
-        <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script> 
+        <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>
         <!-- bootstrap js -->
-        <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>" type="text/javascript"></script>  
+        <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>" type="text/javascript"></script>
         <!-- pace js -->
-        <script src="<?php echo base_url('assets/js/pace.min.js') ?>" type="text/javascript"></script>  
+        <script src="<?php echo base_url('assets/js/pace.min.js') ?>" type="text/javascript"></script>
         <!-- SlimScroll -->
-        <script src="<?php echo base_url('assets/js/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>  
+        <script src="<?php echo base_url('assets/js/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
         <!-- bootstrap timepicker -->
-     
-        <script src="<?php echo base_url() ?>assets/js/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script> 
+
+        <script src="<?php echo base_url() ?>assets/js/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
         <!-- select2 js -->
         <script src="<?php echo base_url() ?>assets/js/select2.min.js" type="text/javascript"></script>
-    
+
 
 
         <!-- ChartJs JavaScript -->
@@ -132,10 +132,10 @@
         <!-- DataTables JavaScript -->
         <script src="<?php echo base_url("assets/datatables/dataTables.min.js") ?>"></script>
         <!-- Table Head Fixer -->
-        <script src="<?php echo base_url() ?>assets/js/tableHeadFixer.js" type="text/javascript"></script> 
+        <script src="<?php echo base_url() ?>assets/js/tableHeadFixer.js" type="text/javascript"></script>
         <!-- Admin Script -->
-        <script src="<?php echo base_url('assets/js/frame.js') ?>" type="text/javascript"></script> 
-        <script src="<?php echo base_url('assets/js/bootstrap-toggle.min.js') ?>" type="text/javascript"></script> 
+        <script src="<?php echo base_url('assets/js/frame.js') ?>" type="text/javascript"></script>
+        <script src="<?php echo base_url('assets/js/bootstrap-toggle.min.js') ?>" type="text/javascript"></script>
         <script src="<?php echo base_url('assets/plugins/toastr/toastr.min.js'); ?>"></script>
         <script src="<?php echo base_url() ?>assets/js/sweetalert/sweetalert.min.js" type="text/javascript"></script>
         <!-- Custom Theme JavaScript -->
@@ -144,6 +144,6 @@
 
  <script src="<?php echo base_url() ?>assets/js/jstree.min.js" ></script>
 
-      
+
     </body>
 </html>

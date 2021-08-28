@@ -2196,6 +2196,29 @@ class Lreport extends CI_Model
         return $reportList;
     }
 
+    public function approval_report()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Reports');
+        $purchase_list = $CI->Reports->get_approved_purchase();
+
+        if (!empty($purchase_list)) {
+            $i = 0;
+            foreach ($purchase_list as $k => $v) {
+                $i++;
+                $purchase_list[$k]['sl']         = $i;
+            }
+        }
+
+        $data = array(
+            'title' => 'Approval Report',
+            'purchase_list' => $purchase_list,
+        );
+
+        $content = $CI->parser->parse('report/approval_report_view', $data, true);
+        return $content;
+    }
+
 }
 
 ?>

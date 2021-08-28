@@ -2801,4 +2801,21 @@ class reports extends CI_Model {
         );
     }
 
+    public function get_approved_purchase()
+    {
+        $this->db->select('*');
+        $this->db->from('product_purchase_details a');
+        $this->db->join('product_purchase b', 'b.purchase_id=a.purchase_id');
+        $this->db->join('product_information c', 'c.product_id=a.product_id');
+        $this->db->where('a.isAprv', 1);
+        $this->db->order_by('b.purchase_date', 'ASC');
+        $query = $this->db->get();
+        // echo '<pre>';print_r($query->result_array());exit();
+        if($query->num_rows() > 0){
+            return $query->result_array();
+        }
+        return false;
+
+    }
+
 }

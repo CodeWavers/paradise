@@ -156,7 +156,7 @@ class Creport extends CI_Controller {
         $links = $this->pagination->create_links();
         #
         #pagination ends
-        #  
+        #
         $content = $this->lreport->stock_report_supplier_wise($product_id, $supplier_id, $date, $links, $config["per_page"], $page);
 
 
@@ -210,7 +210,7 @@ class Creport extends CI_Controller {
         $links = $this->pagination->create_links();
         #
         #pagination ends
-        #  
+        #
         $content = $this->lreport->stock_report_product_date_date_wise($from_date, $to_date, $links, $config["per_page"], $page);
 
 
@@ -265,7 +265,7 @@ class Creport extends CI_Controller {
         $links = $this->pagination->create_links();
         #
         #pagination ends
-        #  
+        #
         $content = $this->lreport->stock_report_product_wise($supplier_id, $from_date, $to_date, $links, $config["per_page"], $page);
 
         $this->template->full_admin_html_view($content);
@@ -396,6 +396,14 @@ class Creport extends CI_Controller {
         $file_path = 'assets/data/pdf/'.'stock_report'.$time.'.pdf';
         $file_name = 'stock_report'.$time.'.pdf';
         force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
+    }
+
+    public function approval_report()
+    {
+        $CI = & get_instance();
+        $CI->load->library('lreport');
+        $content = $this->lreport->approval_report();
+        $this->template->full_admin_html_view($content);
     }
 
 }
