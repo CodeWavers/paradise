@@ -179,7 +179,9 @@
                                         <td><?php echo $rqsn_detail['subcat_name']?></td>
                                         <td>
                                             <?php echo $rqsn_detail['product_name']?>
+
                                             <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="" >
+                                            <input type="hidden" value="<?php echo $rqsn_detail['rqsn_detail_id']?>" name="rqsn_detail_id[]" class="form-control" id="" >
                                         </td>
                                         <td><?php echo $rqsn_detail['parts']?></td>
                                         <td><?php echo $rqsn_detail['sku']?></td>
@@ -193,7 +195,7 @@
                                         </td>
                                         <td style="width: 5%;" ><?php echo $rqsn_detail['total']?></td>
 
-                                        <td width="100" align="center"> <a class="btn btn-danger btn-sm"  value="<?php echo display('delete') ?>" onclick="deleteRow(this)" tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <td width="100" align="center"> <a class="btn btn-danger btn-sm remove_inventory"  value="<?php echo display('delete') ?>" onclick="deleteRow(this,<?php echo $rqsn_detail['rqsn_detail_id']?>)"  tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
@@ -225,22 +227,33 @@
 </div>
 <!-- Invoice Report End -->
 
-<script>
+<script type="text/javascript">
+
+    // $(document).ready( function () {
+    //     $('#add_rqsn_table').DataTable();
+    // } );
 
 
-    $(document).on('click', '.remove_inventory', function(){
-        var row_id = $(this).attr("id");
+    function deleteRow(e,row_id){
+
+        var a = e.parentNode.parentNode;
+        //var row_id = $(this).attr("data-id");
+        console.log(row_id)
         var csrf_test_name = $('[name="csrf_test_name"]').val();
         if(confirm("Are you sure you want to remove this?"))
         {
             $.ajax({
-                url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
+                url:"<?php echo base_url(); ?>Crqsn/remove",
                 method:"POST",
                 data:{csrf_test_name:csrf_test_name,row_id:row_id},
                 success:function(data)
                 {
-                    toastr.success("Product removed from Cart!");
-                    $('#cart_details').html(data);
+
+                    // console.log(data)
+                    toastr.error("Product removed from Requisition!");
+                    a.parentNode.removeChild(a);
+                    //  $('#add_rqsn_table').load("<?php echo base_url();?>/Crqsn/approve_rqsn_final/"+row_id);
+                    // $('#add_rqsn_table').load();
                 }
             });
         }
@@ -248,5 +261,33 @@
         {
             return false;
         }
-    });
+    }
+
+    //$(document).on('click', '.remove_inventory', function(e){
+    //    var a = e.parentNode.parentNode;
+    //    var row_id = $(this).attr("data-id");
+    //    console.log(row_id)
+    //    var csrf_test_name = $('[name="csrf_test_name"]').val();
+    //    if(confirm("Are you sure you want to remove this?"))
+    //    {
+    //        $.ajax({
+    //            url:"<?php //echo base_url(); ?>//Crqsn/remove",
+    //            method:"POST",
+    //            data:{csrf_test_name:csrf_test_name,row_id:row_id},
+    //            success:function(data)
+    //            {
+    //
+    //               // console.log(data)
+    //                toastr.error("Product removed from Requisition!");
+    //                a.parentNode.removeChild(a);
+    //              //  $('#add_rqsn_table').load("<?php //echo base_url();?>///Crqsn/approve_rqsn_final/"+row_id);
+    //               // $('#add_rqsn_table').load();
+    //            }
+    //        });
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //});
 </script>

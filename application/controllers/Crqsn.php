@@ -22,6 +22,24 @@ class Crqsn extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    function remove()
+    {
+
+        $row_id = $_POST["row_id"];
+
+//      $id=  strval($row_id);
+       // $row_id = $this->input->post('rqsn_detail_id',TRUE);
+        //        $data = array(
+        //            'rowid'  => $row_id,
+        //            'qty'  => 0
+        //        );
+        $this->db->where('rqsn_detail_id', $row_id);
+        $this->db->delete('rqsn_details');
+
+        var_dump($row_id); ;
+     //   echo $this->view();
+    }
+
 
 
       public function rqsn_form() {

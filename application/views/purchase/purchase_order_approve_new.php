@@ -64,7 +64,7 @@
                                 <tr>
                                     <th class="text-center"><?php echo display('sl') ?></th>
                                     <th class="text-center">Purchase Order No.</th>
-                                    <th class="text-center">Supplier Name.</th>
+<!--                                    <th class="text-center">Supplier Name.</th>-->
                                     <th class="text-center"><?php echo display('action') ?></th>
                                 </tr>
                                 </thead>
@@ -73,9 +73,9 @@
                                 <tr>
                                     <td class="text-center">{sl}</td>
                                     <td class="text-center">{purchase_order}</td>
-                                    <td class="text-center">{supplier_name}</td>
+<!--                                    <td class="text-center">{supplier_name}</td>-->
                                     <td class="text-center">
-                                        <a href="<?= base_url()?>Cpurchase/edit_purchase_order_new/{purchase_order}/{supplier_id}">
+                                        <a href="<?= base_url()?>Cpurchase/edit_purchase_order_new/{purchase_order}">
                                             <button type="button" class="btn btn-success"><i class="fa fa-pencil"></i></button>
                                         </a>
                                     </td>

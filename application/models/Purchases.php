@@ -1171,8 +1171,12 @@ class Purchases extends CI_Model {
     public function update_po_new() {
           date_default_timezone_set("Asia/Dhaka");
           $purchase_id  = $this->input->post('purchase_id',TRUE);
+          $purchase_detail_id  = $this->input->post('purchase_detail_id',TRUE);
           $po_no  = $this->input->post('pur_order_no',TRUE);
-          $invoice_no  = $this->input->post('invoice_no',TRUE);
+          $qty  = $this->input->post('quantity',TRUE);
+          $rate  = $this->input->post('rate',TRUE);
+          $total  = $this->input->post('total_amount',TRUE);
+        //  $invoice_no  = $this->input->post('invoice_no',TRUE);
 //          $paid_amount  = $this->input->post('paid_amount',TRUE);
 //          $due_amount   = $this->input->post('due_amount',TRUE);
 //          $grand_total   = $this->input->post('grand_total',TRUE);
@@ -1193,33 +1197,33 @@ class Purchases extends CI_Model {
         $receive_by=$this->session->userdata('user_id');
         $receive_date=date('Y-m-d');
         $createdate=date('Y-m-d H:i:s');
-        if ($_FILES['image']['name']) {
-            //Chapter chapter add start
-            $config['upload_path']   = './my-assets/image/product/';
-            $config['allowed_types'] = 'gif|jpg|png|jpeg|JPEG|GIF|JPG|PNG';
-            $config['encrypt_name']  = TRUE;
-
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('image')) {
-                $error = array('error' => $this->upload->display_errors());
-                $this->session->set_userdata(array('error_message' => $this->upload->display_errors()));
-                redirect(base_url('Cpurchase/purchase_order_approve_new'));
-            } else {
-
-                $imgdata = $this->upload->data();
-                $image = $config['upload_path'].$imgdata['file_name'];
-                $config['image_library']  = 'gd2';
-                $config['source_image']   = $image;
-                $config['create_thumb']   = false;
-                $config['maintain_ratio'] = TRUE;
-                $config['width']          = 500;
-                $config['height']         = 500;
-                $this->load->library('image_lib', $config);
-                $this->image_lib->resize();
-                $image_url = base_url() . $image;
-            }
-
-        }
+//        if ($_FILES['image']['name']) {
+//            //Chapter chapter add start
+//            $config['upload_path']   = './my-assets/image/product/';
+//            $config['allowed_types'] = 'gif|jpg|png|jpeg|JPEG|GIF|JPG|PNG';
+//            $config['encrypt_name']  = TRUE;
+//
+//            $this->load->library('upload', $config);
+//            if (!$this->upload->do_upload('image')) {
+//                $error = array('error' => $this->upload->display_errors());
+//                $this->session->set_userdata(array('error_message' => $this->upload->display_errors()));
+//                redirect(base_url('Cpurchase/purchase_order_approve_new'));
+//            } else {
+//
+//                $imgdata = $this->upload->data();
+//                $image = $config['upload_path'].$imgdata['file_name'];
+//                $config['image_library']  = 'gd2';
+//                $config['source_image']   = $image;
+//                $config['create_thumb']   = false;
+//                $config['maintain_ratio'] = TRUE;
+//                $config['width']          = 500;
+//                $config['height']         = 500;
+//                $this->load->library('image_lib', $config);
+//                $this->image_lib->resize();
+//                $image_url = base_url() . $image;
+//            }
+//
+//        }
 
 //        $data = array(
 //
@@ -1240,22 +1244,36 @@ class Purchases extends CI_Model {
 
 
 
-        $data = array(
 
 
+                for ($i = 0, $n = count($p_id); $i < $n; $i++) {
 
-             'invoice_no'=>$invoice_no,
-             'supplier_invoice'=>(!empty($image_url) ? $image_url : base_url('my-assets/image/product.png')),
-         //   'grand_total_amount'=>$grand_total,
-              'isaprv' =>3,
-        );
+            $quantity = $qty[$i];
+            $rate_n = $rate[$i];
+            $total_amount = $total[$i];
+            $purchase_detail = $purchase_detail_id[$i];
+            $product_id = $p_id[$i];
+
+                    $data = array(
+
+                        'qty'=>$quantity,
+                        'rate'=>$rate_n,
+                        'total_amount'=>$total_amount,
+                        'isaprv' =>3,
+                    );
+
+//                $this->db->insert('supplier_product_price', $data1);
+
+                   // $this->db->where('purchase_id',$purchase_id);
+                    $this->db->where('purchase_detail_id',$purchase_detail);
+                    $this->db->update('product_purchase_details',$data);
+
+        }
 
 
 
        // $this->db->set('isAprv',3);
-        $this->db->where('purchase_id',$purchase_id);
-        $this->db->where('supplier_id',$supplier_id);
-        $this->db->update('product_purchase_details',$data);
+
 
 
 //         $cashinhand = array(
@@ -1689,22 +1707,25 @@ class Purchases extends CI_Model {
         $this->db->select('*');
         $this->db->from('product_purchase a');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
-        $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
-        $this->db->where('b.isAprv',2)->order_by('a.purchase_order', 'desc');
+     //   $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
+        $this->db->where('b.isAprv',2)->order_by('a.purchase_order', 'desc')->group_by('a.purchase_order');
         $query = $this->db->get();
         return $query->result_array();
     }
 
 
-    public function purchase_list_details_by_po_no_new($PO_no,$supplier_id)
+    public function purchase_list_details_by_po_no_new($PO_no)
     {
-        $this->db->select('a.*, b.*,c.product_name, c.parts,d.supplier_name');
+        $this->db->select('*');
         $this->db->from('product_purchase a');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
-        $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
+        $this->db->join('product_brand d', 'c.brand_id = d.brand_id','left');
+        $this->db->join('product_model e', 'c.product_model = e.model_id','left');
+     //.   $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
         $this->db->where('a.purchase_order', $PO_no);
-        $this->db->where('b.supplier_id', $supplier_id);
+        $this->db->where('b.isAprv', 2);
+     //   $this->db->where('b.supplier_id', $supplier_id);
 
         $query = $this->db->get();
 

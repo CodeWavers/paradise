@@ -404,12 +404,12 @@ class Lpurchase {
         return $purchaseList;
     }
 
-    public function purchase_order_edit_form_new($PO_No,$supplier_id)
+    public function purchase_order_edit_form_new($PO_No)
     {
         $CI = & get_instance();
         $CI->load->model('Purchases');
 
-        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no_new($PO_No,$supplier_id);
+        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no_new($PO_No);
 
         $i = 0;
         foreach ($all_purchase_list as $k => $v) {
@@ -429,7 +429,7 @@ class Lpurchase {
             'total' => $total,
         );
 
-       // echo '<pre>'; print_r($data);exit();
+     //   echo '<pre>'; print_r($data);exit();
         $purchaseList = $CI->parser->parse('purchase/purchase_order_approve_edit_new', $data, true);
         return $purchaseList;
     }
