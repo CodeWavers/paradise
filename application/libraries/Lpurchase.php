@@ -17,7 +17,7 @@ class Lpurchase {
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $bank_list        = $CI->Web_settings->bank_list();
         $data = array(
-            'title'         => display('add_purchase'),
+            'title'         => 'Purchase Order',
             'all_supplier'  => $all_supplier,
             'invoice_no'    => $CI->auth->generator(10),
             'discount_type' => $currency_details[0]['discount_type'],
@@ -456,6 +456,33 @@ class Lpurchase {
 
         return $CI->parser->parse('purchase/purchase_list_form', $data, true);
 
+    }
+
+    public function add_purchase_form()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Purchases');
+        $CI->load->model('Categories');
+        $CI->load->model('Web_settings');
+        $all_supplier = $CI->Purchases->select_all_supplier();
+        $order_no = $CI->Purchases->number_generator();
+        $category_list = $CI->Categories->category_list();
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $bank_list        = $CI->Web_settings->bank_list();
+        $po_list = $CI->Purchases->PO_approved_list();
+        $data = array(
+            'title'         => display('add_purchase'),
+            'all_supplier'  => $all_supplier,
+            'invoice_no'    => $CI->auth->generator(10),
+            'discount_type' => $currency_details[0]['discount_type'],
+            'bank_list'     => $bank_list,
+            'order_no'      => $order_no,
+            'category_list' => $category_list,
+            'po_list'       => $po_list
+        );
+        // echo '<pre>';print_r($data);die();
+        $purchaseForm = $CI->parser->parse('purchase/add_purchase_new', $data, true);
+        return $purchaseForm;
     }
 
 }

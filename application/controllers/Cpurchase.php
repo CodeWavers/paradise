@@ -222,10 +222,12 @@ class Cpurchase extends CI_Controller
         $this->session->set_userdata(array('message' => display('successfully_added')));
         if (isset($_POST['save_as_draft'])) {
             $CI->Purchases->PO_cart_update();
+            // exit();
             redirect(base_url('Cpurchase'));
             exit;
         } elseif (isset($_POST['finalize'])) {
             $CI->Purchases->purchase_entry_new();
+            // exit();
             redirect(base_url('Cpurchase'));
             exit;
         }
@@ -574,15 +576,12 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="4%">SN</th>
                         <th class="text-center" width="8%">Product Name</th>
                         <th class="text-center" width="8%">SKU</th>
-                        <th class="text-center">Stock</th>
+                        <th class="text-center">Current Stock</th>
                         <th class="text-center">Proposed Quantity</th>
                         <th class="text-center">Order Quantity</th>
-                        <th class="text-center">Supplier Name</th>
-                        <th class="text-center" >Warranty Date</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Additional Cost</th>
-                        <th class="text-center">Discount (%)</th>
-                        <th class="text-center">Total(BDT)</th>
+
+                        <th class="text-center">Est. Price</th>
+                        <th class="text-center">Total</th>
                         <th width=8% class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -633,10 +632,9 @@ class Cpurchase extends CI_Controller
                                 <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right" value="' . $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "00") . '" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "00") . '" min="0" tabindex="7"/>
                             </td>
-                            <td>
-                                <select style="width: 100px" name="supplier_name[]" id="supplier_drop_' . $count . '" class="form-control text-center"  onchange="get_price(' . $count . ')" >
+
                                 ';
 
 
@@ -644,39 +642,30 @@ class Cpurchase extends CI_Controller
 
 
             // $output .= '<option value='.$supp['supplier_id'].'>'.$supp['supplier_name'].'</option>';
-            if ($items['supplier_id']) {
-                foreach ($supplier_list as $supp) {
-                    if ($items['supplier_id'] == $supp['supplier_id']) {
-                        $output .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
-                    } else {
-                        $output .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
-                    }
-                }
-            } else {
-                $output .= '<option value="">Select Option</option>';
-                foreach ($supplier_list as $supp) {
-                    $output .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
-                }
-            }
+            // if ($items['supplier_id']) {
+            //     foreach ($supplier_list as $supp) {
+            //         if ($items['supplier_id'] == $supp['supplier_id']) {
+            //             $output .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
+            //         } else {
+            //             $output .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+            //         }
+            //     }
+            // } else {
+            //     $output .= '<option value="">Select Option</option>';
+            //     foreach ($supplier_list as $supp) {
+            //         $output .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+            //     }
+            // }
 
 
 
-            $output .= '</select>
-                            </td>
+            $output .= '
 
-                        <td>
-                            <input type="date" class="form-control" id="warrenty_date_' . $count . '" name="warrenty_date[]" value="' . ($items['warrenty_date'] ? $items['warrenty_date'] : '') . '"/>
-                        </td>
                                 <td class="text-right">
-                                    <input type="hidden" style="width: 100px" name="bdt_price[]" id="bdt_price_' . $count . '" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="0.00"  tabindex="6"/>
-                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6"/>
+                                    <input type="hidden" style="width: 100px" name="bdt_price[]" id="bdt_price_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="0.00"  tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6"/>
                                 </td>
-                                <td >
-                                    <input type="text" class="form-control text-right" id="additional_cost_' . $count . '" name="additional_cost[]" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" value="' . $add_cost . '"/>
-                                </td>
-                                <td class="text-right">
-                                    <input class="form-control discount text-right" onkeyup="calculate_store(' . $count . ');" onchange="calculate_store(' . $count . ');" type="text" name="discount[]" id="discount_' . $count . '" value="' . ($items['discount'] ? $items['discount'] : "00") . '"/>
-                                </td>
+
                                 <td class="text-left">
                                     <input type="text" class="form-control row_total" name="row_total[]" value="' . $tot . '" id = "row_total_' . $count . '" class="row_total" readonly>
                                 </td>
@@ -691,9 +680,9 @@ class Cpurchase extends CI_Controller
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="12" class="text-right"><b>Grand Total:</b></td>
+                    <td colspan="7" class="text-right"><b>Grand Total:</b></td>
                     <td>
-                    <input class="form-control" id="grand_total" value=' . $total . ' readonly/>
+                    <input class="form-control" name="total" id="grand_total" value=' . $total . ' readonly/>
                 </td>
                 </tr>
             </tfoot>
@@ -735,19 +724,311 @@ class Cpurchase extends CI_Controller
         $this->db->update('purchase_order_cart', $data2);
 
         // if (!($this->Purchases->cart_product($pr_id, $supp_id))) {
-            $data = array(
-                'product_id'    => $pr_id,
-                'product_name'  => $pr_name,
-                'qty'           => $prop_qty,
-                'sku'           => $sku,
-                'rqsn_detail_id' => $rq_id
-            );
-            $this->db->insert('purchase_order_cart', $data);
+        $data = array(
+            'product_id'    => $pr_id,
+            'product_name'  => $pr_name,
+            'qty'           => $prop_qty,
+            'sku'           => $sku,
+            'rqsn_detail_id' => $rq_id
+        );
+        $this->db->insert('purchase_order_cart', $data);
         // }
 
         // echo '<pre>'; print_r($data); exit();
 
 
         echo $this->load();
+    }
+
+    public function add_purchase()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->add_purchase_form();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function get_purchase_details()
+    {
+
+        $po_id = $this->input->post('po_id', TRUE);
+
+        $this->load->model("Purchases");
+        $this->load->model("Products");
+        $this->load->model("Suppliers");
+        //   $product_id=$_POST["product_id"];
+        $cart_list = $this->Purchases->purchase_details($po_id);
+
+        // $total = array_sum(array_column($cart_list, 'total'));
+        $op = '';
+        $op .= '
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="purchaseTable">
+                <thead>
+                     <tr>
+                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="8%">Product Name</th>
+                        <th class="text-center" width="8%">SKU</th>
+                        <th class="text-center">Current Stock</th>
+                        <th class="text-center">Proposed Quantity</th>
+                        <th class="text-center">Order Quantity</th>
+                        <th class="text-center">Supplier Name</th>
+                        <th class="text-center">Warranty</th>
+                        <th class="text-center">Unit Cost</th>
+                        <th class="text-center">Discount</th>
+                        <th class="text-center">Additional Cost</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center">Chalan/Bill No.</th>
+                        <th width=8% class="text-center">Bill Image</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="addPurchaseItem">';
+
+
+        $count = 0;
+        foreach ($cart_list as $items) {
+
+
+            // echo '<pre>'; print_r($items['additional_cost']); exit();
+            $tot = "";
+
+            // if ($items['total']) {
+            //     $tot = $items['total'];
+            // }
+
+            $add_cost = "00";
+
+            // if ($items['additional_cost']) {
+            //     $add_cost = $items['additional_cost'];
+            // }
+
+
+            $product_id = $items['product_id'];
+            $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            $supplier_list = $this->Suppliers->supplier_list();
+            // echo '<pre>'; print_r($items['warrenty_date']); exit();
+            $count++;
+            $op .= '
+                        <tr>
+                        <td class="wt"> ' . $count . '</td>
+                        <td class="span3 supplier">
+                            <span>' . $items['product_name'] . '</span>
+                            <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
+                            <input type="hidden" class="sl" value="' . $count . '">
+                            <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
+                            <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
+                            <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
+                        </td>
+                            <td class="wt">' . $items['sku'] . '</td>
+                            <td class="wt">
+                                <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00" readonly/>
+                            </td>
+                            <td class="test">
+                                <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right" value="' . $items['quantity'] . '" min="0" tabindex="7" readonly/>
+                            </td>
+                            <td class="test">
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . $items['qty'] . '" min="0" tabindex="7"/>
+                            </td>
+
+                            <td>
+                            <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control">
+                                ';
+
+
+
+
+
+
+            foreach ($supplier_list as $supp) {
+                $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+            }
+
+
+
+
+            $op .= ' </select></td>
+
+                                <td class="text-right">
+                                    <input type="date" name="warrenty_date[]" id="warrenty_date_' . $count . '" class="form-control text-right"   tabindex="6"/>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6"/>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0%" tabindex="6"/>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="additional_cost[]" id="additional_cost_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="00" tabindex="6"/>
+                                </td>
+
+                                <td class="text-left">
+                                    <input type="text" style="width: 100px" class="form-control row_total" name="row_total[]" value="' . $tot . '" id = "row_total_' . $count . '" class="row_total" readonly>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="c_b_no[]" id="c_b_no' . $count . '" class="form-control text-right store_cal_1" tabindex="6"/>
+                                </td>
+
+                                <td>
+                                    <input type="file" name="c_b_img[]" id="c_b_img"' . $count . '"/>
+                                </td>
+                                <td>
+                                <button  class="remove_inventory btn btn-danger text-right" type="button"  id="' . $count . '" tabindex="8"><i class="fa fa-close"></i></button>
+                                </td>
+                        </tr>
+                        ';
+        }
+        $op .= '
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="11" class="text-right"><b>Grand Total:</b></td>
+                    <td>
+                    <input class="form-control" name="total" id="grand_total" readonly/>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+                            ';
+
+        if ($count == 0) {
+            $op = '<h3 align="center">Purchase Order is empty</h3>';
+        }
+
+        echo $op;
+    }
+
+    public function add_product()
+    {
+        $this->load->model("Products");
+        $product_id = $_POST["product_id"];
+        $po_id = $_POST["po_id"];
+
+        $pr_data = $this->Products->retrieve_product_full_data($product_id);
+
+        $data = array(
+            'purchase_detail_id' => $this->Purchases->generator(15),
+            'purchase_id' => $po_id,
+            'product_id' => $product_id,
+            'quantity'   => 0,
+            'qty'        => 0,
+            'isAprv'     => 1,
+            // 'sku'        => $pr_data[0]['sku']
+        );
+
+        // var_dump($data); exit();
+
+        // $this->db->where('purchase_id', $po_id);
+        $this->db->insert('product_purchase_details', $data);
+    }
+
+    public function save_purchase()
+    {
+        $order_quantity = $this->input->post('order_quantity', TRUE);
+        $supplier_id = $this->input->post('supplier_drop', TRUE);
+        $warrenty_date = $this->input->post('warrenty_date', TRUE);
+        $price = $this->input->post('price', TRUE);
+        $discount = $this->input->post('discount', TRUE);
+        $additional_cost = $this->input->post('additional_cost', TRUE);
+        $per_item_total = $this->input->post('row_total', TRUE);
+        $chalan_no = $this->input->post('c_b_no', TRUE);
+        $id = $this->input->post('sl_id', TRUE);
+
+
+        $grand_total = $this->input->post('total', TRUE);
+        $po_id = $this->input->post('pur_order_no', TRUE);
+
+        $this->db->where('purchase_id', $po_id);
+        $this->db->set('grand_total_amount', $grand_total);
+        $this->db->update('product_purchase');
+
+        // echo '<pre>'; print_r($_FILES['c_b_img']);exit();
+
+        $image = array();
+        for ($i = 0; $i < count($id); $i++) {
+            $image[$i]['url'] = null;
+        }
+
+
+        $image_url = array();
+
+        $this->load->library('upload');
+
+        $ImageCount = count($_FILES['c_b_img']['name']);
+        for($i = 0; $i < $ImageCount; $i++){
+            $_FILES['file']['name']       = $_FILES['c_b_img']['name'][$i];
+            $_FILES['file']['type']       = $_FILES['c_b_img']['type'][$i];
+            $_FILES['file']['tmp_name']   = $_FILES['c_b_img']['tmp_name'][$i];
+            $_FILES['file']['error']      = $_FILES['c_b_img']['error'][$i];
+            $_FILES['file']['size']       = $_FILES['c_b_img']['size'][$i];
+
+            // File upload configuration
+            $uploadPath = 'my-assets/image/chalan/';
+            $config['upload_path'] = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['encrypt_name']  = TRUE;
+
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            // Upload file to server
+            if($this->upload->do_upload('file')){
+                // Uploaded file data
+                $imageData = $this->upload->data();
+                $uploadImgData[$i]['image'] = $config['upload_path'].$imageData['file_name'];
+                $image_url = base_url() . $uploadImgData[$i]['image'];
+                $image[$i]['url'] = $image_url;
+
+            }
+
+           // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
+        }
+
+
+
+        for ($i = 0; $i < count($id); $i++) {
+            $data = array(
+                'qty'   => $order_quantity[$i],
+                'supplier_id'   => $supplier_id[$i],
+                'warrenty_date'   => $warrenty_date[$i],
+                'rate'   => $price[$i],
+                'discount'   => $discount[$i],
+                'additional_cost'   => $additional_cost[$i],
+                'total_amount'   => $per_item_total[$i],
+                'chalan_id'   => $chalan_no[$i],
+                'chalan_img'    => $image[$i]['url'],
+                'isAprv'      => 4
+            );
+
+            // echo '<pre>'; print_r($data);
+
+            $this->db->where('id', $id[$i]);
+            $this->db->where('purchase_id', $po_id);
+            $this->db->update('product_purchase_details', $data);
+        }
+
+        redirect('Cpurchase/add_purchase/');
+    }
+
+    public function remove_from_list()
+    {
+
+            $CI = &get_instance();
+            $CI->load->model('Purchases');
+
+            $row_id = $_POST["row_id"];
+
+
+            $this->db->where('id', $row_id);
+            $this->db->delete('product_purchase_details');
+
+           $this->get_purchase_details();
+
     }
 }
