@@ -999,7 +999,7 @@ class Cpurchase extends CI_Controller
             'product_id' => $product_id,
             'quantity'   => 0,
             'qty'        => 0,
-            'isAprv'     => 1,
+            'isAprv'     => 3,
             // 'sku'        => $pr_data[0]['sku']
         );
 
@@ -1085,7 +1085,7 @@ class Cpurchase extends CI_Controller
                 'total_amount'   => $per_item_total[$i],
                 'chalan_id'   => $chalan_no[$i],
                 'chalan_img'    => $image[$i]['url'],
-                'isAprv'      => 4
+                'isAprv'      => 1
             );
 
             // echo '<pre>'; print_r($data);
