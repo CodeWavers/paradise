@@ -51,7 +51,11 @@ class Cpurchase extends CI_Controller
         $CI->auth->check_admin_auth();
         $CI->load->model('Purchases');
         $CI->Purchases->update_po_new();
+
+        $po_no=$this->input->post('pur_order_no',TRUE);
         $this->session->set_userdata(array('message' => 'Succesfully Approved'));
+
+       // redirect(base_url('Cpurchase/po_print/'.$po_no));
 
         redirect(base_url('Cpurchase/purchase_order_approve_new'));
     }
