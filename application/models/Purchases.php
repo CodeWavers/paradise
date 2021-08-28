@@ -1615,7 +1615,7 @@ class Purchases extends CI_Model {
             $product_rate = $rate[$i];
             $product_id = $p_id[$i];
             // $disc = $discount[$i];
-            $t_price = $t_price[$i];
+            $tp = $t_price[$i];
             // $unit_add_cost = $additional_cost[$i];
             // $unit_cost = ($product_rate - ($product_rate * ($disc / 100)) + ($unit_add_cost / $product_quantity));
 
@@ -1633,7 +1633,7 @@ class Purchases extends CI_Model {
                 'origin'             => $origin_t,
                 // 'warrenty_date'      => $warrenty_date,
                 'rate'               => $product_rate,
-                'total_amount'       => $t_price,
+                'total_amount'       => $tp,
                 // 'discount'           => $disc,
                 // 'unit_cost'          => $unit_cost,
                 'status'             => 1,
