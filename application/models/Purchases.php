@@ -1873,7 +1873,7 @@ class Purchases extends CI_Model {
         $this->db->from('product_purchase a');
         $this->db->group_by('a.purchase_id');
         $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
-        $this->db->where('b.isAprv', 1);
+        $this->db->where('b.isAprv', 3);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
