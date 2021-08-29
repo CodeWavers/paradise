@@ -218,6 +218,51 @@ class Cproduct extends CI_Controller {
         // }
         // }
 
+        $product_name=$this->input->post('product_name',TRUE);
+        $parts=$this->input->post('parts',TRUE);
+        $origin=$this->input->post('country',TRUE);
+        $category_id=$this->input->post('category_id',TRUE);
+        $sub_cat_id=$this->input->post('sub_cat_id',TRUE);
+        $brand_id=$this->input->post('brand_id',TRUE);
+
+        $category_name=$this->db->select('*')->from('product_category')->where('category_id',$category_id)->get()->row()->category_name;
+        $sub_cat=$this->db->select('*')->from('product_subcat')->where('sub_cat_id',$sub_cat_id)->get()->row()->subcat_name;
+        $brand_name=$this->db->select('*')->from('product_brand')->where('brand_id',$brand_id)->get()->row()->brand_name;
+
+
+
+        $product_word = preg_split("/[\s,&_-]+/", $product_name);
+        $product_new_words = "";
+
+        foreach ($product_word as $w) {
+            $product_new_words .= $w[0];
+        }
+
+        $cat_word = preg_split("/[\s,&_-]+/", $category_name);
+        $cat_new_words = "";
+
+        foreach ($cat_word as $w) {
+            $cat_new_words .= $w[0];
+        }
+
+        $sub_cat_word = preg_split("/[\s,&_-]+/", $sub_cat);
+        $subcat_new_words = "";
+
+        foreach ($sub_cat_word as $w) {
+            $subcat_new_words .= $w[0];
+        }
+
+        $brand_word = preg_split("/[\s,&_-]+/", $brand_name);
+        $brand_new_words = "";
+
+        foreach ($brand_word as $w) {
+            $brand_new_words .= $w[0].$w[1].$w[2];
+        }
+
+        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+
+
+
         $data['product_id']   = $product_id;
         $data['product_id_two']   = $product_id_two;
         $data['category_id']  = $this->input->post('category_id',TRUE);
@@ -227,7 +272,7 @@ class Cproduct extends CI_Controller {
         $data['country'] = $this->input->post('country',TRUE);
         $data['parts'] = $this->input->post('parts',TRUE);
         $data['tag'] = $this->input->post('tag',TRUE);
-        $data['sku'] = $this->input->post('sku',TRUE);
+        $data['sku'] = $sku;
         $data['price']        = $this->input->post('cost_price',TRUE);
         $data['product_model']= $this->input->post('model_id',TRUE);
         $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
@@ -241,6 +286,8 @@ class Cproduct extends CI_Controller {
         $data['image']        = (!empty($image_url) ? $image_url : base_url('my-assets/image/product.png'));
         $data['status']       = 1;
 
+
+      //  echo  $sku; exit();
         $result = $CI->lproduct->insert_product($data);
 
         $data_service=array(
@@ -540,6 +587,51 @@ class Cproduct extends CI_Controller {
 
         $price = $this->input->post('price',TRUE);
 
+        $product_name=$this->input->post('product_name',TRUE);
+        $parts=$this->input->post('parts',TRUE);
+        $origin=$this->input->post('country',TRUE);
+        $category_id=$this->input->post('category_id',TRUE);
+        $sub_cat_id=$this->input->post('sub_cat_id',TRUE);
+        $brand_id=$this->input->post('brand_id',TRUE);
+
+        $category_name=$this->db->select('*')->from('product_category')->where('category_id',$category_id)->get()->row()->category_name;
+        $sub_cat=$this->db->select('*')->from('product_subcat')->where('sub_cat_id',$sub_cat_id)->get()->row()->subcat_name;
+        $brand_name=$this->db->select('*')->from('product_brand')->where('brand_id',$brand_id)->get()->row()->brand_name;
+
+
+
+        $product_word = preg_split("/[\s,&_-]+/", $product_name);
+        $product_new_words = "";
+
+        foreach ($product_word as $w) {
+            $product_new_words .= $w[0];
+        }
+
+        $cat_word = preg_split("/[\s,&_-]+/", $category_name);
+        $cat_new_words = "";
+
+        foreach ($cat_word as $w) {
+            $cat_new_words .= $w[0];
+        }
+
+        $sub_cat_word = preg_split("/[\s,&_-]+/", $sub_cat);
+        $subcat_new_words = "";
+
+        foreach ($sub_cat_word as $w) {
+            $subcat_new_words .= $w[0];
+        }
+
+        $brand_word = preg_split("/[\s,&_-]+/", $brand_name);
+        $brand_new_words = "";
+
+        foreach ($brand_word as $w) {
+            $brand_new_words .= $w[0].$w[1].$w[2];
+        }
+
+        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+
+
+
         $tablecolumn = $this->db->list_fields('tax_collection');
         $num_column = count($tablecolumn)-4;
         if($num_column > 0){
@@ -559,7 +651,7 @@ class Cproduct extends CI_Controller {
         $data['country'] = $this->input->post('country',TRUE);
         $data['parts'] = $this->input->post('parts',TRUE);
         $data['tag'] = $this->input->post('tag',TRUE);
-        $data['sku'] = $this->input->post('sku',TRUE);
+        $data['sku'] = $sku;
         $data['price']        = $this->input->post('cost_price',TRUE);
         $data['product_model']= $this->input->post('model_id',TRUE);
         $data['brand_id']    = $this->input->post('brand_id',TRUE);

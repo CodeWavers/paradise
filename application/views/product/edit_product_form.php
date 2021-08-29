@@ -156,14 +156,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group row">
-                                    <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "SKU" ?> </label>
-                                    <div class="col-sm-8">
-                                        <input type="text" tabindex="" class="form-control" id="sku" name="sku" placeholder="<?php echo display('sku') ?>"  value="{sku}"/>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="col-sm-6">-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="serial_no" class="col-sm-4 col-form-label">--><?php //echo "SKU" ?><!-- </label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        <input type="text" tabindex="" class="form-control" id="sku" name="sku" placeholder="--><?php //echo display('sku') ?><!--"  value="{sku}"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <div class="col-sm-6">
                                 <div class="form-group row">
