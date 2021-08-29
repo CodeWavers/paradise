@@ -4,7 +4,7 @@
 <!-- Supplier Js -->
 <!-- <script src="<?php echo base_url(); ?>my-assets/js/admin_js/json/supplier.js.php" ></script> -->
 
-<script src="<?php echo base_url()?>my-assets/js/admin_js/purchase.js.php" type="text/javascript"></script>
+<!-- <script src="<?php echo base_url()?>my-assets/js/admin_js/purchase.js.php" type="text/javascript"></script> -->
 <style type="text/css">
     .form-control{
         padding: 6px 5px;
@@ -142,7 +142,7 @@
 
 
                         <br>
-                        <div id="cart_details">
+                        <div id="cart_dt">
                             <h3 align="center">Select PO No. from dropdown to get order details.</h3>
                         </div>
 
@@ -176,10 +176,93 @@ function get_purchase_details() {
             csrf_test_name : csrf_test_name
         },
         success:function(data){
-            $('#cart_details').html(data);
-            add_pur_calc_store();
+            $('#cart_dt').html(data);
         }
     })
+
+}
+
+function add_pur_calc_store(sl) {
+
+var gr_tot = 0;
+var dis = 0;
+var discount = $("#discount_" + sl).val()
+var item_ctn_qty = $("#order_quantity_" + sl).val();
+var vendor_rate = $("#product_rate_" + sl).val();
+var currency_value = $("#currency_value_" + sl).val();
+
+var additional_cost = parseFloat($("#additional_cost_" + sl).val());
+
+if (!additional_cost) {
+    additional_cost = 0;
+}
+
+if (!discount) {
+    discount = 0;
+}
+
+// var bdt_price=currency_value*vendor_rate;
+//   $("#bdt_price_" + sl).val(bdt_price.toFixed(2));
+
+//console.log(currency_value);
+//console.log(bdt_price);
+
+var total_price = ((item_ctn_qty * vendor_rate) - ((item_ctn_qty * vendor_rate) * (discount / 100))) + additional_cost;
+$("#row_total_" + sl).val(total_price.toFixed(2));
+
+
+//Total Price
+$(".row_total").each(function () {
+    isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
+});
+// $(".discount").each(function() {
+//    isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
+//});
+
+$("#grand_total").val(gr_tot.toFixed(2, 2));
+//var grandtotal = gr_tot;
+//$("#Total").val(grandtotal.toFixed(2,2));
+//invoice_paidamount();
+
+var supp_id = $("#supplier_drop_" + sl).val();
+var warr_date = $("#warrenty_date_" + sl).val();
+// var add_cost = $("#additional_cost_" + sl).val();
+var cb_no = $("#c_b_no" + sl).val();
+var id = $("#sl_id_" + sl).val();
+var csrf_test_name = $('[name="csrf_test_name"]').val();
+// var data = {
+//     'id': id,
+//     'order_qty': item_ctn_qty,
+//     'rate': vendor_rate,
+//     'discount': discount,
+//     'add_cost': additional_cost,
+//     'supp_id': supp_id,
+//     'warr_date': warr_date,
+//     'cb_no': cb_no,
+//     'total' : total,
+//     'csrf_test_name':csrf_test_name
+// }
+
+// console.log(data);
+
+
+$.ajax({
+    url: '<?= base_url() ?>' + "Cpurchase/update_changed",
+    method: 'post',
+    data: {
+        id: id,
+        order_qty: item_ctn_qty,
+        rate: vendor_rate,
+        discount: discount,
+        add_cost: additional_cost,
+        supp_id: supp_id,
+        warr_date: warr_date,
+        cb_no: cb_no,
+        total: total_price,
+        csrf_test_name: csrf_test_name
+    }
+
+});
 
 }
 
@@ -209,5 +292,72 @@ $(document).on('click', '.remove_inventory', function(){
                 return false;
             }
         });
+        function productList_with_cat_subcat(sl) {
 
+var csrf_test_name = $('[name="csrf_test_name"]').val();
+var base_url = $("#base_url").val();
+
+
+var po_id = $("#pur_order_no").val();
+
+// Auto complete
+var options = {
+    minLength: 0,
+    source: function (request, response) {
+        var product_name = $('#product_name_' + sl).val();
+        $.ajax({
+            url: base_url + "Crqsn/autosearch",
+            method: 'post',
+            dataType: "json",
+            data: {
+                term: request.term,
+                product_name: product_name,
+                // cat_id: cat_id,
+                // subcat_id: subcat_id,
+                // brand_id: brand_id,
+                // mdoel_id: model_id,
+                csrf_test_name: csrf_test_name,
+
+            },
+            success: function (data) {
+                response(data);
+
+            }
+        });
+    },
+    focus: function (event, ui) {
+        $(this).val(ui.item.label);
+        return false;
+    },
+    select: function (event, ui) {
+        $(this).parent().parent().find(".autocomplete_hidden_value").val(ui.item.value);
+        $(this).val(ui.item.label);
+        var id = ui.item.value;
+        var base_url = $('.baseUrl').val();
+
+        $.ajax({
+            type: "POST",
+            url: base_url + "Cpurchase/add_product",
+            data: {
+                product_id: id,
+                po_id: po_id,
+                csrf_test_name: csrf_test_name
+            },
+            cache: false,
+            success: function () {
+                toastr.success('Product Added.');
+                get_purchase_details();
+                $("#product_name_1").val('');
+            }
+        });
+
+        $(this).unbind("change");
+        return false;
+    }
+}
+
+$('body').on('keypress.autocomplete', '.productSelection', function () {
+    $(this).autocomplete(options);
+});
+}
 </script>

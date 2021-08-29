@@ -1579,7 +1579,7 @@ class Purchases extends CI_Model {
             'purchase_id'        => $purchase_id,
             'grand_total_amount' => $this->input->post('total',TRUE),
             'purchase_order'     => $pur_order_no,
-            'purchase_date'      => $receive_date,
+            'purchase_order_date'      => $receive_date,
             'paid_amount'        => $paid_amount,
             'due_amount'         => $due_amount,
             'status'             => 2,

@@ -93,7 +93,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="date" class="col-sm-4 col-form-label"><?php echo display('purchase_date') ?>
+                                    <label for="date" class="col-sm-4 col-form-label">Purchase Order Date
                                         <i class="text-danger">*</i>
                                     </label>
                                     <div class="col-sm-8">
