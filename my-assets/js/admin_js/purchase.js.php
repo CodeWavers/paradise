@@ -14,7 +14,7 @@ function addPurchaseOrderField1(divName) {
     else {
         var newdiv = document.createElement('tr');
         var tabin = "product_name_" + count;
-        <? php $date = date('Y-m-d') ?>
+        <?php $date = date('Y-m-d') ?>
             tabindex = count * 4,
                 newdiv = document.createElement("tr");
         tab1 = tabindex + 1;
@@ -135,7 +135,7 @@ function calculate_store(sl) {
     //console.log(bdt_price);
 
     var total_price = (item_ctn_qty * vendor_rate);
-    < !-- - ((item_ctn_qty * vendor_rate) * (discount / 100))) + additional_cost; -->
+     ((item_ctn_qty * vendor_rate) * (discount / 100))) + additional_cost;
         $("#row_total_" + sl).val(total_price.toFixed(2));
 
 
@@ -403,7 +403,7 @@ function productList_with_cat_subcat(sl) {
                     // subcat_id: subcat_id,
                     // brand_id: brand_id,
                     // mdoel_id: model_id,
-                    csrf_test_name: csrf_test_name,
+                    csrf_test_name: csrf_test_name
 
                 },
                 success: function (data) {
