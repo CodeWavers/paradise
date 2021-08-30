@@ -894,8 +894,8 @@ class Cpurchase extends CI_Controller
 
 
             $product_id = $items['product_id'];
-            $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
-            $supplier_list = $this->Suppliers->supplier_list();
+           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
             // echo '<pre>'; print_r($items['warrenty_date']); exit();
             $count++;
             $op .= '
