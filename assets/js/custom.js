@@ -471,7 +471,7 @@ $(function($){
 
         "aaSorting": [[ 1, "asc" ]],
         "columnDefs": [
-            { "bSortable": false, "aTargets": [0,1,2,3,4,5,6,7,8,9,10] },
+            { "bSortable": false, "aTargets": [0,1,2,3,4,5,6,7,8,9,10,11] },
 
         ],
         'processing': true,
@@ -517,6 +517,7 @@ $(function($){
         'columns': [
             { data: 'sl' },
             { data: 'product_name' },
+            { data: 'sku' },
             { data: 'product_category' },
             { data: 'subcat_name' },
             { data: 'product_type' },

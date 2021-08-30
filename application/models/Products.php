@@ -94,7 +94,7 @@ class Products extends CI_Model {
         ## Search
         $searchQuery = "";
         if($searchValue != ''){
-            $searchQuery = " (a.product_name like '%".$searchValue."%' or d.model_name like '%".$searchValue."%' or a.price like'%".$searchValue."%' or c.supplier_price like'%".$searchValue."%' or m.supplier_name like'%".$searchValue."%'  or x.category_name like'%".$searchValue."%'or e.subcat_name like'%".$searchValue."%' ) ";
+            $searchQuery = " (a.product_name like '%".$searchValue."%' or d.model_name like '%".$searchValue."%' or a.sku like '%".$searchValue."%' or a.price like'%".$searchValue."%' or c.supplier_price like'%".$searchValue."%' or m.supplier_name like'%".$searchValue."%'  or x.category_name like'%".$searchValue."%'or e.subcat_name like'%".$searchValue."%' ) ";
         }
 
         ## Total number of records without filtering
@@ -128,6 +128,7 @@ class Products extends CI_Model {
                 a.product_name,
                 a.product_id,
                 a.product_model,
+                a.sku,
                 a.image,
                 c.supplier_price,
                 c.supplier_id,
@@ -174,6 +175,7 @@ class Products extends CI_Model {
             $data[] = array(
                 'sl'               =>$sl,
                 'product_name'     =>$product_name,
+                'sku'    =>$record->sku,
                 'product_category'    =>$record->category_name,
                 'subcat_name'    =>$record->subcat_name,
                 'product_type'    =>$record->ptype_id,

@@ -76,6 +76,7 @@
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
                                         <th><?php echo display('product_name') ?></th>
+                                        <th>SKU</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
                                         <th>Purchase Type</th>
