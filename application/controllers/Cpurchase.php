@@ -678,8 +678,10 @@ class Cpurchase extends CI_Controller
         $count = 0;
         foreach ($cart_list as $items) {
 
+            $latest_price=$this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->order_by('id', 'DESC')->get()->row()->update_price;
 
-            // echo '<pre>'; print_r($items['additional_cost']); exit();
+
+            // echo '<pre>'; print_r($latest_price); exit();
             $tot = "";
 
             if ($items['total']) {
@@ -749,7 +751,7 @@ class Cpurchase extends CI_Controller
 
                                 <td class="text-right">
                                     <input type="hidden" style="width: 100px" name="bdt_price[]" id="bdt_price_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="0.00"  tabindex="6"/>
-                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($latest_price ? $latest_price : "0.00") . '"  tabindex="6"/>
                                 </td>
 
                                 <td class="text-left">
