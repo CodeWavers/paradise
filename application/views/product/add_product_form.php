@@ -156,6 +156,7 @@
                                     <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "Country of Origin" ?> </label>
                                     <div class="col-sm-8">
                                         <select class="form-control" id="" name="country" tabindex="3">
+                                            <option value="">Select Origin</option>
                                             <option value="AF">Afghanistan</option>
                                             <option value="AX">Åland Islands</option>
                                             <option value="AL">Albania</option>
