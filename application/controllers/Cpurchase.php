@@ -567,12 +567,12 @@ class Cpurchase extends CI_Controller
 
 
 
-    public function edit_purchase_order($PO_No, $supplier_id)
+    public function edit_purchase_order($supplier_id)
     {
         $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('lpurchase');
-        $content = $CI->lpurchase->purchase_order_edit_form($PO_No, $supplier_id);
+        $content = $CI->lpurchase->purchase_order_edit_form($supplier_id);
         $this->template->full_admin_html_view($content);
     }
 
@@ -998,6 +998,171 @@ class Cpurchase extends CI_Controller
         if ($count == 0) {
             $op = '<h3 align="center">Purchase Order is empty</h3>';
         }
+
+        echo $op;
+    }
+
+    public function get_bill_details()
+    {
+
+        $bill_no = $this->input->post('bill_no', TRUE);
+
+        $this->load->model("Purchases");
+        $this->load->model("Products");
+        $this->load->model("Suppliers");
+        //   $product_id=$_POST["product_id"];
+        $cart_list = $this->Purchases->bill_details($bill_no);
+
+        //echo '<pre>';print_r($cart_list);exit();
+        $grand_total = array_sum(array_column($cart_list, 'total_amount'));
+        // $total = array_sum(array_column($cart_list, 'total'));
+        $op = '';
+        $op .= '
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="purchaseTable">
+                <thead>
+                     <tr>
+                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="4%">PO No</th>
+                        <th class="text-center" width="12%">Product Name</th>
+                        <th class="text-center" width="8%">Parts No</th>
+                        <th class="text-center" width="8%">SKU</th>
+                         <th class="text-center">Origin</th>
+                        <th class="text-center">Order Quantity</th>
+                  
+                        <th class="text-center">Rate</th>
+                        <th class="text-center">Discount</th>
+                        <th class="text-center">Total</th>
+                 
+                    </tr>
+                </thead>
+                <tbody id="addPurchaseItem">';
+
+
+        $count = 0;
+        foreach ($cart_list as $items) {
+
+
+
+
+            $product_id = $items['product_id'];
+
+
+            // echo '<pre>'; print_r($items['warrenty_date']); exit();
+            $count++;
+            $op .= '
+                        <tr>
+                        <td class="wt"> ' . $count . '</td>
+                          <td class="wt">' . $items['purchase_order'] . '</td>
+                        <td class="span3 supplier">
+                            <span>' . $items['product_name'] . '</span>
+                            <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
+                            <input type="hidden" class="sl" value="' . $count . '">
+                            <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
+                            <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
+                            <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
+                        </td>
+                            <td class="wt">' . $items['parts'] . '</td>
+                            <td class="wt">' . $items['sku'] . '</td>
+                               <td class="wt">' . $items['country'] . '</td>
+                       
+                            <td class="test">
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . $items['qty'] . '" min="0" tabindex="7" readonly/>
+                            </td>
+                      
+
+
+                           
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6" readonly/>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0%" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6" readonly/>
+                                </td>
+
+                             
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" class="form-control row_total text-right" name="row_total[]" value="' . ($items['total_amount'] ? $items['total_amount'] : "") . '" id = "row_total_' . $count . '" class="row_total" readonly>
+                                </td>
+
+                       
+
+                              
+                               
+                        </tr>
+                        ';
+        }
+        $op .= '
+            </tbody>
+         <tfoot>
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Total:</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" style="width: 100px"  id="total" class="text-right form-control" name="total" value="'. ($grand_total ? $grand_total : "") . '" readonly= />
+                                 
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Total Discount (If any):</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="total_dis" class="text-right form-control" name="total_dis" value="0.00"/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Other Charges (If any):</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="total_charge" class="text-right form-control" name="total_charge" value="0.00"/>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Grand Total</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="'. ($grand_total ? $grand_total : "") . '" />
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-right" colspan="9"><b>Paid Amount:</b></td>
+                                        <td class="text-right" >
+                                            <input type="text" style="width: 100px"  id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="0.00" />
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="9"><b>Due Amount:</b></td>
+                                        <td class="text-right">
+                                            <input type="text" style="width: 100px"  id="dueAmmount" class="text-right form-control" name="due_amount" value="'. ($grand_total ? $grand_total : "") . '"  readonly="readonly" />
+                                        </td>
+
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center">
+                                            <input type="button" id="full_paid_tab" class="btn btn-warning" value="Full Paid" tabindex="16" onClick="full_paid()"/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+        </table>
+                            ';
+
+
 
         echo $op;
     }

@@ -63,24 +63,26 @@
 								<thead>
 									<tr>
 										<th class="text-center"><?php echo display('sl') ?></th>
-										<th class="text-center">Purchase Order No.</th>
 										<th class="text-center">Supplier Name.</th>
+                                        <th class="text-center">Due Amount</th>
 										<th class="text-center"><?php echo display('action') ?></th>
 									</tr>
 								</thead>
 								<tbody>
-                                    {purchase_list}
+                                <?php $sl = 1; ?>
+                                    <?php foreach ($purchase_list as $list) {?>
                                     <tr>
-                                        <td class="text-center">{sl}</td>
-                                        <td class="text-center">{purchase_order}</td>
-                                        <td class="text-center">{supplier_name}</td>
+                                        <td class="text-center"><?php echo $sl++; ?></td>
+                                        <td class="text-center"><?php echo $list['supplier_name']?></td>
+                                        <td class="text-center"><?php echo $list['supplier_due']?> </td>
                                         <td class="text-center">
-                                            <a href="<?= base_url()?>Cpurchase/edit_purchase_order/{purchase_order}/{supplier_id}">
-                                            <button type="button" class="btn btn-success"><i class="fa fa-pencil"></i></button>
-                                            </a>
+
+                                           <?php $id=$list['supplier_id']?>
+                                            <a href="<?php echo base_url("Cpurchase/edit_purchase_order/$id/") ?>" class="btn btn-sm btn-danger"  title="Action"><i class="fa fa-pencil"></i></a>
+
                                         </td>
                                     </tr>
-                                    {/purchase_list}
+                                   <?php }?>
 								</tbody>
 		                    </table>
 		                </div>

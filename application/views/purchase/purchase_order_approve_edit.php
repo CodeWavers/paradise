@@ -58,7 +58,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4><?php echo display('add_purchase') ?></h4>
+                            <h4>Supplier Payment</h4>
                         </div>
                     </div>
 
@@ -68,34 +68,7 @@
 
 
 
-                        <div class="row" >
-                            <div class="col-sm-5">
-                                <div class="form-group row">
-                                    <label for="pur_date" class="col-sm-4 col-form-label"><?php echo display('purchase_date') ?>
 
-                                    </label>
-                                    <div class="col-sm-8">
-
-                                        <input type="text" tabindex="2" class="form-control" name="purchase_date" value="<?php echo $all_purchase_list[0]['purchase_date']; ?>" id="pur_date"  readonly/>
-                                        <input type="hidden" tabindex="2" class="form-control" name="purchase_id" value="<?php echo $all_purchase_list[0]['purchase_id']; ?>" id="pur_date"  readonly/>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-5">
-                                <div class="form-group row">
-                                    <label for="invoice_no" class="col-sm-4 col-form-label">Invoice/Chalan No.
-                                        <i class="text-danger">*</i>
-                                    </label>
-                                    <div class="col-sm-8">
-
-                                        <input type="text"  tabindex="1" class="form-control" name="invoice_no" value="" id="invoice_no"  />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group row">
@@ -108,9 +81,18 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-group row">
-                                    <label for="pur_order_no" class="col-sm-4 col-form-label">Purchase Order No.</label>
+                                    <label for="pur_order_no" class="col-sm-4 col-form-label">Bill No.</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $all_purchase_list[0]['purchase_order'] ?>">
+                                        <?php if($bill_list){?>
+                                            <select class="form-control" id="bill_no" name="bill_no" onchange="get_bill_details()">
+                                                <option value="">Select Bill</option>
+                                                {bill_list}
+                                                <option value={chalan_id}>{chalan_id}</option>
+                                                {/bill_list}
+                                            </select>
+                                        <?php }else{ ?>
+                                            <input class="form-control" type="text" value="No Bill to show" readonly>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -139,18 +121,12 @@
                                     <label for="pay_date" class="col-sm-4 col-form-label">Payment Date<i class="text-danger">*</i></label>
                                     <div class="col-sm-8">
                                         <?php $date = date('Y-m-d'); ?>
+                                        <input type ="hidden" name="csrf_test_name" id="csrf_test_name" value="<?php echo $this->security->get_csrf_hash();?>">
                                         <input type="text" class="form-control datepicker" id="pay_date" name="pay_date" value="<?= $date ?>" required >
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-5">
-                                <div class="form-group row">
-                                    <label for="supp_file" class="col-sm-4 col-form-label">Suppliers Invoice</label>
-                                    <div class="col-sm-8">
-                                        <input type="file" class="form-control" id="supp_file" name="image" readonly>
-                                    </div>
-                                </div>
-                            </div>
+
 
                             <!-- <div class="col-sm-1">
                                 <button class="btn btn-success" onclick="add_payment_opt(1)"><i class="fa fa-plus"></i></button>
@@ -158,140 +134,18 @@
 
                         </div>
 
-                        <div class="row" id="extra_pay">
+                        <div id="bill_dt">
+                            <h3 align="center">Select Bill No from dropdown to supplier payment.</h3>
 
                         </div>
-
-
-<br>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="purchaseTable">
-                                <thead>
-                                     <tr>
-                                        <th class="text-center" width="8%">SN</th>
-                                        <th class="text-center" width="12%">Product Name</th>
-                                        <th class="text-center" width="8%">Parts No.</th>
-                                        <th class="text-center">Order Quantity</th>
-                                        <th class="text-center">Origin</th>
-                                        <th class="text-center">Warranty</th>
-                                        <th class="text-center">Unit Price</th>
-                                        <th class="text-center">Discount(%)</th>
-                                        <th class="text-center">Total Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="addPurchaseItem">
-                                    {all_purchase_list}
-                                    <tr>
-
-                                    <td class="wt"> {sl}</td>
-
-                                    <td class="span3 supplier">
-                                       <span>{product_name}</span>
-                                        <input type="hidden" class="autocomplete_hidden_value product_id_1" value="{product_id}" name="product_id[]" id="SchoolHiddenId"/>
-                                        <input type="hidden" class="sl" value="1">
-                                    </td>
-
-                                        <td class="wt"> {parts}</td>
-
-                                        <td class="test">
-                                            {quantity}
-                                        </td>
-
-                                        <td class="wt"> {origin}</td>
-
-                                        <td>
-                                           {warrenty_date}
-                                       </td>
-
-                                            <td class="text-right">
-                                                {rate}
-                                                <input type="hidden" name="price[]" value="{rate}" id = "price_1" class="row_total">
-                                            </td>
-
-
-                                            <td class="text-right">
-                                                {discount}
-
-                                                <input type="hidden" name="row_total[]" value="" id = "row_total_1" class="row_total">
-                                            </td>
-                                            <td class="text-right">
-                                                {total_amount}
-<!--                                                <input type="text" name="total" value="{total_amount}" id = "" class="form-control" readonly>-->
-                                            </td>
-                                    </tr>
-                                    {/all_purchase_list}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b><?php echo display('total') ?>:</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="total" class="text-right form-control" name="total" value="<?= $total?>" readonly= />
-                                            <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b>Total Discount (If any):</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="total_dis" class="text-right form-control" name="total_dis" value="0.00"/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b>Other Charges (If any):</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="total_charge" class="text-right form-control" name="total_charge" value="0.00"/>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b>Grand Total</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="<?= $total?>" />
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td class="text-right" colspan="8"><b><?php echo display('paid_amount') ?>:</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="0.00" />
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-
-                                        <td class="text-right" colspan="8"><b><?php echo display('due_amount') ?>:</b></td>
-                                        <td class="text-right">
-                                            <input type="text" id="dueAmmount" class="text-right form-control" name="due_amount" value="<?= $total?>" readonly="readonly" />
-                                        </td>
-
-
-
-                                    </tr>
-
-                                    <tr>
-                                        <td align="center">
-                                            <input type="button" id="full_paid_tab" class="btn btn-warning" value="<?php echo display('full_paid') ?>" tabindex="16" onClick="full_paid()"/>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
                         <div class="form-group row">
                             <div class="col-sm-6">
 
                                 <input type="submit" id="add_purchase" class="btn btn-primary btn-large" name="add-purchase" value="<?php echo display('submit') ?>" />
                             </div>
                         </div>
+
+
                     <?php echo form_close()?>
                     </div>
                 </div>
@@ -311,6 +165,24 @@ $( document ).ready(function() {
 
 
 });
+
+function get_bill_details() {
+    var bill_no = $("#bill_no").val();
+    var csrf_test_name = $('[name="csrf_test_name"]').val();
+
+    $.ajax({
+        url : "<?php echo base_url(); ?>Cpurchase/get_bill_details",
+        method : 'POST',
+        data : {
+            bill_no : bill_no,
+            csrf_test_name : csrf_test_name
+        },
+        success:function(data){
+            $('#bill_dt').html(data);
+        }
+    })
+
+}
 
 
 

@@ -358,26 +358,26 @@ class Lpurchase {
         $CI->load->model('Purchases');
         $purchase_list = $CI->Purchases->purchase_list_by_po_no();
 
-        $i = 0;
-        foreach ($purchase_list as $k => $v) {
-            $i++;
-            $purchase_list[$k]['sl'] = $i + $CI->uri->segment(3);
-        }
+        //echo '<pre>';print_r($supplier_total);exit();
 
         $data = array(
             'title'     => 'Supplier Payment',
             'purchase_list' => $purchase_list,
+
         );
+
+//        echo '<pre>';print_r($purchase_list);exit();
         $purchaseList = $CI->parser->parse('purchase/purchase_order_approve', $data, true);
         return $purchaseList;
     }
 
-    public function purchase_order_edit_form($PO_No,$supplier_id)
+    public function purchase_order_edit_form($supplier_id)
     {
         $CI = & get_instance();
         $CI->load->model('Purchases');
 
-        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no($PO_No,$supplier_id);
+        $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no($supplier_id);
+        $bill_list=$CI->db->select('chalan_id')->from('product_purchase_details')->where(array('supplier_id'=>$supplier_id,'isAprv'=>1))->group_by('chalan_id')->get()->result();
 
         $i = 0;
         foreach ($all_purchase_list as $k => $v) {
@@ -392,14 +392,16 @@ class Lpurchase {
 
 
         $data = array(
-            'title'     => 'Edit Approve Order Purchases',
+            'title'     => 'Supplier Payment Form',
             'all_purchase_list' => $all_purchase_list,
+            'bill_list' => $bill_list,
+
             'total' => $total,
         );
 
 
 
-       // echo '<pre>'; print_r($data);exit();
+      //  echo '<pre>'; print_r($bill_list);exit();
         $purchaseList = $CI->parser->parse('purchase/purchase_order_approve_edit', $data, true);
         return $purchaseList;
     }
