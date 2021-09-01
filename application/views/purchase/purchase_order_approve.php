@@ -69,8 +69,11 @@
 									</tr>
 								</thead>
 								<tbody>
+
                                 <?php $sl = 1; ?>
+
                                     <?php foreach ($purchase_list as $list) {?>
+                                <?php if ($list['supplier_due'] > 0): ?>
                                     <tr>
                                         <td class="text-center"><?php echo $sl++; ?></td>
                                         <td class="text-center"><?php echo $list['supplier_name']?></td>
@@ -82,7 +85,9 @@
 
                                         </td>
                                     </tr>
+                                        <?php endif; ?>
                                    <?php }?>
+
 								</tbody>
 		                    </table>
 		                </div>

@@ -40,7 +40,7 @@ class Cpurchase extends CI_Controller
         $CI->auth->check_admin_auth();
         $CI->load->model('Purchases');
         $CI->Purchases->update_po();
-        $this->session->set_userdata(array('message' => 'Succesfully Approved'));
+        $this->session->set_userdata(array('message' => 'Successfully Paid'));
 
         redirect(base_url('Cpurchase/purchase_order_approve'));
     }

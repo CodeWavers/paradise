@@ -1688,15 +1688,16 @@ class Purchases extends CI_Model {
         foreach ($purchase_list as $k ) {
 
             $st=$this->db->select('sum(total_amount) as total')->from('product_purchase_details')->where(array('supplier_id'=>$k->supplier_id,'isAprv'=>1))->get()->row();
+            $paid=$this->db->select('sum(paid_amount) as paid_total')->from('supplier_payment')->where(array('supplier_id'=>$k->supplier_id))->get()->row();
 
-
+                $due=($st->total)-($paid->paid_total);
 
             $data[]=array(
 
 
                 'supplier_id' =>$k->supplier_id,
                 'supplier_name' =>$k->supplier_name,
-                'supplier_due' =>$st->total,
+                'supplier_due' =>$due,
 
 
 
