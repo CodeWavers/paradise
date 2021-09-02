@@ -77,7 +77,7 @@
                                     <tr>
                                         <td class="text-center"><?php echo $sl++; ?></td>
                                         <td class="text-center"><?php echo $list['supplier_name']?></td>
-                                        <td class="text-center"><?php echo $list['supplier_due']?> </td>
+                                        <td class="text-center"><?php echo number_format($list['supplier_due'],2)?> </td>
                                         <td class="text-center">
 
                                            <?php $id=$list['supplier_id']?>
