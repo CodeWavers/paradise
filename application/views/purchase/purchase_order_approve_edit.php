@@ -106,11 +106,12 @@
                                 <div class="form-group row">
                                     <label for="pay_type" class="col-sm-4 col-form-label">Payment Type <i class="text-danger">*</i></label>
                                     <div class="col-sm-8">
-                                        <select name="pay_type" id="pay_type" class="form-control">
+                                        <select name="pay_type" id="pay_type" class="form-control" onchange="bank_paymet(this.value)">
                                             <option value="1">Cash</option>
-                                            <option value="2">Credit</option>
-                                            <option value="3">LC</option>
-                                            <option value="4">TT</option>
+                                            <option value="2">Bank</option>
+                                            <option value="3">Credit</option>
+                                            <option value="4">LC</option>
+                                            <option value="5">TT</option>
                                         </select>
                                     </div>
                                 </div>
@@ -131,9 +132,45 @@
                             <!-- <div class="col-sm-1">
                                 <button class="btn btn-success" onclick="add_payment_opt(1)"><i class="fa fa-plus"></i></button>
                             </div> -->
+                            <div class="col-sm-5" id="bank_div">
+                                <div class="form-group row">
+                                    <label for="bank" class="col-sm-4 col-form-label"><?php
+                                        echo display('bank');
+                                        ?> <i class="text-danger">*</i></label>
+                                    <div class="col-sm-8">
+                                        <select name="bank_id" class="form-control bankpayment"  id="bank_id">
+                                            <option value="">Select Location</option>
+                                            <?php foreach($bank_list as $bank){?>
+                                                <option value="<?php echo $bank['bank_id']?>"><?php echo $bank['bank_name'];?>(<?php echo $bank['ac_number'];?>)</option>
+                                            <?php }?>
+                                        </select>
 
+                                    </div>
+
+<!--                                    <label for="bank" class="col-sm-4 col-form-label">Cheque NO:-->
+<!--                                        <i class="text-danger">*</i></label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        <input type="number"   name="cheque_no" class=" form-control" placeholder=""  />-->
+<!--                                    </div>-->
+<!--                                    <br>-->
+<!---->
+<!--                                    <label for="date" class="col-sm-4 col-form-label">Cheque Date <i class="text-danger">*</i></label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        --><?php
+//
+//                                        $date = date('Y-m-d');
+//                                        ?>
+<!--                                        <input class="datepicker form-control" type="text" size="50" name="cheque_date" id="" required value="--><?php //echo html_escape($date); ?><!--" tabindex="4" />-->
+<!--                                    </div>-->
+
+
+
+                                </div>
+                            </div>
                         </div>
 
+
+                        <br>
                         <div id="bill_dt">
                             <h3 align="center">Select Bill No from dropdown to supplier payment.</h3>
 

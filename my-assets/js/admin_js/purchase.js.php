@@ -404,16 +404,15 @@ function product_pur_or_list(sl) {
 
 }
 
-
 "use strict";
-function bank_paymet(val) {
-    if (val == 2) {
-    var style = 'block';
-    document.getElementById('bank_id').setAttribute("required", true);
-} else {
-    var styleproductList_with_cat_subcat = 'none';
-    document.getElementById('bank_id').removeAttribute("required");
-}
+function bank_paymet(val){
+    if(val==2){
+        var style = 'block';
+        document.getElementById('bank_id').setAttribute("required", true);
+    }else{
+        var style ='none';
+        document.getElementById('bank_id').removeAttribute("required");
+    }
 
     document.getElementById('bank_div').style.display = style;
 }

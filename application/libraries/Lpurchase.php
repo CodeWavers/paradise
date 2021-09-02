@@ -375,6 +375,8 @@ class Lpurchase {
     {
         $CI = & get_instance();
         $CI->load->model('Purchases');
+        $CI->load->model('Web_settings');
+        $bank_list        = $CI->Web_settings->bank_list();
 
         $all_purchase_list = $CI->Purchases->purchase_list_details_by_po_no($supplier_id);
         $bill_list=$CI->db->select('chalan_id')->from('product_purchase_details')->where(array('supplier_id'=>$supplier_id,'isAprv'=>1))->group_by('chalan_id')->get()->result();
@@ -389,12 +391,11 @@ class Lpurchase {
 
         $total = array_sum(array_column($all_purchase_list,'total_amount'));
 
-
-
         $data = array(
             'title'     => 'Supplier Payment Form',
             'all_purchase_list' => $all_purchase_list,
             'bill_list' => $bill_list,
+            'bank_list' => $bank_list,
 
             'total' => $total,
         );
