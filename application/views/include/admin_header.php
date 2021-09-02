@@ -67,7 +67,6 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
             if ($this->permission1->method('new_invoice', 'create')->access()) {
 
-
                 ?>
                 <a href="<?php echo base_url('Cinvoice') ?>" class="btn btn-success btn-outline"><i
                             class="fa fa-balance-scale"></i> <?php echo display('invoice') ?></a>
@@ -937,7 +936,18 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
 
                             }
-                            ?>"><a href="<?php echo base_url('Creport/approval_report') ?>">Approval Report</a></li>
+                            ?>"><a href="<?php echo base_url('Creport/approval_report') ?>">Approval Report</a>
+                            </li>
+
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("approval_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+
+                            }
+                            ?>"><a href="<?php echo base_url('Creport/approval_report') ?>">Product Receive Form</a>
+                            </li>
                         <?php } ?>
 
                         <?php if ($this->permission1->method('purchase_cheque_report', 'create')->access()) { ?>
