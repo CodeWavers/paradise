@@ -837,6 +837,24 @@ class Cpurchase extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function product_receive_form()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->product_receive_form();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function product_receive_form_two()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->product_receive_form_two();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function get_purchase_details()
     {
 
@@ -998,6 +1016,225 @@ class Cpurchase extends CI_Controller
         if ($count == 0) {
             $op = '<h3 align="center">Purchase Order is empty</h3>';
         }
+
+        echo $op;
+    }
+
+    public function get_receive_details()
+    {
+
+        $po_id = $this->input->post('po_id', TRUE);
+
+        $this->load->model("Purchases");
+        $this->load->model("Products");
+        $this->load->model("Suppliers");
+        //   $product_id=$_POST["product_id"];
+        $cart_list = $this->Purchases->purchase_details($po_id);
+        $grand_total = array_sum(array_column($cart_list, 'total_amount'));
+        // $total = array_sum(array_column($cart_list, 'total'));
+        $op = '';
+        $op .= '
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="purchaseTable">
+                <thead>
+                     <tr>
+                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="8%">Product Name</th>
+                        <th class="text-center" width="8%">SKU</th>
+                        <th class="text-center" width="8%">Barcode</th>
+                        <th class="text-center" width="8%">Quantity</th>
+                    
+                        <th class="text-center" width="8%">Supplier Name</th>
+                        <th class="text-center" width="8%">Received</th>
+                        <th class="text-center" width="8%">Return</th>
+                        <th class="text-center" width="8%">Remarks</th>
+                       
+                        <th class="text-center" width="8%">Bill No.</th>
+                       
+                    </tr>
+                </thead>
+                <tbody id="addPurchaseItem">';
+
+
+        $count = 0;
+        foreach ($cart_list as $items) {
+
+
+            // echo '<pre>'; print_r($items['additional_cost']); exit();
+            // $tot = "";
+
+            // if ($items['total_amount']) {
+            //     $tot = $items['total_amount'];
+            // }
+
+            $add_cost = "00";
+
+            // if ($items['additional_cost']) {
+            //     $add_cost = $items['additional_cost'];
+            // }
+
+
+            $product_id = $items['product_id'];
+           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
+            // echo '<pre>'; print_r($items['warrenty_date']); exit();
+            $count++;
+            $op .= '
+                        <tr>
+                        <td class="wt"> ' . $count . '</td>
+                        <td class="span3 supplier">
+                            <span>' . $items['product_name'] . '</span>
+                            <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
+                            <input type="hidden" class="sl" value="' . $count . '">
+                            <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
+                            <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
+                            <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
+                        </td>
+                            <td class="wt">' . $items['sku'] . '</td>
+                            <td class="wt">' . $items['product_id'] . '</td>
+                         
+                          
+                            
+                            <td class="test">
+
+                            </td>
+
+     
+
+                                <td class="text-right">
+           
+                                </td>
+
+                                <td class="text-right">
+
+                                </td> 
+                                <td class="text-right">
+
+                                </td>
+
+                                <td class="text-right">
+          
+                                </td>
+
+                                <td class="text-right">
+
+                                </td>
+
+                             
+
+                           
+                        </tr>
+                        ';
+        }
+
+
+        echo $op;
+    }
+
+    public function get_receive_details_two()
+    {
+
+        $po_id = $this->input->post('po_id', TRUE);
+
+        $this->load->model("Purchases");
+        $this->load->model("Products");
+        $this->load->model("Suppliers");
+        //   $product_id=$_POST["product_id"];
+        $cart_list = $this->Purchases->purchase_details($po_id);
+
+      //  echo '<pre>';print_r($cart_list);exit();
+        $grand_total = array_sum(array_column($cart_list, 'total_amount'));
+        // $total = array_sum(array_column($cart_list, 'total'));
+        $op = '';
+        $op .= '
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="purchaseTable">
+                <thead>
+                     <tr>
+                        <th class="text-center" width="4%">Bill/Chalan No.</th>
+                        <th class="text-center" width="4%">Sl. No</th>
+                        <th class="text-center" width="8%">Product Name</th>
+                        <th class="text-center" width="8%">SKU</th>
+                        <th class="text-center" width="8%">Barcode</th>
+                        <th class="text-center" width="8%">Quantity</th>
+                    
+                        <th class="text-center" width="8%">Aisle No</th>
+                        <th class="text-center" width="8%">Shelf No</th>
+                        <th class="text-center" width="8%">Bin No</th>
+                       
+                       
+                    </tr>
+                </thead>
+                <tbody id="addPurchaseItem">';
+
+
+        $count = 0;
+        foreach ($cart_list as $items) {
+
+
+            // echo '<pre>'; print_r($items['additional_cost']); exit();
+            // $tot = "";
+
+            // if ($items['total_amount']) {
+            //     $tot = $items['total_amount'];
+            // }
+
+            $add_cost = "00";
+
+            // if ($items['additional_cost']) {
+            //     $add_cost = $items['additional_cost'];
+            // }
+
+
+            $product_id = $items['product_id'];
+           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
+            // echo '<pre>'; print_r($items['warrenty_date']); exit();
+            $count++;
+            $op .= '
+                        <tr>
+                        <td class="wt"> ' .$items['chalan_id']. '</td>
+                        <td class="wt"> ' . $count . '</td>
+                        <td class="span3 supplier">
+                            <span>' . $items['product_name'] . '</span>
+                            <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
+                            <input type="hidden" class="sl" value="' . $count . '">
+                            <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
+                            <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
+                            <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
+                        </td>
+                            <td class="wt">' . $items['sku'] . '</td>
+                            <td class="wt">' . $items['product_id'] . '</td>
+                         
+                          
+                            
+                            <td class="test">
+                           <input type="text" style="width: 100px" class="form-control row_total" name="quantity[]" value="" id = "" class="quantity" >
+                            </td>
+
+     
+
+                                <td class="text-right">
+                                      <input type="text" style="width: 100px" class="form-control row_total" name="aisl_no[]" value="" id = "" class="quantity" >
+                                </td>
+
+                                <td class="text-right">
+                                       <input type="text" style="width: 100px" class="form-control row_total" name="shelf_no[]" value="" id = "" class="quantity" >
+                                </td>
+                                 
+                                <td class="text-right">
+                                      <input type="text" style="width: 100px" class="form-control row_total" name="bill_no[]" value="" id = "" class="quantity" >
+                                </td>
+
+                         
+
+                             
+
+                           
+                        </tr>
+                        ';
+        }
+
 
         echo $op;
     }

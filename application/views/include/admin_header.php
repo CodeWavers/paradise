@@ -946,7 +946,17 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
 
                             }
-                            ?>"><a href="<?php echo base_url('Creport/approval_report') ?>">Product Receive Form</a>
+                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form') ?>">Product Receive Form</a>
+                            </li>
+
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("approval_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+
+                            }
+                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_two') ?>">Approved for Allocation</a>
                             </li>
                         <?php } ?>
 
