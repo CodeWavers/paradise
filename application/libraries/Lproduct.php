@@ -59,6 +59,45 @@ class Lproduct {
         return $productForm;
     }
 
+    public function barcode_print_html($barcode_id) {
+
+        $CI = & get_instance();
+        $CI->load->model('Products');
+        $CI->load->model('Web_settings');
+        $CI->load->library('occational');
+        $CI->load->library('numbertowords');
+        $CI->load->library('zend');
+
+
+        // Load in folder Zend
+        $CI->zend->load('Zend/Barcode');
+      //  echo 'Ok';exit();
+        $barcode_details = $CI->Products->barcode_details($barcode_id);
+
+
+
+        $data = array(
+            'title'             => 'Barcode Print',
+            'barcode_details'             => $barcode_details,
+
+
+        );
+
+        $chapterList = $CI->parser->parse('product/barcode_print_html', $data, true);
+        return $chapterList;
+    }
+
+    public function set_barcode($code)
+    {
+        $CI =& get_instance();
+        // Load library
+        $CI->load->library('zend');
+        // Load in folder Zend
+        $this->zend->load('Zend/Barcode');
+        // Generate barcode
+        Zend_Barcode::render('code128', 'image', array('text'=>$code), array());
+    }
+
     public function insert_product($data) {
         $CI = & get_instance();
         $CI->load->model('Products');

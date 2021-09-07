@@ -57,8 +57,104 @@ class Cbarcode extends CI_Controller {
 		$this->barcode_create( $filepath, $product_id, $size, $orientation, $code_type, $print, $sizefactor );
 	}
 
+    public function barcode_generator_multiple(){
+        $CI = & get_instance();
+        $CI->load->library('zend');
+
+
+        // Load in folder Zend
+        $CI->zend->load('Zend/Barcode');
+
+
+	    $barcode_id=date('YmdHis');
+        $stock_in_date=$this->input->post('receive_date',TRUE);
+	    $data=array(
+
+	      "barcode_id" =>$barcode_id,
+	      "stock_in_date" =>$stock_in_date,
+
+
+        );
+        $this->db->insert('barcode_print', $data);
+
+
+
+
+        $p_id=$this->input->post('product_id',TRUE);
+        $pr_name=$this->input->post('product_name',TRUE);
+        $qty=$this->input->post('quantity',TRUE);
+        $sku_a=$this->input->post('sku',TRUE);
+        $aisle_no_a=$this->input->post('aisle_no',TRUE);
+        $shelf_no_a=$this->input->post('shelf_no',TRUE);
+        $bin_no_a=$this->input->post('bin_no',TRUE);
+
+
+
+        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
+
+            $product_id = $p_id[$i];
+            $product_name = $pr_name[$i];
+            $quantity = $qty[$i];
+            $sku = $sku_a[$i];
+            $aisle_no = $aisle_no_a[$i];
+            $shelf_no = $shelf_no_a[$i];
+            $bin_no = $bin_no_a[$i];
+
+//            $file= Zend_Barcode::render('code128','image',array('text'=>$product_id), array());
+//            $product_id = time().'1222';
+//            $image_url=  imagepng($file,base_url()."my-assets/image/barcode/$product_id.png");
+
+
+            $file = Zend_Barcode::draw('code128', 'image', array('text' => $product_id.$aisle_no.$shelf_no.$bin_no), array());
+            $code = time().$product_id;
+            $store_image = imagepng($file,"my-assets/image/barcode/{$code}.png");
+            $barcode_url = base_url()."my-assets/image/barcode/{$code}.png";
+       //     return $code.'.png';
+
+
+            $data1 = array(
+
+                'barcode_id' =>$barcode_id,
+                'product_id'         => $product_id,
+                'product_name'         => $product_name,
+                'quantity'         => $quantity,
+                'sku'         => $sku,
+                'aisle_no'         => $aisle_no,
+                'shelf_no'         => $shelf_no,
+                'bin_no'         => $bin_no,
+                'barcode_url'         => $barcode_url,
+
+            );
+
+          //  echo '<pre>';print_r($data1);exit();
+
+            if (!empty($product_id)) {
+                $this->db->insert('barcode_print_details', $data1);
+            }
+        }
+
+
+      //  exit();
+
+        redirect(base_url('Cbarcode/barcode_print_html/'.$barcode_id));
+
+
+    }
+
+
+
+
+
+    public function barcode_print_html($barcode_id) {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lproduct');
+        $content = $CI->lproduct->barcode_print_html($barcode_id);
+        $this->template->full_admin_html_view($content);
+    }
+
 	//Barcode create
-	function barcode_create( $filepath="", $text="0", $size="25", $orientation="horizontal", $code_type="code128", $print=false, $SizeFactor=1 ) {
+	function barcode_create( $filepath="", $text="0", $size="25", $orientation="horizontal", $code_type="code128", $print=true, $SizeFactor=1 ) {
 	$code_string = "";
 	// Translate the $text into barcode the correct $code_type
 	if ( in_array(strtolower($code_type), array("code128", "code128b")) ) {

@@ -237,6 +237,17 @@ class Products extends CI_Model {
         return $result;
     }
 
+    public function barcode_details($barcode_id) {
+        $result = $this->db->select('*')
+            ->from('barcode_print a')
+            ->join('barcode_print_details b','a.barcode_id=b.barcode_id')
+            ->where('a.barcode_id', $barcode_id)
+            ->get()
+            ->result();
+
+        return $result;
+    }
+
     //Product generator id check
     public function product_id_check($product_id) {
         $query = $this->db->select('*')

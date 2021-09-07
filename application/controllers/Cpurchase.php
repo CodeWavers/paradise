@@ -1200,10 +1200,12 @@ class Cpurchase extends CI_Controller
                             <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
                             <input type="hidden" class="sl" value="' . $count . '">
                             <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
-                            <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
+                            <input type="hidden" name="product_name[]" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
                             <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
                         </td>
-                            <td class="wt">' . $items['sku'] . '</td>
+                            <td class="wt">' . $items['sku'] . '
+                             <input type="hidden" style="width: 100px" class="form-control " name="sku[]" value="' . $items['sku'] . '" id = "" class="sku" >
+                            </td>
                             <td class="wt">' . $items['product_id'] . '</td>
                          
                           
@@ -1215,7 +1217,7 @@ class Cpurchase extends CI_Controller
      
 
                                 <td class="text-right">
-                                      <input type="text" style="width: 100px" class="form-control row_total" name="aisl_no[]" value="" id = "" class="quantity" >
+                                      <input type="text" style="width: 100px" class="form-control row_total" name="aisle_no[]" value="" id = "" class="quantity" >
                                 </td>
 
                                 <td class="text-right">
@@ -1223,7 +1225,7 @@ class Cpurchase extends CI_Controller
                                 </td>
                                  
                                 <td class="text-right">
-                                      <input type="text" style="width: 100px" class="form-control row_total" name="bill_no[]" value="" id = "" class="quantity" >
+                                      <input type="text" style="width: 100px" class="form-control row_total" name="bin_no[]" value="" id = "" class="quantity" >
                                 </td>
 
                          

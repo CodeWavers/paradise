@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="panel-body" id="printableArea">
-<!--                        --><?php //echo form_open_multipart('Cpurchase/save_purchase',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+                        <?php echo form_open_multipart('Cbarcode/barcode_generator_multiple',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
                         <!-- <div class="row">
@@ -98,7 +98,7 @@
                                     </label>
                                     <div class="col-xs-8">
                                         <?php $date = date('Y-m-d'); ?>
-                                        <input type="text"  tabindex="2" class="form-control datepicker" name="purchase_date" value="<?php echo $date; ?>" id="date"  />
+                                        <input type="text"  tabindex="2" class="form-control datepicker" name="receive_date" value="<?php echo $date; ?>" id="date"  />
                                     </div>
                                 </div>
                             </div>
@@ -137,21 +137,20 @@
                         </div>
 
 
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <input type="submit"  class="btn btn-info" value="Print Sticker" >
+                            </div>
+                        </div>
 
-
-<!--                        --><?php //echo form_close()?>
+                        <?php echo form_close()?>
                     </div>
                 </div>
 
             </div>
         </div>
 
-        <div class="form-group row">
-            <div class="col-sm-6">
-                <input type="submit" id="save" class="btn btn-success btn-large" name="save" value="Save" />
-                <button  class="btn btn-info" onclick="printDiv('printableArea')"><span class="fa fa-print"></span></button>
-            </div>
-        </div>
+
     </section>
 </div>
 <!-- Purchase Report End -->
