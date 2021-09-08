@@ -855,6 +855,15 @@ class Cpurchase extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function product_receive_form_three()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->product_receive_form_three();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function get_purchase_details()
     {
 
@@ -1010,6 +1019,177 @@ class Cpurchase extends CI_Controller
                     </td>
                 </tr>
             </tfoot>
+        </table>
+                            ';
+
+        if ($count == 0) {
+            $op = '<h3 align="center">Purchase Order is empty</h3>';
+        }
+
+        echo $op;
+    }
+
+
+    public function get_receive_details_three()
+    {
+
+        $po_id = $this->input->post('po_id', TRUE);
+
+        $this->load->model("Purchases");
+        $this->load->model("Products");
+        $this->load->model("Suppliers");
+        //   $product_id=$_POST["product_id"];
+        $cart_list = $this->Purchases->purchase_details($po_id);
+        $grand_total = array_sum(array_column($cart_list, 'total_amount'));
+        // $total = array_sum(array_column($cart_list, 'total'));
+        $op = '';
+        $op .= '
+            <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="purchaseTable">
+                <thead>
+                     <tr>
+                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="8%">Product Name</th>
+                        <th class="text-center" width="8%">SKU</th>
+                        <th class="text-center">Barcode</th>
+                        <th class="text-center">Quantity</th>
+                      
+                        <th class="text-center">Supplier Name</th>
+                        <th class="text-center">Received</th>
+                        <th class="text-center">Return</th>
+                        <th class="text-center">Remarks</th>
+                        <th class="text-center">Bill No</th>
+                        <th class="text-center" width="8%">Bill Image</th>
+                        <th class="text-center">Aisle No</th>
+                        <th width=8% class="text-center">Shelf No</th>
+                        <th class="text-center">Bill No</th>
+                    </tr>
+                </thead>
+                <tbody id="addPurchaseItem">';
+
+
+        $count = 0;
+        foreach ($cart_list as $items) {
+
+
+            // echo '<pre>'; print_r($items['additional_cost']); exit();
+            // $tot = "";
+
+            // if ($items['total_amount']) {
+            //     $tot = $items['total_amount'];
+            // }
+
+            $add_cost = "00";
+
+            // if ($items['additional_cost']) {
+            //     $add_cost = $items['additional_cost'];
+            // }
+
+
+            $product_id = $items['product_id'];
+           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
+            // echo '<pre>'; print_r($items['warrenty_date']); exit();
+            $count++;
+            $op .= '
+                        <tr>
+                        <td class="wt"> ' . $count . '</td>
+                        <td class="span3 supplier">
+                            <span>' . $items['product_name'] . '</span>
+                            <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
+                            <input type="hidden" class="sl" value="' . $count . '">
+                            <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
+                            <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
+                            <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
+                        </td>
+                            <td class="wt">' . $items['sku'] . '</td>
+                            <td class="wt">' . $items['product_id'] . '</td>
+                            <td class="wt">
+                                <input type="text" name="quantity[]" id="quantity" class="form-control text-right stock_ctn_1" placeholder="0.00" />
+                            </td>
+                           
+
+                            <td>
+                            <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control" onchange="add_pur_calc_store(' . $count . ');" >
+                                ';
+
+
+
+
+
+
+                                if ($items['supplier_id']) {
+                                        foreach ($supplier_list as $supp) {
+                                            if ($items['supplier_id'] == $supp['supplier_id']) {
+                                                $op .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
+                                            } else {
+                                                $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+                                            }
+                                        }
+                                    } else {
+                                        $op .= '<option value="">Select Option</option>';
+                                        foreach ($supplier_list as $supp) {
+                                            $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+                                        }
+                                    }
+
+
+
+
+            $op .= ' </select></td>
+
+                                <td class="text-right">
+                                   
+                                      <select class="form-control" id="" name="received[]"  tabindex="3">
+                                          
+                                          
+                                           
+                                                <option value="Received">Received</option>
+                                                <option value="Not received">Not received</option>
+                                                <option value="Partially received">Partially received</option>
+                                                
+                                            
+                                        </select>
+                                   
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="return[]" id="return" required="" min="0" class="form-control text-right store_cal_1"  placeholder="" value=""  tabindex="6"/>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="remarks[]" id="remarks"  class="form-control text-right store_cal_1"  placeholder="" value="" tabindex="6"/>
+                                </td>
+
+                                <td class="text-right">
+                                    <input type="text" style="width: 100px" name="bill_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
+                                </td>
+
+                              
+
+                                <td>
+                                    <input type="file" name="c_b_img[]" id="c_b_img"' . $count . '"/>
+                                </td>
+                                
+                                 <td class="text-right">
+                                    <input type="text" style="width: 100px" name="aisle_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
+                                </td>
+                                
+                                 <td class="text-right">
+                                    <input type="text" style="width: 100px" name="shelf_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
+                                </td>
+                                
+                                 <td class="text-right">
+                                    <input type="text" style="width: 100px" name="bin_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
+                                  </td>
+
+                              
+                        </tr>
+                        ';
+        }
+        $op .= '
+            </tbody>
+        
         </table>
                             ';
 
@@ -1406,6 +1586,8 @@ class Cpurchase extends CI_Controller
         echo $op;
     }
 
+
+
     public function add_product()
     {
         $this->load->model("Products");
@@ -1520,6 +1702,107 @@ class Cpurchase extends CI_Controller
         }
 
         redirect('Cpurchase/add_purchase/');
+    }
+
+
+    public function erp_entry()
+    {
+
+    //    $pur_date = $this->input->post('purchase_date', TRUE);
+        $po_id = $this->input->post('pur_order_no', TRUE);
+       $product_id = $this->input->post('product_id', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $supplier_id = $this->input->post('supplier_drop', TRUE);
+        $received = $this->input->post('received', TRUE);
+        $return = $this->input->post('return', TRUE);
+        $remarks = $this->input->post('remarks', TRUE);
+        $bil_no = $this->input->post('bill_no', TRUE);
+        $aisle_no = $this->input->post('aisle_no', TRUE);
+        $shelf_no = $this->input->post('shelf_no', TRUE);
+        $bin_no = $this->input->post('bin_no', TRUE);
+
+
+
+
+
+
+        $id = $this->input->post('sl_id', TRUE);
+
+
+
+
+
+
+
+        // echo '<pre>'; print_r($_FILES['c_b_img']);exit();
+
+        $image = array();
+        for ($i = 0; $i < count($id); $i++) {
+            $image[$i]['url'] = null;
+        }
+
+
+        $image_url = array();
+
+        $this->load->library('upload');
+
+        $ImageCount = count($_FILES['c_b_img']['name']);
+        for($i = 0; $i < $ImageCount; $i++){
+            $_FILES['file']['name']       = $_FILES['c_b_img']['name'][$i];
+            $_FILES['file']['type']       = $_FILES['c_b_img']['type'][$i];
+            $_FILES['file']['tmp_name']   = $_FILES['c_b_img']['tmp_name'][$i];
+            $_FILES['file']['error']      = $_FILES['c_b_img']['error'][$i];
+            $_FILES['file']['size']       = $_FILES['c_b_img']['size'][$i];
+
+            // File upload configuration
+            $uploadPath = 'my-assets/image/chalan/';
+            $config['upload_path'] = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['encrypt_name']  = TRUE;
+
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            // Upload file to server
+            if($this->upload->do_upload('file')){
+                // Uploaded file data
+                $imageData = $this->upload->data();
+                $uploadImgData[$i]['image'] = $config['upload_path'].$imageData['file_name'];
+                $image_url = base_url() . $uploadImgData[$i]['image'];
+                $image[$i]['url'] = $image_url;
+
+            }
+
+           // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
+        }
+
+
+
+        for ($i = 0; $i < count($id); $i++) {
+            $data = array(
+                'po_order'   => $po_id,
+                'product_id'   => $product_id[$i],
+                'quantity'   => $quantity[$i],
+                'supplier_id'   => $supplier_id[$i],
+                'received_status'   => $received[$i],
+                'return_qty'   => $return[$i],
+                'remarks'   => $remarks[$i],
+                'bill_no'   => $bil_no[$i],
+                'bill_image'    => $image[$i]['url'],
+                'aisle_no'   => $aisle_no[$i],
+                'shelf_no'   => $shelf_no[$i],
+                'bin_no'   => $bin_no[$i],
+                'isAprv'      => 1
+            );
+
+         //    echo '<pre>'; print_r($data);exit();
+
+
+            $this->db->insert('erp_entry_details', $data);
+        }
+
+        redirect('Cpurchase/product_receive_form_three/');
     }
 
     public function remove_from_list()

@@ -19,11 +19,11 @@
         </div>
         <div class="header-title">
             <h1>Purchase</h1>
-            <small>Product Receive</small>
+            <small>ERP Entry</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#"><?php echo display('purchase') ?></a></li>
-                <li class="active">Product Receive</li>
+                <li class="active">ERP Entry</li>
             </ol>
         </div>
     </section>
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="panel-body" id="printableArea">
-<!--                        --><?php //echo form_open_multipart('Cpurchase/save_purchase',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
+                        <?php echo form_open_multipart('Cpurchase/erp_entry',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
                         <!-- <div class="row">
@@ -162,7 +162,7 @@
                         </div>
 
 
-<!--                        --><?php //echo form_close()?>
+
                     </div>
                 </div>
 
@@ -172,9 +172,11 @@
         <div class="form-group row">
             <div class="col-sm-6">
 <!--                <input type="submit" id="save" class="btn btn-success btn-large" name="save" value="Save" />-->
-                <button  class="btn btn-info" onclick="printDiv('printableArea')"><span class="fa fa-print"></span></button>
+                <input type="submit"  class="btn btn-info" >
             </div>
         </div>
+
+        <?php echo form_close()?>
     </section>
 </div>
 <!-- Purchase Report End -->
@@ -187,7 +189,7 @@ function get_receive_details() {
     var csrf_test_name = $('[name="csrf_test_name"]').val();
 
     $.ajax({
-        url : "<?php echo base_url(); ?>Cpurchase/get_receive_details",
+        url : "<?php echo base_url(); ?>Cpurchase/get_receive_details_three",
         method : 'POST',
         data : {
             po_id : po_id,

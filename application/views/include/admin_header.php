@@ -958,6 +958,16 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             }
                             ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_two') ?>">Approved for Allocation</a>
                             </li>
+
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("approval_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+
+                            }
+                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_three') ?>">ERP Entry</a>
+                            </li>
                         <?php } ?>
 
                         <?php if ($this->permission1->method('purchase_cheque_report', 'create')->access()) { ?>
