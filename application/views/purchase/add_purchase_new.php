@@ -139,6 +139,37 @@
                             </div>
                         </div>
 
+                        <div class="row addBill" >
+                            <div class="bill_div">
+                                <div class="col-sm-6">
+                                    <div class="form-group row">
+                                        <label for="extra_pr" class="col-sm-4 col-form-label">Chalan/Bill No:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" autocomplete="off" name="bill_no[]"  id="product_name_1" class="form-control productSelection" placeholder="Bill No" tabindex="5">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group row">
+                                        <label for="extra_pr" class="col-sm-4 col-form-label">Bill Image:</label>
+                                        <div class="col-sm-7">
+                                            <input type="file" autocomplete="off" name="c_b_img[]"  id="c_b_img" class="form-control" ptabindex="5">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div  class=" col-sm-1">
+                                    <a href="#" id="add_row" class="client-add-btn btn btn-primary add_row" ><i class="fa fa-plus-circle m-r-2"></i></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
 
 
                         <br>
@@ -162,6 +193,45 @@
 <!-- Purchase Report End -->
 
 <script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $(".add_row").click(function(){
+            $(".addBill").append(" <div class='bill_div'><div class=\"col-sm-6\">\n" +
+                "                                <div class=\"form-group row\">\n" +
+                "                                    <label for=\"extra_pr\" class=\"col-sm-4 col-form-label\">Chalan/Bill No:</label>\n" +
+                "                                    <div class=\"col-sm-8\">\n" +
+                "                                        <input type=\"text\" autocomplete=\"off\" name=\"bill_no[]\"  id=\"product_name_1\" class=\"form-control productSelection\" placeholder=\"Bill No\" tabindex=\"5\">\n" +
+                "\n" +
+                "                                    </div>\n" +
+                "                                </div>\n" +
+                "                            </div>\n" +
+                "\n" +
+                "                            <div class=\"col-sm-4\">\n" +
+                "                                <div class=\"form-group row\">\n" +
+                "                                    <label for=\"extra_pr\" class=\"col-sm-4 col-form-label\">Bill Image:</label>\n" +
+                "                                    <div class=\"col-sm-7\">\n" +
+                "                                        <input type=\"file\" autocomplete=\"off\" name=\"c_b_img[]\"  id=\"c_b_img\" class=\"form-control\" ptabindex=\"5\">\n" +
+                "\n" +
+                "                                    </div>\n" +
+                "                                </div>\n" +
+                "                            </div>\n" +
+                "\n" +
+                "\n" +
+                "                            <div  class=\" col-sm-1\">\n" +
+                "                                <a href=\"#\" id=\"remove_row\" class=\"client-add-btn btn btn-danger remove_row\" ><i class=\"fa fa-minus-circle m-r-2\"></i></a>\n" +
+                "                            </div></div>");
+        });
+
+
+    });
+
+
+
+    $("body").on("click",".remove_row",function(e){
+        $(this).parents('.bill_div').remove();
+        //the above method will remove the user_data div
+    });
 
 
 function get_purchase_details() {

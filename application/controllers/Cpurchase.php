@@ -895,7 +895,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center">Additional Cost</th>
                         <th class="text-center">Total</th>
                         <th class="text-center">Chalan/Bill No.</th>
-                        <th width=8% class="text-center">Bill Image</th>
+                   
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -1000,9 +1000,7 @@ class Cpurchase extends CI_Controller
                                     <input type="text" style="width: 100px" name="c_b_no[]" id="c_b_no' . $count . '" class="form-control text-right store_cal_1" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" tabindex="6" value="' . ($items['chalan_id'] ? $items['chalan_id'] : "") . '"/>
                                 </td>
 
-                                <td>
-                                    <input type="file" name="c_b_img[]" id="c_b_img"' . $count . '"/>
-                                </td>
+                              
                                 <td>
                                 <button  class="remove_inventory btn btn-danger text-right" type="button"  id="' . $count . '" tabindex="8"><i class="fa fa-close"></i></button>
                                 </td>
@@ -1678,6 +1676,30 @@ class Cpurchase extends CI_Controller
            // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
         }
 
+        $bill_no=$this->input->post('bill_no',TRUE);
+
+
+
+        if ( ! empty($bill_no) )
+        {
+            foreach ($bill_no as $key => $value )
+            {
+
+                $data['bill_no'] = $value;
+                $data['po_order']=$po_id;
+                $data['bill_image'] = $image_url;
+
+
+             //   echo '<pre>';print_r($image_url);exit();
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data))
+                {
+                    $this->db->insert('bill_details', $data);
+                }
+            }
+
+        }
+
 
 
         for ($i = 0; $i < count($id); $i++) {
@@ -1690,7 +1712,7 @@ class Cpurchase extends CI_Controller
                 'additional_cost'   => $additional_cost[$i],
                 'total_amount'   => $per_item_total[$i],
                 'chalan_id'   => $chalan_no[$i],
-                'chalan_img'    => $image[$i]['url'],
+              //  'chalan_img'    => $image[$i]['url'],
                 'isAprv'      => 1
             );
 
