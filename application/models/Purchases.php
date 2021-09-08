@@ -1879,6 +1879,23 @@ class Purchases extends CI_Model {
 
     }
 
+    public function PO_approved_list_rcv()
+    {
+        $this->db->select('a.purchase_order, a.purchase_id');
+        $this->db->from('product_purchase a');
+        $this->db->group_by('a.purchase_id');
+        $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
+        $this->db->where('b.isAprv', 1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+
+    }
+
     public function purchase_details($purchase_id)
     {
         $this->db->select('a.*, b.id AS real_id, b.*, c.*');
@@ -1887,6 +1904,24 @@ class Purchases extends CI_Model {
         $this->db->join('product_information c', 'c.product_id = b.product_id');
         $this->db->where('b.purchase_id', $purchase_id);
         $this->db->where('b.isAprv', 3);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+
+    }
+
+    public function purchase_details_rcv($purchase_id)
+    {
+        $this->db->select('a.*, b.id AS real_id, b.*, c.*');
+        $this->db->from('product_purchase a');
+        $this->db->join('product_purchase_details b', 'b.purchase_id = a.purchase_id');
+        $this->db->join('product_information c', 'c.product_id = b.product_id');
+        $this->db->where('b.purchase_id', $purchase_id);
+        $this->db->where('b.isAprv', 1);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

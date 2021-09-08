@@ -74,35 +74,57 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
 
                             <div class="panel-body" >
 
-                                <table  id="" class="table-bordered">
-                                {barcode_details}
 
-                                    <tr>
-                                        <td class="barcode-toptd">
+                                <div class="row">
+                                    {barcode_details}
+                                    <div class="col-xs-4 ">
+                                        <div class="form-group row">
 
+                                            <div class="col-xs-8" style=" border-style: dotted;border-width: 2px;">
+                                                <div class="barcode-inner barcode-innerdiv" >
 
-                                            <div class="barcode-inner barcode-innerdiv" >
+                                                    <div class="product-name-details barcode-productdetails" style="margin-bottom: 2%">{stock_in_date}</div>
+                                                    <div class="product-name-details barcode-productdetails" style="margin-bottom: 2%">{product_name} {sku}</div>
+                                                    <img style="margin-bottom: 2%" src="{barcode_url}" class="img-responsive center-block barcode-image" alt="" >
+                                                    <!--                                                <div  class="product-name-details barcode-productdetails">{sku}</div>-->
+                                                                                                    <div  class="product-name-details barcode-productdetails">Aisle No: {aisle_no}</div>
+                                                                                                    <div class="product-name-details barcode-productdetails">Shelf No: {shelf_no}</div>
+                                                                                                    <div  class="product-name-details barcode-productdetails">Bin No: {bin_no}</div>
+                                                </div>
 
-                                                <div class="product-name-details barcode-productdetails" style="margin-bottom: 2%">{stock_in_date}</div>
-                                                <div class="product-name-details barcode-productdetails" style="margin-bottom: 2%">{product_name} {sku}</div>
-                                                <img style="margin-bottom: 2%" src="{barcode_url}" class="img-responsive center-block barcode-image" alt="" >
-<!--                                                <div  class="product-name-details barcode-productdetails">{sku}</div>-->
-<!--                                                <div  class="product-name-details barcode-productdetails">{aisle_no}</div>-->
-<!--                                                <div class="product-name-details barcode-productdetails">{shelf_no}</div>-->
-<!--                                                <div  class="product-name-details barcode-productdetails">{bin_no}</div>-->
                                             </div>
-
-
-                                        </td>
-
-
-                                    </tr>
-
-
-
+                                        </div>
+                                    </div>
                                     {/barcode_details}
+                                </div>
 
-                                </table>
+
+<!--                                <table  id="" class="table-bordered">-->
+<!--                                {barcode_details}-->
+<!---->
+<!--                                    <tr>-->
+<!--                                        <td class="barcode-toptd">-->
+<!---->
+<!---->
+<!--                                            <div class="barcode-inner barcode-innerdiv" >-->
+<!---->
+<!--                                                <div class="product-name-details barcode-productdetails" style="margin-bottom: 2%">{stock_in_date}</div>-->
+<!--                                                <div class="product-name-details barcode-productdetails" style="margin-bottom: 2%">{product_name} {sku}</div>-->
+<!--                                                <img style="margin-bottom: 2%" src="{barcode_url}" class="img-responsive center-block barcode-image" alt="" >-->
+<!---->
+<!--                                            </div>-->
+<!---->
+<!---->
+<!--                                        </td>-->
+<!---->
+<!---->
+<!--                                    </tr>-->
+<!---->
+<!---->
+<!---->
+<!--                                    {/barcode_details}-->
+<!---->
+<!--                                </table>-->
 
 
 

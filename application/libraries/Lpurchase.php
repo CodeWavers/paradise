@@ -501,7 +501,7 @@ class Lpurchase {
         $category_list = $CI->Categories->category_list();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $bank_list        = $CI->Web_settings->bank_list();
-        $po_list = $CI->Purchases->PO_approved_list();
+        $po_list = $CI->Purchases->PO_approved_list_rcv();
         $data = array(
             'title'         => display('add_purchase'),
             'all_supplier'  => $all_supplier,
@@ -528,7 +528,7 @@ class Lpurchase {
         $category_list = $CI->Categories->category_list();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $bank_list        = $CI->Web_settings->bank_list();
-        $po_list = $CI->Purchases->PO_approved_list();
+        $po_list = $CI->Purchases->PO_approved_list_rcv();
         $data = array(
             'title'         => display('add_purchase'),
             'all_supplier'  => $all_supplier,
@@ -555,7 +555,7 @@ class Lpurchase {
         $category_list = $CI->Categories->category_list();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $bank_list        = $CI->Web_settings->bank_list();
-        $po_list = $CI->Purchases->PO_approved_list();
+        $po_list = $CI->Purchases->PO_approved_list_rcv();
         $data = array(
             'title'         => display('add_purchase'),
             'all_supplier'  => $all_supplier,

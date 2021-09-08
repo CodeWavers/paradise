@@ -1039,7 +1039,7 @@ class Cpurchase extends CI_Controller
         $this->load->model("Products");
         $this->load->model("Suppliers");
         //   $product_id=$_POST["product_id"];
-        $cart_list = $this->Purchases->purchase_details($po_id);
+        $cart_list = $this->Purchases->purchase_details_rcv($po_id);
         $grand_total = array_sum(array_column($cart_list, 'total_amount'));
         // $total = array_sum(array_column($cart_list, 'total'));
         $op = '';
@@ -1105,7 +1105,7 @@ class Cpurchase extends CI_Controller
                             <td class="wt">' . $items['sku'] . '</td>
                             <td class="wt">' . $items['product_id'] . '</td>
                             <td class="wt">
-                                <input type="text" name="quantity[]" id="quantity" class="form-control text-right stock_ctn_1" placeholder="0.00" />
+                                <input type="text" name="quantity[]" id="quantity" required="" class="form-control text-right stock_ctn_1" placeholder="0.00" />
                             </td>
                            
 
@@ -1154,7 +1154,7 @@ class Cpurchase extends CI_Controller
                                 </td>
 
                                 <td class="text-right">
-                                    <input type="text" style="width: 100px" name="return[]" id="return" required="" min="0" class="form-control text-right store_cal_1"  placeholder="" value=""  tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="return[]" id="return"  min="0" class="form-control text-right store_cal_1"  placeholder="" value=""  tabindex="6"/>
                                 </td>
 
                                 <td class="text-right">
@@ -1194,7 +1194,7 @@ class Cpurchase extends CI_Controller
                             ';
 
         if ($count == 0) {
-            $op = '<h3 align="center">Purchase Order is empty</h3>';
+            $op = '<h3 align="center"> Empty!!</h3>';
         }
 
         echo $op;
@@ -1209,7 +1209,7 @@ class Cpurchase extends CI_Controller
         $this->load->model("Products");
         $this->load->model("Suppliers");
         //   $product_id=$_POST["product_id"];
-        $cart_list = $this->Purchases->purchase_details($po_id);
+        $cart_list = $this->Purchases->purchase_details_rcv($po_id);
         $grand_total = array_sum(array_column($cart_list, 'total_amount'));
         // $total = array_sum(array_column($cart_list, 'total'));
         $op = '';
@@ -1320,7 +1320,7 @@ class Cpurchase extends CI_Controller
         $this->load->model("Products");
         $this->load->model("Suppliers");
         //   $product_id=$_POST["product_id"];
-        $cart_list = $this->Purchases->purchase_details($po_id);
+        $cart_list = $this->Purchases->purchase_details_rcv($po_id);
 
       //  echo '<pre>';print_r($cart_list);exit();
         $grand_total = array_sum(array_column($cart_list, 'total_amount'));

@@ -939,8 +939,34 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             ?>"><a href="<?php echo base_url('Creport/approval_report') ?>">Approval Report</a>
                             </li>
 
+
+
+                        <?php } ?>
+                    </ul>
+                </li>
+            <?php } ?>
+            <?php if ($this->permission1->method('add_purchase', 'create')->access() || $this->permission1->method('manage_purchase', 'read')->access()) { ?>
+                <li class="treeview <?php
+                if ($this->uri->segment('1') == ("")) {
+                    echo "active";
+                } else {
+                    echo " ";
+                }
+                ?>">
+                    <a href="#">
+                        <i class="ti-shopping-cart"></i><span>Product Receive</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+
+
+                        <?php if ($this->permission1->method('manage_purchase', 'read')->access()) { ?>
+
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("approval_report")) {
+                            if ($this->uri->segment('1') == ("product_receive_form")) {
                                 echo "active";
                             } else {
                                 echo " ";
@@ -950,17 +976,17 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             </li>
 
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("approval_report")) {
+                            if ($this->uri->segment('2') == ("product_receive_form_two")) {
                                 echo "active";
                             } else {
                                 echo " ";
 
                             }
-                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_two') ?>">Approved for Allocation</a>
+                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_two') ?>">Print Barcode Sticker</a>
                             </li>
 
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("approval_report")) {
+                            if ($this->uri->segment('3') == ("product_receive_form_three")) {
                                 echo "active";
                             } else {
                                 echo " ";
@@ -970,9 +996,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             </li>
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('purchase_cheque_report', 'create')->access()) { ?>
 
-                        <?php } ?>
                     </ul>
                 </li>
             <?php } ?>

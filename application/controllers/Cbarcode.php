@@ -105,7 +105,7 @@ class Cbarcode extends CI_Controller {
 //            $image_url=  imagepng($file,base_url()."my-assets/image/barcode/$product_id.png");
 
 
-            $file = Zend_Barcode::draw('code128', 'image', array('text' => $product_id.$aisle_no.$shelf_no.$bin_no), array());
+            $file = Zend_Barcode::draw('code128', 'image', array('text' => $product_id), array());
             $code = time().$product_id;
             $store_image = imagepng($file,"my-assets/image/barcode/{$code}.png");
             $barcode_url = base_url()."my-assets/image/barcode/{$code}.png";
