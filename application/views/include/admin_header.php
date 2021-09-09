@@ -947,7 +947,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
             <?php } ?>
             <?php if ($this->permission1->method('add_purchase', 'create')->access() || $this->permission1->method('manage_purchase', 'read')->access()) { ?>
                 <li class="treeview <?php
-                if ($this->uri->segment('1') == ("")) {
+                if ($this->uri->segment('1') == ("Cpurchase")) {
                     echo "active";
                 } else {
                     echo " ";
@@ -1053,6 +1053,15 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             } else {
                                 echo " ";
                             } ?>"><a href="<?php echo base_url('Creport') ?>"><?php echo display('stock_report') ?></a>
+                            </li>
+                        <?php } ?>
+
+                        <?php if ($this->permission1->method('stock_report', 'read')->access()) { ?>
+                            <li class="treeview <?php if ($this->uri->segment('1') == ("Creport") && $this->uri->segment('2') == ("")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('Creport/wastage_dec') ?>">Wastage Declaration</a>
                             </li>
                         <?php } ?>
 

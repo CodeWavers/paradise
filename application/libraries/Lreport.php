@@ -46,6 +46,22 @@ class Lreport extends CI_Model
         return $reportList;
     }
 
+    public function wastage_dec() {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Web_settings');
+
+        $data = array(
+            'title'         => "Wastage Decelaration",
+
+        );
+
+        // echo '<pre'; print_r($cw_list);exit();
+        //    die();
+        $invoiceForm = $CI->parser->parse('wastage/wastage_dec', $data, true);
+        return $invoiceForm;
+    }
+
 //Out of stock
     public function out_of_stock()
     {

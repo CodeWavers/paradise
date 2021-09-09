@@ -2061,8 +2061,9 @@ class Invoices extends CI_Model {
         $data2['price']          = $product_information->price;
         $data2['supplier_id']    = $product_information->supplier_id;
         $data2['warehouse']      = $whouse;
-       // $data2['warrenty_date']  = $product_information->warrenty_date;
-       // $data2['expired_date']  = $product_information->expired_date;
+        $data2['product_id']  = $product_information->product_id;
+        $data2['sku']  = $product_information->sku;
+        $data2['country']  = $product_information->country;
         $data2['unit']           = $product_information->unit;
         $data2['tax']            = $product_information->tax;
         $data2['serial']         = $html;
