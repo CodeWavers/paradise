@@ -102,7 +102,7 @@
                                     <th class="text-center">Origin</th>
                                     <th class="text-center">Unit</th>
                                     <th class="text-center"><?php echo display('quantity') ?> <i class="text-danger">*</i></th>
-                                    <th class="text-center" width="15%"><?php echo display('action') ?></th>
+                                    <th class="text-center" width="5%"><?php echo display('action') ?></th>
                                 </tr>
                                 </thead>
                                 <tbody id="addinvoiceItem">
@@ -137,8 +137,8 @@
 
                                     <td>
 
-
-                                        <button  class='btn btn-danger text-right' type='button' value='Delete' onclick='deleteRow(this)'><i class='fa fa-close'></i></button>
+<!---->
+<!--                                        <button  class='btn btn-danger text-right' type='button' value='Delete' onclick='deleteRow(this)'><i class='fa fa-close'></i></button>-->
                                         <button  class='btn btn-info text-right'  id="add_invoice_item" name="add-invoice-item" type='button' value='Add' onclick="addInputField('addinvoiceItem');"><i class='fa fa-plus'></i></button>
 <!--                                        <a style="margin-top: 30%"  id="add_invoice_item" class="btn btn-info" name="add-invoice-item"  onClick="addInputField('addinvoiceItem');"  tabindex="11"><i class="fa fa-plus"></i></a>-->
                                     </td>
