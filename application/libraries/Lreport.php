@@ -52,13 +52,29 @@ class Lreport extends CI_Model
         $CI->load->model('Web_settings');
 
         $data = array(
-            'title'         => "Wastage Decelaration",
+            'title'         => "Wastage Declaration",
 
         );
 
         // echo '<pre'; print_r($cw_list);exit();
         //    die();
         $invoiceForm = $CI->parser->parse('wastage/wastage_dec', $data, true);
+        return $invoiceForm;
+    }
+
+    public function dead_dec() {
+        $CI = & get_instance();
+
+        $CI->load->model('Web_settings');
+
+        $data = array(
+            'title'         => "Dead Declaration",
+
+        );
+
+        // echo '<pre'; print_r($cw_list);exit();
+        //    die();
+        $invoiceForm = $CI->parser->parse('wastage/dead_dec', $data, true);
         return $invoiceForm;
     }
 

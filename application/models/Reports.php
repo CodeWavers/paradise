@@ -2756,6 +2756,44 @@ class reports extends CI_Model {
         return $data;
     }
 
+    public function dead_entry(){
+        $this->load->model('Web_settings');
+      //  $wastage_id=date('YmdHis');
+
+        $quantity            = $this->input->post('product_quantity',true);
+        $p_id             = $this->input->post('product_id',true);
+        //  $unit             = $this->input->post('unit',true);
+
+
+        for ($i = 0, $n   = count($p_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            //   $un  = $unit[$i];
+            $product_id   = $p_id[$i];
+
+//            $supplier_price=$this->db->select('supplier_price')->from('supplier_product')->where('product_id',$product_id)->get()->row();
+
+          //  $price=$qty*($supplier_price->supplier_price);
+            $data = array(
+
+//                'wastage_id'=>$wastage_id,
+                'product_id'=>$product_id,
+                'dead_quantity'=>$qty,
+                'status'=>1
+
+
+            );
+            if (!empty($quantity)) {
+                $this->db->insert('wastage_dec', $data);
+
+
+            }
+
+
+        }
+
+        return $data;
+    }
+
 
 
 

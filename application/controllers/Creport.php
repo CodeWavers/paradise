@@ -32,6 +32,15 @@ class Creport extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function dead_dec()
+    {
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lreport');
+        $content = $CI->lreport->dead_dec();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function wastage_entry(){
         $CI = & get_instance();
 
@@ -41,6 +50,34 @@ class Creport extends CI_Controller {
         $CI->load->model('Reports');
 
         $result = $CI->Reports->wastage_entry();
+
+
+
+
+        //   echo "ok";exit();
+
+        if ($result == TRUE) {
+            $this->session->set_userdata(array('message' => display('successfully_added')));
+
+            redirect(base_url('Creport/wastage_dec'));
+
+        } else {
+            $this->session->set_userdata(array('error_message' => display('please_try_again')));
+            redirect(base_url('Creport/wastage_dec'));
+        }
+
+
+    }
+
+    public function dead_entry(){
+        $CI = & get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Reports');
+
+        $result = $CI->Reports->dead_entry();
 
 
 

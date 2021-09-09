@@ -1065,6 +1065,15 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             </li>
                         <?php } ?>
 
+                        <?php if ($this->permission1->method('stock_report', 'read')->access()) { ?>
+                            <li class="treeview <?php if ($this->uri->segment('1') == ("Creport") && $this->uri->segment('2') == ("")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('Creport/dead_dec') ?>">Dead Declaration</a>
+                            </li>
+                        <?php } ?>
+
 
                     </ul>
                 </li>
