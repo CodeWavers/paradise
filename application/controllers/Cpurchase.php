@@ -52,10 +52,10 @@ class Cpurchase extends CI_Controller
         $CI->load->model('Purchases');
         $CI->Purchases->update_po_new();
 
-        $po_no=$this->input->post('pur_order_no',TRUE);
+        $po_no = $this->input->post('pur_order_no', TRUE);
         $this->session->set_userdata(array('message' => 'Succesfully Approved'));
 
-       // redirect(base_url('Cpurchase/po_print/'.$po_no));
+        // redirect(base_url('Cpurchase/po_print/'.$po_no));
 
         redirect(base_url('Cpurchase/purchase_order_approve_new'));
     }
@@ -63,7 +63,7 @@ class Cpurchase extends CI_Controller
     public function po_print($po_no)
     {
 
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->model('Web_settings');
         $CI->load->model('Invoices');
         $CI->load->model('Purchases');
@@ -71,12 +71,12 @@ class Cpurchase extends CI_Controller
         $CI->load->library('numbertowords');
         $taxfield = $CI->db->select('*')
             ->from('tax_settings')
-            ->where('is_show',1)
+            ->where('is_show', 1)
             ->get()
             ->result_array();
-        $txregname ='';
-        foreach($taxfield as $txrgname){
-            $regname = $txrgname['tax_name'].' Reg No  - '.$txrgname['reg_no'].', ';
+        $txregname = '';
+        foreach ($taxfield as $txrgname) {
+            $regname = $txrgname['tax_name'] . ' Reg No  - ' . $txrgname['reg_no'] . ', ';
             $txregname .= $regname;
         }
 
@@ -94,7 +94,7 @@ class Cpurchase extends CI_Controller
 
             //   $closing_inventory = array_sum(array_column($data,'purchase_total'));
         }
-        $total = array_sum(array_column($all_purchase_list,'total_amount'));
+        $total = array_sum(array_column($all_purchase_list, 'total_amount'));
 
         $data = array(
             'title'             => 'Approve PO',
@@ -107,7 +107,7 @@ class Cpurchase extends CI_Controller
 
         );
 
-         //echo '<pre>';print_r($data);exit();
+        //echo '<pre>';print_r($data);exit();
 
         $content =  $CI->parser->parse('purchase/po_print', $data, true);
         $this->template->full_admin_html_view($content);
@@ -526,7 +526,7 @@ class Cpurchase extends CI_Controller
         $this->db->where('purchase_detail_id', $row_id);
         $this->db->delete('product_purchase_details');
 
-        var_dump($row_id); ;
+        var_dump($row_id);;
         //   echo $this->view();
     }
 
@@ -538,11 +538,11 @@ class Cpurchase extends CI_Controller
         $rate = $_POST["rate"];
         $total_amount = $_POST["total_amount"];
 
-        $this->db->set(array('qty'=>$qty,'rate'=>$rate,'total_amount'=>$total_amount,'isAprv'=>3));
+        $this->db->set(array('qty' => $qty, 'rate' => $rate, 'total_amount' => $total_amount, 'isAprv' => 3));
         $this->db->where('purchase_detail_id', $row_id);
         $this->db->update('product_purchase_details');
 
-        var_dump($row_id); ;
+        var_dump($row_id);;
         //   echo $this->view();
     }
 
@@ -678,7 +678,7 @@ class Cpurchase extends CI_Controller
         $count = 0;
         foreach ($cart_list as $items) {
 
-            $latest_price=$this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->order_by('id', 'DESC')->get()->row()->update_price;
+            $latest_price = $this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->order_by('id', 'DESC')->get()->row()->update_price;
 
 
             // echo '<pre>'; print_r($latest_price); exit();
@@ -895,7 +895,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center">Additional Cost</th>
                         <th class="text-center">Total</th>
                         <th class="text-center">Chalan/Bill No.</th>
-                   
+
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -921,7 +921,7 @@ class Cpurchase extends CI_Controller
 
 
             $product_id = $items['product_id'];
-           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
             $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
             // echo '<pre>'; print_r($items['warrenty_date']); exit();
             $count++;
@@ -956,20 +956,20 @@ class Cpurchase extends CI_Controller
 
 
 
-                                if ($items['supplier_id']) {
-                                        foreach ($supplier_list as $supp) {
-                                            if ($items['supplier_id'] == $supp['supplier_id']) {
-                                                $op .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
-                                            } else {
-                                                $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
-                                            }
-                                        }
-                                    } else {
-                                        $op .= '<option value="">Select Option</option>';
-                                        foreach ($supplier_list as $supp) {
-                                            $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
-                                        }
-                                    }
+            if ($items['supplier_id']) {
+                foreach ($supplier_list as $supp) {
+                    if ($items['supplier_id'] == $supp['supplier_id']) {
+                        $op .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
+                    } else {
+                        $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+                    }
+                }
+            } else {
+                $op .= '<option value="">Select Option</option>';
+                foreach ($supplier_list as $supp) {
+                    $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+                }
+            }
 
 
 
@@ -1000,7 +1000,7 @@ class Cpurchase extends CI_Controller
                                     <input type="text" style="width: 100px" name="c_b_no[]" id="c_b_no' . $count . '" class="form-control text-right store_cal_1" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" tabindex="6" value="' . ($items['chalan_id'] ? $items['chalan_id'] : "") . '"/>
                                 </td>
 
-                              
+
                                 <td>
                                 <button  class="remove_inventory btn btn-danger text-right" type="button"  id="' . $count . '" tabindex="8"><i class="fa fa-close"></i></button>
                                 </td>
@@ -1013,7 +1013,7 @@ class Cpurchase extends CI_Controller
                 <tr>
                     <td colspan="11" class="text-right"><b>Grand Total:</b></td>
                     <td>
-                    <input class="form-control" name="total" id="grand_total" value="'.($grand_total ? $grand_total : '').'" readonly/>
+                    <input class="form-control" name="total" id="grand_total" value="' . ($grand_total ? $grand_total : '') . '" readonly/>
                     </td>
                 </tr>
             </tfoot>
@@ -1051,7 +1051,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="8%">SKU</th>
                         <th class="text-center">Barcode</th>
                         <th class="text-center">Quantity</th>
-                      
+
                         <th class="text-center">Supplier Name</th>
                         <th class="text-center">Received</th>
                         <th class="text-center">Return</th>
@@ -1085,7 +1085,7 @@ class Cpurchase extends CI_Controller
 
 
             $product_id = $items['product_id'];
-           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
             $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
             // echo '<pre>'; print_r($items['warrenty_date']); exit();
             $count++;
@@ -1105,7 +1105,7 @@ class Cpurchase extends CI_Controller
                             <td class="wt">
                                 <input type="text" name="quantity[]" id="quantity" required="" class="form-control text-right stock_ctn_1" placeholder="0.00" />
                             </td>
-                           
+
 
                             <td>
                             <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control" onchange="add_pur_calc_store(' . $count . ');" >
@@ -1116,20 +1116,20 @@ class Cpurchase extends CI_Controller
 
 
 
-                                if ($items['supplier_id']) {
-                                        foreach ($supplier_list as $supp) {
-                                            if ($items['supplier_id'] == $supp['supplier_id']) {
-                                                $op .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
-                                            } else {
-                                                $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
-                                            }
-                                        }
-                                    } else {
-                                        $op .= '<option value="">Select Option</option>';
-                                        foreach ($supplier_list as $supp) {
-                                            $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
-                                        }
-                                    }
+            if ($items['supplier_id']) {
+                foreach ($supplier_list as $supp) {
+                    if ($items['supplier_id'] == $supp['supplier_id']) {
+                        $op .= '<option selected value=' . $items['supplier_id'] . '>' . $this->Suppliers->supplier_search($items['supplier_id'])[0]['supplier_name'] . '<option>';
+                    } else {
+                        $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+                    }
+                }
+            } else {
+                $op .= '<option value="">Select Option</option>';
+                foreach ($supplier_list as $supp) {
+                    $op .= '<option value=' . $supp['supplier_id'] . '>' . $supp['supplier_name'] . '</option>';
+                }
+            }
 
 
 
@@ -1137,18 +1137,18 @@ class Cpurchase extends CI_Controller
             $op .= ' </select></td>
 
                                 <td class="text-right">
-                                   
+
                                       <select class="form-control" id="" name="received[]"  tabindex="3">
-                                          
-                                          
-                                           
+
+
+
                                                 <option value="Received">Received</option>
                                                 <option value="Not received">Not received</option>
                                                 <option value="Partially received">Partially received</option>
-                                                
-                                            
+
+
                                         </select>
-                                   
+
                                 </td>
 
                                 <td class="text-right">
@@ -1163,31 +1163,31 @@ class Cpurchase extends CI_Controller
                                     <input type="text" style="width: 100px" name="bill_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
                                 </td>
 
-                              
+
 
                                 <td>
                                     <input type="file" name="c_b_img[]" id="c_b_img"' . $count . '"/>
                                 </td>
-                                
+
                                  <td class="text-right">
                                     <input type="text" style="width: 100px" name="aisle_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
                                 </td>
-                                
+
                                  <td class="text-right">
                                     <input type="text" style="width: 100px" name="shelf_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
                                 </td>
-                                
+
                                  <td class="text-right">
                                     <input type="text" style="width: 100px" name="bin_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
                                   </td>
 
-                              
+
                         </tr>
                         ';
         }
         $op .= '
             </tbody>
-        
+
         </table>
                             ';
 
@@ -1216,12 +1216,13 @@ class Cpurchase extends CI_Controller
             <table class="table table-bordered table-hover" id="purchaseTable">
                 <thead>
                      <tr>
+
                         <th style="font-size: 12px" class="text-center" width="4%">SN</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Product Name</th>
                         <th style="font-size: 12px" class="text-center" width="8%">SKU</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Barcode</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Quantity</th>
-                   
+
                         <th style="font-size: 12px" class="text-center" width="8%">Supplier Name</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Received</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Return</th>
@@ -1230,7 +1231,21 @@ class Cpurchase extends CI_Controller
                         <th style="font-size: 12px" class="text-center" width="8%">Aisle No.</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Shelf No.</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Bin No.</th>
-                      
+
+                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="8%">Product Name</th>
+                        <th class="text-center" width="8%">SKU</th>
+                        <th class="text-center" width="8%">Barcode</th>
+                        <th class="text-center" width="8%">Quantity</th>
+
+                        <th class="text-center" width="8%">Supplier Name</th>
+                        <th class="text-center" width="8%">Received</th>
+                        <th class="text-center" width="8%">Return</th>
+                        <th class="text-center" width="8%">Remarks</th>
+
+                        <th class="text-center" width="8%">Bill No.</th>
+
+
                     </tr>
                 </thead>
                 <tbody id="addPurchaseItem">';
@@ -1255,7 +1270,7 @@ class Cpurchase extends CI_Controller
 
 
             $product_id = $items['product_id'];
-           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
             $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
             // echo '<pre>'; print_r($items['warrenty_date']); exit();
             $count++;
@@ -1270,35 +1285,40 @@ class Cpurchase extends CI_Controller
                             <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
                             <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
                         </td>
+
                             <td style="font-size: 11px" class="wt">' . $items['sku'] . '</td>
                             <td style="font-size: 11px" class="wt">' . $items['product_id'] . '</td>
-                         
-                          
-                            
+
+
+
+
+                            <td class="wt">' . $items['sku'] . '</td>
+                            <td class="wt">' . $items['product_id'] . '</td>
+
+
+
+
                             <td class="test">
 
                             </td>
 
-     
 
-                                <td class="text-right">
-           
-                                </td>
 
                                 <td class="text-right">
 
-                                </td> 
-                                <td class="text-right">
-
-                                </td>
-
-                                <td class="text-right">
-          
                                 </td>
 
                                 <td class="text-right">
 
                                 </td>
+                                <td class="text-right">
+
+                                </td>
+
+                                <td class="text-right">
+
+                                </td>
+
                                 <td class="text-right">
 
                                 </td>
@@ -1308,13 +1328,16 @@ class Cpurchase extends CI_Controller
                                 <td class="text-right">
 
                                 </td>
-                              
-                                                                
+                                <td class="text-right">
+
+                                </td>
 
 
-                             
 
-                           
+
+
+
+
                         </tr>
                         ';
         }
@@ -1334,7 +1357,7 @@ class Cpurchase extends CI_Controller
         //   $product_id=$_POST["product_id"];
         $cart_list = $this->Purchases->purchase_details_rcv($po_id);
 
-      //  echo '<pre>';print_r($cart_list);exit();
+        //  echo '<pre>';print_r($cart_list);exit();
         $grand_total = array_sum(array_column($cart_list, 'total_amount'));
         // $total = array_sum(array_column($cart_list, 'total'));
         $op = '';
@@ -1349,12 +1372,12 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="8%">SKU</th>
                         <th class="text-center" width="8%">Barcode</th>
                         <th class="text-center" width="8%">Quantity</th>
-                    
+
                         <th class="text-center" width="8%">Aisle No</th>
                         <th class="text-center" width="8%">Shelf No</th>
                         <th class="text-center" width="8%">Bin No</th>
-                       
-                       
+
+
                     </tr>
                 </thead>
                 <tbody id="addPurchaseItem">';
@@ -1379,13 +1402,13 @@ class Cpurchase extends CI_Controller
 
 
             $product_id = $items['product_id'];
-           // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
+            // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
             $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
             // echo '<pre>'; print_r($items['warrenty_date']); exit();
             $count++;
             $op .= '
                         <tr>
-                        <td class="wt"> ' .$items['chalan_id']. '</td>
+                        <td class="wt"> ' . $items['chalan_id'] . '</td>
                         <td class="wt"> ' . $count . '</td>
                         <td class="span3 supplier">
                             <span>' . $items['product_name'] . '</span>
@@ -1399,14 +1422,14 @@ class Cpurchase extends CI_Controller
                              <input type="hidden" style="width: 100px" class="form-control " name="sku[]" value="' . $items['sku'] . '" id = "" class="sku" >
                             </td>
                             <td class="wt">' . $items['product_id'] . '</td>
-                         
-                          
-                            
+
+
+
                             <td class="test">
                            <input type="text" style="width: 100px" class="form-control row_total" name="quantity[]" value="" id = "" class="quantity" >
                             </td>
 
-     
+
 
                                 <td class="text-right">
                                       <input type="text" style="width: 100px" class="form-control row_total" name="aisle_no[]" value="" id = "" class="quantity" >
@@ -1415,16 +1438,16 @@ class Cpurchase extends CI_Controller
                                 <td class="text-right">
                                        <input type="text" style="width: 100px" class="form-control row_total" name="shelf_no[]" value="" id = "" class="quantity" >
                                 </td>
-                                 
+
                                 <td class="text-right">
                                       <input type="text" style="width: 100px" class="form-control row_total" name="bin_no[]" value="" id = "" class="quantity" >
                                 </td>
 
-                         
 
-                             
 
-                           
+
+
+
                         </tr>
                         ';
         }
@@ -1460,11 +1483,11 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="8%">SKU</th>
                          <th class="text-center">Origin</th>
                         <th class="text-center">Order Quantity</th>
-                  
+
                         <th class="text-center">Rate</th>
                         <th class="text-center">Discount</th>
                         <th class="text-center">Total</th>
-                 
+
                     </tr>
                 </thead>
                 <tbody id="addPurchaseItem">';
@@ -1496,14 +1519,14 @@ class Cpurchase extends CI_Controller
                             <td class="wt">' . $items['parts'] . '</td>
                             <td class="wt">' . $items['sku'] . '</td>
                                <td class="wt">' . $items['country'] . '</td>
-                       
+
                             <td class="test">
                                 <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
-                      
 
 
-                           
+
+
 
                                 <td class="text-right">
                                     <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6" readonly/>
@@ -1513,16 +1536,16 @@ class Cpurchase extends CI_Controller
                                     <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0%" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6" readonly/>
                                 </td>
 
-                             
+
 
                                 <td class="text-right">
                                     <input type="text" style="width: 100px" class="form-control row_total text-right" name="row_total[]" value="' . ($items['total_amount'] ? $items['total_amount'] : "") . '" id = "row_total_' . $count . '" class="row_total" readonly>
                                 </td>
 
-                       
 
-                              
-                               
+
+
+
                         </tr>
                         ';
         }
@@ -1533,8 +1556,8 @@ class Cpurchase extends CI_Controller
 
                                         <td class="text-right" colspan="9"><b>Total:</b></td>
                                         <td class="text-right" >
-                                            <input type="text" style="width: 100px"  id="total" class="text-right form-control" name="total" value="'. ($grand_total ? $grand_total : "") . '" readonly= />
-                                 
+                                            <input type="text" style="width: 100px"  id="total" class="text-right form-control" name="total" value="' . ($grand_total ? $grand_total : "") . '" readonly= />
+
                                         </td>
                                     </tr>
 
@@ -1560,7 +1583,7 @@ class Cpurchase extends CI_Controller
 
                                         <td class="text-right" colspan="9"><b>Grand Total</b></td>
                                         <td class="text-right" >
-                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="'. ($grand_total ? $grand_total : "") . '" />
+                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="' . ($grand_total ? $grand_total : "") . '" />
                                         </td>
 
                                     </tr>
@@ -1577,7 +1600,7 @@ class Cpurchase extends CI_Controller
 
                                         <td class="text-right" colspan="9"><b>Due Amount:</b></td>
                                         <td class="text-right">
-                                            <input type="text" style="width: 100px"  id="dueAmmount" class="text-right form-control" name="due_amount" value="'. ($grand_total ? $grand_total : "") . '"  readonly="readonly" />
+                                            <input type="text" style="width: 100px"  id="dueAmmount" class="text-right form-control" name="due_amount" value="' . ($grand_total ? $grand_total : "") . '"  readonly="readonly" />
                                         </td>
 
 
@@ -1660,7 +1683,7 @@ class Cpurchase extends CI_Controller
         $this->load->library('upload');
 
         $ImageCount = count($_FILES['c_b_img']['name']);
-        for($i = 0; $i < $ImageCount; $i++){
+        for ($i = 0; $i < $ImageCount; $i++) {
             $_FILES['file']['name']       = $_FILES['c_b_img']['name'][$i];
             $_FILES['file']['type']       = $_FILES['c_b_img']['type'][$i];
             $_FILES['file']['tmp_name']   = $_FILES['c_b_img']['tmp_name'][$i];
@@ -1678,40 +1701,35 @@ class Cpurchase extends CI_Controller
             $this->upload->initialize($config);
 
             // Upload file to server
-            if($this->upload->do_upload('file')){
+            if ($this->upload->do_upload('file')) {
                 // Uploaded file data
                 $imageData = $this->upload->data();
-                $uploadImgData[$i]['image'] = $config['upload_path'].$imageData['file_name'];
+                $uploadImgData[$i]['image'] = $config['upload_path'] . $imageData['file_name'];
                 $image_url = base_url() . $uploadImgData[$i]['image'];
                 $image[$i]['url'] = $image_url;
-
             }
 
-           // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
+            // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
         }
 
-        $bill_no=$this->input->post('bill_no',TRUE);
+        $bill_no = $this->input->post('bill_no', TRUE);
 
 
 
-        if ( ! empty($bill_no) )
-        {
-            foreach ($bill_no as $key => $value )
-            {
+        if (!empty($bill_no)) {
+            foreach ($bill_no as $key => $value) {
 
                 $data['bill_no'] = $value;
-                $data['po_order']=$po_id;
+                $data['po_order'] = $po_id;
                 $data['bill_image'] = $image_url;
 
 
-             //   echo '<pre>';print_r($image_url);exit();
+                //   echo '<pre>';print_r($image_url);exit();
                 // $this->ProductModel->add_products($data);
-                if ( ! empty($data))
-                {
+                if (!empty($data)) {
                     $this->db->insert('bill_details', $data);
                 }
             }
-
         }
 
 
@@ -1726,7 +1744,7 @@ class Cpurchase extends CI_Controller
                 'additional_cost'   => $additional_cost[$i],
                 'total_amount'   => $per_item_total[$i],
                 'chalan_id'   => $chalan_no[$i],
-              //  'chalan_img'    => $image[$i]['url'],
+                //  'chalan_img'    => $image[$i]['url'],
                 'isAprv'      => 1
             );
 
@@ -1744,9 +1762,9 @@ class Cpurchase extends CI_Controller
     public function erp_entry()
     {
 
-    //    $pur_date = $this->input->post('purchase_date', TRUE);
+        //    $pur_date = $this->input->post('purchase_date', TRUE);
         $po_id = $this->input->post('pur_order_no', TRUE);
-       $product_id = $this->input->post('product_id', TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
         $quantity = $this->input->post('quantity', TRUE);
         $supplier_id = $this->input->post('supplier_drop', TRUE);
         $received = $this->input->post('received', TRUE);
@@ -1783,7 +1801,7 @@ class Cpurchase extends CI_Controller
         $this->load->library('upload');
 
         $ImageCount = count($_FILES['c_b_img']['name']);
-        for($i = 0; $i < $ImageCount; $i++){
+        for ($i = 0; $i < $ImageCount; $i++) {
             $_FILES['file']['name']       = $_FILES['c_b_img']['name'][$i];
             $_FILES['file']['type']       = $_FILES['c_b_img']['type'][$i];
             $_FILES['file']['tmp_name']   = $_FILES['c_b_img']['tmp_name'][$i];
@@ -1801,16 +1819,15 @@ class Cpurchase extends CI_Controller
             $this->upload->initialize($config);
 
             // Upload file to server
-            if($this->upload->do_upload('file')){
+            if ($this->upload->do_upload('file')) {
                 // Uploaded file data
                 $imageData = $this->upload->data();
-                $uploadImgData[$i]['image'] = $config['upload_path'].$imageData['file_name'];
+                $uploadImgData[$i]['image'] = $config['upload_path'] . $imageData['file_name'];
                 $image_url = base_url() . $uploadImgData[$i]['image'];
                 $image[$i]['url'] = $image_url;
-
             }
 
-           // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
+            // echo '<pre>';print_r( $uploadImgData[$i]['image']);exit();
         }
 
 
@@ -1832,7 +1849,7 @@ class Cpurchase extends CI_Controller
                 'isAprv'      => 1
             );
 
-         //    echo '<pre>'; print_r($data);exit();
+            //    echo '<pre>'; print_r($data);exit();
 
 
             $this->db->insert('erp_entry_details', $data);
@@ -1844,17 +1861,16 @@ class Cpurchase extends CI_Controller
     public function remove_from_list()
     {
 
-            $CI = &get_instance();
-            $CI->load->model('Purchases');
+        $CI = &get_instance();
+        $CI->load->model('Purchases');
 
-            $row_id = $_POST["row_id"];
+        $row_id = $_POST["row_id"];
 
 
-            $this->db->where('id', $row_id);
-            $this->db->delete('product_purchase_details');
+        $this->db->where('id', $row_id);
+        $this->db->delete('product_purchase_details');
 
-            return $this->get_purchase_details();
-
+        return $this->get_purchase_details();
     }
 
     public function update_changed()

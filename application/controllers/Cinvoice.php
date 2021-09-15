@@ -3,23 +3,27 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Cinvoice extends CI_Controller {
+class Cinvoice extends CI_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->db->query('SET SESSION sql_mode = ""');
     }
 
-    public function index() {
-        $CI = & get_instance();
+    public function index()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->invoice_add_form();
         $this->template->full_admin_html_view($content);
     }
 
-    public function dispatch_outlet() {
-        $CI = & get_instance();
+    public function dispatch_outlet()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->dispatch_add_form();
@@ -27,35 +31,36 @@ class Cinvoice extends CI_Controller {
     }
 
     //Insert invoice
-    public function insert_invoice() {
-        $CI = & get_instance();
+    public function insert_invoice()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $invoice_id = $CI->Invoices->invoice_entry();
         $this->session->set_userdata(array('message' => display('successfully_added')));
-        redirect(base_url('Cinvoice/invoice_inserted_data/'.$invoice_id));
-
+        redirect(base_url('Cinvoice/invoice_inserted_data/' . $invoice_id));
     }
 
     // ================= manual sale insert ============================
-    public function manual_sales_insert(){
-        $CI = & get_instance();
+    public function manual_sales_insert()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $invoice_id = $CI->Invoices->invoice_entry();
-        if(!empty($invoice_id)){
+        if (!empty($invoice_id)) {
             $data['status'] = true;
             $data['invoice_id'] = $invoice_id;
             $data['message'] = display('save_successfully');
             $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
-            if($mailsetting[0]['isinvoice']==1){
+            if ($mailsetting[0]['isinvoice'] == 1) {
                 $mail = $this->invoice_pdf_generate($invoice_id);
-                if($mail == 0){
+                if ($mail == 0) {
                     $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
                 }
             }
             $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
-        }else{
+        } else {
             $data['status'] = false;
             $data['error_message'] = 'Sorry';
         }
@@ -63,24 +68,25 @@ class Cinvoice extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function dispatch_sales_insert(){
-        $CI = & get_instance();
+    public function dispatch_sales_insert()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $invoice_id = $CI->Invoices->dispatch_entry();
-        if(!empty($invoice_id)){
+        if (!empty($invoice_id)) {
             $data['status'] = true;
             $data['invoice_id'] = $invoice_id;
             $data['message'] = display('save_successfully');
             $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
-            if($mailsetting[0]['isinvoice']==1){
+            if ($mailsetting[0]['isinvoice'] == 1) {
                 $mail = $this->invoice_pdf_generate($invoice_id);
-                if($mail == 0){
+                if ($mail == 0) {
                     $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
                 }
             }
             $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
-        }else{
+        } else {
             $data['status'] = false;
             $data['error_message'] = 'Sorry';
         }
@@ -89,41 +95,42 @@ class Cinvoice extends CI_Controller {
     }
 
 
-//    public function add_cheque(){
-//        $invoice_id=$this->input->post('invoice_id',TRUE);
-//        $cheque_date=$this->input->post('cheque_date',TRUE);
-//        $cheque_no=$this->input->post('cheque_no',TRUE);
-//        $amount=$this->input->post('amount',TRUE);
-//
-//
-//        if ( ! empty($cheque_no) && ! empty($cheque_date) )
-//        {
-//            foreach ($cheque_no as $key => $value )
-//            {
-//
-//                $data['cheque_no'] = $value;
-//                $data['invoice_id']=$invoice_id;
-//                $data['cheque_id']=$this->generator(10);
-//
-//                $data['cheque_date'] = $cheque_date[$key];
-//                $data['amount'] = $amount[$key];
-//                $data['status'] = 2;
-//
-//                //   echo '<pre>';print_r($data);exit();
-//                // $this->ProductModel->add_products($data);
-//                if ( ! empty($data))
-//                {
-//                    $this->db->insert('cus_cheque', $data);
-//                }
-//            }
-//
-//        }
-//        echo json_encode($data);
-//
-//
-//    }
+    //    public function add_cheque(){
+    //        $invoice_id=$this->input->post('invoice_id',TRUE);
+    //        $cheque_date=$this->input->post('cheque_date',TRUE);
+    //        $cheque_no=$this->input->post('cheque_no',TRUE);
+    //        $amount=$this->input->post('amount',TRUE);
+    //
+    //
+    //        if ( ! empty($cheque_no) && ! empty($cheque_date) )
+    //        {
+    //            foreach ($cheque_no as $key => $value )
+    //            {
+    //
+    //                $data['cheque_no'] = $value;
+    //                $data['invoice_id']=$invoice_id;
+    //                $data['cheque_id']=$this->generator(10);
+    //
+    //                $data['cheque_date'] = $cheque_date[$key];
+    //                $data['amount'] = $amount[$key];
+    //                $data['status'] = 2;
+    //
+    //                //   echo '<pre>';print_r($data);exit();
+    //                // $this->ProductModel->add_products($data);
+    //                if ( ! empty($data))
+    //                {
+    //                    $this->db->insert('cus_cheque', $data);
+    //                }
+    //            }
+    //
+    //        }
+    //        echo json_encode($data);
+    //
+    //
+    //    }
 
-    public function invoice_pdf_generate($invoice_id = null) {
+    public function invoice_pdf_generate($invoice_id = null)
+    {
         $id = $invoice_id;
         $this->load->model('Invoices');
         $this->load->model('Web_settings');
@@ -132,12 +139,12 @@ class Cinvoice extends CI_Controller {
         $invoice_detail = $this->Invoices->retrieve_invoice_html_data($invoice_id);
         $taxfield = $this->db->select('*')
             ->from('tax_settings')
-            ->where('is_show',1)
+            ->where('is_show', 1)
             ->get()
             ->result_array();
-        $txregname ='';
-        foreach($taxfield as $txrgname){
-            $regname = $txrgname['tax_name'].' Reg No  - '.$txrgname['reg_no'].', ';
+        $txregname = '';
+        foreach ($taxfield as $txrgname) {
+            $regname = $txrgname['tax_name'] . ' Reg No  - ' . $txrgname['reg_no'] . ', ';
             $txregname .= $regname;
         }
         $subTotal_quantity = 0;
@@ -158,27 +165,25 @@ class Cinvoice extends CI_Controller {
             foreach ($invoice_detail as $k => $v) {
                 $i++;
                 $invoice_detail[$k]['sl'] = $i;
-                if(!empty($invoice_detail[$k]['description'])){
-                    $descript = $descript+1;
+                if (!empty($invoice_detail[$k]['description'])) {
+                    $descript = $descript + 1;
                 }
-                if(!empty($invoice_detail[$k]['serial_no'])){
-                    $isserial = $isserial+1;
+                if (!empty($invoice_detail[$k]['serial_no'])) {
+                    $isserial = $isserial + 1;
                 }
-                if(!empty($invoice_detail[$k]['discount_per'])){
-                    $is_discount = $is_discount+1;
-                }
-
-                if(!empty($invoice_detail[$k]['unit'])){
-                    $isunit = $isunit+1;
-
+                if (!empty($invoice_detail[$k]['discount_per'])) {
+                    $is_discount = $is_discount + 1;
                 }
 
+                if (!empty($invoice_detail[$k]['unit'])) {
+                    $isunit = $isunit + 1;
+                }
             }
         }
 
         $currency_details = $this->Web_settings->retrieve_setting_editdata();
         $company_info     = $this->Invoices->retrieve_company();
-        $totalbal         = $invoice_detail[0]['total_amount']+$invoice_detail[0]['prevous_due'];
+        $totalbal         = $invoice_detail[0]['total_amount'] + $invoice_detail[0]['prevous_due'];
         $amount_inword    = $this->numbertowords->convert_number($totalbal);
         $user_id          = $invoice_detail[0]['sales_by'];
         $users            = $this->Invoices->user_invoice_data($user_id);
@@ -195,7 +200,7 @@ class Cinvoice extends CI_Controller {
             'customer_email'    => $invoice_detail[0]['customer_email'],
             'final_date'        => $invoice_detail[0]['final_date'],
             'invoice_details'   => $invoice_detail[0]['invoice_details'],
-            'total_amount'      => number_format($invoice_detail[0]['total_amount']+$invoice_detail[0]['prevous_due'], 2, '.', ','),
+            'total_amount'      => number_format($invoice_detail[0]['total_amount'] + $invoice_detail[0]['prevous_due'], 2, '.', ','),
             'subTotal_quantity' => $subTotal_quantity,
             'total_discount'    => number_format($invoice_detail[0]['total_discount'], 2, '.', ','),
             'total_tax'         => number_format($invoice_detail[0]['total_tax'], 2, '.', ','),
@@ -212,7 +217,7 @@ class Cinvoice extends CI_Controller {
             'currency_details'  => $currency_details,
             'am_inword'         => $amount_inword,
             'is_discount'       => $is_discount,
-            'users_name'        => $users->first_name.' '.$users->last_name,
+            'users_name'        => $users->first_name . ' ' . $users->last_name,
             'tax_regno'         => $txregname,
             'is_desc'           => $descript,
             'is_serial'         => $isserial,
@@ -231,24 +236,22 @@ class Cinvoice extends CI_Controller {
         if (!empty($email)) {
             $send_email = $this->setmail($email, $file_path, $invoice_detail[0]['invoice'], $name);
 
-            if($send_email){
+            if ($send_email) {
                 return 1;
-            }else{
+            } else {
                 return 0;
-
             }
-
         }
         return 0;
-
     }
 
 
-    public function setmail($email, $file_path, $id = null, $name = null) {
+    public function setmail($email, $file_path, $id = null, $name = null)
+    {
         $setting_detail = $this->db->select('*')->from('email_config')->get()->row();
         $subject = 'Purchase  Information';
         $message = strtoupper($name) . '-' . $id;
-        $config = Array(
+        $config = array(
             'protocol'  => $setting_detail->protocol,
             'smtp_host' => $setting_detail->smtp_host,
             'smtp_port' => $setting_detail->smtp_port,
@@ -281,7 +284,8 @@ class Cinvoice extends CI_Controller {
     }
 
     //Email testing for email
-    public function test_input($data) {
+    public function test_input($data)
+    {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
@@ -289,8 +293,9 @@ class Cinvoice extends CI_Controller {
     }
 
     //invoice Update Form
-    public function invoice_update_form($invoice_id) {
-        $CI = & get_instance();
+    public function invoice_update_form($invoice_id)
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->invoice_edit_data($invoice_id);
@@ -298,8 +303,9 @@ class Cinvoice extends CI_Controller {
     }
 
     // invoice Update
-    public function invoice_update() {
-        $CI = & get_instance();
+    public function invoice_update()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $invoice_id = $CI->Invoices->update_invoice();
@@ -308,19 +314,21 @@ class Cinvoice extends CI_Controller {
     }
 
     //Search Inovoice Item
-    public function search_inovoice_item() {
-        $CI = & get_instance();
+    public function search_inovoice_item()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('linvoice');
 
-        $customer_id = $this->input->post('customer_id',TRUE);
+        $customer_id = $this->input->post('customer_id', TRUE);
         $content     = $CI->linvoice->search_inovoice_item($customer_id);
         $this->template->full_admin_html_view($content);
     }
 
     //Manage invoice list
-    public function manage_invoice() {
-        $CI = & get_instance();
+    public function manage_invoice()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $CI->load->model('Invoices');
@@ -328,16 +336,18 @@ class Cinvoice extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
-    public function CheckInvoiceList(){
+    public function CheckInvoiceList()
+    {
         // GET data
         $this->load->model('Invoices');
         $postData = $this->input->post();
         $data = $this->Invoices->getInvoiceList($postData);
         echo json_encode($data);
     }
-// invoice list pdf download
-    public function sale_downloadpdf(){
-        $CI = & get_instance();
+    // invoice list pdf download
+    public function sale_downloadpdf()
+    {
+        $CI = &get_instance();
         $CI->load->model('Invoices');
         $CI->load->model('Web_settings');
         $CI->load->library('occational');
@@ -373,14 +383,15 @@ class Cinvoice extends CI_Controller {
         $dompdf->load_html($content);
         $dompdf->render();
         $output = $dompdf->output();
-        file_put_contents('assets/data/pdf/'.'sales'.$time.'.pdf', $output);
-        $file_path = 'assets/data/pdf/'.'sales'.$time.'.pdf';
-        $file_name = 'sales'.$time.'.pdf';
-        force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
+        file_put_contents('assets/data/pdf/' . 'sales' . $time . '.pdf', $output);
+        $file_path = 'assets/data/pdf/' . 'sales' . $time . '.pdf';
+        $file_name = 'sales' . $time . '.pdf';
+        force_download(FCPATH . 'assets/data/pdf/' . $file_name, null);
     }
 
 
-    public function invoicdetails_download($invoice_id = null) {
+    public function invoicdetails_download($invoice_id = null)
+    {
 
         $this->load->model('Invoices');
         $this->load->model('Web_settings');
@@ -389,12 +400,12 @@ class Cinvoice extends CI_Controller {
         $invoice_detail = $this->Invoices->retrieve_invoice_html_data($invoice_id);
         $taxfield = $this->db->select('*')
             ->from('tax_settings')
-            ->where('is_show',1)
+            ->where('is_show', 1)
             ->get()
             ->result_array();
-        $txregname ='';
-        foreach($taxfield as $txrgname){
-            $regname = $txrgname['tax_name'].' Reg No  - '.$txrgname['reg_no'].', ';
+        $txregname = '';
+        foreach ($taxfield as $txrgname) {
+            $regname = $txrgname['tax_name'] . ' Reg No  - ' . $txrgname['reg_no'] . ', ';
             $txregname .= $regname;
         }
         $subTotal_quantity = 0;
@@ -415,24 +426,24 @@ class Cinvoice extends CI_Controller {
             foreach ($invoice_detail as $k => $v) {
                 $i++;
                 $invoice_detail[$k]['sl'] = $i;
-                if(!empty($invoice_detail[$k]['description'])){
-                    $descript = $descript+1;
+                if (!empty($invoice_detail[$k]['description'])) {
+                    $descript = $descript + 1;
                 }
-                if(!empty($invoice_detail[$k]['serial_no'])){
-                    $isserial = $isserial+1;
+                if (!empty($invoice_detail[$k]['serial_no'])) {
+                    $isserial = $isserial + 1;
                 }
-                if(!empty($invoice_detail[$k]['discount_per'])){
-                    $is_discount = $is_discount+1;
+                if (!empty($invoice_detail[$k]['discount_per'])) {
+                    $is_discount = $is_discount + 1;
                 }
-                if(!empty($invoice_detail[$k]['unit'])){
-                    $isunit = $isunit+1;
+                if (!empty($invoice_detail[$k]['unit'])) {
+                    $isunit = $isunit + 1;
                 }
             }
         }
 
         $currency_details = $this->Web_settings->retrieve_setting_editdata();
         $company_info     = $this->Invoices->retrieve_company();
-        $totalbal         = $invoice_detail[0]['total_amount']+$invoice_detail[0]['prevous_due'];
+        $totalbal         = $invoice_detail[0]['total_amount'] + $invoice_detail[0]['prevous_due'];
         $amount_inword    = $this->numbertowords->convert_number($totalbal);
         $user_id          = $invoice_detail[0]['sales_by'];
         $users            = $this->Invoices->user_invoice_data($user_id);
@@ -447,7 +458,7 @@ class Cinvoice extends CI_Controller {
             'customer_email'    => $invoice_detail[0]['customer_email'],
             'final_date'        => $invoice_detail[0]['final_date'],
             'invoice_details'   => $invoice_detail[0]['invoice_details'],
-            'total_amount'      => number_format($invoice_detail[0]['total_amount']+$invoice_detail[0]['prevous_due'], 2, '.', ','),
+            'total_amount'      => number_format($invoice_detail[0]['total_amount'] + $invoice_detail[0]['prevous_due'], 2, '.', ','),
             'subTotal_quantity' => $subTotal_quantity,
             'total_discount'    => number_format($invoice_detail[0]['total_discount'], 2, '.', ','),
             'total_tax'         => number_format($invoice_detail[0]['total_tax'], 2, '.', ','),
@@ -464,7 +475,7 @@ class Cinvoice extends CI_Controller {
             'currency_details'  => $currency_details,
             'am_inword'         => $amount_inword,
             'is_discount'       => $is_discount,
-            'users_name'        => $users->first_name.' '.$users->last_name,
+            'users_name'        => $users->first_name . ' ' . $users->last_name,
             'tax_regno'         => $txregname,
             'is_desc'           => $descript,
             'is_serial'         => $isserial,
@@ -477,7 +488,7 @@ class Cinvoice extends CI_Controller {
         $dompdf = new DOMPDF();
         $page = $this->load->view('invoice/invoice_download', $data, true);
         $file_name = time();
-        $dompdf->load_html($page,'UTF-8');
+        $dompdf->load_html($page, 'UTF-8');
         $dompdf->render();
         $output = $dompdf->output();
         file_put_contents("assets/data/pdf/invoice/$file_name.pdf", $output);
@@ -490,8 +501,9 @@ class Cinvoice extends CI_Controller {
     }
 
     // search invoice by customer id
-    public function invoice_search() {
-        $CI = & get_instance();
+    public function invoice_search()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $CI->load->model('Invoices');
@@ -533,19 +545,21 @@ class Cinvoice extends CI_Controller {
     }
 
     // search invoice by invoice id
-    public function manage_invoice_invoice_id() {
-        $CI = & get_instance();
+    public function manage_invoice_invoice_id()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $CI->load->model('Invoices');
-        $invoice_no = $this->input->post('invoice_no',TRUE);
+        $invoice_no = $this->input->post('invoice_no', TRUE);
         $content = $this->linvoice->invoice_list_invoice_no($invoice_no);
         $this->template->full_admin_html_view($content);
     }
 
     // invoice list date to date
-    public function date_to_date_invoice() {
-        $CI = & get_instance();
+    public function date_to_date_invoice()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $CI->load->model('Invoices');
@@ -590,8 +604,9 @@ class Cinvoice extends CI_Controller {
     }
 
     //POS invoice page load
-    public function pos_invoice() {
-        $CI = & get_instance();
+    public function pos_invoice()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->pos_invoice_add_form();
@@ -599,12 +614,13 @@ class Cinvoice extends CI_Controller {
     }
 
     //Insert pos invoice
-    public function insert_pos_invoice() {
-        $CI = & get_instance();
+    public function insert_pos_invoice()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $CI->load->model('Web_settings');
-        $product_id = $this->input->post('product_id',TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
 
         $product_details  = $CI->Invoices->pos_invoice_setup($product_id);
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
@@ -612,29 +628,29 @@ class Cinvoice extends CI_Controller {
             ->from('tax_settings')
             ->get()
             ->result_array();
-        $prinfo = $this->db->select('*')->from('product_information')->where('product_id',$product_id)->get()->result_array();
+        $prinfo = $this->db->select('*')->from('product_information')->where('product_id', $product_id)->get()->result_array();
         $tr = " ";
         if (!empty($product_details)) {
             $product_id = $this->generator(5);
-            $serialdata =explode(',', $product_details->serial_no);
-            if($product_details->total_product > 0){
+            $serialdata = explode(',', $product_details->serial_no);
+            if ($product_details->total_product > 0) {
                 $qty = 1;
-            }else{
+            } else {
                 $qty = 1;
             }
 
             $html = "";
             if (empty($serialdata)) {
-                $html .="No Serial Found !";
-            }else{
+                $html .= "No Serial Found !";
+            } else {
                 // Select option created for product
                 $date = date('Y-m-d');
-                $html .="<select name=\"serial_no[]\"   class=\"serial_no_1 form-control\" id=\"serial_no_" . $product_details->product_id . "\">";
-                $html .= "<option value=''>".display('select_one')."</option>";
+                $html .= "<select name=\"serial_no[]\"   class=\"serial_no_1 form-control\" id=\"serial_no_" . $product_details->product_id . "\">";
+                $html .= "<option value=''>" . display('select_one') . "</option>";
                 foreach ($serialdata as $serial) {
-                    $html .="<option value=".$serial.">".$serial."</option>";
+                    $html .= "<option value=" . $serial . ">" . $serial . "</option>";
                 }
-                $html .="</select>";
+                $html .= "</select>";
             }
 
             $tr .= "<tr id=\"row_" . $product_details->product_id . "\">
@@ -650,11 +666,11 @@ class Cinvoice extends CI_Controller {
                              <input type=\"text\" name=\"desc[]\" class=\"form-control text-right \"  />
                         </td>
 
-                        <td style=\"width:120px\">".$html."</td>
+                        <td style=\"width:120px\">" . $html . "</td>
 
                         <td>
 
-                             <input id=\"warehouse\" type=\"text\" name=\"warehouse[]\" class=\"form-control text-center \" value='".$product_details->warehouse."'  readonly/>
+                             <input id=\"warehouse\" type=\"text\" name=\"warehouse[]\" class=\"form-control text-center \" value='" . $product_details->warehouse . "'  readonly/>
                         </td>
 
 	  					<td>
@@ -696,12 +712,13 @@ class Cinvoice extends CI_Controller {
 						</td>
 
 						<td>";
-            $sl=0;
+            $sl = 0;
             foreach ($taxfield as $taxes) {
-                $txs = 'tax'.$sl;
-                $tr .= "<input type=\"hidden\" id=\"total_tax".$sl."_" . $product_details->product_id . "\" class=\"total_tax".$sl."_" . $product_details->product_id . "\" value='" . $prinfo[0][$txs] . "'/>
-                            <input type=\"hidden\" id=\"all_tax".$sl."_" . $product_details->product_id . "\" class=\" total_tax".$sl."\" value='" . $prinfo[0][$txs]*$product_details->price . "' name=\"tax[]\"/>";
-                $sl++; }
+                $txs = 'tax' . $sl;
+                $tr .= "<input type=\"hidden\" id=\"total_tax" . $sl . "_" . $product_details->product_id . "\" class=\"total_tax" . $sl . "_" . $product_details->product_id . "\" value='" . $prinfo[0][$txs] . "'/>
+                            <input type=\"hidden\" id=\"all_tax" . $sl . "_" . $product_details->product_id . "\" class=\" total_tax" . $sl . "\" value='" . $prinfo[0][$txs] * $product_details->price . "' name=\"tax[]\"/>";
+                $sl++;
+            }
 
             $tr .= "<input type=\"hidden\" id=\"total_discount_" . $product_details->product_id . "\" />
 							<input type=\"hidden\" id=\"all_discount_" . $product_details->product_id . "\" class=\"total_discount dppr\"/>
@@ -715,83 +732,83 @@ class Cinvoice extends CI_Controller {
     }
 
     //Retrive right now inserted data to cretae html
-    public function invoice_inserted_data($invoice_id) {
-        $CI = & get_instance();
+    public function invoice_inserted_data($invoice_id)
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->invoice_html_data($invoice_id);
         $this->template->full_admin_html_view($content);
     }
 
-    public function invoice_inserted_data_manual() {
-        $CI = & get_instance();
+    public function invoice_inserted_data_manual()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
-        $invoice_id = $this->input->post('invoice_id',TRUE);
-        $chalan_value= $this->input->post('chalan_value',TRUE);
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $chalan_value = $this->input->post('chalan_value', TRUE);
         $CI->load->library('linvoice');
 
 
         //echo '<pre>';print_r($_POST['chalan_value']);exit();
-        if (isset($_POST['chalan_value'])){
+        if (isset($_POST['chalan_value'])) {
             $content = $CI->linvoice->invoice_chalan_html_data_manual($invoice_id);
             $this->template->full_admin_html_view($content);
-          //  echo $_POST['chalan_value']; // Displays value of checked checkbox.
-        }else{
+            //  echo $_POST['chalan_value']; // Displays value of checked checkbox.
+        } else {
 
-           // echo "value Not found";
+            // echo "value Not found";
             $content = $CI->linvoice->invoice_html_data_manual($invoice_id);
             $this->template->full_admin_html_view($content);
         }
-
-
-
     }
 
-    public function dispatch_inserted_data_manual() {
-        $CI = & get_instance();
+    public function dispatch_inserted_data_manual()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
-        $invoice_id = $this->input->post('invoice_id',TRUE);
-        $chalan_value= $this->input->post('chalan_value',TRUE);
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $chalan_value = $this->input->post('chalan_value', TRUE);
         $CI->load->library('linvoice');
 
 
         //echo '<pre>';print_r($_POST['chalan_value']);exit();
-        if (isset($_POST['chalan_value'])){
+        if (isset($_POST['chalan_value'])) {
             $content = $CI->linvoice->invoice_chalan_html_data_manual($invoice_id);
             $this->template->full_admin_html_view($content);
-          //  echo $_POST['chalan_value']; // Displays value of checked checkbox.
-        }else{
+            //  echo $_POST['chalan_value']; // Displays value of checked checkbox.
+        } else {
 
-           // echo "value Not found";
+            // echo "value Not found";
             $content = $CI->linvoice->invoice_html_data_manual($invoice_id);
             $this->template->full_admin_html_view($content);
         }
-
-
-
     }
-    public function pos_invoice_inserted_data_manual() {
-        $CI = & get_instance();
+    public function pos_invoice_inserted_data_manual()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
-        $invoice_id = $this->input->post('invoice_id',TRUE);
-        $url = $this->input->post('url',TRUE);
-        $content = $CI->linvoice->pos_invoice_html_data_manual($invoice_id,$url);
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $url = $this->input->post('url', TRUE);
+        $content = $CI->linvoice->pos_invoice_html_data_manual($invoice_id, $url);
         $this->template->full_admin_html_view($content);
     }
 
 
     //Retrive right now inserted data to cretae html
-    public function pos_invoice_inserted_data($invoice_id) {
-        $CI = & get_instance();
+    public function pos_invoice_inserted_data($invoice_id)
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->pos_invoice_html_data($invoice_id);
         $this->template->full_admin_html_view($content);
     }
-//Min invoice data
-    public function min_invoice_inserted_data($invoice_id) {
-        $CI = & get_instance();
+    //Min invoice data
+    public function min_invoice_inserted_data($invoice_id)
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->min_invoice_html_data($invoice_id);
@@ -799,8 +816,9 @@ class Cinvoice extends CI_Controller {
     }
 
     //Chalan invoice data
-    public function chalan_invoice_inserted_data($invoice_id) {
-        $CI = & get_instance();
+    public function chalan_invoice_inserted_data($invoice_id)
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $content = $CI->linvoice->chalan_invoice_html_data($invoice_id);
@@ -808,13 +826,14 @@ class Cinvoice extends CI_Controller {
     }
 
     // Retrieve_product_data
-    public function retrieve_product_data() {
-        $CI = & get_instance();
+    public function retrieve_product_data()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $CI->load->model('Products');
-        $product_id  = $this->input->post('product_id',TRUE);
-        $sl  = $this->input->post('sl',TRUE);
+        $product_id  = $this->input->post('product_id', TRUE);
+        $sl  = $this->input->post('sl', TRUE);
         // $supplier_id = $this->input->post('supplier_id',TRUE);
 
         $product_suppliers = $CI->Products->supplier_product_editdata($product_id);
@@ -822,17 +841,17 @@ class Cinvoice extends CI_Controller {
 
 
         foreach ($product_suppliers as $ps) {
-            $pr_supp[] =array('supplier_name'=>$ps['supplier_name'],'supplier_id'=>$ps['supplier_id']);
+            $pr_supp[] = array('supplier_name' => $ps['supplier_name'], 'supplier_id' => $ps['supplier_id']);
         }
 
         $product_details = $CI->Products->retrieve_product_full_data($product_id)[0];
 
         $product_info = $CI->Invoices->get_total_product_invoic($product_id);
 
-        $suppliers[] = '<select name="supplier_name[]" id="supplier_drop_1" class="form-control text-center" onchange=get_price('.$sl.')>';
-        $suppliers .= "<option value=''>".display('select_one')."</option>";
+        $suppliers[] = '<select name="supplier_name[]" id="supplier_drop_1" class="form-control text-center" onchange=get_price(' . $sl . ')>';
+        $suppliers .= "<option value=''>" . display('select_one') . "</option>";
         foreach ($pr_supp as $pr_supp) {
-            $suppliers .= "<option value=".$pr_supp['supplier_id'].">".$pr_supp['supplier_name']."</option>";
+            $suppliers .= "<option value=" . $pr_supp['supplier_id'] . ">" . $pr_supp['supplier_name'] . "</option>";
         }
 
         $suppliers .= "</select>";
@@ -847,11 +866,12 @@ class Cinvoice extends CI_Controller {
 
 
     //product info retrive by product id for invoice
-    public function retrieve_product_data_inv() {
-        $CI = & get_instance();
+    public function retrieve_product_data_inv()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
-        $product_id = $this->input->post('product_id',TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
 
 
         $product_info = $CI->Invoices->get_total_product_invoic($product_id);
@@ -859,11 +879,12 @@ class Cinvoice extends CI_Controller {
         echo json_encode($product_info);
     }
 
-    public function retrieve_product_data_dispatch() {
-        $CI = & get_instance();
+    public function retrieve_product_data_dispatch()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
-        $product_id = $this->input->post('product_id',TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
 
 
         $product_info = $CI->Invoices->get_total_product_dispatch($product_id);
@@ -872,8 +893,9 @@ class Cinvoice extends CI_Controller {
     }
 
     // Invoice delete
-    public function invoice_delete($invoice_id) {
-        $CI = & get_instance();
+    public function invoice_delete($invoice_id)
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $result = $CI->Invoices->delete_invoice($invoice_id);
@@ -883,48 +905,49 @@ class Cinvoice extends CI_Controller {
         }
     }
 
-    public function autocompleteproductsearch(){
-        $CI =& get_instance();
+    public function autocompleteproductsearch()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
-        $product_name   = $this->input->post('product_name',TRUE);
+        $product_name   = $this->input->post('product_name', TRUE);
         $product_info   = $CI->Invoices->autocompletproductdata($product_name);
 
-        if(!empty($product_info)){
+        if (!empty($product_info)) {
             $list[''] = '';
             foreach ($product_info as $value) {
-                $json_product[] = array('label'=>$value['product_name'],'value'=>$value['product_id']);
+                $json_product[] = array('label' => $value['product_name'], 'value' => $value['product_id']);
             }
-        }else{
+        } else {
             $json_product[] = 'No Product Found';
         }
         echo json_encode($json_product);
-
     }
 
 
-    public function autocompleteproductsearch_dispatch(){
-        $CI =& get_instance();
+    public function autocompleteproductsearch_dispatch()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
-        $product_name   = $this->input->post('product_name',TRUE);
+        $product_name   = $this->input->post('product_name', TRUE);
         $product_info   = $CI->Invoices->autocompletproductdata_dispatch($product_name);
 
-        if(!empty($product_info)){
+        if (!empty($product_info)) {
             $list[''] = '';
             foreach ($product_info as $value) {
-                $json_product[] = array('label'=>$value['product_name'].'('.$value['product_model'].')','value'=>$value['product_id']);
+                $json_product[] = array('label' => $value['product_name'] . '(' . $value['product_model'] . ')', 'value' => $value['product_id']);
             }
-        }else{
+        } else {
             $json_product[] = 'No Product Found';
         }
         echo json_encode($json_product);
-
     }
 
     //AJAX INVOICE STOCKs
-    public function product_stock_check($product_id) {
-        $CI = & get_instance();
+    public function product_stock_check($product_id)
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $purchase_stocks = $CI->Invoices->get_total_purchase_item($product_id);
@@ -946,8 +969,9 @@ class Cinvoice extends CI_Controller {
         return $final_total;
     }
 
-//    =========== its for 1 increment =============
-    function randomChange($myValue) {
+    //    =========== its for 1 increment =============
+    function randomChange($myValue)
+    {
         $random = rand(0, 1);
         if ($random > 0)
             return $myValue + 1;
@@ -956,7 +980,8 @@ class Cinvoice extends CI_Controller {
     }
 
     //This function is used to Generate Key
-    public function generator($lenth) {
+    public function generator($lenth)
+    {
         $number = array("1", "2", "3", "4", "5", "6", "7", "8", "9");
 
         for ($i = 0; $i < $lenth; $i++) {
@@ -972,44 +997,47 @@ class Cinvoice extends CI_Controller {
         return $con;
     }
     //customer previous due
-    public function previous() {
-        $CI = & get_instance();
+    public function previous()
+    {
+        $CI = &get_instance();
         $CI->load->model('Customers');
-        $customer_id = $this->input->post('customer_id',TRUE);
+        $customer_id = $this->input->post('customer_id', TRUE);
         $this->db->select("a.*,b.HeadCode,((select ifnull(sum(Debit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)-(select ifnull(sum(Credit),0) from acc_transaction where COAID= `b`.`HeadCode` AND IsAppove = 1)) as balance");
         $this->db->from('customer_information a');
-        $this->db->join('acc_coa b','a.customer_id = b.customer_id','left');
-        $this->db->where('a.customer_id',$customer_id);
+        $this->db->join('acc_coa b', 'a.customer_id = b.customer_id', 'left');
+        $this->db->where('a.customer_id', $customer_id);
         $result = $this->db->get()->result_array();
         $balance = $result[0]['balance'];
-        $b = (!empty($balance)?$balance:0);
-        if ($b){
+        $b = (!empty($balance) ? $balance : 0);
+        if ($b) {
             echo  $b;
         } else {
             echo  $b;
         }
     }
 
-    public function customer_autocomplete(){
-        $CI =& get_instance();
+    public function customer_autocomplete()
+    {
+        $CI = &get_instance();
         $this->auth->check_admin_auth();
         $CI->load->library('lpurchase');
         $CI->load->model('Customers');
-        $customer_id    = $this->input->post('customer_id',TRUE);
+        $customer_id    = $this->input->post('customer_id', TRUE);
         $customer_info   = $CI->Customers->customer_search($customer_id);
 
-        if($customer_info){
+        if ($customer_info) {
             $json_customer[''] = '';
             foreach ($customer_info as $value) {
-                $json_customer[] = array('label'=>$value['customer_name'],'value'=>$value['customer_id']);
+                $json_customer[] = array('label' => $value['customer_name'], 'value' => $value['customer_id']);
             }
-        }else{
+        } else {
             $json_customer[] = 'No Record found';
         }
         echo json_encode($json_customer);
     }
     //csv excel
-    public function exportinvocsv() {
+    public function exportinvocsv()
+    {
         // file name
         $this->load->model('Invoices');
         $filename = 'sale_' . date('Ymd') . '.csv';
@@ -1031,7 +1059,8 @@ class Cinvoice extends CI_Controller {
     }
 
 
-    public function gui_pos(){
+    public function gui_pos()
+    {
         $this->load->model('Invoices');
         $this->load->model('Web_settings');
         $taxfield = $this->db->select('tax_name,default_value')
@@ -1039,9 +1068,9 @@ class Cinvoice extends CI_Controller {
             ->get()
             ->result_array();
         $tablecolumn = $this->db->list_fields('tax_collection');
-        $num_column = count($tablecolumn)-4;
+        $num_column = count($tablecolumn) - 4;
         $data['title'] = display('gui_pos');
-        $saveid=$this->session->userdata('user_id');
+        $saveid = $this->session->userdata('user_id');
         $walking_customer      = $this->Invoices->walking_customer();
         $data['customer_id']   = $walking_customer[0]['customer_id'];
         $data['customer_name'] = $walking_customer[0]['customer_name'];
@@ -1057,18 +1086,19 @@ class Cinvoice extends CI_Controller {
         $data['currency']       = $currency_details[0]['currency'];
         $data['taxes']         = $taxfield;
         $data['taxnumber']     = $num_column;
-        $data['todays_invoice']= $this->Invoices->todays_invoice();
+        $data['todays_invoice'] = $this->Invoices->todays_invoice();
         $content  = $this->parser->parse('invoice/gui_pos_invoice', $data, true);
         $this->template->full_admin_html_view($content);
     }
 
     //gui pos invoice
-    public function gui_pos_invoice() {
-        $CI = & get_instance();
+    public function gui_pos_invoice()
+    {
+        $CI = &get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->model('Invoices');
         $CI->load->model('Web_settings');
-        $product_id = $this->input->post('product_id',TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
 
         $product_details = $CI->Invoices->pos_invoice_setup($product_id);
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
@@ -1076,29 +1106,29 @@ class Cinvoice extends CI_Controller {
             ->from('tax_settings')
             ->get()
             ->result_array();
-        $prinfo = $this->db->select('*')->from('product_information')->where('product_id',$product_id)->get()->result_array();
+        $prinfo = $this->db->select('*')->from('product_information')->where('product_id', $product_id)->get()->result_array();
 
         $tr = " ";
         if (!empty($product_details)) {
             $product_id = $this->generator(5);
-            $serialdata =explode(',', $product_details->serial_no);
-            if($product_details->total_product > 0){
+            $serialdata = explode(',', $product_details->serial_no);
+            if ($product_details->total_product > 0) {
                 $qty = 1;
-            }else{
+            } else {
                 $qty = 1;
             }
 
             $html = "";
             if (empty($serialdata)) {
-                $html .="No Serial Found !";
-            }else{
+                $html .= "No Serial Found !";
+            } else {
                 // Select option created for product
-                $html .="<select name=\"serial_no[]\"   class=\"serial_no_1 form-control\" id=\"serial_no_".$product_details->product_id."\">";
-                $html .= "<option value=''>".display('select_one')."</option>";
+                $html .= "<select name=\"serial_no[]\"   class=\"serial_no_1 form-control\" id=\"serial_no_" . $product_details->product_id . "\">";
+                $html .= "<option value=''>" . display('select_one') . "</option>";
                 foreach ($serialdata as $serial) {
-                    $html .="<option value=".$serial.">".$serial."</option>";
+                    $html .= "<option value=" . $serial . ">" . $serial . "</option>";
                 }
-                $html .="</select>";
+                $html .= "</select>";
             }
 
             $tr .= "<tr id=\"row_" . $product_details->product_id . "\">
@@ -1108,7 +1138,7 @@ class Cinvoice extends CI_Controller {
 
                             <input type=\"hidden\" class=\"form-control autocomplete_hidden_value product_id_" . $product_details->product_id . "\" name=\"product_id[]\" id=\"SchoolHiddenId_" . $product_details->product_id . "\" value = \"$product_details->product_id\"/>
                         </td>
-                        <td>".$html."</td>
+                        <td>" . $html . "</td>
                         <td>
                             <input type=\"text\" name=\"available_quantity[]\" class=\"form-control text-right available_quantity_" . $product_details->product_id . "\" value='" . $product_details->total_product . "' readonly=\"\" id=\"available_quantity_" . $product_details->product_id . "\"/>
                         </td>
@@ -1130,16 +1160,17 @@ class Cinvoice extends CI_Controller {
                         </td>
 
                         <td>";
-            $sl=0;
+            $sl = 0;
             foreach ($taxfield as $taxes) {
-                $txs = 'tax'.$sl;
-                $tr .= "<input type=\"hidden\" id=\"total_tax".$sl."_" . $product_details->product_id . "\" class=\"total_tax".$sl."_" . $product_details->product_id . "\" value='" . $prinfo[0][$txs] . "'/>
-                            <input type=\"hidden\" id=\"all_tax".$sl."_" . $product_details->product_id . "\" class=\" total_tax".$sl."\" value='" . $prinfo[0][$txs]*$product_details->price . "' name=\"tax[]\"/>";
-                $sl++; }
-            $tr.="<input type=\"hidden\" id=\"total_discount_" . $product_details->product_id . "\" />
+                $txs = 'tax' . $sl;
+                $tr .= "<input type=\"hidden\" id=\"total_tax" . $sl . "_" . $product_details->product_id . "\" class=\"total_tax" . $sl . "_" . $product_details->product_id . "\" value='" . $prinfo[0][$txs] . "'/>
+                            <input type=\"hidden\" id=\"all_tax" . $sl . "_" . $product_details->product_id . "\" class=\" total_tax" . $sl . "\" value='" . $prinfo[0][$txs] * $product_details->price . "' name=\"tax[]\"/>";
+                $sl++;
+            }
+            $tr .= "<input type=\"hidden\" id=\"total_discount_" . $product_details->product_id . "\" />
                             <input type=\"hidden\" id=\"all_discount_" . $product_details->product_id . "\" class=\"total_discount dppr\"/>
                             <a style=\"text-align: right;\" class=\"btn btn-danger btn-xs\" href=\"#\"  onclick=\"deleteRow(this)\">" . '<i class="fa fa-close"></i>' . "</a>
-                             <a style=\"text-align: right;\" class=\"btn btn-success btn-xs\" href=\"#\"  onclick=\"detailsmodal('".$product_details->product_name."','".$product_details->total_product."','".$product_details->product_model."','".$product_details->unit."','".$product_details->price."','".$product_details->image."')\">" . '<i class="fa fa-eye"></i>' . "</a>
+                             <a style=\"text-align: right;\" class=\"btn btn-success btn-xs\" href=\"#\"  onclick=\"detailsmodal('" . $product_details->product_name . "','" . $product_details->total_product . "','" . $product_details->product_model . "','" . $product_details->unit . "','" . $product_details->price . "','" . $product_details->image . "')\">" . '<i class="fa fa-eye"></i>' . "</a>
                         </td>
                     </tr>";
             echo $tr;
@@ -1148,31 +1179,32 @@ class Cinvoice extends CI_Controller {
         }
     }
 
-    public function getitemlist(){
+    public function getitemlist()
+    {
         $this->load->model('Invoices');
-        $prod=$this->input->post('product_name',TRUE);
-        $catid=$this->input->post('category_id',TRUE);
-        $getproduct = $this->Invoices->searchprod($catid,$prod);
-        if(!empty($getproduct)){
-            $data['itemlist']=$getproduct;
+        $prod = $this->input->post('product_name', TRUE);
+        $catid = $this->input->post('category_id', TRUE);
+        $getproduct = $this->Invoices->searchprod($catid, $prod);
+        if (!empty($getproduct)) {
+            $data['itemlist'] = $getproduct;
             $this->load->view('invoice/getproductlist', $data);
-        }
-        else{
+        } else {
             $title['title'] = 'Product Not found';
             $this->load->view('invoice/productnot_found', $title);
         }
     }
-    public function instant_customer(){
+    public function instant_customer()
+    {
         $this->load->model('Customers');
 
         $data = array(
-            'customer_id_two'    => $this->input->post('customer_id_two',TRUE),
-            'contact_person'    => $this->input->post('contact_person',TRUE),
-            'contact'    => $this->input->post('contact',TRUE),
-            'customer_name'    => $this->input->post('customer_name',TRUE),
-            'customer_address' => $this->input->post('address',TRUE),
-            'customer_mobile'  => $this->input->post('mobile',TRUE),
-            'customer_email'   => $this->input->post('email',TRUE),
+            'customer_id_two'    => $this->input->post('customer_id_two', TRUE),
+            'contact_person'    => $this->input->post('contact_person', TRUE),
+            'contact'    => $this->input->post('contact', TRUE),
+            'customer_name'    => $this->input->post('customer_name', TRUE),
+            'customer_address' => $this->input->post('address', TRUE),
+            'customer_mobile'  => $this->input->post('mobile', TRUE),
+            'customer_email'   => $this->input->post('email', TRUE),
             'status'           => 1
         );
 
@@ -1183,14 +1215,14 @@ class Cinvoice extends CI_Controller {
             $vouchar_no = $this->auth->generator(10);
             //Customer  basic information adding.
             $coa = $this->Customers->headcode();
-            if($coa->HeadCode!=NULL){
-                $headcode=$coa->HeadCode+1;
-            }else{
-                $headcode="102030001";
+            if ($coa->HeadCode != NULL) {
+                $headcode = $coa->HeadCode + 1;
+            } else {
+                $headcode = "102030001";
             }
-            $c_acc=$customer_id.'-'.$this->input->post('customer_name',TRUE);
-            $createby=$this->session->userdata('user_id');
-            $createdate=date('Y-m-d H:i:s');
+            $c_acc = $customer_id . '-' . $this->input->post('customer_name', TRUE);
+            $createby = $this->session->userdata('user_id');
+            $createdate = date('Y-m-d H:i:s');
 
             $customer_coa = [
                 'HeadCode'         => $headcode,
@@ -1209,8 +1241,8 @@ class Cinvoice extends CI_Controller {
                 'CreateDate'       => $createdate,
             ];
             //Previous balance adding -> Sending to customer model to adjust the data.
-            $this->db->insert('acc_coa',$customer_coa);
-            $this->Customers->previous_balance_add($this->input->post('previous_balance',TRUE), $customer_id);
+            $this->db->insert('acc_coa', $customer_coa);
+            $this->Customers->previous_balance_add($this->input->post('previous_balance', TRUE), $customer_id);
 
             $data['status']        = true;
             $data['message']       = display('save_successfully');
@@ -1224,50 +1256,47 @@ class Cinvoice extends CI_Controller {
     }
 
 
-    public function add_cheque(){
+    public function add_cheque()
+    {
         $this->load->model('Invoices');
-        $invoice_id=$this->input->post('invoice_id',TRUE);
-        $cheque_date=$this->input->post('cheque_date',TRUE);
-        $cheque_no=$this->input->post('cheque_no',TRUE);
-        $cheque_type=$this->input->post('cheque_type',TRUE);
-        $amount=$this->input->post('amount',TRUE);
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $cheque_date = $this->input->post('cheque_date', TRUE);
+        $cheque_no = $this->input->post('cheque_no', TRUE);
+        $cheque_type = $this->input->post('cheque_type', TRUE);
+        $amount = $this->input->post('amount', TRUE);
 
-        if ( ! empty($cheque_no) && ! empty($cheque_date) )
-        {
-            foreach ($cheque_no as $key => $value )
-            {
+        if (!empty($cheque_no) && !empty($cheque_date)) {
+            foreach ($cheque_no as $key => $value) {
 
                 $data['cheque_no'] = $value;
-                $data['invoice_id']=$invoice_id;
-                $data['cheque_id']=$this->generator(10);
+                $data['invoice_id'] = $invoice_id;
+                $data['cheque_id'] = $this->generator(10);
 
                 $data['cheque_type'] = $cheque_type[$key];
                 $data['cheque_date'] = $cheque_date[$key];
                 $data['amount'] = $amount[$key];
                 $data['status'] = 2;
 
-                   //echo '<pre>';print_r($data);
+                //echo '<pre>';print_r($data);
                 // $this->ProductModel->add_products($data);
 
 
-                   $result= $this->db->insert('cus_cheque', $data);
-
+                $result = $this->db->insert('cus_cheque', $data);
             }
-
         }
 
-//        $data=array(
-//
-//            'cheque_id'=>$this->generator(10),
-//            'invoice_id'=>$this->generator(10),
-//            'cheque_no'=>$cheque_no,
-//            'amount'=>$amount,
-//            'cheque_date'=>$cheque_date,
-//            'status'=>2,
-//
-//        );
+        //        $data=array(
+        //
+        //            'cheque_id'=>$this->generator(10),
+        //            'invoice_id'=>$this->generator(10),
+        //            'cheque_no'=>$cheque_no,
+        //            'amount'=>$amount,
+        //            'cheque_date'=>$cheque_date,
+        //            'status'=>2,
+        //
+        //        );
 
-       // echo '<pre>';print_r($data);
+        // echo '<pre>';print_r($data);
 
 
         // $this->db->insert('cus_cheque', $data);
@@ -1278,13 +1307,102 @@ class Cinvoice extends CI_Controller {
             $data['status']        = true;
             $data['message']       = display('save_successfully');
             redirect('Admin_dashboard/sales_cheque_report');
-
         } else {
             $data['status'] = false;
             $data['error_message'] = display('please_try_again');
             redirect('Admin_dashboard/sales_cheque_report');
         }
-       // echo json_encode($data);
+        // echo json_encode($data);
     }
 
+    public function sales_order()
+    {
+        $CI = &get_instance();
+        // $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $content = $CI->linvoice->sales_order();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function manage_sales_order()
+    {
+        $CI = &get_instance();
+        // $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $content = $CI->linvoice->manage_sales_order();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function add_new_sales()
+    {
+        $CI = &get_instance();
+        // $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $content = $CI->linvoice->add_new_sales();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function save_sales_order()
+    {
+
+        $invoice_id = $this->generator(10);
+
+        $invoice_no = $this->input->post('invoice_no', TRUE);
+        $date = $this->input->post('invoice_date', TRUE);
+        $customer_name = $this->input->post('customer', TRUE);
+        $delivery_type = $this->input->post('delivery_type', TRUE);
+        $grand_total = $this->input->post('grand_total', TRUE);
+        $paid_amount = $this->input->post('advance', TRUE);
+        $due_amount = $this->input->post('due_amount', TRUE);
+        $discount = $this->input->post('discount', TRUE);
+
+        $product_id = $this->input->post('product_id', TRUE);
+        $adjusted_qty = $this->input->post('adjusted_quantity', TRUE);
+        $order_qty = $this->input->post('order_quantity', TRUE);
+        $rate = $this->input->post('rate', TRUE);
+        $row_total = $this->input->post('item_total', TRUE);
+
+        $data_1 = array(
+            'invoice_id'    => $invoice_id,
+            'invoice_no'    => $invoice_no,
+            'date'          => $date,
+            'customer_id'   => $customer_name,
+            'total_amount'  => $grand_total,
+            'delivery_type' => $delivery_type,
+            'paid_amount'   => $paid_amount,
+            'due_amount'    => $due_amount,
+            'total_discount' => $discount,
+            'status'        => 1
+        );
+
+        $this->db->insert('invoice', $data_1);
+
+        for ($i = 0; $i < count($product_id); $i++) {
+            $pr_id = $product_id[$i];
+            $item_adjs_qty = $adjusted_qty[$i];
+            $item_order_qty = $order_qty[$i];
+            $item_rate = $rate[$i];
+            $item_total = $row_total[$i];
+
+            $data_2 = array(
+                'invoice_details_id' => $this->generator(15),
+                'invoice_id'         => $invoice_id,
+                'product_id'        => $pr_id,
+                'quantity'          => $item_adjs_qty,
+                'order_qty'         => $item_order_qty,
+                'rate'              => $item_rate,
+                'total_price'       => $item_total,
+                'status'            => 1
+            );
+
+            $this->db->insert('invoice_details', $data_2);
+        }
+
+        $rqsn_id = $this->input->post('rqsn_id', TRUE);
+        $this->db->where('rqsn_id', $rqsn_id);
+        $this->db->set('is_sold', 1);
+        $this->db->update('rqsn');
+
+        redirect('Cinvoice/sales_order');
+    }
 }
