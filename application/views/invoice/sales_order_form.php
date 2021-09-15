@@ -147,7 +147,8 @@
                                 <div class="form-group row">
                                     <label for="customer" class="col-sm-4 col-form-label">Customer Name</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="customer" name="customer" class="form-control" value="" readonly="readonly">
+                                        <input type="text" id="customer" class="form-control" value="" readonly="readonly">
+                                        <input type="hidden" name="customer" id="cus_id" value="">
                                     </div>
                                 </div>
                             </div>
@@ -199,6 +200,7 @@
                 obj = jQuery.parseJSON(data);
                 $('#cart_dt').html(obj.html);
                 $('#customer').val(obj.cus_name);
+                $("#cus_id").val(obj.cus_id);
             }
         })
 

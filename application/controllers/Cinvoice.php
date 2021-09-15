@@ -1344,14 +1344,65 @@ class Cinvoice extends CI_Controller
 
     public function save_sales_order()
     {
+
+        $invoice_id = $this->generator(10);
+
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
         $delivery_type = $this->input->post('delivery_type', TRUE);
         $grand_total = $this->input->post('grand_total', TRUE);
+        $paid_amount = $this->input->post('advance', TRUE);
+        $due_amount = $this->input->post('due_amount', TRUE);
+        $discount = $this->input->post('discount', TRUE);
+
+        $product_id = $this->input->post('product_id', TRUE);
         $adjusted_qty = $this->input->post('adjusted_quantity', TRUE);
         $order_qty = $this->input->post('order_quantity', TRUE);
         $rate = $this->input->post('rate', TRUE);
         $row_total = $this->input->post('item_total', TRUE);
+
+        $data_1 = array(
+            'invoice_id'    => $invoice_id,
+            'invoice_no'    => $invoice_no,
+            'date'          => $date,
+            'customer_id'   => $customer_name,
+            'total_amount'  => $grand_total,
+            'delivery_type' => $delivery_type,
+            'paid_amount'   => $paid_amount,
+            'due_amount'    => $due_amount,
+            'total_discount' => $discount,
+            'status'        => 1
+        );
+
+        $this->db->insert('invoice', $data_1);
+
+        for ($i = 0; $i < count($product_id); $i++) {
+            $pr_id = $product_id[$i];
+            $item_adjs_qty = $adjusted_qty[$i];
+            $item_order_qty = $order_qty[$i];
+            $item_rate = $rate[$i];
+            $item_total = $row_total[$i];
+
+            $data_2 = array(
+                'invoice_details_id' => $this->generator(15),
+                'invoice_id'         => $invoice_id,
+                'product_id'        => $pr_id,
+                'quantity'          => $item_adjs_qty,
+                'order_qty'         => $item_order_qty,
+                'rate'              => $item_rate,
+                'total_price'       => $item_total,
+                'status'            => 1
+            );
+
+            $this->db->insert('invoice_details', $data_2);
+        }
+
+        $rqsn_id = $this->input->post('rqsn_id', TRUE);
+        $this->db->where('rqsn_id', $rqsn_id);
+        $this->db->set('is_sold', 1);
+        $this->db->update('rqsn');
+
+        redirect('Cinvoice/sales_order');
     }
 }

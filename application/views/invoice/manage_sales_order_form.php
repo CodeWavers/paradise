@@ -66,7 +66,9 @@
                                         <div class="col-sm-8">
                                             <select class="form-control" name="invoice_no" id="invoice_no" onchange="getinvoice_details">
                                                 <option value="">Select One</option>
-                                                <option value=""></option>
+                                                {so_list}
+                                                <option value="{invoice_id}">{invoice_no}</option>
+                                                {/so_list}
                                             </select>
                                         </div>
                                     </div>

@@ -2409,4 +2409,19 @@ class Invoices extends CI_Model
         }
         return 'SO' . $order_no;
     }
+
+    public function get_sales_orders()
+    {
+        $this->db->select('invoice_no, invoice_id'); //later we have get the invoice data according to invoice and invoice_details table
+        $this->db->from('invoice');
+        $this->db->where('status', 1);
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+    }
 }

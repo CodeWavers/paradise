@@ -1050,9 +1050,13 @@ class Linvoice
     public function manage_sales_order()
     {
         $CI = &get_instance();
+        $CI->load->model('Invoices');
+
+        $so_list = $CI->Invoices->get_sales_orders();
 
         $data = array(
-            'title'     => 'Manage Sales Order'
+            'title'     => 'Manage Sales Order',
+            'so_list'   => $so_list
         );
 
         $view = $CI->parser->parse('invoice/manage_sales_order_form', $data, true);

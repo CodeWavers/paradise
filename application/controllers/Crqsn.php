@@ -887,15 +887,15 @@ class Crqsn extends CI_Controller
             </tr>
             <tr>
                 <td colspan="9" class="text-right">Advance</td>
-                <td><input id="advance" type="text" class="form-control" value="" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
+                <td><input name="advance" id="advance" type="text" class="form-control" value="" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <button class="btn btn-warning btn-large" style="width: 100%;">Full Paid</button>
+                    <button type="button" class="btn btn-warning btn-large" style="width: 100%;">Full Paid</button>
                 </td>
                 <td colspan="7" class="text-right">Due</td>
-                <td><input id="due_amount" type="text" class="form-control" value="" readonly></td>
+                <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="" readonly></td>
             </tr>
         </tfoot>
     </table>
@@ -903,7 +903,8 @@ class Crqsn extends CI_Controller
 
         $data = array(
             'html' => $output,
-            'cus_name'  => $rqsn_details[0]['outlet_name']
+            'cus_name'  => $rqsn_details[0]['outlet_name'],
+            'cus_id'    => $rqsn_details[0]['from_id']
         );
 
         echo json_encode($data);
