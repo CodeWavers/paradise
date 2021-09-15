@@ -525,7 +525,7 @@ function  delivery_type(val){
 
     "use strict";
 function cancelprint(){
-   window.location.href = "Cinvoice/manage_invoice";
+   window.location.href = "Cinvoice/add_new_sales";
 }
 
 $(document).ready(function(){

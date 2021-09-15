@@ -510,9 +510,13 @@ class Linvoice
         $amount_inword = $CI->numbertowords->convert_number($totalbal);
         $user_id = $invoice_detail[0]['sales_by'];
         $users = $CI->Invoices->user_invoice_data($user_id);
+
+
+
         $data = array(
             'title'             => display('invoice_details'),
             'invoice_id'        => $invoice_detail[0]['invoice_id'],
+           // 'invoice_id'        => $invoice_id,
             'invoice_no'        => $invoice_detail[0]['invoice'],
             'customer_name'     => $invoice_detail[0]['customer_name'],
             'customer_address'  => $invoice_detail[0]['customer_address'],
@@ -544,9 +548,9 @@ class Linvoice
 
         );
 
-        // echo '<pre>';print_r($data);exit();
+        echo '<pre>';print_r($invoice_detail);exit();
 
-        $chapterList = $CI->parser->parse('invoice/invoice_html_manual', $data, true);
+        $chapterList = $CI->parser->parse('invoice/invoice_html_manual_new', $data, true);
         return $chapterList;
     }
     public function invoice_chalan_html_data_manual($invoice_id)
@@ -1066,9 +1070,19 @@ class Linvoice
     public function add_new_sales()
     {
         $CI = &get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Invoices');
+
+        $approved_list = $CI->Invoices->get_approved_so();
+
+        $so_no = $CI->Invoices->generate_invoice_no();
+
+
 
         $data = array(
-            'title'     => 'Add New Sales'
+            'title'     => 'Add Sales',
+            'approved_list'     => $approved_list,
+            'sales_order_no'    => $so_no,
         );
 
         $view = $CI->parser->parse('invoice/add_new_sales_form', $data, true);
