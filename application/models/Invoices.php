@@ -1853,7 +1853,7 @@ class Invoices extends CI_Model
         );
         $this->db->from('invoice a');
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
-        $this->db->join('customer_information b', 'b.customer_id = a.customer_id');
+        $this->db->join('outlet_warehouse b', 'b.outlet_id = a.customer_id');
         $this->db->join('product_information d', 'd.product_id = c.product_id');
         // $this->db->join('branch_name e', 'e.branch_id = a.branch_id');
         // $this->db->join('courier_name f', 'f.courier_id = a.courier_id');
@@ -2441,5 +2441,35 @@ class Invoices extends CI_Model
         }
 
         return false;
+    }
+
+
+    public function get_approved_so()
+    {
+        $this->db->select('*');
+        $this->db->from('invoice a');
+        $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
+        $this->db->where('b.status', 1);
+
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function approved_so_details($invoice_no)
+    {
+        $this->db->select('*');
+        $this->db->from('invoice a');
+        $this->db->where('a.invoice_no', $invoice_no);
+        $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
+        $this->db->join('product_information b', 'c.product_id = b.product_id');
+        $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
+        //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
     }
 }

@@ -1216,6 +1216,22 @@ class Cpurchase extends CI_Controller
             <table class="table table-bordered table-hover" id="purchaseTable">
                 <thead>
                      <tr>
+
+                        <th style="font-size: 12px" class="text-center" width="4%">SN</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Product Name</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">SKU</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Barcode</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Quantity</th>
+
+                        <th style="font-size: 12px" class="text-center" width="8%">Supplier Name</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Received</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Return</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Remarks</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Bill No.</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Aisle No.</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Shelf No.</th>
+                        <th style="font-size: 12px" class="text-center" width="8%">Bin No.</th>
+
                         <th class="text-center" width="4%">SN</th>
                         <th class="text-center" width="8%">Product Name</th>
                         <th class="text-center" width="8%">SKU</th>
@@ -1228,6 +1244,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="8%">Remarks</th>
 
                         <th class="text-center" width="8%">Bill No.</th>
+
 
                     </tr>
                 </thead>
@@ -1259,8 +1276,8 @@ class Cpurchase extends CI_Controller
             $count++;
             $op .= '
                         <tr>
-                        <td class="wt"> ' . $count . '</td>
-                        <td class="span3 supplier">
+                        <td style="font-size: 11px" class="wt"> ' . $count . '</td>
+                        <td style="font-size: 11px" class="span3 supplier">
                             <span>' . $items['product_name'] . '</span>
                             <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
                             <input type="hidden" class="sl" value="' . $count . '">
@@ -1268,8 +1285,16 @@ class Cpurchase extends CI_Controller
                             <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
                             <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
                         </td>
+
+                            <td style="font-size: 11px" class="wt">' . $items['sku'] . '</td>
+                            <td style="font-size: 11px" class="wt">' . $items['product_id'] . '</td>
+
+
+
+
                             <td class="wt">' . $items['sku'] . '</td>
                             <td class="wt">' . $items['product_id'] . '</td>
+
 
 
 
@@ -1297,6 +1322,18 @@ class Cpurchase extends CI_Controller
                                 <td class="text-right">
 
                                 </td>
+                                <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+
+
+
 
 
 
