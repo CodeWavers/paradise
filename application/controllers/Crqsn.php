@@ -892,7 +892,7 @@ class Crqsn extends CI_Controller
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-warning btn-large" style="width: 100%;">Full Paid</button>
+                    <button type="button" class="btn btn-warning btn-large" onclick="full_paid()" style="width: 100%;">Full Paid</button>
                 </td>
                 <td colspan="7" class="text-right">Due</td>
                 <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="" readonly></td>

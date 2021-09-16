@@ -240,4 +240,12 @@
         $("#due_amount").val((real_gr_tot - advance).toFixed(2));
 
     }
+
+    function full_paid() {
+        var advance = $("#advance");
+        var gr_tot = $('#grand_total').val();
+
+        advance.val(gr_tot);
+        add_pur_calc_store(1);
+    }
 </script>

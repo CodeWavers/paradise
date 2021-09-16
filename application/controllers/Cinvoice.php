@@ -750,7 +750,7 @@ class Cinvoice extends CI_Controller
         $CI->load->library('linvoice');
 
 
-       // echo $invoice_id;exit();
+        // echo $invoice_id;exit();
         if (isset($_POST['chalan_value'])) {
             $content = $CI->linvoice->invoice_chalan_html_data_manual($invoice_id);
             $this->template->full_admin_html_view($content);
@@ -1406,6 +1406,7 @@ class Cinvoice extends CI_Controller
         redirect('Cinvoice/sales_order');
     }
 
+
     public function add_sale()
     {
 
@@ -1435,7 +1436,7 @@ class Cinvoice extends CI_Controller
             'status'        => 1
         );
 
-        $this->db->where('invoice_no',$invoice_no);
+        $this->db->where('invoice_no', $invoice_no);
         $this->db->update('invoice', $data_1);
 
         for ($i = 0; $i < count($product_id); $i++) {
@@ -1450,8 +1451,8 @@ class Cinvoice extends CI_Controller
                 'total_price'       => $item_total,
                 'status'            => 2
             );
-            $this->db->where('product_id',$pr_id);
-            $result=$this->db->update('invoice_details', $data_2);
+            $this->db->where('product_id', $pr_id);
+            $result = $this->db->update('invoice_details', $data_2);
         }
 
 
@@ -1474,12 +1475,12 @@ class Cinvoice extends CI_Controller
 
         echo json_encode($data);
 
-//        $rqsn_id = $this->input->post('rqsn_id', TRUE);
-//        $this->db->where('rqsn_id', $rqsn_id);
-//        $this->db->set('is_sold', 1);
-//        $this->db->update('rqsn');
+        //        $rqsn_id = $this->input->post('rqsn_id', TRUE);
+        //        $this->db->where('rqsn_id', $rqsn_id);
+        //        $this->db->set('is_sold', 1);
+        //        $this->db->update('rqsn');
 
-      //  redirect('Cinvoice/add_new_sales');
+        //  redirect('Cinvoice/add_new_sales');
     }
 
     public function get_so_details()
@@ -1500,9 +1501,9 @@ class Cinvoice extends CI_Controller
             <thead>
                 <th width="5%">Sl. NO</th>
                 <th width="8%">Item Description</th>
-          
+
                 <th width="5%"> Quantity</th>
-           
+
                 <th width="5%">Unit Price</th>
                 <th  width="8%">Total Price</th>
             </thead>
@@ -1514,7 +1515,7 @@ class Cinvoice extends CI_Controller
                 <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 </td>
-            
+
                 <td><input  id="qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" ></td>
                 <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="' . $rq['rate'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
                 <td><input type="text" id="row_total_' . $count . '" name="item_total[]" class="form-control row_total" value="' . $rq['total_price'] . '" readonly></td></tr>';
@@ -1545,14 +1546,14 @@ class Cinvoice extends CI_Controller
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-warning btn-sm" >Full Paid</button>
+                    <button type="button" onclick="full_paid()" class="btn btn-warning btn-sm" >Full Paid</button>
                 </td>
                 <td colspan="2" class="text-right">Due</td>
                 <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="" readonly></td>
             </tr>
         </tfoot>
     </table>
-                       
+
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="invoice_no" class="col-sm-3 col-form-label">Upload Image</label>
@@ -1560,11 +1561,10 @@ class Cinvoice extends CI_Controller
                                         <input type="file" name="image" class="form-control" value=\'\' >
                                     </div>
                                 </div>
-
                             </div>
-                       
+
     </div>
-    
+
     ';
 
         $data = array(
@@ -1575,5 +1575,123 @@ class Cinvoice extends CI_Controller
         );
 
         echo json_encode($data);
+    }
+
+
+    public function get_po_details()
+    {
+
+        $CI = &get_instance();
+        $CI->load->model('Invoices');
+
+        $invoice_id = $this->input->post('invoice_id', true);
+
+        $rqsn_details = $CI->Invoices->get_so_details($invoice_id);
+        // echo '<pre>'; print_r($rqsn_details); exit();
+
+        $output = "";
+        $count = 0;
+
+        $output .= '<div class="table-responsive">
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <th>Sl. NO</th>
+                <th>Product Name</th>
+                <th>Parts No.</th>
+                <th>SKU</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th width="5%">Order Quantity</th>
+                <th width="5%">Adjusted Quantity</th>
+                <th width="8%">Unit Price</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </thead>
+            <tbody>';
+
+        foreach ($rqsn_details as $rq) {
+            $count++;
+            $output .= '<tr><td>' . $count . '</td>
+                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
+                <input type="hidden" name="invoice_details_id[]" value="' . $rq['invoice_details_id'] . '">
+                </td>
+                <td><input type="text" class="form-control" value="' . $rq['parts'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" value="' . $rq['brand_name'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" value="' . $rq['model_name'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" name="order_quantity[]" value="' . $rq['order_qty'] . '" readonly="readonly"></td>
+                <td><input id="qty_' . $count . '" type="text" name="adjusted_quantity[]" class="form-control" value="' . $rq['quantity'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
+                <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="' . $rq['rate'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
+                <td><input type="text" id="row_total_' . $count . '" name="item_total[]" class="form-control row_total" value="' . $rq['total_price'] . '" readonly></td>
+                <td><button type="button" class="btn btn-sm btn-danger" onclick="delete_row(' . $rq['invoice_details_id'] . ', this)"><i class="fa fa-trash"></i></button></td></tr>';
+        }
+
+        $output .= '</tbody>
+    </table>
+    </div>';
+
+        $data = array(
+            'html' => $output,
+        );
+
+        echo json_encode($data);
+    }
+
+    public function approve_sales_order()
+    {
+
+        $invoice_id = $this->input->post('invoice_no', TRUE);
+
+        $invoice_details_id = $this->input->post('invoice_details_id', TRUE);
+        $adjusted_qty = $this->input->post('adjusted_quantity', TRUE);
+        $rate = $this->input->post('rate', TRUE);
+        $row_total = $this->input->post('item_total', TRUE);
+
+        for ($i = 0; $i < count($invoice_details_id); $i++) {
+            $item_id = $invoice_details_id[$i];
+            $item_adjs_qty = $adjusted_qty[$i];
+            $item_rate = $rate[$i];
+            $item_total = $row_total[$i];
+
+            $data = array(
+                'quantity' => $item_adjs_qty,
+                'rate'     => $item_rate,
+                'total_price'   => $item_total
+            );
+
+            $this->db->set($data);
+            $this->db->where('invoice_details_id', $item_id);
+            $this->db->update('invoice_details');
+        }
+
+        $this->db->set('status', 2);
+        $this->db->where('invoice_id', $invoice_id);
+        $this->db->update('invoice');
+
+        redirect(base_url('Cinvoice/manage_sales_order'));
+    }
+
+    public function remove_sales_order_row()
+    {
+        $invoice_id = $this->input->post('inv_id', TRUE);
+        $invoice_details_id = $this->input->post('inv_details_id', TRUE);
+
+        $inv = $this->db->select('*')
+            ->from('invoice_details')
+            ->where('invoice_id', $invoice_id)
+            ->get()->result_array();
+
+        // echo '<pre>';
+        // print_r(count($inv));
+        // exit();
+        // if there is no sales list left remove the sales_order
+        if (count($inv) <= 1) {
+            $this->db->where('invoice_id', $inv[0]['invoice_id']);
+            $this->db->delete('invoice');
+        }
+
+        $this->db->where('invoice_details_id', $invoice_details_id);
+        $this->db->delete('invoice_details');
     }
 }

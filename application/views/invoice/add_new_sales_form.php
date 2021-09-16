@@ -33,22 +33,22 @@
         <?php
         $message = $this->session->userdata('message');
         if (isset($message)) {
-            ?>
+        ?>
             <div class="alert alert-info alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                 <?php echo $message ?>
             </div>
-            <?php
+        <?php
             $this->session->unset_userdata('message');
         }
         $error_message = $this->session->userdata('error_message');
         if (isset($error_message)) {
-            ?>
+        ?>
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <?php echo $error_message ?>
             </div>
-            <?php
+        <?php
             $this->session->unset_userdata('error_message');
         }
         ?>
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <?php echo form_open_multipart('Cinvoice/add_sale', array('class' => 'form-vertical', 'id' => 'insert_sale','name' => 'insert_sale')) ?>
+                        <?php echo form_open_multipart('Cinvoice/add_sale', array('class' => 'form-vertical', 'id' => 'insert_sale', 'name' => 'insert_sale')) ?>
                         <div class="row">
 
                             <div class="col-sm-6">
@@ -83,7 +83,7 @@
                                     </label>
                                     <div class="col-sm-8">
                                         <?php $date = date('Y-m-d'); ?>
-                                        <input type="text" required tabindex="2" class="form-control" name="invoice_date" value="<?php echo $date; ?>" id="date"  readonly/>
+                                        <input type="text" required tabindex="2" class="form-control" name="invoice_date" value="<?php echo $date; ?>" id="date" readonly />
                                     </div>
                                 </div>
                             </div>
@@ -125,8 +125,8 @@
                                 <div class="form-group row">
                                     <label for="invoice_no" class="col-sm-4 col-form-label">Vessel Name</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="vessel_name" class="form-control" value='' >
-                                        <input type="hidden" name="invoice_id" id="invoice_id" class="form-control" value='' >
+                                        <input type="text" name="vessel_name" class="form-control" value=''>
+                                        <input type="hidden" name="invoice_id" id="invoice_id" class="form-control" value=''>
                                     </div>
                                 </div>
 
@@ -171,7 +171,7 @@
                                 <h3> <?php echo display('successfully_inserted') ?></h3>
                                 <h4><?php echo display('do_you_want_to_print') ?> ??</h4>
                                 <label class="ab">With Chalan </label>
-                                <input type="checkbox"  name="chalan_value" value=''>
+                                <input type="checkbox" name="chalan_value" value=''>
 
 
                                 <input type="hidden" name="invoice_id" id="inv_id">
@@ -247,5 +247,13 @@
 
         $("#due_amount").val((real_gr_tot - advance).toFixed(2));
 
+    }
+
+    function full_paid() {
+        var advance = $("#advance");
+        var gr_tot = $('#grand_total').val();
+
+        advance.val(gr_tot);
+        add_pur_calc_store(1);
     }
 </script>
