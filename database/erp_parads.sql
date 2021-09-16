@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 22, 2021 at 10:17 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.11
+-- Host: localhost:3306
+-- Generation Time: Sep 16, 2021 at 11:37 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `erp_paradise`
+-- Database: `erp_parads`
 --
 
 -- --------------------------------------------------------
@@ -57,66 +57,122 @@ INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActi
 ('502040010', '0-Md Arman Ullah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 11:16:13', '', '0000-00-00 00:00:00'),
 ('102030000002', '0-Rifat', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 0, NULL, '0.00', 'tF2YChLBH86gHfG', '2021-01-25 02:43:01', '', '0000-00-00 00:00:00'),
 ('102010210', '01836714343', 'Cash At Bkash', 4, 1, 1, 0, 'A', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-02-01 07:27:22', '', '0000-00-00 00:00:00'),
-('5020023', '1-Codeweavers', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 1, '0.00', 'OpSoxJvBbbS8Rws', '2021-04-03 09:08:30', '', '0000-00-00 00:00:00'),
 ('102030000001', '1-Walking Customer', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 1, NULL, '0.00', '1', '2019-11-16 08:44:42', '', '0000-00-00 00:00:00'),
 ('502040009', '10-Engineering Khan', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 06:48:50', '', '0000-00-00 00:00:00'),
-('5020003', '10-Shenzhen Mindray Bio-Medical Electronics Co., Ltd', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 10, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020029', '10-M/S. AMANAT BATTERY CO.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 10, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:23:58', '', '0000-00-00 00:00:00'),
+('5020090', '104-Test Supplier 1', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 104, '0.00', 'ByIUOew8UWnm8dD', '2021-08-18 09:51:11', '', '0000-00-00 00:00:00'),
+('5020091', '105-Test Supplier 2', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 105, '0.00', 'ByIUOew8UWnm8dD', '2021-08-18 09:51:28', '', '0000-00-00 00:00:00'),
+('5020092', '106-Al-Helal Electric Co.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 106, '0.00', 'ByIUOew8UWnm8dD', '2021-08-19 04:38:57', '', '0000-00-00 00:00:00'),
+('5020093', '108-Bangladesh Medical Hall', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 108, '0.00', 'ByIUOew8UWnm8dD', '2021-08-19 04:44:28', '', '0000-00-00 00:00:00'),
 ('502040010', '11-MainulUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 06:52:27', '', '0000-00-00 00:00:00'),
+('5020030', '11-NASIM MACHINERY', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 11, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:27:26', '', '0000-00-00 00:00:00'),
 ('102030000003', '11-Rifat', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 11, NULL, '0.00', 'tF2YChLBH86gHfG', '2021-01-25 02:54:26', '', '0000-00-00 00:00:00'),
 ('5020004', '11-TEKNOVA Medical Systems Limited', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 11, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020094', '110-New IT Power', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 110, '0.00', 'ByIUOew8UWnm8dD', '2021-08-19 04:53:11', '', '0000-00-00 00:00:00'),
+('5020095', '111-S.K Electric Engineering Service', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 111, '0.00', 'ByIUOew8UWnm8dD', '2021-08-22 11:20:56', '', '0000-00-00 00:00:00'),
 ('102030000004', '12-Customer Hasan', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 12, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-02-01 09:43:34', '', '0000-00-00 00:00:00'),
 ('502040010', '12-Engineering ihy', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 06:55:12', '', '0000-00-00 00:00:00'),
+('5020031', '12-M/S. HALIMA IRON MART', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 12, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:35:34', '', '0000-00-00 00:00:00'),
 ('5020005', '12-Shenzhen Comen Medical Instruments Co., Ltd.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 12, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020032', '13-ALAM TRADING', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 13, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:38:59', '', '0000-00-00 00:00:00'),
 ('5020006', '13-Boditech Med Inc.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 13, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('502040010', '13-DSUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 07:27:26', '', '0000-00-00 00:00:00'),
 ('102030000005', '13-Helen', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 13, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-02-08 06:57:01', '', '0000-00-00 00:00:00'),
 ('5020007', '14-BMC Medical Co., Ltd.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 14, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020033', '14-MOHOSIN SCREW CENTER', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 14, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:42:38', '', '0000-00-00 00:00:00'),
 ('502040010', '14-RIfat Khan', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 07:38:02', '', '0000-00-00 00:00:00'),
 ('102030000006', '14-Rishi', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 14, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-02-08 07:27:49', '', '0000-00-00 00:00:00'),
 ('502040010', '15-Engineering Solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 07:46:41', '', '0000-00-00 00:00:00'),
 ('102030000007', '15-GMEBD', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 15, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-01 08:46:15', '', '0000-00-00 00:00:00'),
 ('5020008', '15-Hunan VentMed Medical Technology Co., Ltd.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 15, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020034', '15-MADINA MACHINERY', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 15, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:44:48', '', '0000-00-00 00:00:00'),
 ('502040010', '16-Engineering Solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 07:47:33', '', '0000-00-00 00:00:00'),
+('5020035', '16-MADINA MACHINERY', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 16, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 11:48:00', '', '0000-00-00 00:00:00'),
 ('102030000008', '16-Mizbah', 'Customer Receivable', 4, 1, 1, 0, 'A', 0, 0, 16, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-31 07:43:49', '', '0000-00-00 00:00:00'),
 ('5020009', '16-SHENZHEN EAST MEDICAL TECHNOLOGY  CO., LTD ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 16, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020036', '17-BISMILLAH IRON MART', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 17, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:09:39', '', '0000-00-00 00:00:00'),
 ('502040010', '17-Engineering Solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 09:41:19', '', '0000-00-00 00:00:00'),
-('5020010', '17-SHENZHEN EMPEROR ELECTRONIC TECHNOLOGY CO., LTD', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 17, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('502040010', '18-Engineering Solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 09:41:25', '', '0000-00-00 00:00:00'),
+('5020037', '18-M/S. ABU HANIF & BROTHERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 18, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:11:37', '', '0000-00-00 00:00:00'),
 ('5020011', '18-WUHAN ZONCARE BIO-M EDICAL ELECTRONICS CO.,LTD', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 18, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('502040010', '19-Engineering Solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 09:41:45', '', '0000-00-00 00:00:00'),
+('5020038', '19-M/S. RAJU & BROTHERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 19, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:12:32', '', '0000-00-00 00:00:00'),
 ('5020012', '19-XIAN HAIYE MEDICAL EQUIPMENT., LTD', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 19, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
-('5020024', '2-Arman', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 2, '0.00', 'OpSoxJvBbbS8Rws', '2021-04-03 09:10:33', '', '0000-00-00 00:00:00'),
 ('502040001', '2-Md. IsahaqHossain', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'tF2YChLBH86gHfG', '2021-01-28 07:32:03', 'OpSoxJvBbbS8Rws', '2021-03-09 09:48:22'),
-('5020026', '2-Pran', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 2, '0.00', 'OpSoxJvBbbS8Rws', '2021-08-09 07:14:37', '', '0000-00-00 00:00:00'),
 ('502040010', '20-Engineering Solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 09:41:58', '', '0000-00-00 00:00:00'),
 ('5020013', '20-Garnier Diagnostic GMbH', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 20, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
-('5020014', '21-CARETIUM MEDICAL INSTRUMENTS CO., LIMITED', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 21, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('502040010', '21-MdUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 10:00:45', '', '0000-00-00 00:00:00'),
 ('502040010', '22-MdUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 10:03:00', '', '0000-00-00 00:00:00'),
 ('5020015', '22-Shenzhen Prokan Electronics Inc.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 22, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
-('5020016', '23-GENORAY CO., LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 23, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('502040010', '23-Md Arman Ullah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 10:12:17', '', '0000-00-00 00:00:00'),
 ('502040010', '24-Engineering Ullah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 10:45:01', '', '0000-00-00 00:00:00'),
 ('5020017', '24-Philosys Co. Ltd', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 24, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('502040010', '25-ArmanUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 11:20:46', 'OpSoxJvBbbS8Rws', '2021-03-15 08:12:45'),
 ('5020018', '25-BIOTEC UK LTD', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 25, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
-('5020019', '26-Greiner Diagnostic GmbH', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 26, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020040', '27-M/S. BHAI BHAI IRON MART', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 27, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:19:30', '', '0000-00-00 00:00:00'),
 ('5020020', '27-Shijiazhuang Hipro Biotechnology Co. Ltd', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 27, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
-('5020021', '28-Local Purchase', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 28, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
 ('5020022', '29-3s', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 29, '0.00', 'OpSoxJvBbbS8Rws', '2021-02-25 12:27:43', '', '0000-00-00 00:00:00'),
+('5020042', '29-NIZAM & BROTHERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 29, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:28:11', '', '0000-00-00 00:00:00'),
 ('502040002', '3-Md ArmanUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-08 08:06:52', 'OpSoxJvBbbS8Rws', '2021-03-09 10:22:27'),
-('5020027', '4-BCD', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 4, '0.00', 'OpSoxJvBbbS8Rws', '2021-08-09 11:52:29', '', '0000-00-00 00:00:00'),
+('5020024', '3-VSP', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 3, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 09:20:38', '', '0000-00-00 00:00:00'),
+('5020043', '30-SHAH AMANAT ENTERPRISE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 30, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:29:33', '', '0000-00-00 00:00:00'),
+('5020044', '31-SHAH AMANAT ENTERPRISE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 31, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 17:32:36', '', '0000-00-00 00:00:00'),
+('5020045', '32-M/S. BHAI BHAI STEEL', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 32, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:31:35', '', '0000-00-00 00:00:00'),
+('5020046', '33-M/S. BHAI BHAI STEEL', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 33, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:33:47', '', '0000-00-00 00:00:00'),
+('5020047', '34-M/S. JAYNAL SHOWDAGOR', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 34, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:36:07', '', '0000-00-00 00:00:00'),
+('5020048', '35-M/S. EDRIS AND SONS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 35, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:39:10', '', '0000-00-00 00:00:00'),
+('5020049', '36-M/S. RAHUL TRADERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 36, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:41:06', '', '0000-00-00 00:00:00'),
+('5020050', '37-SHAH JALAL IRON STORE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 37, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:42:51', '', '0000-00-00 00:00:00'),
+('5020051', '38-M/S. KHAWJA IRON STORE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 38, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:46:03', '', '0000-00-00 00:00:00'),
+('5020052', '39-M/S. B.S REFRIGERATION', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 39, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:47:58', '', '0000-00-00 00:00:00'),
 ('502040003', '4-Rifat Khan', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-09 08:16:45', 'OpSoxJvBbbS8Rws', '2021-03-09 10:21:58'),
+('5020025', '4-VSP', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 4, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 09:54:28', '', '0000-00-00 00:00:00'),
+('5020053', '40-NADIM HARDWARE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 40, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:53:24', '', '0000-00-00 00:00:00'),
+('5020054', '41-M/S. JAKIR HOSSAIN IRON MART', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 41, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:55:42', '', '0000-00-00 00:00:00'),
+('5020055', '42-M/S. SHANTA REFRIGERATION', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 42, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 18:58:19', '', '0000-00-00 00:00:00'),
+('5020056', '43-RUPALI TRADING CORPORATION ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 43, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:00:43', '', '0000-00-00 00:00:00'),
+('5020057', '44-ANJUMAN ELECTRIC', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 44, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:02:41', '', '0000-00-00 00:00:00'),
+('5020058', '45-KHAWAJA TRADERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 45, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:04:56', '', '0000-00-00 00:00:00'),
+('5020059', '46-M/S. AKTHER STORE ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 46, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:07:50', '', '0000-00-00 00:00:00'),
+('5020060', '48-MALEK SHAH TRADE INTERNATIONAL', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 48, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:10:24', '', '0000-00-00 00:00:00'),
+('5020061', '49-A.D.SONS MARINE TECH', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 49, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:12:25', '', '0000-00-00 00:00:00'),
 ('502040004', '5-JohnHarrison', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-13 07:15:23', '', '0000-00-00 00:00:00'),
-('5020025', '6-ABCD', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 6, '0.00', 'OpSoxJvBbbS8Rws', '2021-08-09 07:07:27', '', '0000-00-00 00:00:00'),
+('5020062', '50-NADIA ELECTRONICS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 50, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:15:07', '', '0000-00-00 00:00:00'),
+('5020063', '51-ROBIUL MODERN TRAWL SUPPLIER', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 51, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:18:33', '', '0000-00-00 00:00:00'),
+('5020064', '52-H.N.J TRADERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 52, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:21:29', '', '0000-00-00 00:00:00'),
+('5020065', '53-M/S. NADIM ENTERPRISE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 53, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:23:30', '', '0000-00-00 00:00:00'),
+('5020066', '54-BENGAL MOTORS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 54, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:25:41', '', '0000-00-00 00:00:00'),
+('5020067', '55-CHITTAGONG SUPPLIER ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 55, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:28:29', '', '0000-00-00 00:00:00'),
+('5020068', '56-J.B. ENTERPRISE  ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 56, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:29:53', '', '0000-00-00 00:00:00'),
+('5020069', '57-KANCHAN ENTERPRISE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 57, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:31:55', '', '0000-00-00 00:00:00'),
+('5020070', '58-MEERA ENTERPRISE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 58, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:38:03', '', '0000-00-00 00:00:00'),
+('5020071', '59-MAHANAGAR TOOLS CENTER ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 59, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:40:04', '', '0000-00-00 00:00:00'),
 ('502040005', '6-ArmanUllah', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-13 07:22:54', 'OpSoxJvBbbS8Rws', '2021-03-13 10:00:49'),
-('50205000001', '7-Local Supplier', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 7, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-24 06:47:00', '', '0000-00-00 00:00:00'),
+('5020072', '60-NABI ELECTRIC STORE', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 60, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:42:21', '', '0000-00-00 00:00:00'),
+('5020074', '62-M/S. RUBEL ENTERPRISE ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 62, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:48:10', '', '0000-00-00 00:00:00'),
+('5020075', '63-S.N. TRADERS ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 63, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:50:18', '', '0000-00-00 00:00:00'),
+('5020076', '64-S.S. ENTERPRISE ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 64, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:52:25', '', '0000-00-00 00:00:00'),
+('5020077', '65-M/S. MEGHNA TIMBER TRADERS ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 65, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:55:17', '', '0000-00-00 00:00:00'),
+('5020078', '66-M/S. TAMIM ENTERPRISE ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 66, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:57:16', '', '0000-00-00 00:00:00'),
+('5020079', '67-M/S. TAMIM ENTERPRISE ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 67, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 19:59:27', '', '0000-00-00 00:00:00'),
+('5020080', '68-M/S. JAMAL UDDIN CHOWDHURY ', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 68, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 20:02:19', '', '0000-00-00 00:00:00'),
+('5020026', '7-Applied Power Co. Ltd', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 7, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 10:02:40', '', '0000-00-00 00:00:00'),
 ('502040006', '7-MainulSolution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 06:29:34', '', '0000-00-00 00:00:00'),
+('5020081', '70-OCEAN MARINE CO. LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 70, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 20:19:43', '', '0000-00-00 00:00:00'),
+('5020082', '79-MAHACHAI DOCKYARD CO. LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 79, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 20:27:40', '', '0000-00-00 00:00:00'),
 ('502040007', '8-ArmanSolution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 06:36:17', '', '0000-00-00 00:00:00'),
+('5020027', '8-M/S. KHASRU TRADERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 8, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 10:29:08', '', '0000-00-00 00:00:00'),
 ('5020001', '8-VINNO Technology (Suzhou) Co., Ltd', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 8, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
+('5020083', '80-RITCHMEN (S) PTE. LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 80, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 20:41:58', '', '0000-00-00 00:00:00'),
+('5020084', '83-POH LEONG TRACTORS PTE. LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 83, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 20:45:55', '', '0000-00-00 00:00:00'),
+('5020085', '85-SLS BEARINGS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 85, '0.00', 'ByIUOew8UWnm8dD', '2021-08-10 04:38:03', '', '0000-00-00 00:00:00'),
+('5020086', '87-ROLLER ASIA', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 87, '0.00', 'ByIUOew8UWnm8dD', '2021-08-10 04:43:10', '', '0000-00-00 00:00:00'),
+('5020087', '88-GEA REFRIGERATION INDIA PVT. LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 88, '0.00', 'ByIUOew8UWnm8dD', '2021-08-10 04:59:52', '', '0000-00-00 00:00:00'),
+('5020088', '89-COMET TRAWL', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 89, '0.00', 'ByIUOew8UWnm8dD', '2021-08-10 05:03:21', '', '0000-00-00 00:00:00'),
 ('5020002', '9-GE-Biomedical', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 9, '0.00', 'OpSoxJvBbbS8Rws', '2021-01-28 01:27:48', '', '0000-00-00 00:00:00'),
-('5020028', '9-KDAIT', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 9, '0.00', 'OpSoxJvBbbS8Rws', '2021-08-10 07:21:47', '', '0000-00-00 00:00:00'),
+('5020028', '9-M/S. KHASRU TRADERS', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 9, '0.00', 'ByIUOew8UWnm8dD', '2021-08-09 10:34:24', '', '0000-00-00 00:00:00'),
 ('502040008', '9-Md Arman solution', 'Employee Ledger', 3, 1, 1, 0, 'L', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-03-14 06:41:24', '', '0000-00-00 00:00:00'),
+('5020089', '90-CHONGQING CUMMINS ENGINE PARTS CO. LTD., C/O: CHONGQING OGEM TRADE CO. LTD.', 'Account Payable', 3, 1, 1, 0, 'L', 0, 0, NULL, 90, '0.00', 'ByIUOew8UWnm8dD', '2021-08-10 05:09:17', '', '0000-00-00 00:00:00'),
 ('10106', 'ABC', 'XYZ', 2, 1, 0, 0, 'A', 0, 0, NULL, NULL, '0.00', 'OpSoxJvBbbS8Rws', '2021-02-23 10:27:19', '', '0000-00-00 00:00:00'),
 ('50202', 'Account Payable', 'Current Liabilities', 2, 1, 0, 1, 'L', 0, 0, NULL, NULL, '0.00', 'admin', '2015-10-15 19:50:43', '', '2019-09-05 00:00:00'),
 ('10203', 'Account Receivable', 'Current Asset', 2, 1, 0, 0, 'A', 0, 0, NULL, NULL, '0.00', '', '2019-09-05 00:00:00', 'admin', '2013-09-18 15:29:35'),
@@ -172,7 +228,7 @@ CREATE TABLE `acc_transaction` (
   `Vtype` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `VDate` date DEFAULT NULL,
   `COAID` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `Narration` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Narration` text COLLATE utf8_unicode_ci,
   `Debit` decimal(18,2) DEFAULT NULL,
   `Credit` decimal(18,2) DEFAULT NULL,
   `IsPosted` char(10) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -182,6 +238,21 @@ CREATE TABLE `acc_transaction` (
   `UpdateDate` datetime DEFAULT NULL,
   `IsAppove` char(10) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `acc_transaction`
+--
+
+INSERT INTO `acc_transaction` (`ID`, `VNo`, `cheque_id`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `UpdateBy`, `UpdateDate`, `IsAppove`) VALUES
+(1, '20210727074521', NULL, 'Purchase', '2021-07-27', '10107', 'Inventory Debit For Supplier Arman', '500.00', '0.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:45:21', NULL, NULL, '1'),
+(2, '20210727074521', NULL, 'Purchase', '2021-07-27', '5020024', 'Supplier .Arman', '0.00', '500.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 00:00:00', NULL, NULL, '1'),
+(3, '20210727074521', NULL, 'Purchase', '2021-07-27', '402', 'Company Credit For  Arman', '500.00', '0.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:45:21', NULL, NULL, '1'),
+(4, '20210727074521', NULL, 'Purchase', '2021-07-27', '1020101', 'Cash in Hand For Supplier Arman', '0.00', '500.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:45:21', NULL, NULL, '1'),
+(5, '20210727074521', NULL, 'Purchase', '2021-07-27', '5020024', 'Supplier .Arman', '500.00', '0.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 00:00:00', NULL, NULL, '1'),
+(6, '6759512554', NULL, 'INV', '2021-07-27', '10107', 'Inventory credit For Invoice No1000', '0.00', '500.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:46:23', NULL, NULL, '1'),
+(7, '6759512554', NULL, 'INV', '2021-07-27', '102030000001', 'Customer debit For Invoice No -  1000 Customer Walking Customer', '600.00', '0.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:46:23', NULL, NULL, '1'),
+(8, '6759512554', NULL, 'INVOICE', '2021-07-27', '303', 'Sale Income For Invoice NO - 1000 Customer Walking Customer', '0.00', '600.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:46:23', NULL, NULL, '1'),
+(9, '6759512554', NULL, 'INV', '2021-07-27', '102030000001', 'Customer credit for Paid Amount For Customer Invoice NO- 1000 Customer- Walking Customer', '0.00', '600.00', '1', 'OpSoxJvBbbS8Rws', '2021-07-27 07:46:23', NULL, NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -260,6 +331,66 @@ INSERT INTO `bank_add` (`id`, `bank_id`, `bank_name`, `ac_name`, `ac_number`, `b
 (12, 'YNHXVVGFA4', 'Brac Bank Ltd.', 'Tarikul Islam', '1503101314261001', 'Maghbazar', NULL, 1),
 (13, '7WNZ9K7UWR', 'The City Bank Ltd.', 'Global Medical Engineering (Bd) Ltd.', '1232753345001', 'B.B Avenue Branch', NULL, 1),
 (14, 'Z2IOVDAGPP', 'The City Bank Ltd.', 'Tarikul Islam', '2401890308001', 'B B Avenue', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barcode_print`
+--
+
+CREATE TABLE `barcode_print` (
+  `id` int(255) NOT NULL,
+  `barcode_id` varchar(255) DEFAULT NULL,
+  `stock_in_date` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barcode_print`
+--
+
+INSERT INTO `barcode_print` (`id`, `barcode_id`, `stock_in_date`) VALUES
+(1, '20210908063827', '2021-09-08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barcode_print_details`
+--
+
+CREATE TABLE `barcode_print_details` (
+  `id` int(255) NOT NULL,
+  `barcode_id` varchar(255) DEFAULT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `quantity` varchar(255) DEFAULT NULL,
+  `sku` varchar(255) DEFAULT NULL,
+  `aisle_no` varchar(255) DEFAULT NULL,
+  `shelf_no` varchar(255) DEFAULT NULL,
+  `bin_no` varchar(255) DEFAULT NULL,
+  `barcode_url` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barcode_print_details`
+--
+
+INSERT INTO `barcode_print_details` (`id`, `barcode_id`, `product_id`, `product_name`, `quantity`, `sku`, `aisle_no`, `shelf_no`, `bin_no`, `barcode_url`) VALUES
+(1, '20210908063827', '89228533', 'Fuel Injector (GP) (4P9077)', '6', '4P9077', '44', '66', '6', 'https://localhost/git/paradise/my-assets/image/barcode/163108310789228533.png'),
+(2, '20210908063827', '59587973', 'Barrel & Plunger (3052254)', '6', '3052254', '44', '6', '5', 'https://localhost/git/paradise/my-assets/image/barcode/163108310759587973.png'),
+(3, '20210908063827', '34823275', 'Gasket (1W1253)', '6', '1W1253', '44', '64', '3', 'https://localhost/git/paradise/my-assets/image/barcode/163108310734823275.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bill_details`
+--
+
+CREATE TABLE `bill_details` (
+  `id` int(255) NOT NULL,
+  `po_order` varchar(255) DEFAULT NULL,
+  `bill_no` varchar(255) DEFAULT NULL,
+  `bill_image` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -353,7 +484,7 @@ CREATE TABLE `company_information` (
 --
 
 INSERT INTO `company_information` (`company_id`, `company_name`, `email`, `email2`, `address`, `mobile`, `phone`, `website`, `status`) VALUES
-('1', 'Global Medical Engineering (BD) Ltd', 'gmebd@gmail.com', 'gmebd2@gmail.com', '17/2, Topkhana Road (2nd Floor) Dhaka – 1000, Bangladesh.', '01822911624', '01467754378', 'https://gmebd.com', 1);
+('1', 'Paradise Marine Traders', 'paradise@gmail.com', 'paradise@gmail.com', '17/2, Topkhana Road (2nd Floor) Dhaka – 1000, Bangladesh.', '01822911624', '01467754378', 'https://www.paradisemarine.com', 1);
 
 -- --------------------------------------------------------
 
@@ -394,7 +525,12 @@ CREATE TABLE `currency_tbl` (
 
 INSERT INTO `currency_tbl` (`id`, `currency_name`, `icon`) VALUES
 (1, 'Dollar', '$'),
-(2, 'BDT', 'Tk');
+(2, 'BDT', 'Tk'),
+(3, 'EURO', 'EURO'),
+(4, 'SGD', 'SGD'),
+(5, 'THB', 'THB'),
+(6, 'INR', 'INR'),
+(7, 'CNY', 'CNY');
 
 -- --------------------------------------------------------
 
@@ -415,14 +551,14 @@ CREATE TABLE `customer_information` (
   `contact_person` varchar(1000) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `fax` varchar(100) DEFAULT NULL,
-  `city` text DEFAULT NULL,
-  `state` text DEFAULT NULL,
+  `city` text,
+  `state` text,
   `zip` varchar(50) DEFAULT NULL,
   `country` varchar(250) DEFAULT NULL,
   `discount_customer` int(255) DEFAULT NULL,
   `website` varchar(1000) DEFAULT NULL,
   `status` int(2) NOT NULL COMMENT '1=paid,2=credit',
-  `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `create_by` varchar(30) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -485,7 +621,7 @@ CREATE TABLE `daily_banking_add` (
   `bank_id` varchar(100) DEFAULT NULL,
   `deposit_type` varchar(255) DEFAULT NULL,
   `transaction_type` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `amount` int(11) DEFAULT NULL,
   `status` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -616,9 +752,9 @@ CREATE TABLE `employee_history` (
   `hrate` float DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `blood_group` varchar(10) DEFAULT NULL,
-  `address_line_1` text DEFAULT NULL,
-  `address_line_2` text DEFAULT NULL,
-  `image` text DEFAULT NULL,
+  `address_line_1` text,
+  `address_line_2` text,
+  `image` text,
   `country` varchar(50) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
   `zip` varchar(50) DEFAULT NULL,
@@ -663,7 +799,7 @@ CREATE TABLE `employee_salary_payment` (
   `emp_sal_pay_id` int(11) NOT NULL,
   `generate_id` int(11) NOT NULL,
   `employee_id` varchar(50) CHARACTER SET latin1 NOT NULL,
-  `total_salary` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `total_salary` decimal(18,2) NOT NULL DEFAULT '0.00',
   `total_working_minutes` varchar(50) CHARACTER SET latin1 NOT NULL,
   `working_period` varchar(50) CHARACTER SET latin1 NOT NULL,
   `payment_due` varchar(50) CHARACTER SET latin1 NOT NULL,
@@ -690,7 +826,7 @@ CREATE TABLE `employee_salary_setup` (
   `employee_id` varchar(30) CHARACTER SET latin1 NOT NULL,
   `sal_type` varchar(30) NOT NULL,
   `salary_type_id` varchar(30) CHARACTER SET latin1 NOT NULL,
-  `amount` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(12,2) NOT NULL DEFAULT '0.00',
   `create_date` date DEFAULT NULL,
   `update_date` datetime(6) DEFAULT NULL,
   `update_id` varchar(30) CHARACTER SET latin1 NOT NULL,
@@ -732,6 +868,38 @@ INSERT INTO `employee_tr` (`tr_id`, `employee_id`, `tr_centre`, `tr_name`, `tr_d
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `erp_entry_details`
+--
+
+CREATE TABLE `erp_entry_details` (
+  `entry_id` int(255) NOT NULL,
+  `po_order` varchar(255) DEFAULT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
+  `quantity` varchar(255) DEFAULT NULL,
+  `supplier_id` varchar(255) DEFAULT NULL,
+  `received_status` varchar(255) DEFAULT NULL,
+  `return_qty` varchar(255) DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `bill_no` varchar(255) DEFAULT NULL,
+  `bill_image` varchar(255) DEFAULT NULL,
+  `aisle_no` varchar(255) DEFAULT NULL,
+  `shelf_no` varchar(255) DEFAULT NULL,
+  `bin_no` varchar(255) DEFAULT NULL,
+  `isAprv` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `erp_entry_details`
+--
+
+INSERT INTO `erp_entry_details` (`entry_id`, `po_order`, `product_id`, `quantity`, `supplier_id`, `received_status`, `return_qty`, `remarks`, `bill_no`, `bill_image`, `aisle_no`, `shelf_no`, `bin_no`, `isAprv`) VALUES
+(4, '20210819095222', '34244717', '50', '73', 'Not received', '', '', '', NULL, '', '', '', 1),
+(5, '20210818101220', '34244717', '60', '74', 'Received', '4', '3', '6', NULL, '', '', '', 1),
+(6, '20210819060857', '59587973', '70', '67', 'Received', '', '', '', NULL, '', '', '', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `expense`
 --
 
@@ -763,19 +931,26 @@ CREATE TABLE `expense_item` (
 CREATE TABLE `invoice` (
   `id` int(30) NOT NULL,
   `invoice_id` bigint(20) NOT NULL,
-  `customer_id` bigint(20) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `vessel_name` varchar(255) DEFAULT NULL,
   `customer_name_two` varchar(255) DEFAULT NULL,
   `customer_mobile_two` varchar(255) DEFAULT NULL,
   `date` varchar(50) DEFAULT NULL,
-  `total_amount` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `paid_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `due_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `prevous_due` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `shipping_cost` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `chalan_date` varchar(255) DEFAULT NULL,
+  `total_amount` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `paid_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `due_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `prevous_due` decimal(20,2) NOT NULL DEFAULT '0.00',
+  `shipping_cost` decimal(10,2) NOT NULL DEFAULT '0.00',
   `invoice` bigint(20) NOT NULL,
-  `invoice_discount` decimal(10,2) DEFAULT 0.00 COMMENT 'invoice discount',
-  `total_discount` decimal(10,2) DEFAULT 0.00 COMMENT 'total invoice discount',
-  `total_tax` decimal(10,2) DEFAULT 0.00,
+  `invoice_no` varchar(255) DEFAULT NULL,
+  `dc_no` varchar(255) DEFAULT NULL,
+  `rqsn_id` varchar(255) DEFAULT NULL,
+  `contact_person` varchar(255) DEFAULT NULL,
+  `contact_no` varchar(255) DEFAULT NULL,
+  `invoice_discount` decimal(10,2) DEFAULT '0.00' COMMENT 'invoice discount',
+  `total_discount` decimal(10,2) DEFAULT '0.00' COMMENT 'total invoice discount',
+  `total_tax` decimal(10,2) DEFAULT '0.00',
   `sales_by` varchar(50) NOT NULL,
   `invoice_details` text NOT NULL,
   `status` int(2) NOT NULL,
@@ -784,17 +959,18 @@ CREATE TABLE `invoice` (
   `payment_type` int(11) NOT NULL,
   `delivery_type` int(11) NOT NULL,
   `courier_id` varchar(255) DEFAULT NULL,
-  `branch_id` varchar(255) DEFAULT NULL
+  `branch_id` varchar(255) DEFAULT NULL,
+  `remarks` text,
+  `received_by` varchar(255) DEFAULT NULL,
+  `delivered_by` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`id`, `invoice_id`, `customer_id`, `customer_name_two`, `customer_mobile_two`, `date`, `total_amount`, `paid_amount`, `due_amount`, `prevous_due`, `shipping_cost`, `invoice`, `invoice_discount`, `total_discount`, `total_tax`, `sales_by`, `invoice_details`, `status`, `bank_id`, `bkash_id`, `payment_type`, `delivery_type`, `courier_id`, `branch_id`) VALUES
-(217, 5937273793, 1, NULL, NULL, '2021-04-26', '9000.00', '9000.00', '0.00', '0.00', '0.00', 1002, '0.00', '0.00', '0.00', 'oHhdeY9SHRfOBJE', 'Thank you for shopping with us', 1, NULL, NULL, 1, 1, NULL, NULL),
-(216, 9321516392, 1, NULL, NULL, '2021-04-22', '2000.00', '2000.00', '0.00', '0.00', '0.00', 1001, '0.00', '0.00', '0.00', 'BqEHuu0wLvpfiJo', 'Thank you for shopping with us', 1, NULL, NULL, 1, 1, NULL, NULL),
-(215, 8698258484, 1, NULL, NULL, '2021-04-22', '2000.00', '2000.00', '0.00', '0.00', '0.00', 1000, '0.00', '0.00', '0.00', 'BqEHuu0wLvpfiJo', 'Thank you for shopping with us', 1, NULL, NULL, 1, 1, NULL, NULL);
+INSERT INTO `invoice` (`id`, `invoice_id`, `customer_id`, `vessel_name`, `customer_name_two`, `customer_mobile_two`, `date`, `chalan_date`, `total_amount`, `paid_amount`, `due_amount`, `prevous_due`, `shipping_cost`, `invoice`, `invoice_no`, `dc_no`, `rqsn_id`, `contact_person`, `contact_no`, `invoice_discount`, `total_discount`, `total_tax`, `sales_by`, `invoice_details`, `status`, `bank_id`, `bkash_id`, `payment_type`, `delivery_type`, `courier_id`, `branch_id`, `remarks`, `received_by`, `delivered_by`) VALUES
+(219, 4936259372, 'NKZN4G21YFTBXR9', 'Titanic', NULL, NULL, '2021-09-16', NULL, '0.00', '0.00', '0.00', '0.00', '0.00', 0, 'SO1000', NULL, '1344799327', NULL, NULL, '0.00', '0.00', '0.00', '', '', 3, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -811,6 +987,7 @@ CREATE TABLE `invoice_details` (
   `warehouse` varchar(255) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
   `quantity` decimal(10,2) DEFAULT NULL,
+  `order_qty` varchar(255) DEFAULT NULL,
   `warrenty_date` varchar(50) DEFAULT NULL,
   `expiry_date` varchar(255) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
@@ -828,11 +1005,8 @@ CREATE TABLE `invoice_details` (
 -- Dumping data for table `invoice_details`
 --
 
-INSERT INTO `invoice_details` (`id`, `invoice_details_id`, `invoice_id`, `product_id`, `sn`, `warehouse`, `description`, `quantity`, `warrenty_date`, `expiry_date`, `rate`, `supplier_rate`, `total_price`, `discount`, `discount_per`, `tax`, `paid_amount`, `due_amount`, `status`) VALUES
-(18, '166773384456559', '5937273793', '74325422', NULL, NULL, NULL, '20.00', NULL, '2021-04-27', '200.00', 150, '4000.00', '0.00', '', NULL, '9000', '0.00', 2),
-(17, '984122269737385', '5937273793', '53858917', NULL, NULL, NULL, '10.00', NULL, '2021-05-01', '500.00', 300, '5000.00', '0.00', '', NULL, '9000', '0.00', 2),
-(16, '845678659668788', '9321516392', '74325422', NULL, NULL, NULL, '10.00', NULL, '2021-04-27', '200.00', 150, '2000.00', '0.00', '', NULL, '2000', '0.00', 2),
-(15, '494759782695859', '8698258484', '74325422', NULL, NULL, NULL, '10.00', NULL, '2021-04-27', '200.00', 150, '2000.00', '0.00', '', NULL, '2000', '0.00', 2);
+INSERT INTO `invoice_details` (`id`, `invoice_details_id`, `invoice_id`, `product_id`, `sn`, `warehouse`, `description`, `quantity`, `order_qty`, `warrenty_date`, `expiry_date`, `rate`, `supplier_rate`, `total_price`, `discount`, `discount_per`, `tax`, `paid_amount`, `due_amount`, `status`) VALUES
+(20, '176559234815378', '4936259372', '97555421', NULL, NULL, NULL, '50.00', '50.00', NULL, NULL, '200.00', NULL, '10000.00', NULL, NULL, NULL, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -843,8 +1017,8 @@ INSERT INTO `invoice_details` (`id`, `invoice_details_id`, `invoice_id`, `produc
 CREATE TABLE `language` (
   `id` int(11) UNSIGNED NOT NULL,
   `phrase` text NOT NULL,
-  `english` text DEFAULT NULL,
-  `bangla` text DEFAULT NULL
+  `english` text,
+  `bangla` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1802,10 +1976,10 @@ INSERT INTO `language` (`id`, `phrase`, `english`, `bangla`) VALUES
 CREATE TABLE `module` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `image` varchar(255) DEFAULT NULL,
   `directory` varchar(100) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1847,7 +2021,7 @@ CREATE TABLE `money_receipt` (
   `COAID` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `customer_id` varchar(255) DEFAULT NULL,
   `date` varchar(255) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `pay_type` varchar(255) DEFAULT NULL,
   `bank_name` varchar(255) DEFAULT NULL,
   `cheque_type` varchar(255) DEFAULT NULL,
@@ -1938,9 +2112,9 @@ INSERT INTO `outlet_warehouse` (`id`, `outlet_id`, `warehouse_id`, `user_id`, `c
 
 CREATE TABLE `payroll_tax_setup` (
   `tax_setup_id` int(11) UNSIGNED NOT NULL,
-  `start_amount` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `end_amount` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `rate` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `start_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `end_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `rate` decimal(12,2) NOT NULL DEFAULT '0.00',
   `status` varchar(30) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1954,8 +2128,8 @@ CREATE TABLE `personal_loan` (
   `per_loan_id` int(11) NOT NULL,
   `transaction_id` varchar(30) NOT NULL,
   `person_id` varchar(30) NOT NULL,
-  `debit` decimal(12,2) DEFAULT 0.00,
-  `credit` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `debit` decimal(12,2) DEFAULT '0.00',
+  `credit` decimal(12,2) NOT NULL DEFAULT '0.00',
   `date` varchar(30) NOT NULL,
   `details` varchar(100) NOT NULL,
   `status` int(11) NOT NULL COMMENT '1=no paid,2=paid'
@@ -1987,8 +2161,8 @@ CREATE TABLE `person_ledger` (
   `transaction_id` varchar(50) NOT NULL,
   `person_id` varchar(50) NOT NULL,
   `date` varchar(50) NOT NULL,
-  `debit` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `credit` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `debit` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `credit` decimal(12,2) NOT NULL DEFAULT '0.00',
   `details` text NOT NULL,
   `status` int(11) NOT NULL COMMENT '1=no paid,2=paid'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2026,12 +2200,25 @@ CREATE TABLE `product_brand` (
 --
 
 INSERT INTO `product_brand` (`id`, `brand_id`, `brand_name`, `status`) VALUES
-(16, 'YOTMD1PWYG6YC1T', 'VINNO', 1),
-(17, 'K56MPOCRJHDD2ZQ', 'GE-BioMed', 1),
-(18, 'S3YKPWFIZPGYHCB', 'Comen', 1),
-(19, 'MQ5ZPBM67AUUNDS', 'HAIYE', 1),
-(20, 'LODW3REO519FPOC', 'Genoray', 1),
-(21, '9CQNE9UJOWVZ6KN', 'KB', 1);
+(22, 'HGAAUYCF7X3HXAU', 'CUMMINS', 1),
+(23, 'TY8KY2S6HFUW7M2', 'CAT', 1),
+(24, '41KRE3PLDZYYTNZ', 'BRPL', 1),
+(25, 'MCE1UXRI24F9OJ7', 'MURPHY', 1),
+(26, 'YETGU96MOGIUSUK', 'TIMKEN', 1),
+(27, 'LA6GKVH7R9L9GDK', 'GEA BOCK', 1),
+(28, 'SLUB1PMDK2DA4Q1', 'OSAKA', 1),
+(29, 'FGF56DBSHFKV99U', 'REFCO', 1),
+(30, '3KPUWGBARKL97SX', 'DANFOSS', 1),
+(31, 'Y4ZEVEHTMC7CNQP', 'VIKING', 1),
+(32, 'QIAQYJIZTNZ6VNX', 'FLEETGUARD', 1),
+(33, 'W2KAYSIPZLNVJZW', 'SKF', 1),
+(34, 'W5ET5KGYACCKJ7K', 'NTN', 1),
+(35, 'J1SBS7M8KKFUZGC', 'NSK', 1),
+(36, 'LP7X6ET92XV76LX', 'KOYO', 1),
+(37, 'J11VGL766O7DLPN', 'COSMOS', 1),
+(38, '2GXLCVZPXFVTQCJ', 'THYBORON', 1),
+(39, 'D8UWZXC8BONWCNS', 'STAMFORD', 1),
+(40, '7GJLH2JJJ3Y9YZI', 'PERFECT-USP', 1);
 
 -- --------------------------------------------------------
 
@@ -2051,19 +2238,17 @@ CREATE TABLE `product_category` (
 --
 
 INSERT INTO `product_category` (`id`, `category_id`, `category_name`, `status`) VALUES
-(31, 'VGIJYRWZF4AYB1Y', 'Imaging/Ultrasound', 1),
-(32, 'SUX9Y9ZDBPKVJMJ', 'Cardiovascular system', 1),
-(33, 'SBGUNTNUZ65JXG5', 'Respiratory', 1),
-(34, 'I29MYPVTVMGABGM', 'Microbiology', 1),
-(35, 'V5AKOGYV17Q1TUC', 'IVD/Laboratory Product', 1),
-(36, 'R95NWQJAYTZXXYP', 'Others Equipments', 1),
-(37, 'RF36QPWJD7ONTNG', 'OT Equipment', 1),
-(38, 'DU3HETF9P97RVZ9', 'ICU/NICU/CCU Equipment', 1),
-(39, 'EGZNN7GPWUWRKR7', 'Urology', 1),
-(40, 'V4TIURZMPLMHEER', 'Imaging/CTG', 1),
-(41, 'YEX7ZOK7MOS9BZ4', 'ENT Equipment', 1),
-(42, '5WJ3JY55HNGABVF', 'Imaging/Radiology', 1),
-(43, 'I2HGJY1OWTD8JQY', 'Wheel', 1);
+(46, 'QHUIF6A1195YRZH', 'Engine', 1),
+(47, 'IETIILDX642CXPO', 'Refrigeration', 1),
+(48, 'FDLA91OWSHQYN3K', 'Fishing & Net Gear', 1),
+(49, '3IZF3VPAHO95JIG', 'Electrical', 1),
+(50, 'OL8RHMJQ7CMH5S9', 'Working & Repairing Tools', 1),
+(51, 'OUTGP3QU3H3XSZ3', 'Paints', 1),
+(52, '6BL4I2N3VON3EZI', 'Wearables', 1),
+(53, 'YHBDCK9BFJ7DSAA', 'Utensils & Accessories', 1),
+(54, 'JKJ5LWVM8EMNLYL', 'Vessel Parts & Materials', 1),
+(55, 'WKXM1DBKPTGRZBI', 'Mechanical Parts', 1),
+(56, 'K6EHUAV187KCDLM', 'Winch', 1);
 
 -- --------------------------------------------------------
 
@@ -2100,10 +2285,59 @@ CREATE TABLE `product_information` (
 --
 
 INSERT INTO `product_information` (`id`, `product_id`, `product_id_two`, `category_id`, `sub_cat_id`, `brand_id`, `country`, `parts`, `tag`, `sku`, `ptype_id`, `product_name`, `price`, `re_order_level`, `unit`, `tax`, `serial_no`, `product_model`, `product_details`, `image`, `status`) VALUES
-(2, '6767876', NULL, 'VGIJYRWZF4AYB1Y', 'IMS25E1LH58XLQV', 'YOTMD1PWYG6YC1T', '', '', '', '', 'Local', 'Wallet', 800, 50, 'Pcs', 0, '764457', 'SUX9Y9ZDBPASDF', '', 'https://localhost/erp_mw/my-assets/image/product.png', 1),
-(4, '74325422', '', 'SBGUNTNUZ65JXG5', NULL, 'YOTMD1PWYG6YC1T', '', '555555', '', '33333333', 'Local', 'Shampoo', 500, 50, 'Pcs', 0, '', 'SUX9Y9ZDBPASDF', '', 'https://localhost/erp_hms/my-assets/image/product.png', 1),
-(7, '68354349', '', 'SUX9Y9ZDBPKVJMJ', NULL, 'YOTMD1PWYG6YC1T', 'Australia', '45555', 'Abc,DRF', 'BD12455', 'Import', 'Fan 2', 253, 0, 'Unit', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://localhost/git/paradise/./my-assets/image/product/7c36e357036fe609ac932548bf35a925.jpg', 1),
-(12, '81244656', '', 'I29MYPVTVMGABGM', NULL, 'MQ5ZPBM67AUUNDS', '', '456755', '', 'ABV-15', '0', 'Test Productoo', 999, 0, 'Kit', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://localhost/git/paradise/my-assets/image/product.png', 1);
+(13, '16294296', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '205093', 'KTA 38', '205093', 'Import', 'Exhaust Valve Insert (205093)', 4004.95, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(14, '24518529', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3026296', 'KTA 38', '3026296', 'Import', 'Intake Valve Seat Insert (3026296)', 4253.5, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(8, '17662126', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3007525', 'Import, KTA 38', '3007525', 'Import', 'K-Series Liner Kit (3007525)', 33754.1, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(12, '53664342', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3803515', 'KTA 38', '3803515', 'Import', 'Intake Valve (3803515)', 7286.65, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(11, '67899138', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3803529', 'KTA 38', '3803529', 'Import', 'Exhaust Valve (3803529)', 9, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(15, '19682378', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3057139', 'KTA 38', '3057139', 'Local', 'Push Rod (3057139)', 1179, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(16, '21583987', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3001663', 'KTA 38', '3001663', 'Import', 'Valve Spring Guide (3001663)', 185.69, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(17, '59587973', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3052254', 'KTA 38', '3052254', 'Import', 'Barrel & Plunger (3052254)', 2035, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(18, '97153822', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3010510', 'KTA 38', '3010510', 'Import', 'O-Ring Seal (3010510)', 429.18, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(19, '54943947', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '193736', 'KTA 38, NT 855', '193736', 'Import', 'O-Ring Injector Seal (193736)', 289, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(20, '25837271', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3347937', 'KTA 38', '3347937', 'Import', 'O-Ring Seal (3347937)', 307.07, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(21, '17424681', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3630839', 'KTA 38', '3630839', 'Import', 'Rocker Lever Housing Gasket (3630839)', 0, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(22, '51277311', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '4334080', 'KTA 38', '4334080', '0', 'Cylinder Head Gasket (4334080)', 0, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(23, '95651937', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '4920076', 'KTA 38', '4920076', '', 'Rocker Lever Cover Gasket (4920076)', 0, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(25, '44971296', '', 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '3010457', 'KTA 38, NT 855', '3010457', 'Import', 'Oil Seal (3010457)', 709.51, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(26, '13468463', NULL, 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '3609826', 'KTA 38, Pumps', '3609826', 'Import', 'Water Pump Seal (3609826)', 5676.05, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(27, '85367251', NULL, 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '3071085', 'KTA 38, Pumps', '3071085', 'Import', 'Water Pump Oil Seal (3071085)', 1064.26, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(28, '95669627', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3042745', 'KTA 38', '3042745', 'Import', 'Valve Spring Guide (3042745)', 400.87, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(29, '59539268', '', 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '3001340', 'KTA 38, Fuel Channel', '3001340', '0', 'Fuel Channel O-Ring Seal (3001340)', 0, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(30, '58459882', NULL, 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '3089056', 'KTA 38, Pumps', '3089056', 'Import', 'Water Pump Seal (3089056)', 10997.3, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(31, '93399336', '', 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '207244', 'KTA 38', '207244', 'Import', 'Injector Ring Seal (207244)', 521.66, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(32, '72955787', NULL, 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'HGAAUYCF7X3HXAU', '', '4308682', 'KTA 38', '4308682', 'Import', 'Rectangular Ring Seal (4308682)', 886.88, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(33, '78642686', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3005963', 'KTA 38', '3005963', 'Import', 'Injector Cup (3005963)', 7762.07, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(34, '45648961', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3046200', 'KTA 38', '3046200', 'Import', 'Jaw Coupling Spider (3046200)', 331.64, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(35, '52935741', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3803257', 'KTA 38, Repair', '3803257', 'Import', 'Turbocharger Repair Kit (3803257)', 24492.8, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(36, '67114931', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3010647', 'KTA 38, NT 855', '3010647', 'Import', 'Pressure Switch (3010647)', 15491.9, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(37, '59124692', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3076489', 'KTA 38', '3076489', 'Import', 'Thermostat Valve (3076489)', 6253.44, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(38, '53929871', NULL, 'WKXM1DBKPTGRZBI', 'DAYJ2OHNK4Q8DQT', 'HGAAUYCF7X3HXAU', '', 'AR12250', 'KTA 38', 'AR12250', 'Import', 'Main Bearing Set (Standard) (AR12250)', 172433, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(39, '93448636', '', 'WKXM1DBKPTGRZBI', 'DAYJ2OHNK4Q8DQT', 'HGAAUYCF7X3HXAU', '', '3047390', 'KTA 38', '3047390', 'Import', 'Connecting Rod Bearing (Standard) (3047390)', 4281.67, 0, 'Vial', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(40, '78315395', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '4955975', 'KTA 38', '4955975', '', 'Piston Ring Set (4955975)', 0, 0, 'Set', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(41, '45761292', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '3202210', 'KTA 38', '3202210', 'Local', 'Valve Stem Guide (3202210)', 650, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(42, '78493615', NULL, '3IZF3VPAHO95JIG', 'CS3J66J3RV9HAP7', 'MCE1UXRI24F9OJ7', '', '', 'Meter', '', 'Import', 'Digital Tachometer (with Sensor)', 50539.7, 0, 'Pcs', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/./my-assets/image/product/ba9aa314c4ac2afa00aaf398c0140bb1.jpg', 1),
+(43, '61873387', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '6V9897', 'D 3512', '6V9897', 'Import', 'Single Fuel Injector Kit (Gasket Kit) (6V9897)', 2907.46, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'This kit contains the seals needed to reinstall one injector into the cylinder head.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(44, '18517848', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '2135233', 'D 3512', '2135233', 'Import', 'Water Lines Group Kit (Gasket Kit) (2135233)', 45881.6, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'This kit contains the gaskets and seals to install a water lines group.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(45, '16566981', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '3062351', 'D 3512', '3062351', 'Import', 'Main Water Pump Install Kit (Gasket Kit) (3062351)', 4785.77, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'This kit contains the gaskets and seals to reinstall a main water pump and attaching lines.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(46, '63112579', '', 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'TY8KY2S6HFUW7M2', '', '3535995', 'D 3512', '3535995', 'Import', 'Single Cylinder Liner Kit (Seal Kit) (3535995)', 3991.4, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'This kit contains the gaskets, and seals to install a single cylinder liner.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(47, '54168694', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '3550767', 'D 3512', '3550767', 'Import', 'Single Cylinder Head Kit (Gasket Kit) (3550767)', 23940.6, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'This kit contains the gaskets and seals to rebuild and reinstall a single cylinder head. This kit includes the turbo gaskets but does not include the fuel injector seals. Order a single fuel injector seal kit as needed.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(48, '71821423', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '4620787', 'D 3512', '4620787', 'Import', 'Gasket Kit (4620787)', 31532.1, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(49, '97555421', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '4640895', 'D 3512', '4640895', 'Import', 'Gasket Kit (4640895)', 34361.3, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'Items included in this kit: 1092332 O Ring, 113820 Ring Retn., 2287097 O Ring, 2473796 Gasket, 3P0655 O Ring Seal, 4B8407 Gasket, 4N1320 Gasket, 5P4892 O Ring, 5P5846 O Ring, 6V3908 O Ring, 6V5048 O Ring, 6V5066 O Ring, 6V6609 O Ring, 7N4945 Gasket', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(50, '75133349', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '2301072', 'D 3512', '2301072', 'Import', 'Gasket (2301072)', 446.1, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'Gaskets seal the joint of two mating surfaces to prevent leakage and contamination.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(51, '86148663', NULL, 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'TY8KY2S6HFUW7M2', '', '6V1454', 'D 3512', '6V1454', 'Import', 'O-Ring Seal (6V1454)', 489.14, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'O-Rings are used in static sealing and some dynamic applications.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(52, '17926862', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '1M7913', 'D 3512', '1M7913', 'Import', 'Retaining Ring (Nut Lock) (1M7913)', 324.79, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(53, '35135896', NULL, 'WKXM1DBKPTGRZBI', 'R3R3KP5WDVJ7F9W', 'TY8KY2S6HFUW7M2', '', '8C5209', 'D 3512', '8C5209', 'Import', 'O-Ring Seal (8C5209)', 332.79, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'O-Rings are used in static sealing and some dynamic applications.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(54, '34823275', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '1W1253', 'D 3512', '1W1253', 'Import', 'Gasket (1W1253)', 1220.95, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'Gaskets seal the joint of two mating surfaces to prevent leakage and contamination.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(55, '28845172', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '8N2410', 'D 3512', '8N2410', 'Import', 'Gasket (8N2410)', 4124.45, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'Gaskets seal the joint of two mating surfaces to prevent leakage and contamination.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(56, '89228533', NULL, 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'TY8KY2S6HFUW7M2', '', '4P9077', 'D 3512', '4P9077', 'Import', 'Fuel Injector (GP) (4P9077)', 146633, 0, 'Pcs', 0, NULL, 'O1OUOGIH4FYMKEH', 'Fuel injectors deliver the right amount of fuel at the right time into an internal combustion engine.', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(57, '31547468', '', 'FDLA91OWSHQYN3K', 'MPWXNN4QUY4XTGZ', '7GJLH2JJJ3Y9YZI', 'Thailand', 'USP-88S', '', '', 'Import', 'Perfect Trawl Door Type USP-88S', 0, 0, 'Set', 0, NULL, '0', 'Area-3.58sq.m., Weight-580kg/pc, Engine Power-800, Size: L-2485mm x H-1540mm x T-6mm, H.S Code-8428.90.00', 'https://paradisemarinebd.com/erp/./my-assets/image/product/eed9f3e978765f57ab74b4326514a20f.jpeg', 1),
+(58, '57935631', '', 'FDLA91OWSHQYN3K', 'MPWXNN4QUY4XTGZ', '7GJLH2JJJ3Y9YZI', 'Thailand', 'USP-92S', '', '', 'Import', 'Perfect Trawl Door Type USP-92S', 0, 0, 'Set', 0, NULL, '0', 'Area-3.93sq.m., Weight-650 kg/pc, Engine Power-1000, Size: L-2605mm x H-1610mm x T-6mm, H.S Code-8428.90.00', 'https://paradisemarinebd.com/erp/./my-assets/image/product/c764df9cc884af20a555a32b763011e8.jpeg', 1),
+(59, '63455738', '', 'FDLA91OWSHQYN3K', 'MPWXNN4QUY4XTGZ', '7GJLH2JJJ3Y9YZI', 'Thailand', 'USP-100S', '', '', 'Import', 'Perfect Trawl Door Type USP-100S', 0, 0, 'Set', 0, NULL, 'SCJPAP46BKJZX2F', 'Area-4.60sq.m., Weight-900kg/pc, Engine Power-1400, Size: L-2825mm x H-1750mm x T-6mm, H.S Code-8428.90.00 ', 'https://paradisemarinebd.com/erp/my-assets/image/product/6e8fb4436729b7cc07fc0238e62eac53.jpeg', 1),
+(60, '49921875', '', 'FDLA91OWSHQYN3K', 'MPWXNN4QUY4XTGZ', '7GJLH2JJJ3Y9YZI', 'Thailand', 'USP-96S', '', '', 'Import', 'Perfect Trawl Door Type USP-96S', 0, 0, 'Set', 0, NULL, '0', 'Area-4.24sq.m., Weight-730kg/pc, Size: L-2715mm x H- 680mm x T-6mm, H.S Code-8428.90.00', 'https://paradisemarinebd.com/erp/my-assets/image/product/d3c7d208b1438ec95e00151a33ce8b86.jpeg', 1),
+(61, '34244717', '', 'QHUIF6A1195YRZH', 'WZ1M1D3VOTCPCOK', 'HGAAUYCF7X3HXAU', '', '1234', '', '4321', 'Import', 'test', 1300, 0, 'Pcs', 0, NULL, '0', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(62, '78161535', NULL, 'QHUIF6A1195YRZH', 'DFEPP6A6JZKI4Y3', 'HGAAUYCF7X3HXAU', 'USA', '234567', '', 'TPO234567-EGE-CUM-USA', 'Import', 'Test & Product One', 120, 0, 'Unit', 0, NULL, 'SUX9Y9ZDBPASDF', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1),
+(63, '11233344', NULL, 'QHUIF6A1195YRZH', 'FAA1AKW449IS8J6', 'MCE1UXRI24F9OJ7', 'DK', '890', '990', 'TT2890-EAE-MUR-DK', 'Local', 'Test & Test 2', 112, 0, 'Pcs', 0, NULL, 'IS5187VO645ZEPT', '', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1);
 
 -- --------------------------------------------------------
 
@@ -2123,8 +2357,15 @@ CREATE TABLE `product_model` (
 --
 
 INSERT INTO `product_model` (`id`, `model_id`, `model_name`, `status`) VALUES
-(1, 'SUX9Y9ZDBPASDF', 'A', 1),
-(3, 'IS5187VO645ZEPT', 'B', 1);
+(1, 'SUX9Y9ZDBPASDF', 'KTA 38', 1),
+(3, 'IS5187VO645ZEPT', 'KTA 50', 1),
+(4, 'O1OUOGIH4FYMKEH', 'D 3512', 1),
+(5, 'FYGPYZRKHH7WPT6', 'KTA 19', 1),
+(6, 'H323CNTV9XUKEUD', 'NT 855', 1),
+(7, 'TYYAG1MAKQA2LNK', 'KT 1150', 1),
+(8, 'TEQ6KVHWRMHNLY8', 'C 18', 1),
+(9, '7ENFOLMFLH8TRAZ', 'F 16', 1),
+(10, 'SCJPAP46BKJZX2F', 'USP-100S', 1);
 
 -- --------------------------------------------------------
 
@@ -2137,12 +2378,13 @@ CREATE TABLE `product_purchase` (
   `purchase_id` bigint(20) NOT NULL,
   `purchase_order` varchar(255) DEFAULT NULL,
   `supplier_id` bigint(20) DEFAULT NULL,
-  `grand_total_amount` decimal(12,2) DEFAULT 0.00,
-  `paid_amount` decimal(10,2) DEFAULT 0.00,
-  `due_amount` decimal(10,2) DEFAULT 0.00,
+  `grand_total_amount` decimal(12,2) DEFAULT '0.00',
+  `paid_amount` decimal(10,2) DEFAULT '0.00',
+  `due_amount` decimal(10,2) DEFAULT '0.00',
   `total_discount` decimal(10,2) DEFAULT NULL,
   `purchase_date` varchar(50) DEFAULT NULL,
-  `purchase_details` text DEFAULT NULL,
+  `purchase_order_date` varchar(255) DEFAULT NULL,
+  `purchase_details` text,
   `status` int(2) DEFAULT NULL,
   `bank_id` varchar(30) DEFAULT NULL,
   `cheque_no` varchar(255) DEFAULT NULL,
@@ -2154,18 +2396,34 @@ CREATE TABLE `product_purchase` (
 -- Dumping data for table `product_purchase`
 --
 
-INSERT INTO `product_purchase` (`id`, `purchase_id`, `purchase_order`, `supplier_id`, `grand_total_amount`, `paid_amount`, `due_amount`, `total_discount`, `purchase_date`, `purchase_details`, `status`, `bank_id`, `cheque_no`, `cheque_date`, `payment_type`) VALUES
-(75, 20210814092647, 'PO1000', NULL, '8.00', '8.00', '0.00', '0.00', '2021-08-14', NULL, 2, NULL, NULL, NULL, 1),
-(76, 20210814092918, 'PO1001', NULL, '1000.00', '1000.00', '0.00', '0.00', '2021-08-14', NULL, 2, NULL, NULL, NULL, 1),
-(77, 20210814141515, 'PO1002', NULL, '83916.00', '83916.00', '0.00', '0.00', '2021-08-14', NULL, 2, NULL, NULL, NULL, 1),
-(78, 20210818131239, 'PO1003', NULL, NULL, NULL, NULL, NULL, '2021-08-18', NULL, 2, NULL, NULL, NULL, NULL),
-(79, 20210818131547, 'PO1004', 0, NULL, NULL, NULL, NULL, '2021-08-18', NULL, 2, NULL, NULL, NULL, NULL),
-(80, 20210818131950, 'PO1005', NULL, NULL, NULL, NULL, NULL, '2021-08-18', NULL, 2, NULL, NULL, NULL, NULL),
-(81, 20210818132248, 'PO1006', NULL, NULL, NULL, NULL, NULL, '2021-08-18', NULL, 2, NULL, NULL, NULL, NULL),
-(82, 20210819072008, 'PO1007', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, 2, NULL, NULL, NULL, NULL),
-(83, 20210821081505, 'PO1008', NULL, '83916.00', '83916.00', '0.00', '0.00', '2021-08-21', NULL, 2, NULL, NULL, NULL, 1),
-(84, 20210821082803, 'PO1009', NULL, '33000.00', NULL, NULL, NULL, '2021-08-21', NULL, 2, NULL, NULL, NULL, NULL),
-(87, 20210822070802, 'PO1010', NULL, NULL, NULL, NULL, NULL, '2021-08-22', NULL, 2, NULL, NULL, NULL, NULL);
+INSERT INTO `product_purchase` (`id`, `purchase_id`, `purchase_order`, `supplier_id`, `grand_total_amount`, `paid_amount`, `due_amount`, `total_discount`, `purchase_date`, `purchase_order_date`, `purchase_details`, `status`, `bank_id`, `cheque_no`, `cheque_date`, `payment_type`) VALUES
+(64, 20210807092426, 'PO1000', NULL, '656601.00', '0.00', '656601.00', NULL, '2021-08-07', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(65, 20210808054327, 'PO1001', NULL, '50000.00', '0.00', '50000.00', NULL, '2021-08-08', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(66, 20210811114152, 'PO1002', NULL, NULL, NULL, NULL, NULL, '2021-08-11', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(67, 20210812114148, 'PO1003', NULL, NULL, NULL, NULL, NULL, '2021-08-12', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(68, 20210812114251, 'PO1004', NULL, NULL, NULL, NULL, NULL, '2021-08-12', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(69, 20210818101220, 'PO1005', NULL, '3990000.00', '1990000.00', '2000000.00', '0.00', '2021-08-18', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(70, 20210819060857, 'PO1006', NULL, '126000.00', '126000.00', '0.00', '0.00', '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(71, 20210819061939, 'PO1007', NULL, '855000.00', '855000.00', '0.00', '0.00', '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(72, 20210819062733, 'PO1008', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(73, 20210819062925, 'PO1009', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(74, 20210819065124, 'PO1010', NULL, '992700.00', '992700.00', '0.00', '0.00', '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(75, 20210819072601, 'PO1011', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(76, 20210819072707, 'PO1012', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(77, 20210819095222, 'PO1013', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(78, 20210819103153, 'PO1014', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(79, 20210819113458, 'PO1015', NULL, NULL, NULL, NULL, NULL, '2021-08-19', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(80, 20210823064233, 'PO1016', NULL, '0.00', '0.00', '0.00', '0.00', '2021-08-23', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(81, 20210823071113, 'PO1017', NULL, '1081000.00', '1081000.00', '0.00', '0.00', '2021-08-23', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(82, 20210823091535, 'PO1018', NULL, NULL, NULL, NULL, NULL, '2021-08-23', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(83, 20210823102310, 'PO1019', NULL, NULL, NULL, NULL, NULL, '2021-08-23', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(84, 20210823110337, 'PO1020', NULL, '29800.00', NULL, NULL, NULL, '2021-09-08', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(85, 20210823114802, 'PO1021', NULL, '99200.00', '40000.00', '59200.00', '0.00', '2021-08-23', NULL, NULL, 2, NULL, NULL, NULL, 1),
+(86, 20210824113124, 'PO1022', NULL, NULL, NULL, NULL, NULL, '2021-08-24', NULL, NULL, 2, NULL, NULL, NULL, NULL),
+(87, 20210830070258, 'PO1023', NULL, '7150.00', NULL, NULL, NULL, '2021-08-30', '2021-08-30', NULL, 2, NULL, NULL, NULL, NULL),
+(88, 20210831072522, 'PO1024', NULL, '6000.00', NULL, NULL, NULL, '2021-09-08', '2021-08-31', NULL, 2, NULL, NULL, NULL, NULL),
+(89, 20210901062518, 'PO1025', NULL, NULL, NULL, NULL, NULL, NULL, '2021-09-01', NULL, 2, NULL, NULL, NULL, NULL),
+(90, 20210902065707, 'PO1026', NULL, '105900.00', NULL, NULL, NULL, '2021-09-08', '2021-09-02', NULL, 2, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2177,8 +2435,8 @@ CREATE TABLE `product_purchase_details` (
   `id` int(11) NOT NULL,
   `purchase_detail_id` varchar(100) DEFAULT NULL,
   `purchase_id` bigint(20) DEFAULT NULL,
-  `invoice_no` varchar(255) DEFAULT NULL,
-  `invoice_no_p` varchar(255) DEFAULT NULL,
+  `invoice_no` varchar(255) NOT NULL,
+  `invoice_no_p` varchar(255) NOT NULL,
   `chalan_id` varchar(30) DEFAULT NULL,
   `product_id` varchar(30) DEFAULT NULL,
   `supplier_id` bigint(255) DEFAULT NULL,
@@ -2194,31 +2452,58 @@ CREATE TABLE `product_purchase_details` (
   `rate` decimal(10,2) DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `discount` float DEFAULT NULL,
+  `additional_cost` varchar(255) DEFAULT NULL,
+  `chalan_img` varchar(255) DEFAULT NULL,
   `supplier_invoice` varchar(255) DEFAULT NULL,
   `supplier_invoice_p` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `isAprv` int(11) DEFAULT NULL COMMENT '1=Payment Done,2=Pending,3=Approved'
+  `isAprv` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `product_purchase_details`
 --
 
-INSERT INTO `product_purchase_details` (`id`, `purchase_detail_id`, `purchase_id`, `invoice_no`, `invoice_no_p`, `chalan_id`, `product_id`, `supplier_id`, `barcode`, `sn`, `quantity`, `qty`, `lot_number`, `origin`, `warehouse`, `warrenty_date`, `expired_date`, `rate`, `total_amount`, `discount`, `supplier_invoice`, `supplier_invoice_p`, `status`, `isAprv`) VALUES
-(82, 'DIEqUneRlXtoRds', 20210818131547, NULL, NULL, NULL, '74325422', 2, NULL, NULL, '40.00', '1.00', NULL, '', NULL, '2021-09-07', NULL, '200.00', '1000.00', 0, NULL, NULL, 1, 3),
-(81, 'TDFF3njTiOUKqU1', 20210818131239, '1234', NULL, NULL, '68354349', 1, NULL, NULL, '10.00', '13.00', NULL, '', NULL, '2021-08-30', NULL, '20.00', '8580.00', 0, 'https://localhost/git/paradise/./my-assets/image/product/dc6feaba7e42d8cd4225330725b8d60c.jpeg', NULL, 1, 3),
-(80, 'qRFYXK5pietoeZt', 20210814141515, NULL, NULL, NULL, '81244656', 5, NULL, NULL, '21.00', '1.00', NULL, '', NULL, '2021-08-26', NULL, '999.00', '83916.00', 0, NULL, NULL, 1, 1),
-(79, 'UXn0VDqISs7ZUbY', 20210814092918, NULL, NULL, NULL, '74325422', 2, NULL, NULL, '22.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '200.00', '1000.00', 0, NULL, NULL, 1, 1),
-(77, 'mPqgV6I0dCom0YL', 20210814092647, NULL, NULL, NULL, '6767876', 2, NULL, NULL, '22.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '600.00', '1800.00', 0, NULL, NULL, 1, 1),
-(78, 'mTiZMsvfqXldF1A', 20210814092647, NULL, NULL, NULL, '68354349', 1, NULL, NULL, '222.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '20.00', '8.00', 0, NULL, NULL, 1, 1),
-(83, '3H6Hx4U2NaUDnab', 20210818131950, NULL, NULL, NULL, '68354349', 1, NULL, NULL, '50.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '40.00', '3360.00', 0, NULL, NULL, 1, 2),
-(84, 'Rq94GyjNJjnNhoU', 20210818132248, NULL, NULL, NULL, '81244656', 5, NULL, NULL, '20.00', '1.00', NULL, '', NULL, '2021-09-20', NULL, '2000.00', '168000.00', 0, NULL, NULL, 1, 1),
-(85, 'UHAeKP6DByy0y2d', 20210819072008, NULL, NULL, NULL, '74325422', 2, NULL, NULL, '50.00', '1.00', NULL, '', NULL, NULL, NULL, '500.00', '42500.00', 0, NULL, NULL, 1, 3),
-(86, 'WR1ssnBJNjU6XPr', 20210819072008, NULL, NULL, NULL, '68354349', 1, NULL, NULL, '50.00', '1.00', NULL, '', NULL, NULL, NULL, '100.00', '2.00', 0, NULL, NULL, 1, 2),
-(87, 'Dut6rEm4t164aEt', 20210821081505, NULL, '3455', NULL, '81244656', 5, NULL, NULL, '187.00', '1.00', NULL, '', NULL, NULL, NULL, '999.00', '83916.00', 0, NULL, 'https://localhost/git/paradise/./my-assets/image/product/cc796a706527c4d109afa8684ef1822b.png', 1, 1),
-(88, 'qct1Ts6AuiLL1tl', 20210821081505, NULL, NULL, NULL, '68354349', 1, NULL, NULL, '358.00', '1.00', NULL, '', NULL, NULL, NULL, '20.00', '3.00', 0, NULL, NULL, 1, 2),
-(89, 'egDx2ZBwLm8Xkuy', 20210821082803, NULL, NULL, NULL, '74325422', 2, NULL, NULL, '50.00', '1.00', NULL, '', NULL, NULL, NULL, '500.00', '33000.00', 0, NULL, NULL, 1, 3),
-(90, 'PMxGME6FyRAR2UU', 20210822070802, NULL, NULL, NULL, '68354349', 1, NULL, NULL, '50.00', '1.00', NULL, '', NULL, '2021-08-17', NULL, '20.00', '1830.00', 5, NULL, NULL, 1, 2);
+INSERT INTO `product_purchase_details` (`id`, `purchase_detail_id`, `purchase_id`, `invoice_no`, `invoice_no_p`, `chalan_id`, `product_id`, `supplier_id`, `barcode`, `sn`, `quantity`, `qty`, `lot_number`, `origin`, `warehouse`, `warrenty_date`, `expired_date`, `rate`, `total_amount`, `discount`, `additional_cost`, `chalan_img`, `supplier_invoice`, `supplier_invoice_p`, `status`, `isAprv`) VALUES
+(60, 'NFWFBcQbJ03z6Fb', 20210807092426, '', '', NULL, '59587973', 3, NULL, NULL, '30.00', '30.00', NULL, '', NULL, '', NULL, '21886.70', '656601.00', 0, NULL, NULL, NULL, NULL, 1, NULL),
+(61, 'TikeZ7NRWZ2fspL', 20210808054327, '', '', NULL, '51277311', 5, NULL, NULL, '20.00', '20.00', NULL, '', NULL, '', NULL, '2500.00', '50000.00', 0, NULL, NULL, NULL, NULL, 1, NULL),
+(62, 'PKp2wqJROYU7iWj', 20210811114152, '', '', NULL, '63455738', 64, NULL, NULL, '50.00', '2.00', NULL, '', NULL, '2021-08-11', NULL, '11030.00', '22060.00', 0, NULL, NULL, NULL, NULL, 1, NULL),
+(63, 'XRVyMUo7wZXfwLC', 20210812114148, '', '', NULL, '97555421', 0, NULL, NULL, '60.00', '1.00', NULL, '', NULL, '2021-08-24', NULL, '8.00', '8.00', 0, NULL, NULL, NULL, NULL, 1, NULL),
+(64, '9sa9zsrPpNWFipm', 20210818101220, '', '', NULL, '34244717', 74, NULL, NULL, '50.00', '50.00', NULL, '', NULL, '2021-08-31', NULL, '950.00', '3990000.00', 0, NULL, NULL, NULL, NULL, 1, 1),
+(65, 't3a7N2SeO50tEoI', 20210819060857, '', '', NULL, '59587973', 67, NULL, NULL, '10.00', '1.00', NULL, '', NULL, '2021-08-18', NULL, '1500.00', '126000.00', 0, NULL, NULL, NULL, NULL, 1, 1),
+(66, 'd2KeotkfOS3j0W9', 20210819061939, '', '', NULL, '34244717', 73, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '2021-08-31', NULL, '950.00', '855000.00', 0, NULL, NULL, NULL, NULL, 1, 1),
+(67, 'ofAM9hSRHelprZb', 20210819062733, '', '', NULL, '34244717', 73, NULL, NULL, '50.00', '1.00', NULL, '', NULL, '2021-08-25', NULL, '1000.00', '50000.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(68, 'xN6ewsavEG473Wj', 20210819062925, '', '', NULL, '34244717', 73, NULL, NULL, '50.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '800.00', '67200.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(69, '6BGvo8Vm5TQehMs', 20210819065124, '', '', NULL, '63455738', 64, NULL, NULL, '75.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '11030.00', '992700.00', 0, NULL, NULL, NULL, NULL, 1, 1),
+(70, 'Hy4YISTtwzsggMz', 20210819065124, '', '', NULL, '59587973', 67, NULL, NULL, '75.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '1800.00', '9.00', 0, NULL, NULL, NULL, NULL, 1, 1),
+(71, 'wZ2ryCUAmQoR65H', 20210819072601, '', '', NULL, '59587973', 67, NULL, NULL, '20.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '1800.00', '162000.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(72, '33zdJ8GqYDbw0sG', 20210819072707, '', '', NULL, '59587973', 67, NULL, NULL, '10.00', '1.00', NULL, '', NULL, '2021-08-31', NULL, '2000.00', '180000.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(73, '8lZpyXt48mTnXDZ', 20210819095222, '', '', NULL, '34244717', 73, NULL, NULL, '260.00', NULL, NULL, '', NULL, NULL, NULL, NULL, '0.00', 0, '0', NULL, 'https://paradisemarinebd.com/erp/my-assets/image/product.png', NULL, 1, 1),
+(74, 'cSWyQFrL0HnYunB', 20210819103153, '', '', NULL, '34244717', 73, NULL, NULL, '310.00', '1.00', NULL, '', NULL, NULL, NULL, '950.00', '72775.00', 15, NULL, NULL, NULL, NULL, 1, 2),
+(75, 'vgv2FpVlkPyuvyK', 20210819113458, '', '', NULL, '34244717', 73, NULL, NULL, '360.00', '1.00', NULL, '', NULL, NULL, NULL, '500.00', '45050.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(76, 'BXOYl1yYu7VeSia', 20210823064233, '', '', NULL, '59587973', 67, NULL, NULL, '50.00', '50.00', NULL, '', NULL, '', NULL, '1800.00', '7372000.00', 9, NULL, NULL, 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1, 1),
+(77, 'uhqG268ftzQApIK', 20210823064233, '', '', NULL, '34244717', 73, NULL, NULL, '50.00', '20.00', NULL, '', NULL, '', NULL, '1000.00', '3.00', 5, NULL, NULL, 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1, 1),
+(78, 'nGxooxkShVgEG74', 20210823064233, '', '', NULL, '34244717', 74, NULL, NULL, '50.00', '30.00', NULL, '', NULL, '', NULL, '1000.00', '0.00', 0, NULL, NULL, 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1, 1),
+(79, 'j7YfzzSf6w2TKGk', 20210823071113, '', '', NULL, '34244717', 73, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '2021-08-31', NULL, '1200.00', '1081000.00', 0, NULL, NULL, 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1, 1),
+(80, '2dAGQT2upAOh04l', 20210823091535, '', '', NULL, '59587973', 67, NULL, NULL, '50.00', '20.00', NULL, '', NULL, '', NULL, '2000.00', '36000700.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(81, '4ILU20EvHewSePz', 20210823102310, '', '', NULL, '89228533', 0, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '1000.00', '850000.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(82, 'DtJrCky3U1IsTNb', 20210823102310, '', '', NULL, '71821423', 0, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '1000.00', '5.00', 0, NULL, NULL, NULL, NULL, 1, 2),
+(83, 'kXyFN4QxZajNgYi', 20210823110337, '', '', '', '89228533', 67, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '1000.00', '9800.00', 2, '', NULL, NULL, NULL, 1, 1),
+(84, 'voMoUSS08R3a7eC', 20210823110337, '', '', '', '59587973', 0, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '2000.00', '20000.00', 0, '', NULL, NULL, NULL, 1, 1),
+(85, '1vazF6ubOiTwfN1', 20210823110337, '', '', '', '34823275', NULL, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '1000.00', '0.00', 15, '', NULL, NULL, NULL, 1, 1),
+(86, '8zduZhCPdi3qjk9', 20210823114802, '', '', NULL, '34244717', 73, NULL, NULL, '10.00', '1.00', NULL, '', NULL, '', NULL, '1100.00', '99200.00', 0, NULL, NULL, 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 'https://paradisemarinebd.com/erp/my-assets/image/product.png', 1, 1),
+(87, 'bGjPWTHW37tDCnL', 0, '', '', NULL, '93448636', NULL, NULL, NULL, '0.00', '0.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+(88, 'khiz2wcSFV7tt7I', 20210830070258, '', '', '', '93448636', 78, NULL, NULL, '10.00', '50.00', NULL, '', NULL, '2021-08-31', NULL, '100.00', '4350.00', 15, '100', NULL, NULL, NULL, 1, 1),
+(89, 'OACNdLYu8ftgAK7', 20210830070258, '', '', '', '89228533', 78, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '100.00', '950.00', 10, '50', NULL, NULL, NULL, 1, 1),
+(90, '4sSThLiJq8X6RKI', 20210830070258, '', '', '', '59587973', 63, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '100.00', '850.00', 20, '50', NULL, NULL, NULL, 1, 1),
+(91, 'JI9uMkcXYkdPCj3', 20210830070258, '', '', '', '34823275', 63, NULL, NULL, '10.00', '10.00', NULL, '', NULL, '', NULL, '100.00', '1000.00', 0, '', NULL, NULL, NULL, 1, 1),
+(92, 'kJ6Es3nCk90w0TG', 0, '', '', NULL, '93448636', NULL, NULL, NULL, '0.00', '0.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+(93, 'qjdOyBQjRS4tBTz', 20210831072522, '', '', '1234', '59587973', 67, NULL, NULL, '20.00', '20.00', NULL, '', NULL, '', NULL, '100.00', '2000.00', 0, '', NULL, NULL, NULL, 1, 1),
+(94, '7wX9I337gRmPm8a', 20210831072522, '', '', '12345', '59539268', 0, NULL, NULL, '40.00', '40.00', NULL, '', NULL, '', NULL, '100.00', '4000.00', 0, '', NULL, NULL, NULL, 1, 1),
+(95, 'Kh6areFtEtlRHb0', 20210902065707, '', '', NULL, '93448636', NULL, NULL, NULL, '20.00', '20.00', NULL, '', NULL, NULL, NULL, '100.00', '2000.00', NULL, NULL, NULL, NULL, NULL, 1, 3),
+(96, 'AdHU56WZtI3viYw', 20210902065707, '', '', NULL, '63455738', NULL, NULL, NULL, '1.00', '1.00', NULL, '', NULL, NULL, NULL, '100000.00', '100000.00', NULL, NULL, NULL, NULL, NULL, 1, 3),
+(97, 'h3CXNWqd7tsPJaJ', 20210902065707, '', '', NULL, '59539268', NULL, NULL, NULL, '25.00', '25.00', NULL, '', NULL, NULL, NULL, '100.00', '2500.00', NULL, NULL, NULL, NULL, NULL, 1, 3),
+(98, '6y08VmniQveAfHK', 20210902065707, '', '', NULL, '34823275', NULL, NULL, NULL, '14.00', '14.00', NULL, '', NULL, NULL, NULL, '100.00', '1400.00', NULL, NULL, NULL, NULL, NULL, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -2237,12 +2522,12 @@ CREATE TABLE `product_return` (
   `ret_qty` float NOT NULL,
   `customer_id` varchar(20) CHARACTER SET latin1 NOT NULL,
   `supplier_id` varchar(30) CHARACTER SET latin1 NOT NULL,
-  `product_rate` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `product_rate` decimal(10,2) NOT NULL DEFAULT '0.00',
   `deduction` float NOT NULL,
-  `total_deduct` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total_tax` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total_ret_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `net_total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `total_deduct` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total_tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total_ret_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `net_total_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `reason` text CHARACTER SET latin1 NOT NULL,
   `usablity` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2267,7 +2552,7 @@ CREATE TABLE `product_service` (
   `service_id` int(11) NOT NULL,
   `service_name` varchar(250) NOT NULL,
   `description` text NOT NULL,
-  `charge` decimal(10,2) NOT NULL DEFAULT 0.00
+  `charge` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2289,17 +2574,69 @@ INSERT INTO `product_service` (`service_id`, `service_name`, `description`, `cha
 (14, 'Wallet', '', '0.00'),
 (15, 'Bags', '', '0.00'),
 (16, 'Shampoo', '', '0.00'),
-(17, 'tanha', '', '0.00'),
-(18, 'Milk', '', '0.00'),
-(19, 'Fan', '', '0.00'),
-(20, 'Doll', '', '0.00'),
-(21, 'Bag', '', '0.00'),
-(22, 'Bags(Xiaomi)', '', '0.00'),
-(23, ' iFOB(25T/Box)', '', '0.00'),
-(24, 'Test Productoo', '', '0.00'),
-(25, 'p', '', '0.00'),
-(26, 'Cleaner', '', '0.00'),
-(27, 'Sauce', '', '0.00');
+(17, 'INTAKE VALVE', '', '0.00'),
+(18, 'test', '', '0.00'),
+(19, 'Intake Valve', '', '0.00'),
+(20, 'Oil Seal', '', '0.00'),
+(21, 'xyz', '', '0.00'),
+(22, 'Test Product', '', '0.00'),
+(23, 'KIT LINER', '', '0.00'),
+(24, 'K-Series Liner Kit', '', '0.00'),
+(25, 'EXHAUST VALVE', '', '0.00'),
+(26, 'test', '', '0.00'),
+(27, 'Exhaust Valve', '', '0.00'),
+(28, 'Intake Valve', '', '0.00'),
+(29, 'Exhaust Valve Insert (205093)', '', '0.00'),
+(30, 'Intake Valve Seat Insert (3026296)', '', '0.00'),
+(31, 'Push Rod (3057139)', '', '0.00'),
+(32, 'Valve Spring Guide', '', '0.00'),
+(33, 'Barrel & Plunger (3052254)', '', '0.00'),
+(34, 'O Ring Seal (3010510)', '', '0.00'),
+(35, 'O Ring Injector Seal (193736)', '', '0.00'),
+(36, 'O Ring Seal (3347937)', '', '0.00'),
+(37, 'Rocker Lever Housing Gasket (3630839)', '', '0.00'),
+(38, 'Cylinder Head Gasket (4334080)', '', '0.00'),
+(39, 'Rocker Lever Cover Gasket (4920076)', '', '0.00'),
+(40, 'test', '', '0.00'),
+(41, 'Oil Seal (3010457)', '', '0.00'),
+(42, 'Water Pump Seal (3609826)', '', '0.00'),
+(43, 'Water Pump Oil Seal (3071085)', '', '0.00'),
+(44, 'Valve Spring Guide (3042745)', '', '0.00'),
+(45, 'Fuel Channel O Ring Seal (3001340)', '', '0.00'),
+(46, 'Water Pump Seal (3089056)', '', '0.00'),
+(47, 'Injector Ring Seal (207244)', '', '0.00'),
+(48, 'Rectangular Ring Seal (4308682)', '', '0.00'),
+(49, 'Injector Cup (3005963)', '', '0.00'),
+(50, 'Jaw Coupling Spider (3046200)', '', '0.00'),
+(51, 'Turbocharger Repair Kit (3803257)', '', '0.00'),
+(52, 'Pressure Switch (3010647)', '', '0.00'),
+(53, 'Thermostat Valve (3076489)', '', '0.00'),
+(54, 'Main Bearing Set (Standard) (AR12250)', '', '0.00'),
+(55, 'Connecting Rod Bearing (Standard) (3047390)', '', '0.00'),
+(56, 'Piston Ring Set (4955975)', '', '0.00'),
+(57, 'Valve Stem Guide', '', '0.00'),
+(58, 'Digital Tachometer (with Sensor)', '', '0.00'),
+(59, 'Gasket Kit (6V9897)', '', '0.00'),
+(60, 'Gasket Kit (2135233)', 'This kit contains the gaskets and seals to install a water lines group.', '0.00'),
+(61, 'Gasket Kit (3062351)', 'This kit contains the gaskets and seals to reinstall a main water pump and attaching lines.', '0.00'),
+(62, 'Single Cylinder Liner Kit (Seal Kit) (3535995)', 'This kit contains the gaskets, and seals to install a single cylinder liner.', '0.00'),
+(63, 'Single Cylinder Head Kit (Gasket Kit) (3550767)', 'This kit contains the gaskets and seals to rebuild and reinstall a single cylinder head. This kit includes the turbo gaskets but does not include the fuel injector seals. Order a single fuel injector seal kit as needed.', '0.00'),
+(64, 'Gasket Kit (4620787)', '', '0.00'),
+(65, 'Gasket Kit (4640895)', 'Items included in this kit: 1092332 O Ring, 113820 Ring Retn., 2287097 O Ring, 2473796 Gasket, 3P0655 O Ring Seal, 4B8407 Gasket, 4N1320 Gasket, 5P4892 O Ring, 5P5846 O Ring, 6V3908 O Ring, 6V5048 O Ring, 6V5066 O Ring, 6V6609 O Ring, 7N4945 Gasket', '0.00'),
+(66, 'Gasket (2301072)', 'Gaskets seal the joint of two mating surfaces to prevent leakage and contamination.', '0.00'),
+(67, 'O-Ring Seal (6V1454)', 'O-Rings are used in static sealing and some dynamic applications.', '0.00'),
+(68, 'Retaining Ring (Nut Lock) (1M7913)', '', '0.00'),
+(69, 'O-Ring Seal (8C5209)', 'O-Rings are used in static sealing and some dynamic applications.', '0.00'),
+(70, 'Gasket (1W1253)', 'Gaskets seal the joint of two mating surfaces to prevent leakage and contamination.', '0.00'),
+(71, 'Gasket (8N2410)', 'Gaskets seal the joint of two mating surfaces to prevent leakage and contamination.', '0.00'),
+(72, 'Fuel Injector (GP) (4P9077)', 'Fuel injectors deliver the right amount of fuel at the right time into an internal combustion engine.', '0.00'),
+(73, 'Perfect Trawl Door Type USP- 88S', 'Area- 3.58 sq.m., Weight- 580 kg/pc, Engine Power- 800, Size: L-2485mm x H-1540mm x T-6mm, H.S. Code- 8428.90.00', '0.00'),
+(74, 'Perfect Trawl Door Type USP- 92S', 'Area- 3.93sq.m., Weight- 650 kg/pc, Engine Power-1000, Size: L- 2605mm x H- 1610mm x T- 6mm, H.S Code- 8428.90.00', '0.00'),
+(75, 'Perfect Trawl Door Type USP- 100S', '', '0.00'),
+(76, 'Perfect Trawl Door Type USP- 96S', 'Area- 4.24 sq.m., Weight- 730 kg/pc, Size: L- 2715mm x H- 1680mm x T- 6mm, H.S Code- 8428.90.00', '0.00'),
+(77, 'test', '', '0.00'),
+(78, 'Test & Product One', '', '0.00'),
+(79, 'Test & Test 2', '', '0.00');
 
 -- --------------------------------------------------------
 
@@ -2320,7 +2657,33 @@ CREATE TABLE `product_subcat` (
 --
 
 INSERT INTO `product_subcat` (`id`, `sub_cat_id`, `category_id`, `subcat_name`, `status`) VALUES
-(1, 'IMS25E1LH58XLQV', 'VGIJYRWZF4AYB1Y', 'ABCD', 1);
+(8, 'DFEPP6A6JZKI4Y3', 'QHUIF6A1195YRZH', 'Generator Engine', 1),
+(9, 'FAA1AKW449IS8J6', 'QHUIF6A1195YRZH', 'Auxiliary Engine', 1),
+(10, 'WZ1M1D3VOTCPCOK', 'QHUIF6A1195YRZH', 'Main Engine', 1),
+(11, '7L5GRU567U4RO49', 'IETIILDX642CXPO', 'Compressor', 1),
+(12, 'ZR5FFHQTAXO32HG', 'IETIILDX642CXPO', 'Coolant', 1),
+(13, 'CFYXKALM481GFQ5', 'IETIILDX642CXPO', 'Condenser', 1),
+(14, 'QYDU725B4645CKX', 'IETIILDX642CXPO', 'Refrigeration System Accessories', 1),
+(15, 'LZO3T2DSCOU83M3', 'FDLA91OWSHQYN3K', 'Fishing Nets', 1),
+(16, 'JOK1LND7AIXQ4R8', 'FDLA91OWSHQYN3K', 'Floats & Bobbins', 1),
+(17, 'ALJKMOHNCMNS45H', 'FDLA91OWSHQYN3K', 'Twines', 1),
+(18, 'H97L9BQZUV6UB7S', 'FDLA91OWSHQYN3K', 'Wires & Ropes', 1),
+(19, 'MPWXNN4QUY4XTGZ', 'FDLA91OWSHQYN3K', 'Trawl Door', 1),
+(20, 'M2CRCOAUUNW7QGF', 'FDLA91OWSHQYN3K', 'Plastic Materials', 1),
+(21, 'O5PQ35EE7D6RL64', '3IZF3VPAHO95JIG', 'Sonar', 1),
+(22, '2UE4ILBTWPB1CGB', '3IZF3VPAHO95JIG', 'Radar', 1),
+(23, 'GLL8RPC8MTBK4OW', 'FDLA91OWSHQYN3K', 'Fishing Accessories', 1),
+(24, '8G5XUD4TEEDN823', '3IZF3VPAHO95JIG', 'Electrical Accessories', 1),
+(25, 'CS3J66J3RV9HAP7', '3IZF3VPAHO95JIG', 'Meters', 1),
+(26, '1CSIRFGQU3CN8BK', 'JKJ5LWVM8EMNLYL', 'Wood Materials', 1),
+(27, '81T3ATXLGR7MNWM', 'JKJ5LWVM8EMNLYL', 'Metal Materials', 1),
+(28, 'DAYJ2OHNK4Q8DQT', 'WKXM1DBKPTGRZBI', 'Bearings', 1),
+(29, 'E322NUJE3MW23CA', 'WKXM1DBKPTGRZBI', 'Fastenings', 1),
+(30, 'R3R3KP5WDVJ7F9W', 'WKXM1DBKPTGRZBI', 'Seals', 1),
+(31, 'P3F98BYQD2B4CYH', 'WKXM1DBKPTGRZBI', 'Gears', 1),
+(32, 'E5ZZU56WUFTBJRC', 'WKXM1DBKPTGRZBI', 'Pumps', 1),
+(33, 'HYRUVOJ9OR4LJMX', 'K6EHUAV187KCDLM', 'Winch Engine', 1),
+(34, '2OUMOOXJPW1I62K', 'K6EHUAV187KCDLM', 'Winch Accessories', 1);
 
 -- --------------------------------------------------------
 
@@ -2334,22 +2697,6 @@ CREATE TABLE `product_type` (
   `ptype_name` varchar(255) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `product_type`
---
-
-INSERT INTO `product_type` (`id`, `ptype_id`, `ptype_name`, `status`) VALUES
-(25, 'SQROXZJ5T1MQ8LH', '4D Color Doppler', 1),
-(26, 'KDFEXMCOAQBA9U4', 'Electrocardiogram (ECG) ', 1),
-(27, '2ZRQ5WUW3ICFQGY', 'ICU/NICU/CCU Equipment', 1),
-(28, 'RURBN2D2P2SDZSQ', 'IVD/Laboratory Product', 1),
-(29, '1GOQNI3RHAZTO1B', 'Others Equipments', 1),
-(30, 'DUAEZKW1FZEJ1FE', 'Surgary', 1),
-(31, 'WZ3L71OEYJX9FSG', 'Imaging/CTG', 1),
-(32, '81U9XJO9IUPTMB1', 'ENT Equipment', 1),
-(33, 'HQ3BIJNO3DYRTR8', 'OT Equipment', 1),
-(34, 'BSLYU7FP4ZDV7MG', 'Car Wheel', 1);
 
 -- --------------------------------------------------------
 
@@ -2373,11 +2720,11 @@ CREATE TABLE `purchase_order_cart` (
   `supplier_id` bigint(50) DEFAULT NULL,
   `warrenty_date` date DEFAULT NULL,
   `rate` bigint(50) DEFAULT NULL,
-  `currency_value` varchar(255) DEFAULT NULL,
   `currency` varchar(255) DEFAULT NULL,
-  `additional_cost` varchar(255) DEFAULT NULL,
+  `currency_value` varchar(255) DEFAULT NULL,
   `discount` bigint(50) DEFAULT NULL,
   `total` varchar(255) DEFAULT NULL,
+  `additional_cost` varchar(255) DEFAULT NULL,
   `is_modified` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2395,13 +2742,13 @@ CREATE TABLE `quotation` (
   `quotdate` date NOT NULL,
   `expire_date` date DEFAULT NULL,
   `item_total_amount` decimal(12,2) NOT NULL,
-  `item_total_dicount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `item_total_tax` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `service_total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `service_total_discount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `service_total_tax` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `quot_dis_item` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `quot_dis_service` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `item_total_dicount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `item_total_tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `service_total_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `service_total_discount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `service_total_tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `quot_dis_item` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `quot_dis_service` decimal(10,2) NOT NULL DEFAULT '0.00',
   `quot_no` varchar(50) NOT NULL,
   `create_by` varchar(30) NOT NULL,
   `create_date` date NOT NULL,
@@ -2421,12 +2768,12 @@ CREATE TABLE `quotation_service_used` (
   `id` int(11) NOT NULL,
   `quot_id` varchar(20) NOT NULL,
   `service_id` int(11) NOT NULL,
-  `qty` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `charge` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `discount_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `tax` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total` decimal(10,2) NOT NULL DEFAULT 0.00
+  `qty` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `charge` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `discount_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3225,7 +3572,141 @@ INSERT INTO `role_permission` (`id`, `fk_module_id`, `role_id`, `create`, `read`
 (10763, 137, 7, 1, 1, 1, 1),
 (10764, 132, 7, 1, 1, 1, 1),
 (10765, 133, 7, 0, 0, 0, 0),
-(10766, 136, 7, 1, 1, 1, 1);
+(10766, 136, 7, 1, 1, 1, 1),
+(10767, 1, 11, 1, 1, 1, 1),
+(10768, 2, 11, 1, 1, 1, 1),
+(10769, 3, 11, 0, 0, 0, 0),
+(10770, 114, 11, 0, 0, 0, 0),
+(10771, 123, 11, 1, 1, 1, 1),
+(10772, 125, 11, 1, 1, 1, 1),
+(10773, 25, 11, 1, 1, 1, 1),
+(10774, 26, 11, 1, 1, 1, 1),
+(10775, 27, 11, 1, 1, 1, 1),
+(10776, 28, 11, 1, 1, 1, 1),
+(10777, 111, 11, 1, 1, 1, 1),
+(10778, 113, 11, 1, 1, 1, 1),
+(10779, 21, 11, 1, 1, 1, 1),
+(10780, 22, 11, 1, 1, 1, 1),
+(10781, 23, 11, 1, 1, 1, 1),
+(10782, 24, 11, 1, 1, 1, 1),
+(10783, 30, 11, 1, 1, 1, 1),
+(10784, 31, 11, 1, 1, 1, 1),
+(10785, 32, 11, 1, 1, 1, 1),
+(10786, 33, 11, 1, 1, 1, 1),
+(10787, 112, 11, 1, 1, 1, 1),
+(10788, 35, 11, 1, 1, 1, 1),
+(10789, 36, 11, 1, 1, 1, 1),
+(10790, 124, 11, 1, 1, 1, 1),
+(10791, 135, 11, 1, 1, 1, 1),
+(10792, 43, 11, 1, 1, 1, 1),
+(10793, 37, 11, 1, 1, 1, 1),
+(10794, 38, 11, 1, 1, 1, 1),
+(10795, 39, 11, 1, 1, 1, 1),
+(10796, 40, 11, 1, 1, 1, 1),
+(10797, 139, 11, 1, 1, 1, 1),
+(10798, 140, 11, 1, 1, 1, 1),
+(10799, 46, 11, 1, 1, 1, 1),
+(10800, 47, 11, 1, 1, 1, 1),
+(10801, 48, 11, 1, 1, 1, 1),
+(10802, 49, 11, 1, 1, 1, 1),
+(10803, 50, 11, 1, 1, 1, 1),
+(10804, 51, 11, 1, 1, 1, 1),
+(10805, 52, 11, 1, 1, 1, 1),
+(10806, 53, 11, 1, 1, 1, 1),
+(10807, 54, 11, 1, 1, 1, 1),
+(10808, 55, 11, 1, 1, 1, 1),
+(10809, 97, 11, 1, 1, 1, 1),
+(10810, 98, 11, 1, 1, 1, 1),
+(10811, 99, 11, 1, 1, 1, 1),
+(10812, 100, 11, 1, 1, 1, 1),
+(10813, 101, 11, 0, 0, 0, 0),
+(10814, 102, 11, 1, 1, 1, 1),
+(10815, 122, 11, 1, 1, 1, 1),
+(10816, 4, 11, 0, 0, 0, 0),
+(10817, 5, 11, 0, 0, 0, 0),
+(10818, 6, 11, 0, 0, 0, 0),
+(10819, 7, 11, 0, 0, 0, 0),
+(10820, 8, 11, 0, 0, 0, 0),
+(10821, 9, 11, 0, 0, 0, 0),
+(10822, 10, 11, 0, 0, 0, 0),
+(10823, 11, 11, 0, 0, 0, 0),
+(10824, 12, 11, 0, 0, 0, 0),
+(10825, 13, 11, 0, 0, 0, 0),
+(10826, 14, 11, 0, 0, 0, 0),
+(10827, 15, 11, 0, 0, 0, 0),
+(10828, 16, 11, 0, 0, 0, 0),
+(10829, 17, 11, 0, 0, 0, 0),
+(10830, 18, 11, 0, 0, 0, 0),
+(10831, 19, 11, 0, 0, 0, 0),
+(10832, 56, 11, 1, 1, 1, 1),
+(10833, 57, 11, 1, 1, 1, 1),
+(10834, 58, 11, 1, 1, 1, 1),
+(10835, 41, 11, 0, 0, 0, 0),
+(10836, 103, 11, 0, 0, 0, 0),
+(10837, 104, 11, 0, 0, 0, 0),
+(10838, 109, 11, 0, 0, 0, 0),
+(10839, 110, 11, 0, 0, 0, 0),
+(10840, 60, 11, 0, 0, 0, 0),
+(10841, 61, 11, 0, 0, 0, 0),
+(10842, 62, 11, 0, 0, 0, 0),
+(10843, 63, 11, 0, 0, 0, 0),
+(10844, 64, 11, 0, 0, 0, 0),
+(10845, 65, 11, 0, 0, 0, 0),
+(10846, 66, 11, 0, 0, 0, 0),
+(10847, 67, 11, 0, 0, 0, 0),
+(10848, 68, 11, 0, 0, 0, 0),
+(10849, 69, 11, 0, 0, 0, 0),
+(10850, 70, 11, 0, 0, 0, 0),
+(10851, 71, 11, 0, 0, 0, 0),
+(10852, 72, 11, 0, 0, 0, 0),
+(10853, 73, 11, 0, 0, 0, 0),
+(10854, 74, 11, 0, 0, 0, 0),
+(10855, 75, 11, 0, 0, 0, 0),
+(10856, 76, 11, 0, 0, 0, 0),
+(10857, 77, 11, 0, 0, 0, 0),
+(10858, 78, 11, 0, 0, 0, 0),
+(10859, 79, 11, 0, 0, 0, 0),
+(10860, 80, 11, 0, 0, 0, 0),
+(10861, 81, 11, 0, 0, 0, 0),
+(10862, 82, 11, 0, 0, 0, 0),
+(10863, 83, 11, 0, 0, 0, 0),
+(10864, 84, 11, 0, 0, 0, 0),
+(10865, 85, 11, 0, 0, 0, 0),
+(10866, 86, 11, 0, 0, 0, 0),
+(10867, 105, 11, 0, 0, 0, 0),
+(10868, 106, 11, 0, 0, 0, 0),
+(10869, 107, 11, 0, 0, 0, 0),
+(10870, 108, 11, 0, 0, 0, 0),
+(10871, 59, 11, 0, 0, 0, 0),
+(10872, 87, 11, 0, 0, 0, 0),
+(10873, 88, 11, 0, 0, 0, 0),
+(10874, 89, 11, 0, 0, 0, 0),
+(10875, 90, 11, 0, 0, 0, 0),
+(10876, 91, 11, 0, 0, 0, 0),
+(10877, 92, 11, 0, 0, 0, 0),
+(10878, 93, 11, 0, 0, 0, 0),
+(10879, 94, 11, 0, 0, 0, 0),
+(10880, 95, 11, 0, 0, 0, 0),
+(10881, 96, 11, 0, 0, 0, 0),
+(10882, 115, 11, 0, 0, 0, 0),
+(10883, 116, 11, 0, 0, 0, 0),
+(10884, 117, 11, 0, 0, 0, 0),
+(10885, 118, 11, 0, 0, 0, 0),
+(10886, 119, 11, 0, 0, 0, 0),
+(10887, 120, 11, 0, 0, 0, 0),
+(10888, 121, 11, 0, 0, 0, 0),
+(10889, 126, 11, 1, 1, 1, 1),
+(10890, 127, 11, 1, 1, 1, 1),
+(10891, 128, 11, 1, 1, 1, 1),
+(10892, 129, 11, 1, 1, 1, 1),
+(10893, 138, 11, 1, 1, 1, 1),
+(10894, 141, 11, 1, 1, 1, 1),
+(10895, 130, 11, 1, 1, 1, 1),
+(10896, 131, 11, 1, 1, 1, 1),
+(10897, 137, 11, 1, 1, 1, 1),
+(10898, 132, 11, 1, 1, 1, 1),
+(10899, 133, 11, 1, 1, 1, 1),
+(10900, 136, 11, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -3241,7 +3722,8 @@ CREATE TABLE `rqsn` (
   `from_id` varchar(255) CHARACTER SET utf8 NOT NULL,
   `to_id` varchar(255) CHARACTER SET utf8 NOT NULL,
   `date` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `details` text CHARACTER SET utf8 DEFAULT NULL,
+  `details` text CHARACTER SET utf8,
+  `is_sold` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -3249,34 +3731,36 @@ CREATE TABLE `rqsn` (
 -- Dumping data for table `rqsn`
 --
 
-INSERT INTO `rqsn` (`id`, `rqsn_id`, `rqsn_no`, `rqsn_customer_name`, `from_id`, `to_id`, `date`, `details`, `status`) VALUES
-(56, '1466658170', '1000', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-11', 'Requisition', 2),
-(57, '1093453886', '1001', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-11', 'Requisition', 2),
-(58, '1781224619', '1002', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-12', 'Requisition', 3),
-(59, '1300774183', '1003', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-12', 'Requisition', 3),
-(60, '1101212506', '1004', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-14', 'Requisition', 3),
-(61, '83777668', '1005', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-14', 'Requisition', 3),
-(62, '1868336728', '1006', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 2),
-(63, '275462325', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(64, '972513092', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(65, '1314334809', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(66, '241434409', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(67, '1071600192', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(68, '1452235091', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(69, '1231997685', NULL, '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 1),
-(70, '1903371570', '1007', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 3),
-(71, '1566439646', '1008', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-16', 'Requisition', 2),
-(72, '220954212', '1009', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-17', 'Requisition', 3),
-(73, '2021711719', '1009', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-17', 'Requisition', 3),
-(74, '1872142986', '1010', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-18', 'Requisition', 3),
-(75, '1839752343', '1011', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-18', 'Requisition', 2),
-(76, '967479489', '1011', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-18', 'Requisition', 3),
-(77, '133266877', '1012', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-18', 'Requisition', 3),
-(78, '795471405', '1013', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', 3),
-(79, '1985405674', '1014', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', 3),
-(80, '1552401608', '1014', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', 3),
-(81, '1013782005', '1015', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-21', 'Requisition', 3),
-(82, '1194990856', '1016', '', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-22', 'Requisition', 3);
+INSERT INTO `rqsn` (`id`, `rqsn_id`, `rqsn_no`, `rqsn_customer_name`, `from_id`, `to_id`, `date`, `details`, `is_sold`, `status`) VALUES
+(59, '1344799327', '1000', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-12', 'Requisition', '1', 3),
+(60, '1369498680', '1001', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-12', 'Requisition', '0', 3),
+(61, '2067924797', '1002', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-17', 'Requisition', '0', 3),
+(62, '843224109', '1003', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-17', 'Requisition', '0', 3),
+(63, '1116903266', '1004', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-17', 'Requisition', '0', 3),
+(64, '777235666', '1005', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-18', 'Requisition', '0', 3),
+(65, '1761834242', '1006', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-18', 'Requisition', '0', 3),
+(66, '773767956', '1007', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(67, '1087658233', '1008', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(68, '1361220845', '1009', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(69, '1343414813', NULL, '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', NULL, 1),
+(70, '790317568', '1010', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(71, '1135828589', '1011', 'Marine Explorers Ltd.', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(72, '2032654334', '1012', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(73, '1796687153', '1013', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(74, '177795429', '1014', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(75, '2089543223', '1015', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(76, '354252053', '1016', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-19', 'Requisition', '0', 3),
+(77, '1705762556', '1017', 'Rifat', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', '0', 3),
+(78, '1266432259', '1018', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', NULL, 2),
+(79, '1841444258', '1018', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', '0', 3),
+(80, '1550884432', '1019', 'Marine Explorers Ltd.', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', '0', 3),
+(81, '741559822', '1020', 'Marine Explorers Ltd.', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', '0', 3),
+(82, '1122366026', NULL, 'Rifat', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', NULL, 1),
+(83, '66884730', '1021', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-23', 'Requisition', '0', 3),
+(84, '736795778', '1022', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-30', 'Requisition', '0', 3),
+(85, '409488672', '1023', '', 'NKZN4G21YFTBXR9', 'HK7TGDT69VFMXB7', '2021-08-31', 'Requisition', NULL, 2),
+(86, '1383649776', '1023', 'Marine Explorers Ltd.', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-09-02', 'Requisition', NULL, 2),
+(87, '1095241310', '1023', 'Marine Explorers Ltd.', 'E99H3W5SLS51PV4', 'HK7TGDT69VFMXB7', '2021-09-02', 'Requisition', '0', 3);
 
 -- --------------------------------------------------------
 
@@ -3325,60 +3809,53 @@ CREATE TABLE `rqsn_details` (
 --
 
 INSERT INTO `rqsn_details` (`id`, `rqsn_detail_id`, `rqsn_id`, `product_id`, `unit`, `quantity`, `a_qty`, `total`, `status`, `isaprv`, `isrcv`, `iscw`, `purchase_status`) VALUES
-(93, '1294058361', '1466658170', '15589215', '', '5', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(94, '100776161', '1466658170', '74325422', '', '5', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(95, '1383627114', '1466658170', '81244656', '', '45', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(96, '746162705', '1093453886', '15589215', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(97, '1968887280', '1093453886', '39347173', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(98, '162083738', '1093453886', '53858917', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(99, '993588343', '1781224619', '81244656', '', '60', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(100, '1723779167', '1300774183', '43546', '', '70', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(101, '85232800', '1300774183', '81244656', '', '70', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(102, '524125543', '1101212506', '6767876', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(103, '1006924798', '1101212506', '68354349', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(104, '1874590835', '1101212506', '74325422', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(105, '1911962878', '1101212506', '81244656', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(106, '1110780401', '83777668', '6767876', '', '22', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(107, '2114140347', '83777668', '68354349', '', '222', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(108, '2059834846', '83777668', '74325422', '', '22', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(109, '824646957', '83777668', '81244656', '', '21', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(110, '2043356645', '1868336728', '6543434', '', '', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(111, '485108449', '1868336728', '13557324', '', '', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(112, '118155080', '1868336728', '41181598', '', '', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(113, '1825505502', '275462325', '81244656', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(114, '1473077719', '275462325', '13557324', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(115, '1414211773', '275462325', '39347173', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(116, '1974205013', '972513092', '', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(117, '1572555655', '972513092', '13557324', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(118, '831676927', '972513092', '39347173', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(119, '1065445475', '1314334809', '53858917', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(120, '750811951', '1314334809', '13557324', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(121, '800335127', '241434409', '11111', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(122, '1229790583', '241434409', '11111', '', '16', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(123, '1603747818', '241434409', '13557324', '', '6', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(124, '711946623', '1071600192', '', '', '16', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(125, '1377508816', '1071600192', '11111', '', '12', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(126, '1287144191', '1071600192', '13557324', '', '10', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(127, '1803547802', '1452235091', '13557324', '', '20', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(128, '262094224', '1452235091', '41181598', '', '10', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(129, '1144589335', '1452235091', '84562845', '', '5', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(130, '408939617', '1231997685', '13557324', '', '20', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(131, '597369667', '1231997685', '41181598', '', '10', NULL, NULL, 1, NULL, NULL, NULL, 2),
-(132, '1402843444', '1231997685', '84562845', '', '8', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(133, '1712893608', '1903371570', '13557324', '', '10', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(134, '5838456', '1903371570', '53858917', '', '10', NULL, NULL, 1, NULL, NULL, NULL, 1),
-(135, '861829789', '1566439646', '39347173', '', '10', NULL, 120000, 1, NULL, NULL, NULL, 1),
-(136, '983969893', '220954212', '13557324', '', '10', NULL, 80, 1, NULL, NULL, NULL, 1),
-(137, '968596311', '2021711719', '68354349', '', '10', NULL, 1200, 1, NULL, NULL, NULL, 1),
-(138, '1635041922', '1872142986', '74325422', '', '40', NULL, 8000, 1, NULL, NULL, NULL, 2),
-(139, '1084186037', '967479489', '68354349', '', '50', NULL, 1000, 1, NULL, NULL, NULL, 1),
-(140, '175461269', '133266877', '81244656', '', '20', NULL, 19980, 1, NULL, NULL, NULL, 2),
-(141, '695721769', '795471405', '68354349', '', '50', NULL, 1000, 1, NULL, NULL, NULL, 1),
-(142, '2029580059', '795471405', '74325422', '', '50', NULL, 10000, 1, NULL, NULL, NULL, 2),
-(143, '1544385476', '1985405674', '68354349', '', '20', NULL, 400, 1, NULL, NULL, NULL, 1),
-(144, '1527250586', '1552401608', '81244656', '', '70', NULL, 69930, 1, NULL, NULL, NULL, 2),
-(145, '621101361', '1013782005', '74325422', '', '50', NULL, 25000, 1, NULL, NULL, NULL, 2),
-(146, '2043866852', '1194990856', '68354349', '', '50', NULL, 1000, 1, NULL, NULL, NULL, 1);
+(92, '1178836176', '1344799327', '97555421', '', '60', NULL, NULL, 1, NULL, NULL, NULL, 2),
+(93, '842635984', '1369498680', '95651937', '', '1', NULL, NULL, 1, NULL, NULL, NULL, 2),
+(94, '1245608393', '1369498680', '95669627', '', '1', NULL, NULL, 1, NULL, NULL, NULL, 2),
+(95, '2058047211', '1369498680', '97153822', '', '2', NULL, NULL, 1, NULL, NULL, NULL, 2),
+(96, '1938993406', '1369498680', '97555421', '', '1', NULL, NULL, 1, NULL, NULL, NULL, 2),
+(97, '1801302693', '2067924797', '59587973', '', '20', NULL, 437734, 1, NULL, NULL, NULL, 2),
+(98, '587215700', '843224109', '34823275', '', '99', NULL, 120874, 1, NULL, NULL, NULL, 2),
+(99, '214623220', '843224109', '59587973', '', '99', NULL, 2166780, 1, NULL, NULL, NULL, 2),
+(100, '1675023243', '1116903266', '59587973', '', '10', NULL, 10000, 1, NULL, NULL, NULL, 2),
+(101, '358645469', '777235666', '34244717', '', '50', NULL, 50000, 1, NULL, NULL, NULL, 2),
+(102, '2091389461', '1761834242', '34244717', '', '50', NULL, 50000, 1, NULL, NULL, NULL, 2),
+(103, '327095764', '773767956', '34244717', '', '10', NULL, 10000, 1, NULL, NULL, NULL, 2),
+(104, '1441260795', '1087658233', '34244717', '', '50', NULL, 47500, 1, NULL, NULL, NULL, 2),
+(105, '1452122451', '1361220845', '34244717', '', '50', NULL, 50000, 1, NULL, NULL, NULL, 2),
+(106, '205802330', '1343414813', '59587973', '', '', NULL, 0, 1, NULL, NULL, NULL, 2),
+(107, '726959710', '790317568', '59587973', '', '30', NULL, 45000, 1, NULL, NULL, NULL, 2),
+(108, '1460440634', '790317568', '63455738', '', '30', NULL, 330900, 1, NULL, NULL, NULL, 2),
+(109, '320528399', '1135828589', '59587973', '', '45', NULL, 67500, 1, NULL, NULL, NULL, 2),
+(110, '129289835', '1135828589', '63455738', '', '45', NULL, 496350, 1, NULL, NULL, NULL, 2),
+(111, '523065963', '2032654334', '59587973', '', '20', NULL, 30000, 1, NULL, NULL, NULL, 2),
+(112, '815235966', '1796687153', '59587973', '', '10', NULL, 18000, 1, NULL, NULL, NULL, 2),
+(113, '1995314755', '177795429', '34244717', '', '50', NULL, 47500, 1, NULL, NULL, NULL, 2),
+(114, '971326628', '2089543223', '34244717', '', '50', NULL, 47500, 1, NULL, NULL, NULL, 2),
+(115, '305444956', '354252053', '34244717', '', '50', NULL, 47500, 1, NULL, NULL, NULL, 2),
+(116, '567331368', '1705762556', '34244717', '', '50', NULL, 50000, 1, NULL, NULL, NULL, 2),
+(117, '356116121', '1705762556', '59587973', '', '50', NULL, 90000, 1, NULL, NULL, NULL, 2),
+(118, '66129171', '1841444258', '34244717', '', '10', NULL, 10000, 1, NULL, NULL, NULL, 2),
+(119, '252623254', '1550884432', '71821423', '', '10', NULL, 315321, 1, NULL, NULL, NULL, 2),
+(120, '140468703', '1550884432', '89228533', '', '10', NULL, 1466330, 1, NULL, NULL, NULL, 2),
+(121, '1022159864', '741559822', '34823275', '', '10', NULL, 12209.5, 1, NULL, NULL, NULL, 2),
+(122, '971415139', '741559822', '59587973', '', '10', NULL, 20000, 1, NULL, NULL, NULL, 2),
+(123, '222058928', '741559822', '89228533', '', '10', NULL, 1466330, 1, NULL, NULL, NULL, 2),
+(124, '1890399110', '1122366026', '34244717', '', '10', NULL, 12000, 1, NULL, NULL, NULL, 2),
+(125, '1042921636', '1122366026', '34823275', '', '10', NULL, 12209.5, 1, NULL, NULL, NULL, 2),
+(126, '1352895706', '1122366026', '59587973', '', '10', NULL, 20000, 1, NULL, NULL, NULL, 2),
+(127, '1776296883', '1122366026', '93448636', '', '10', NULL, 42816.7, 1, NULL, NULL, NULL, 2),
+(128, '1672954399', '66884730', '34244717', '', '10', NULL, 12000, 1, NULL, NULL, NULL, 2),
+(129, '987485429', '66884730', '34823275', '', '10', NULL, 12209.5, 1, NULL, NULL, NULL, 2),
+(130, '1877911872', '66884730', '59587973', '', '10', NULL, 20000, 1, NULL, NULL, NULL, 2),
+(131, '1357827144', '66884730', '93448636', '', '10', NULL, 42816.7, 1, NULL, NULL, NULL, 2),
+(132, '19927068', '736795778', '59539268', '', '40', NULL, 4000, 1, NULL, NULL, NULL, 2),
+(133, '929230085', '736795778', '59587973', '', '20', NULL, 0, 1, NULL, NULL, NULL, 2),
+(134, '1955496268', '736795778', '93448636', '', '20', NULL, 85633.4, 1, NULL, NULL, NULL, 2),
+(135, '1447788016', '409488672', '59587973', '', '10', NULL, 20000, 1, NULL, NULL, NULL, 1),
+(136, '558093476', '1095241310', '34823275', '', '15', NULL, 24419, 1, NULL, NULL, NULL, 2),
+(137, '171583398', '1095241310', '59539268', '', '20', NULL, 2000, 1, NULL, NULL, NULL, 2),
+(138, '467893219', '1095241310', '63455738', '', '2', NULL, 22060, 1, NULL, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -3397,7 +3874,7 @@ CREATE TABLE `rqsn_return` (
   `tr_qty` varchar(255) DEFAULT NULL,
   `date_rqsn` varchar(50) DEFAULT NULL,
   `date_return` varchar(50) DEFAULT NULL,
-  `reason` text DEFAULT NULL,
+  `reason` text,
   `usablity` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -3466,7 +3943,8 @@ INSERT INTO `sec_role` (`id`, `type`) VALUES
 (5, 'sales'),
 (6, 'test'),
 (7, 'outlet'),
-(10, 'cw');
+(10, 'cw'),
+(11, 'paradise');
 
 -- --------------------------------------------------------
 
@@ -3501,7 +3979,8 @@ INSERT INTO `sec_userrole` (`id`, `user_id`, `roleid`, `createby`, `createdate`)
 (12, 'V2DEJbIBFZq40dl', 6, 'OpSoxJvBbbS8Rws', '2021-02-09 07:27:25'),
 (13, 'oHhdeY9SHRfOBJE', 7, 'OpSoxJvBbbS8Rws', '2021-04-13 09:53:38'),
 (14, 'BqEHuu0wLvpfiJo', 7, 'OpSoxJvBbbS8Rws', '2021-04-15 10:07:06'),
-(15, 'iddZKdMU6PIVZMj', 10, 'OpSoxJvBbbS8Rws', '2021-04-17 08:29:31');
+(15, 'iddZKdMU6PIVZMj', 10, 'OpSoxJvBbbS8Rws', '2021-04-17 08:29:31'),
+(16, 'ByIUOew8UWnm8dD', 11, 'OpSoxJvBbbS8Rws', '2021-07-18 09:03:54');
 
 -- --------------------------------------------------------
 
@@ -3513,7 +3992,7 @@ CREATE TABLE `sent_sms` (
   `id` int(11) NOT NULL,
   `from` varchar(255) DEFAULT NULL,
   `to` varchar(255) DEFAULT NULL,
-  `message` text DEFAULT NULL
+  `message` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -3535,14 +4014,14 @@ CREATE TABLE `service_invoice` (
   `date` date NOT NULL,
   `employee_id` varchar(100) DEFAULT NULL,
   `customer_id` varchar(30) NOT NULL,
-  `total_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `total_discount` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `invoice_discount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total_tax` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `paid_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `due_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `shipping_cost` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `previous` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `total_amount` decimal(20,2) NOT NULL DEFAULT '0.00',
+  `total_discount` decimal(20,2) NOT NULL DEFAULT '0.00',
+  `invoice_discount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total_tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `paid_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `due_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `shipping_cost` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `previous` decimal(10,2) NOT NULL DEFAULT '0.00',
   `details` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -3563,11 +4042,11 @@ CREATE TABLE `service_invoice_details` (
   `id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `service_inv_id` varchar(30) NOT NULL,
-  `qty` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `charge` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `discount_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total` decimal(10,2) NOT NULL DEFAULT 0.00
+  `qty` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `charge` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `discount_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -3589,9 +4068,9 @@ CREATE TABLE `sms_settings` (
   `api_key` varchar(100) DEFAULT NULL,
   `api_secret` varchar(100) DEFAULT NULL,
   `from` varchar(100) DEFAULT NULL,
-  `isinvoice` int(11) NOT NULL DEFAULT 0,
-  `isservice` int(11) NOT NULL DEFAULT 0,
-  `isreceive` int(11) NOT NULL DEFAULT 0
+  `isinvoice` int(11) NOT NULL DEFAULT '0',
+  `isservice` int(11) NOT NULL DEFAULT '0',
+  `isreceive` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -3611,7 +4090,7 @@ CREATE TABLE `sub_module` (
   `id` int(11) NOT NULL,
   `mid` int(11) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `description` text CHARACTER SET utf8 DEFAULT NULL,
+  `description` text CHARACTER SET utf8,
   `image` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `directory` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `status` tinyint(1) NOT NULL
@@ -3774,10 +4253,79 @@ CREATE TABLE `supplier_address` (
 --
 
 INSERT INTO `supplier_address` (`id`, `supplier_id`, `address`) VALUES
-(8, '5', 'Hathazrai,chittgaong'),
-(9, '5', 'CFG'),
-(10, '5', 'sdadsa'),
-(12, '6', 'Chittagong');
+(3, '7', ''),
+(6, '10', 'Kadamtali, Motiarpool'),
+(7, '11', 'Kadamtali, Motiarpool'),
+(8, '12', 'Kadamtali, Motiarpool'),
+(9, '13', 'Kadamtali, Motiarpool'),
+(10, '14', 'Kadamtali, Motiarpool'),
+(11, '15', 'Kadamtali, Motiarpool'),
+(12, '16', 'Kadamtali, Motiarpool'),
+(13, '17', ''),
+(14, '18', 'Kadamtali, Motiarpool'),
+(15, '19', 'Kadamtali, Motiarpool'),
+(16, '20', 'Kadamtali, Motiarpool'),
+(17, '21', ''),
+(20, '22', 'Kadamtali, Motiarpool'),
+(21, '23', 'Kadamtali, Motiarpool'),
+(22, '24', 'Kadamtali, Motiarpool'),
+(23, '25', 'Kadamtali, Motiarpool'),
+(24, '26', ''),
+(25, '27', 'Kadamtali, Motiarpool'),
+(28, '30', 'Kadamtali, Motiarpool'),
+(29, '31', 'Kadamtali, Motiarpool'),
+(30, '32', 'Kadamtali, Motiarpool'),
+(31, '33', 'Kadamtali, Motiarpool'),
+(33, '35', 'Kadamtali, Motiarpool'),
+(34, '36', 'Kadamtali, Motiarpool'),
+(35, '37', 'Kadamtali, Motiarpool'),
+(36, '38', 'CDA Market'),
+(37, '39', 'CDA Market'),
+(38, '40', 'Jublee Road'),
+(39, '41', 'Jublee Road'),
+(40, '42', 'Golam Rosul Market'),
+(41, '43', 'Bangla Bazar'),
+(43, '45', 'Akmal Ali Road, EPZ, Navy Hospital Gate'),
+(44, '46', 'Chittagong Fish Harbour, Trawler Office, 1st Floor'),
+(45, '47', 'Sadarghat Road'),
+(46, '48', 'Mia Khan Road'),
+(47, '49', 'Chowmuhani'),
+(48, '50', 'Shahjahan Hotel Gate'),
+(49, '51', 'Sk. Mujib Road,'),
+(50, '52', 'Motiarpool'),
+(51, '53', 'Sadarghat Road'),
+(52, '54', 'Jublee Road'),
+(53, '55', 'Gausia Electric Market'),
+(54, '56', 'Stand Road, Mazir Ghat'),
+(55, '57', 'D.T Lane, Goli No- 2, West Madarbari'),
+(56, '58', 'Mazirghat Road'),
+(57, '59', 'Kadamtali, Dastagir Centre'),
+(58, '60', 'Chairman Ghat'),
+(59, '61', 'T.B Hos. Gate,\r\nSitakunda'),
+(60, '62', 'TB Hos. Gate, Sitakunda'),
+(61, '63', '14/A,B Das Lane, Firingibazar'),
+(62, '34', 'Kadamtali, Motiarpool'),
+(63, '64', '1101/7, Wichien Chodok Road, Mahachai, Muang, Samut Sakhon'),
+(66, '8', '210, Ratchadaphisek Road, Dao Kanong Thonburi, Bangkok'),
+(67, '65', '200, Suttivatvitee Road, Tachalom, Mueang, Samut Sakhon'),
+(68, '66', '3 Ang Mo Kio Street 62, #07-22/23/24 Link @AMK, Singapore- 569139'),
+(71, '69', '21, Woodlands Close, #04-04 Primz BizHub'),
+(74, '71', 'Fiskerihavnsgade 21, 6700 Esbjerg, DK- Denmark'),
+(75, '72', 'Room- 29-16, Building No.-1, ARC Central Plaza, No-88, Shi Nian Pan Main Street, Sha Ping Ba District, Chongqing, China- 400030'),
+(78, '67', '432/434, Serangoon Road, '),
+(79, '9', '13, Soi Sakaengam 39, Rama 2 Road, Samaedam, Bangkhuntien, Bangkok'),
+(80, '68', '149, Rochor Road, #05-01 Fu Lu Shou Complex'),
+(81, '70', 'Registered Office: Block No. 08, P.O. Dumad Savli Road, Vadodara- 391740, Gujarat, India'),
+(82, '70', 'Principal Place of Business: Block No.69/P, Opp. Mukutnagar Temple, AT & PO. Manjusar Tal. Savli, Vadodara, Gujarat-391775, India.'),
+(83, '44', 'Sadarghat Road'),
+(84, '28', ''),
+(85, '29', 'Kadamtali, Motiarpool'),
+(86, '73', ''),
+(87, '74', ''),
+(94, '75', '181, Gulshan Plaza, Jublee Road'),
+(95, '76', '128, Kader Tower, Jublee Road'),
+(96, '77', 'Shop-24, Zohora Tower, Sk. Mujib Road, Chowmohani, Agrabad'),
+(97, '78', 'Inside BFDC Action Hall, Ichanagar, Karnafully');
 
 -- --------------------------------------------------------
 
@@ -3796,9 +4344,86 @@ CREATE TABLE `supplier_contact` (
 --
 
 INSERT INTO `supplier_contact` (`id`, `supplier_id`, `contact`) VALUES
-(7, '5', 'Arman'),
-(8, '5', 'Md Arman Ullah'),
-(10, '6', 'Mainul');
+(3, '7', 'Mr. Surachet'),
+(8, '10', 'Md. Abu Taher Khasru'),
+(9, '11', 'Md. Abu Taher Khasru'),
+(10, '12', 'Mr. Shah Amanat'),
+(11, '13', 'Mr. Nasimuzzaman'),
+(12, '14', 'Mr. Jashim Uddin'),
+(13, '15', 'Mr. Rashedul Alam Chowdhury'),
+(14, '16', 'Mr. Mohsin'),
+(15, '17', 'Md. Shah Alam'),
+(16, '18', 'Md. Shah Alam'),
+(17, '19', 'Md. Khalil'),
+(18, '20', 'Md. Abu Hanif'),
+(19, '21', 'Siraj Ahmed'),
+(26, '22', 'Mr. Siraj Ahmed'),
+(27, '23', 'Mr. Md. Nurul Islam'),
+(28, '24', 'Mr. MIr Md. Monir Hossen'),
+(29, '25', 'Mr. Nizam'),
+(30, '26', 'Mr. Md. Azizul Hoque'),
+(31, '27', 'Mr. Md. Azizul Hoque'),
+(34, '30', 'Mr. Md Jaynal Abedin'),
+(35, '31', 'Mr. Hazi Md. Edris Sowdagor'),
+(36, '32', 'Mr. Raton Das'),
+(37, '33', 'Mr. Hazi Md. Shofi'),
+(39, '35', 'Mr. Ronozith Deb'),
+(40, '36', 'Mr. Nadim Khan'),
+(41, '37', 'Mr. Al-Haz Md. Jakir Hossain'),
+(42, '38', 'Mr. Md. Ruhul Amin Liton'),
+(43, '39', 'Eng. Md. Nuruzzaman'),
+(44, '40', 'Mr. Jamal Mia'),
+(45, '41', 'Mr. Al-Mamunur Rashid'),
+(46, '42', 'Mr. Md. Selim'),
+(47, '43', 'Mr. Md. Nazmul Huda Chowdhury Shahin'),
+(48, '43', 'Mr. Emon'),
+(50, '45', 'Mr. Rezaul'),
+(51, '46', 'Mr. Robiul'),
+(52, '47', 'Mr. Kamal'),
+(53, '48', 'Mr. Md. Asad Zaman'),
+(54, '49', 'Mr. Abdus Sattar'),
+(55, '50', 'Mr. Bashir'),
+(56, '51', 'Mr. Abul Bashar Bhuiyan'),
+(57, '52', 'Mr. Kanchan '),
+(58, '53', 'Mr. Oshok Sen'),
+(59, '54', 'Mr. Shopon Chowdhury'),
+(60, '55', 'Mr. Nurun Nabi'),
+(61, '56', 'Mr. Nizam Uddin Tushar'),
+(62, '57', 'Mr. Md. Abdul Karim'),
+(63, '58', 'Mr. Morshed'),
+(64, '59', 'Mr. Ziaul Karim Sagar'),
+(65, '60', 'Mr. Md. Yunus'),
+(66, '61', 'Mr. Tamim'),
+(67, '62', 'Mr. Tamim'),
+(68, '63', 'Mr. Hazi Jamal Uddin Chowdhury'),
+(69, '34', 'Mr. Md. Shahjahan Babul'),
+(70, '64', 'Mr. Wiriya Sirichai Ekawat'),
+(77, '8', 'Mr. Surachet'),
+(78, '65', 'Mr. Thanachok Ruchiprapha'),
+(79, '65', 'Ms. Pum'),
+(80, '66', 'Ms. Ivy Goh'),
+(86, '69', 'Mr. Bryan Lim'),
+(87, '69', 'Mr. Brandon'),
+(89, '71', 'Mr. John Boberg Brink'),
+(90, '72', 'Ms. Jane He'),
+(92, '67', 'Ms. Jasmine'),
+(93, '67', 'Mr. Eric'),
+(94, '67', 'Mr. Raymond'),
+(95, '9', 'Mr. Narong Chaladthanyakij'),
+(96, '9', 'Mr. Nut'),
+(97, '9', 'Ms. Pare'),
+(98, '68', 'Ms. Violet'),
+(99, '68', 'Ms. May Tan'),
+(100, '70', 'Mr. Prashant Gupta'),
+(101, '44', 'Mr. Monowar'),
+(102, '28', 'Mr. Md. Shofiqul Islam'),
+(103, '29', 'Mr. Md. Shofiqul Islam'),
+(104, '73', 'test'),
+(105, '74', 'test'),
+(112, '75', 'Al-Helal Electric Co.'),
+(113, '76', 'Bangladesh Medical Hall'),
+(114, '77', 'New IT Power'),
+(115, '78', 'S.K Electric Engineering Service');
 
 -- --------------------------------------------------------
 
@@ -3817,10 +4442,89 @@ CREATE TABLE `supplier_email` (
 --
 
 INSERT INTO `supplier_email` (`id`, `supplier_id`, `email_id`) VALUES
-(13, '5', 'irfamna@gmail.com'),
-(14, '5', 'engsol2020@gmail.com'),
-(15, '5', 'sad@gmail.com'),
-(17, '6', 'mainul@gmail.com');
+(8, '7', ''),
+(11, '10', ''),
+(12, '11', ''),
+(13, '12', ''),
+(14, '13', ''),
+(15, '14', ''),
+(16, '15', ''),
+(17, '16', ''),
+(18, '17', ''),
+(19, '18', ''),
+(20, '19', ''),
+(21, '20', ''),
+(22, '21', ''),
+(25, '22', ''),
+(26, '23', ''),
+(27, '24', ''),
+(28, '25', ''),
+(29, '26', ''),
+(30, '27', ''),
+(33, '30', ''),
+(34, '31', ''),
+(35, '32', ''),
+(36, '33', ''),
+(38, '35', ''),
+(39, '36', ''),
+(40, '37', ''),
+(41, '38', ''),
+(42, '39', ''),
+(43, '40', ''),
+(44, '41', ''),
+(45, '42', ''),
+(46, '43', ''),
+(48, '45', ''),
+(49, '46', ''),
+(50, '47', ''),
+(51, '48', ''),
+(52, '49', ''),
+(53, '50', ''),
+(54, '51', ''),
+(55, '52', ''),
+(56, '53', ''),
+(57, '54', ''),
+(58, '55', ''),
+(59, '56', ''),
+(60, '57', ''),
+(61, '58', ''),
+(62, '59', ''),
+(63, '60', ''),
+(64, '61', ''),
+(65, '62', ''),
+(66, '63', ''),
+(67, '34', ''),
+(68, '64', 'mahachaifisherman@gmail.com'),
+(69, '64', 'sirichai_acc02@hotmail.com'),
+(72, '8', 'vsp2547@yahoo.com'),
+(73, '65', 'mahachaidockyard@gmail.com'),
+(74, '65', 'pum_nuntaya@hotmail.com'),
+(75, '66', 'ivy@ritchmen.com.sg'),
+(81, '69', 'bryan.lim@rollerasia.com'),
+(82, '69', 'sales.support@rollerasia.com'),
+(83, '69', 'admin@rollerasia.com'),
+(85, '71', 'john@comet-trawl.dk'),
+(86, '72', 'jane@ogem.cc'),
+(87, '72', 'jane@artstc.com'),
+(88, '72', 'john@artstc.com'),
+(90, '67', 'jasmine@pohleong.com'),
+(91, '67', 'raymond@pohleong.com'),
+(92, '67', 'eric@pohleong.com'),
+(93, '67', 'parts@pohleong.com'),
+(94, '9', 'applied_p@yahoo.com'),
+(95, '9', 'appliedpower13@gmail.com'),
+(96, '68', 'violet.y@slsbearings.co.sg'),
+(97, '68', 'may.tan@slsbearings.com.sg'),
+(98, '70', 'prashant.gupta@gea.com'),
+(99, '44', ''),
+(100, '28', ''),
+(101, '29', ''),
+(102, '73', ''),
+(103, '74', ''),
+(110, '75', ''),
+(111, '76', ''),
+(112, '77', ''),
+(113, '78', 'cpdw33@yahoo.com');
 
 -- --------------------------------------------------------
 
@@ -3833,8 +4537,8 @@ CREATE TABLE `supplier_information` (
   `supplier_name` varchar(255) NOT NULL,
   `supplier_type` varchar(255) DEFAULT NULL,
   `credit_interval` varchar(255) DEFAULT NULL,
-  `bank_details` text DEFAULT NULL,
-  `state` text DEFAULT NULL,
+  `bank_details` text,
+  `state` text,
   `zip` varchar(50) DEFAULT NULL,
   `country` varchar(250) DEFAULT NULL,
   `details` varchar(255) DEFAULT NULL,
@@ -3846,12 +4550,70 @@ CREATE TABLE `supplier_information` (
 --
 
 INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `supplier_type`, `credit_interval`, `bank_details`, `state`, `zip`, `country`, `details`, `status`) VALUES
-(1, 'Codeweavers', '2', '60', 'Hathazari', 'Chittgaong', '6543', 'Afghanistan', 'XYZ', 1),
-(2, 'Arman', '1', '15', 'CTGT', 'Chittagong', '4330', 'Bangladesh', 'xyz', 1),
-(3, 'ABCD', NULL, NULL, 'ABCS', 'Nowakhali', '4337', 'Afghanistan', 'Abcd', 1),
-(4, 'Pran', NULL, NULL, 'IDIC', 'Nowakhali', '6543', 'Afghanistan', 'asdd', 1),
-(5, 'BRAD', '2', NULL, 'ASSD', 'Nowakhali', '6543', 'Afghanistan', 'AS', 1),
-(6, 'KDAIT', '3', NULL, 'd', 'Nowakhali', '6543', 'Afghanistan', 'd', 1);
+(8, 'VSP GROUP CO. LTD.', '1', NULL, 'MR. SURACHET TREEROTANAN\r\nA/C NO.- 026-8-31859-3,\r\nKASIKORN BANK, \r\nTHE MALL THRAPHRA BRANCH,\r\nSWIFT CODE : KASITHBK', 'Bangkok', '10600', 'Thailand', 'Electrical Items & Refrigeration System &#40;Danfoss, REFCO, GEA BOCK, OSAKA, etc.&#41;', 1),
+(9, 'APPLIED POWER CO. LTD.', '1', NULL, '', 'Bangkok', '10150', 'Thailand', 'Electrical Items, Vessel Parts & Materials,  Mechanical Parts', 1),
+(11, 'M/S. KHASRU TRADERS', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'Refrigeration & Compressor Parts', 1),
+(12, 'M/S. AMANAT BATTERY CO.', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'Electrical Items, Battery & IPS', 1),
+(13, 'NASIM MACHINERY', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'Engine Parts, Spare Parts', 1),
+(14, 'M/S. HALIMA IRON MART', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'Various Chains, Hooks, etc.', 1),
+(15, 'ALAM TRADING', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'Working & Repairing Tools,\r\nHardware tools, & Workshop equipments', 1),
+(16, 'MOHOSIN SCREW CENTER', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'S.S & M.S Nuts & Screws', 1),
+(18, 'MADINA MACHINERY', NULL, NULL, '', 'Chattogram', '', 'Bangladesh', 'Engine Spare Parts', 1),
+(19, 'BISMILLAH IRON MART', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Angle & Flat Bars', 1),
+(20, 'M/S. ABU HANIF & BROTHERS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Channel, Angle & Flat Bars', 1),
+(22, 'M/S. RAJU & BROTHERS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'M.S Rods, Flat Bars, Z Bars, Angles, G.I Sheets', 1),
+(29, 'M/S. BHAI BHAI STEEL', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Old Vessel Channels, Angles, Rod, Sheet, Brass & Bronze Items.', 1),
+(24, 'M/S. SHAH PARAN IRON STORE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, M.S Plate', 1),
+(25, 'NIZAM & BROTHERS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, B.S Shaft, Square Bar', 1),
+(27, 'SHAH AMANAT ENTERPRISE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Old Vessel Channels, Angles, Rod, Sheet, Brass & Bronze Items', 1),
+(73, 'Test Supplier 1', '1', NULL, '', '', '', '', '', 1),
+(30, 'M/S. JAYNAL SHOWDAGOR', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, M.S. Angles, & Flat Bars', 1),
+(31, 'M/S. EDRIS AND SONS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Brass, Bronze & Cast Iron Items', 1),
+(32, 'M/S. RAHUL TRADERS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Refrigeration, Compressor engine spare parts', 1),
+(33, 'SHAH JALAL IRON STORE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Brass, Bronze & Cast Iron Items', 1),
+(34, 'M/S. KHAWAJA IRON STORE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, B.P Sheets, G.I Sheets, M.S Sheet Plates', 1),
+(35, 'M/S. B.S REFRIGERATION', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Refrigeration, Compressor Engine Spare Parts', 1),
+(36, 'NADIM HARDWARE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Rubber, Nylon, Plastic Hose Pipes', 1),
+(37, 'M/S. JAKIR HOSSAIN IRON MART', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Old M.S Plates', 1),
+(38, 'M/S. SHANTA REFRIGERATION', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Refrigeration, Compressor Engine Spare Parts', 1),
+(39, 'RUPALI TRADING CORPORATION ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Compressor Engine Spare Parts', 1),
+(40, 'ANJUMAN ELECTRIC', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Electrical Items', 1),
+(41, 'KHAWAJA TRADERS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Hardwares, Marine & Industrial Equipments.', 1),
+(42, 'M/S. AKTHER STORE ', '1', NULL, '', 'Chattogram', '', 'Bangladesh', 'Bed Sheets & various Clothing Accessories', 1),
+(43, 'MALEK SHAH TRADE INTERNATIONAL', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Metal Materials, Chains, Cargo Blocks, Anchor Chains, Anchor Ropes', 1),
+(44, 'A.D. SONS MARINE TECH', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Engine Spare Parts', 1),
+(45, 'NADIA ELECTRONICS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Navigation Items', 1),
+(46, 'ROBIUL MODERN TRAWL SUPPLIER', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Fishing Nets', 1),
+(47, 'H.N.J TRADERS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Polythene & Tissue Bags', 1),
+(48, 'M/S. NADIM ENTERPRISE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Polythene & Tissue Bags', 1),
+(49, 'BENGAL MOTORS', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Engine Spare Parts', 1),
+(50, 'CHITTAGONG SUPPLIER ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Fishing Gears, Ropes, Nets, Shackles, Floats etc Items.', 1),
+(51, 'J.B. ENTERPRISE  ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Survey Items', 1),
+(52, 'KANCHAN ENTERPRISE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Nuts & Bolts', 1),
+(53, 'MEERA ENTERPRISE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Bearings', 1),
+(54, 'MAHANAGAR TOOLS CENTER ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Hardwares, Equipments & Tools', 1),
+(55, 'NABI ELECTRIC STORE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Electrical Accessories', 1),
+(56, 'N.N. ENTERPRISE', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Fishing & Net Gears, Ropes, Nets, Shackles, Floats etc Materials', 1),
+(57, 'M/S. RUBEL ENTERPRISE ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'M.S & G.I Pipes, Bands, T.Connectors, Sockets, Flanges', 1),
+(58, 'S.N. TRADERS ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Plastic Fish Bags for Sungthon', 1),
+(59, 'S.S. ENTERPRISE ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Filters, Metal Seals, Oil Seals, etc', 1),
+(60, 'M/S. MEGHNA TIMBER TRADERS ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Wood Materials', 1),
+(62, 'M/S. TAMIM ENTERPRISE ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Paints', 1),
+(63, 'M/S. JAMAL UDDIN CHOWDHURY ', '3', NULL, '', 'Chattogram', '', 'Bangladesh', 'Grease & Distilled Water', 1),
+(64, 'OCEAN MARINE CO. LTD.', '3', NULL, 'A/C NAME : OCEAN MARINE CO., LTD.\r\nA/C NO: 570-2-46413-6\r\nBANK: THE SIAM COMMERCIAL BANK PCL.\r\nBRANCH: SAMUTSAKHON\r\nSWIFTCODE : SICOTHBK', 'Samut Sakhon', '74000', 'Thailand', 'Fishing & Net Gears', 1),
+(65, 'MAHACHAI DOCKYARD CO. LTD.', '3', NULL, '', 'Samut Sakhon', '74000', 'Thailand', 'Vessel, Vessel Parts & Materials', 1),
+(66, 'RITCHMEN (S) PTE. LTD.', '1', NULL, '', '', '569139', 'Singapore', 'Engine Parts (M.E & G.E) Brand- CUMMINS', 1),
+(67, 'POH LEONG TRACTORS PTE. LTD.', '1', NULL, 'A/C NO: 503-310-141-5\r\nBANK: UNITED OVERSEAS BANK LIMITED\r\nADDRESS: 1, COLEMAN STREET, #01-14 THE ADELPHI, SINGAPORE- 179803\r\nSWIFT CODE: UOVBSGSXXX', '', '218130', 'Singapore', 'Engine Parts (M.E & G.E)', 1),
+(68, 'SLS BEARINGS / PRO-KNIGHT ENTERPRISE PTE. LTD.', '1', NULL, '', '', '188425', 'Singapore', 'Bearings', 1),
+(69, 'ROLLER ASIA', '1', NULL, '', '', '737854', 'Singapore', 'Refrigeration & Compressor Parts (GEA BOCK)', 1),
+(70, 'GEA REFRIGERATION INDIA PVT. LTD.', '1', NULL, 'BANK: DEUTSCHE BANK AG\r\nEEFC A/C NO: 0604470-01-8/EUR\r\nCURRENT A/C NO: 06044470-00-0/INR\r\nSWIFT CODE: DEUTINBB\r\nIFSC CODE: DEUT0784BBY\r\nADDRESS: DEUTSCHE BANK AG, D.B. HOUSE, HAZARIMAL SOMANI MARG, FORT, MUMBAI- 400001', 'Gujarat', '', 'India', 'Refrigeration & Compressor Parts (GEA BOCK- INDIA)', 1),
+(71, 'COMET TRAWL', '3', NULL, '', 'Esbjerg', '6700', 'Denmark', 'Fishing & Nets Gears, & Vessel parts (Trawldoors)', 1),
+(72, 'CHONGQING CUMMINS ENGINE PARTS CO. LTD., C/O: CHONGQING OGEM TRADE CO. LTD.', '1', NULL, 'A/C NAME: CHONGQING CUMMINS ENGINE PARTS CO. LTD.\r\nA/C NO: 108830237686\r\nBANK: BANK OF CHINA\r\nBRANCH: CHONGQING\r\nSWIFT CODE: BKCHCNBJ59A\r\nTAX CODE: 500106051703873\r\nCONTACT NO: +86 18680806634', 'Chongqing', '400030', 'China', 'Engine Parts (M.E & G.E) (CUMMINS- CHINA)', 1),
+(74, 'Test Supplier 2', '1', NULL, '', '', '', '', '', 1),
+(75, 'AL-HELAL ELECTRIC CO.', '1', NULL, '', 'Chattogram', '', 'Bangladesh', 'Electric Goods, Tube lights, bulbs, ballasts, socket, switch, tester, cables etc.', 1),
+(76, 'BANGLADESH MEDICAL HALL', '1', NULL, '', 'Chattogram', '', 'Bangladesh', 'All types of Medicines', 1),
+(77, 'NEW IT POWER', '1', NULL, '', 'Chattogram', '', 'Bangladesh', 'Computer accessories, printer cartridge etc.', 1),
+(78, 'S.K ELECTRIC ENGINEERING SERVICE', '1', NULL, '', 'Chattogram', '', 'Bangladesh', 'Auto Voltage Regulator, AC/DC motor & generator, Compressor, Electrical Equipments, etc.', 1);
 
 -- --------------------------------------------------------
 
@@ -3870,10 +4632,137 @@ CREATE TABLE `supplier_mobile` (
 --
 
 INSERT INTO `supplier_mobile` (`id`, `supplier_id`, `mobile_no`) VALUES
-(8, '5', '0182636383'),
-(9, '5', '0173537487'),
-(10, '5', '017574645'),
-(12, '6', '0736347');
+(3, '7', ''),
+(7, '10', '01849492274'),
+(8, '10', '01782621193'),
+(9, '11', '01849492274'),
+(10, '11', '01782621193'),
+(11, '12', '01711379348'),
+(12, '12', '01860523312'),
+(13, '13', '01819371846'),
+(14, '13', '01811631822'),
+(15, '14', '01811139834'),
+(16, '14', '01811372898'),
+(17, '15', '01715481461'),
+(18, '16', '01819352561'),
+(19, '16', '01819837267'),
+(20, '17', '01818020956'),
+(21, '18', '01818020956'),
+(22, '18', '01819640029'),
+(23, '19', '01816175257'),
+(24, '19', '01670387913'),
+(25, '20', '01673535856'),
+(26, '21', ''),
+(31, '22', '01711701980'),
+(32, '22', '01711760470'),
+(33, '23', '01818127032'),
+(34, '23', '01766278395'),
+(35, '24', '01715726695'),
+(36, '24', '01712991576'),
+(37, '25', '01816894125'),
+(38, '25', '01672539281'),
+(39, '26', '01776664796'),
+(40, '27', '01776664796'),
+(43, '30', '01715983035'),
+(44, '31', '01817205128'),
+(45, '31', '01815850451'),
+(46, '32', '01818825804'),
+(47, '33', '01833504353'),
+(50, '35', '01716396005'),
+(51, '36', '01675655544'),
+(52, '36', '01845112233'),
+(53, '37', '01711327452'),
+(54, '37', '01711396338'),
+(55, '38', '01711169875'),
+(56, '39', '01715265236'),
+(57, '39', '01831474009'),
+(58, '40', '01914004494'),
+(59, '40', '01616004494'),
+(60, '41', '01855966611'),
+(61, '41', '01777330362'),
+(62, '42', '01819026033'),
+(63, '42', '01967881255'),
+(64, '43', '01711174353'),
+(65, '43', '01819051284'),
+(68, '45', '01711025479'),
+(69, '46', '01726454640'),
+(70, '47', '01838256474'),
+(71, '47', '01823939589'),
+(72, '48', '01749450125'),
+(73, '48', '01861209642'),
+(74, '49', '01712110601'),
+(75, '49', '01612110601'),
+(76, '50', '01819616786'),
+(77, '50', '01824456295'),
+(78, '51', '01711761224'),
+(79, '52', '01711701189'),
+(80, '52', '01823405256'),
+(81, '53', '01758677545'),
+(82, '54', '01819358249'),
+(83, '55', '01714281839'),
+(84, '55', '01710805364'),
+(85, '56', '01819390015'),
+(86, '56', '01710112200'),
+(87, '57', '01711279823'),
+(88, '58', '01711168434'),
+(89, '58', '01954047100'),
+(90, '59', '01819616011'),
+(91, '59', '01731335761'),
+(92, '60', '01195046965'),
+(93, '61', '01816237644'),
+(94, '61', '01758359396'),
+(95, '62', '01816237644'),
+(96, '62', '01758359396'),
+(97, '63', '01819109300'),
+(98, '63', '01818917356'),
+(99, '34', '01824828337'),
+(100, '34', '01817201857'),
+(101, '64', '0066818133065'),
+(106, '8', ''),
+(107, '65', ''),
+(108, '66', ''),
+(112, '69', '006562503813'),
+(114, '71', '004521779990'),
+(115, '72', '008615736263682'),
+(117, '67', '006591192292'),
+(118, '9', '0066813729256'),
+(119, '9', '0066896878782'),
+(120, '68', '006562958402'),
+(121, '68', '006563963782'),
+(122, '70', '00919599557365'),
+(123, '44', '01831093244'),
+(124, '44', '01714408521'),
+(125, '28', '01716069553'),
+(126, '29', '01716069553'),
+(127, '73', '017'),
+(128, '74', '019'),
+(137, '75', '01819795543'),
+(138, '76', ''),
+(139, '77', '01878055581'),
+(140, '77', '01915658648'),
+(141, '78', '01818776311'),
+(142, '78', '01862029573');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_payment`
+--
+
+CREATE TABLE `supplier_payment` (
+  `id` int(255) NOT NULL,
+  `supplier_id` varchar(255) DEFAULT NULL,
+  `payment_date` varchar(255) DEFAULT NULL,
+  `bill_no` varchar(255) DEFAULT NULL,
+  `total_amount` varchar(255) DEFAULT NULL,
+  `total_discount` varchar(255) DEFAULT NULL,
+  `other_charge` varchar(255) DEFAULT NULL,
+  `grand_total` varchar(255) DEFAULT NULL,
+  `paid_amount` varchar(255) DEFAULT NULL,
+  `due_amount` varchar(255) DEFAULT NULL,
+  `pay_type` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -3892,11 +4781,83 @@ CREATE TABLE `supplier_phone` (
 --
 
 INSERT INTO `supplier_phone` (`id`, `supplier_id`, `phone_no`) VALUES
-(8, '5', '0182636383'),
-(9, '5', '0736347'),
-(10, '5', '91836843'),
-(12, '6', '0736347'),
-(13, '6', '8888888888');
+(3, '7', ''),
+(8, '10', ''),
+(9, '11', ''),
+(10, '12', ''),
+(11, '13', ''),
+(12, '14', ''),
+(13, '15', ''),
+(14, '16', ''),
+(15, '17', ''),
+(16, '18', ''),
+(17, '19', ''),
+(18, '20', ''),
+(19, '21', ''),
+(24, '22', ''),
+(25, '23', ''),
+(26, '24', ''),
+(27, '25', ''),
+(28, '26', ''),
+(29, '27', ''),
+(32, '30', ''),
+(33, '31', ''),
+(34, '32', ''),
+(35, '33', ''),
+(37, '35', ''),
+(38, '36', ''),
+(39, '37', ''),
+(40, '38', ''),
+(41, '39', ''),
+(42, '40', ''),
+(43, '41', ''),
+(44, '42', ''),
+(45, '43', ''),
+(47, '45', ''),
+(48, '46', ''),
+(49, '47', ''),
+(50, '48', ''),
+(51, '49', ''),
+(52, '50', ''),
+(53, '51', ''),
+(54, '52', ''),
+(55, '53', ''),
+(56, '54', ''),
+(57, '55', ''),
+(58, '56', ''),
+(59, '57', ''),
+(60, '58', ''),
+(61, '59', ''),
+(62, '60', ''),
+(63, '61', ''),
+(64, '62', ''),
+(65, '63', ''),
+(66, '34', ''),
+(67, '64', '0066034820298'),
+(68, '64', '0066034820299'),
+(73, '8', '66024760522'),
+(74, '8', '66024763572'),
+(75, '65', '0066962495499'),
+(76, '66', '006562581311'),
+(79, '69', ''),
+(82, '71', ''),
+(83, '72', '00862365358329'),
+(86, '67', '006662954488'),
+(87, '67', '006662954489'),
+(88, '9', '006628949452'),
+(89, '9', '006628949453'),
+(90, '68', ''),
+(91, '70', '00912667244861'),
+(92, '70', '00912653061720'),
+(93, '44', ''),
+(94, '28', ''),
+(95, '29', ''),
+(96, '73', ''),
+(97, '74', ''),
+(104, '75', ''),
+(105, '76', '88031615739'),
+(106, '77', ''),
+(107, '78', '');
 
 -- --------------------------------------------------------
 
@@ -4831,9 +5792,72 @@ INSERT INTO `supplier_product` (`supplier_pr_id`, `product_id`, `product_id_two`
 (2167, '3842544848', '225754', 'AT223', 29, NULL, '5000.00'),
 (2168, 'AB12', NULL, 'Apple', 29, NULL, '12000.00'),
 (2170, '6767876', NULL, 'Apple', 2, NULL, '600.00'),
-(2200, '74325422', '', NULL, 2, '', '500.00'),
-(2201, '81244656', '', NULL, 5, 'Dollar', '999.00'),
-(2202, '68354349', '', NULL, 1, 'Dollar', '20.00');
+(2171, '53858917', NULL, 'Xiaomi', 2, NULL, '300.00'),
+(2172, '74325422', NULL, 'Loreal', 2, NULL, '150.00'),
+(2177, '43689356', NULL, '', 3, NULL, '0.00'),
+(2181, '27868792', '', NULL, 3, NULL, '1.00'),
+(2182, '82228667', NULL, '', 3, NULL, '10.00'),
+(2183, '49747246', NULL, '', 2, NULL, '500.00'),
+(2199, '53664342', '', NULL, 3, NULL, '7286.65'),
+(2201, '16294296', '', NULL, 3, NULL, '4004.95'),
+(2202, '24518529', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '4253.50'),
+(2205, '21583987', '', NULL, 3, NULL, '185.69'),
+(2214, '95651937', NULL, 'SUX9Y9ZDBPASDF', 5, NULL, '948.00'),
+(2215, '95651937', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '1218.22'),
+(2218, '17424681', '', NULL, 5, NULL, '1500.00'),
+(2219, '17424681', '', NULL, 3, NULL, '2573.28'),
+(2220, '67899138', '', NULL, 3, NULL, '9.00'),
+(2222, '13468463', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '5675.05'),
+(2223, '85367251', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '1064.26'),
+(2224, '95669627', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '400.87'),
+(2229, '58459882', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '10997.34'),
+(2231, '72955787', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '886.88'),
+(2232, '78642686', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '7762.07'),
+(2233, '45648961', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '331.64'),
+(2234, '52935741', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '24492.81'),
+(2235, '67114931', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '15491.90'),
+(2237, '59124692', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '6253.44'),
+(2239, '53929871', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '172433.05'),
+(2241, '93448636', '', NULL, 3, NULL, '4281.67'),
+(2242, '78315395', NULL, 'SUX9Y9ZDBPASDF', 5, NULL, '11500.00'),
+(2243, '78315395', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '11270.00'),
+(2245, '78493615', NULL, 'SUX9Y9ZDBPASDF', 3, NULL, '50539.68'),
+(2259, '97555421', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '34361.29'),
+(2260, '61873387', '', NULL, 3, NULL, '2907.46'),
+(2261, '54168694', '', NULL, 3, NULL, '23940.60'),
+(2262, '63112579', '', NULL, 3, NULL, '3991.40'),
+(2263, '16566981', '', NULL, 3, NULL, '4785.77'),
+(2264, '18517848', '', NULL, 3, NULL, '45881.60'),
+(2265, '71821423', '', NULL, 3, NULL, '31532.10'),
+(2266, '72678757', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '446.10'),
+(2267, '75133349', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '446.10'),
+(2268, '86148663', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '489.14'),
+(2269, '17926862', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '324.79'),
+(2270, '59539268', '', NULL, 5, NULL, '100.00'),
+(2271, '59539268', '', NULL, 3, NULL, '232.65'),
+(2272, '25837271', '', NULL, 3, NULL, '307.07'),
+(2273, '54943947', '', NULL, 3, NULL, '289.00'),
+(2274, '97153822', '', NULL, 3, NULL, '429.18'),
+(2275, '35135896', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '332.62'),
+(2276, '34823275', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '1220.95'),
+(2277, '28845172', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '4124.45'),
+(2278, '93399336', '', NULL, 3, NULL, '521.66'),
+(2279, '17662126', '', NULL, 3, NULL, '33754.10'),
+(2280, '44971296', '', NULL, 3, NULL, '709.51'),
+(2281, '19682378', '', NULL, 5, NULL, '1179.00'),
+(2282, '45761292', '', NULL, 5, NULL, '650.00'),
+(2283, '89228533', NULL, 'O1OUOGIH4FYMKEH', 3, NULL, '146632.95'),
+(2284, '51277311', '', NULL, 5, NULL, '2500.00'),
+(2285, '51277311', '', NULL, 3, NULL, '7914.37'),
+(2298, '31547468', '', NULL, 64, 'Dollar', '8240.00'),
+(2299, '57935631', '', NULL, 64, 'Dollar', '8970.00'),
+(2300, '49921875', '', NULL, 64, 'Dollar', '10060.00'),
+(2302, '59587973', '', NULL, 67, 'Dollar', '2000.00'),
+(2305, '63455738', '', NULL, 64, 'Dollar', '11030.00'),
+(2308, '34244717', '', NULL, 73, 'Dollar', '1100.00'),
+(2309, '34244717', '', NULL, 74, 'Dollar', '1000.00'),
+(2310, '78161535', NULL, 'SUX9Y9ZDBPASDF', 73, NULL, '9000.00'),
+(2311, '11233344', NULL, 'IS5187VO645ZEPT', 76, NULL, '990.00');
 
 -- --------------------------------------------------------
 
@@ -4856,24 +5880,26 @@ CREATE TABLE `supplier_product_price` (
 --
 
 INSERT INTO `supplier_product_price` (`id`, `supplier_id`, `product_id`, `update_price`, `date`, `time`, `status`) VALUES
-(14, '2', '6767876', '600.00', '2021-08-15', '09:27:40am', 1),
-(15, '2', '74325422', '200.00', '2021-08-14', '09:30:53am', 1),
-(16, '1', '68354349', '20.00', '2021-08-14', '04:39:15pm', 1),
-(17, '5', '81244656', '999.00', '2021-08-14', '06:16:12pm', 1),
-(18, '6', '84562845', '5', '2021-08-15', '12:33:10pm', 1),
-(19, '2', '74325422', '200.00', '2021-08-16', '01:22:10pm', 1),
-(20, '5', '13557324', '8.00', '2021-08-17', '02:26:09pm', 1),
-(21, '5', '13557324', '8.00', '2021-08-17', '03:51:20pm', 1),
-(22, '6', '13557324', '7.00', '2021-08-17', '03:51:20pm', 1),
-(23, '1', '68354349', '20.00', '2021-08-17', '05:07:34pm', 1),
-(24, '2', '74325422', '200.00', '2021-08-17', '05:08:01pm', 1),
-(25, '5', '81244656', '999.00', '2021-08-17', '05:08:25pm', 1),
-(26, '1', '68354349', '20.00', '2021-08-17', '05:26:22pm', 1),
-(27, '2', '74325422', '500.00', '2021-08-19', '07:28:52am', 1),
-(28, '5', '81244656', '2000.00', '2021-08-18', '02:58:39pm', 1),
-(29, '5', '81244656', '999.00', '2021-08-21', '04:59:07pm', 1),
-(30, '5', '81244656', '999.00', '2021-08-21', '05:01:42pm', 1),
-(31, '5', '81244656', '999.00', '2021-08-21', '05:03:14pm', 1);
+(7, '67', '59587973', '2000.00', '2021-08-23', '09:15:35am', 2),
+(8, '', '89228533', '1000', '2021-08-23', '10:23:10am', 1),
+(9, '', '71821423', '1000', '2021-08-23', '10:23:10am', 1),
+(10, '', '89228533', '1000', '2021-08-23', '11:03:37am', 1),
+(11, '67', '59587973', '2000.00', '2021-08-23', '11:03:37am', 1),
+(12, '', '34823275', '1000', '2021-08-23', '11:03:37am', 1),
+(13, '73', '34244717', '1100.00', '2021-08-23', '11:48:02am', 1),
+(14, '73', '34244717', '1100.00', '2021-08-23', '05:57:59pm', 1),
+(15, '73', '78161535', '9000', '2021-08-29', '05:21:29pm', 1),
+(16, '76', '11233344', '990', '2021-08-29', '05:54:13pm', 1),
+(17, NULL, '93448636', '100', '2021-08-30', '07:02:58am', 1),
+(18, NULL, '89228533', '100', '2021-08-30', '07:02:58am', 1),
+(19, NULL, '59587973', '100', '2021-08-30', '07:02:58am', 1),
+(20, NULL, '34823275', '100', '2021-08-30', '07:02:58am', 1),
+(21, NULL, '59587973', '100', '2021-08-31', '07:25:22am', 1),
+(22, NULL, '59539268', '100.00', '2021-08-31', '07:25:22am', 1),
+(23, NULL, '93448636', '100', '2021-09-02', '06:57:08am', 1),
+(24, NULL, '63455738', '100000.00', '2021-09-02', '06:57:08am', 1),
+(25, NULL, '59539268', '100.00', '2021-09-02', '06:57:08am', 1),
+(26, NULL, '34823275', '100', '2021-09-02', '06:57:08am', 1);
 
 -- --------------------------------------------------------
 
@@ -5171,7 +6197,8 @@ INSERT INTO `tax_collection` (`id`, `date`, `customer_id`, `relation_id`) VALUES
 (261, '2021-04-18', '1', '9276756433'),
 (262, '2021-04-22', '1', '8698258484'),
 (263, '2021-04-22', '1', '9321516392'),
-(264, '2021-04-26', '1', '5937273793');
+(264, '2021-04-26', '1', '5937273793'),
+(265, '2021-07-27', '1', '6759512554');
 
 -- --------------------------------------------------------
 
@@ -5185,7 +6212,7 @@ CREATE TABLE `tax_settings` (
   `tax_name` varchar(250) NOT NULL,
   `nt` int(11) NOT NULL,
   `reg_no` varchar(100) NOT NULL,
-  `is_show` tinyint(4) NOT NULL DEFAULT 1
+  `is_show` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -5235,7 +6262,13 @@ CREATE TABLE `unit_cost_history` (
 --
 
 INSERT INTO `unit_cost_history` (`id`, `supplier_id`, `product_id`, `update_unit_cost`, `date`, `time`, `status`) VALUES
-(10, '1', '68354349', '253', '2021:08:22 07:08:02am', NULL, 2);
+(14, '67', '59587973', '2035', '2021:08:23 09:15:35am', NULL, 2),
+(15, '', '89228533', '1000', '2021:08:23 10:23:10am', NULL, 1),
+(16, '', '71821423', '1000', '2021:08:23 10:23:10am', NULL, 1),
+(17, '', '89228533', '980', '2021:08:23 11:03:37am', NULL, 1),
+(18, '67', '59587973', '2000', '2021:08:23 11:03:37am', NULL, 1),
+(19, '', '34823275', '850', '2021:08:23 11:03:37am', NULL, 1),
+(20, '73', '34244717', '1300', '2021:08:23 11:48:02am', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -5249,7 +6282,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `company_name` varchar(250) DEFAULT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `phone` varchar(20) DEFAULT NULL,
   `gender` int(2) DEFAULT NULL,
   `date_of_birth` varchar(255) DEFAULT NULL,
@@ -5268,7 +6301,8 @@ INSERT INTO `users` (`id`, `user_id`, `last_name`, `first_name`, `company_name`,
 (7, 'V2DEJbIBFZq40dl', 'Test', 'Test', NULL, NULL, NULL, NULL, NULL, 'https://localhost/gmebd/gmebd/assets/dist/img/profile_picture/profile.jpg', 1),
 (8, 'oHhdeY9SHRfOBJE', 'CTG', 'Chittagong', NULL, NULL, NULL, NULL, NULL, 'https://localhost/erp_hms/assets/dist/img/profile_picture/profile.jpg', 1),
 (9, 'BqEHuu0wLvpfiJo', 'Outlet', 'Dhaka', NULL, NULL, NULL, NULL, NULL, 'https://localhost/erp_hms/assets/dist/img/profile_picture/profile.jpg', 1),
-(10, 'iddZKdMU6PIVZMj', 'Warehouse', 'Central', NULL, NULL, NULL, NULL, NULL, 'https://localhost/erp_hms/assets/dist/img/profile_picture/profile.jpg', 1);
+(10, 'iddZKdMU6PIVZMj', 'Warehouse', 'Central', NULL, NULL, NULL, NULL, NULL, 'https://localhost/erp_hms/assets/dist/img/profile_picture/profile.jpg', 1),
+(11, 'ByIUOew8UWnm8dD', 'Marine', 'Paradise', NULL, NULL, NULL, NULL, NULL, 'https://paradisemarinebd.com/erp/assets/dist/img/profile_picture/profile.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -5299,7 +6333,8 @@ INSERT INTO `user_login` (`id`, `user_id`, `username`, `password`, `user_type`, 
 (9, 'V2DEJbIBFZq40dl', 'test@gmail.com', '41d99b369894eb1ec3f461135132d8bb', 2, NULL, 1),
 (10, 'oHhdeY9SHRfOBJE', 'ctg@gmail.com', '5c9f45d10caa8504c488a5abb3cb02ee', 2, NULL, 1),
 (11, 'BqEHuu0wLvpfiJo', 'dhaka@gmail.com', 'ec9ad1793e0fb033be89e42b020a595a', 2, NULL, 1),
-(12, 'iddZKdMU6PIVZMj', 'cw@gmail.com', '04e80b52c69af326bc98c0ebec4e0c8d', 2, NULL, 1);
+(12, 'iddZKdMU6PIVZMj', 'cw@gmail.com', '04e80b52c69af326bc98c0ebec4e0c8d', 2, NULL, 1),
+(13, 'ByIUOew8UWnm8dD', 'paradise@gmail.com', '41d99b369894eb1ec3f461135132d8bb', 2, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -5353,6 +6388,32 @@ INSERT INTO `warrenty_return` (`return_id`, `product_id`, `invoice_id`, `invoice
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `wastage_dec`
+--
+
+CREATE TABLE `wastage_dec` (
+  `id` int(11) NOT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
+  `wastage_quantity` varchar(255) DEFAULT NULL,
+  `dead_quantity` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wastage_dec`
+--
+
+INSERT INTO `wastage_dec` (`id`, `product_id`, `wastage_quantity`, `dead_quantity`, `status`) VALUES
+(1, '59587973', '20', NULL, '1'),
+(2, '93448636', '21', NULL, '1'),
+(3, '59587973', '22', NULL, '1'),
+(4, '93448636', '3', NULL, '1'),
+(5, '59587973', NULL, '6', '1'),
+(6, '67899138', NULL, '5', '1');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `web_setting`
 --
 
@@ -5367,10 +6428,10 @@ CREATE TABLE `web_setting` (
   `footer_text` varchar(255) DEFAULT NULL,
   `language` varchar(255) DEFAULT NULL,
   `rtr` varchar(255) DEFAULT NULL,
-  `captcha` int(11) DEFAULT 1 COMMENT '0=active,1=inactive',
+  `captcha` int(11) DEFAULT '1' COMMENT '0=active,1=inactive',
   `site_key` varchar(250) DEFAULT NULL,
   `secret_key` varchar(250) DEFAULT NULL,
-  `discount_type` int(11) DEFAULT 1
+  `discount_type` int(11) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -5378,7 +6439,7 @@ CREATE TABLE `web_setting` (
 --
 
 INSERT INTO `web_setting` (`setting_id`, `logo`, `invoice_logo`, `favicon`, `currency`, `timezone`, `currency_position`, `footer_text`, `language`, `rtr`, `captcha`, `site_key`, `secret_key`, `discount_type`) VALUES
-(1, 'https://erp.gmebdonline.com/./my-assets/image/logo/8e58af86bc24f2ebf5fae4c24bb7860d.png', 'http://erp.devenport.co/./my-assets/image/logo/df40f631bb64182d87895c1eaf2f01ea.png', 'http://erp.devenport.co/my-assets/image/logo/5e40b3bddb804d7e975dd522dd1af73f.png', 'Tk', 'Asia/Dhaka', '0', 'Copyright© 2020-GMELBD', 'english', '0', 1, '', '', 1);
+(1, 'https://git.test/paradise/./my-assets/image/logo/49c23b36644fcd1cfe9ae5b5806c2307.jpeg', 'https://git.test/paradise/./my-assets/image/logo/ce8a17748021f8200f1bdaca82b1f516.jpeg', 'https://git.test/paradise/my-assets/image/logo/cb84487703060f2e5692441eb268886d.jpeg', 'Tk', 'Asia/Dhaka', '0', 'Copyright© 2020-2021 ParadiseMine', 'english', '0', 1, '', '', 1);
 
 --
 -- Indexes for dumped tables
@@ -5417,6 +6478,24 @@ ALTER TABLE `attendance`
 -- Indexes for table `bank_add`
 --
 ALTER TABLE `bank_add`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `barcode_print`
+--
+ALTER TABLE `barcode_print`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `barcode_print_details`
+--
+ALTER TABLE `barcode_print_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bill_details`
+--
+ALTER TABLE `bill_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5514,6 +6593,12 @@ ALTER TABLE `employee_salary_setup`
 --
 ALTER TABLE `employee_tr`
   ADD PRIMARY KEY (`tr_id`);
+
+--
+-- Indexes for table `erp_entry_details`
+--
+ALTER TABLE `erp_entry_details`
+  ADD PRIMARY KEY (`entry_id`);
 
 --
 -- Indexes for table `expense`
@@ -5830,6 +6915,12 @@ ALTER TABLE `supplier_mobile`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `supplier_payment`
+--
+ALTER TABLE `supplier_payment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `supplier_phone`
 --
 ALTER TABLE `supplier_phone`
@@ -5899,6 +6990,12 @@ ALTER TABLE `warrenty_return`
   ADD KEY `supplier_id` (`supplier_id`);
 
 --
+-- Indexes for table `wastage_dec`
+--
+ALTER TABLE `wastage_dec`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `web_setting`
 --
 ALTER TABLE `web_setting`
@@ -5912,7 +7009,7 @@ ALTER TABLE `web_setting`
 -- AUTO_INCREMENT for table `acc_transaction`
 --
 ALTER TABLE `acc_transaction`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `app_setting`
@@ -5931,6 +7028,24 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `bank_add`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `barcode_print`
+--
+ALTER TABLE `barcode_print`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `barcode_print_details`
+--
+ALTER TABLE `barcode_print_details`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `bill_details`
+--
+ALTER TABLE `bill_details`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bkash_add`
@@ -5960,7 +7075,7 @@ ALTER TABLE `courier_name`
 -- AUTO_INCREMENT for table `currency_tbl`
 --
 ALTER TABLE `currency_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `customer_information`
@@ -6023,6 +7138,12 @@ ALTER TABLE `employee_tr`
   MODIFY `tr_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
+-- AUTO_INCREMENT for table `erp_entry_details`
+--
+ALTER TABLE `erp_entry_details`
+  MODIFY `entry_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `expense`
 --
 ALTER TABLE `expense`
@@ -6038,13 +7159,13 @@ ALTER TABLE `expense_item`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
 
 --
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `language`
@@ -6104,61 +7225,61 @@ ALTER TABLE `pesonal_loan_information`
 -- AUTO_INCREMENT for table `product_brand`
 --
 ALTER TABLE `product_brand`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `product_information`
 --
 ALTER TABLE `product_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `product_model`
 --
 ALTER TABLE `product_model`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `product_purchase`
 --
 ALTER TABLE `product_purchase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `product_purchase_details`
 --
 ALTER TABLE `product_purchase_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `product_service`
 --
 ALTER TABLE `product_service`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `product_subcat`
 --
 ALTER TABLE `product_subcat`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `product_type`
 --
 ALTER TABLE `product_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_cart`
 --
 ALTER TABLE `purchase_order_cart`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `quotation`
@@ -6188,25 +7309,25 @@ ALTER TABLE `quot_products_used`
 -- AUTO_INCREMENT for table `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10767;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10901;
 
 --
 -- AUTO_INCREMENT for table `rqsn`
 --
 ALTER TABLE `rqsn`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `rqsn_cart`
 --
 ALTER TABLE `rqsn_cart`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `rqsn_details`
 --
 ALTER TABLE `rqsn_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `rqsn_return`
@@ -6230,13 +7351,13 @@ ALTER TABLE `salary_type`
 -- AUTO_INCREMENT for table `sec_role`
 --
 ALTER TABLE `sec_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sec_userrole`
 --
 ALTER TABLE `sec_userrole`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `sent_sms`
@@ -6272,55 +7393,61 @@ ALTER TABLE `sub_module`
 -- AUTO_INCREMENT for table `supplier_address`
 --
 ALTER TABLE `supplier_address`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `supplier_contact`
 --
 ALTER TABLE `supplier_contact`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `supplier_email`
 --
 ALTER TABLE `supplier_email`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `supplier_information`
 --
 ALTER TABLE `supplier_information`
-  MODIFY `supplier_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `supplier_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `supplier_mobile`
 --
 ALTER TABLE `supplier_mobile`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+
+--
+-- AUTO_INCREMENT for table `supplier_payment`
+--
+ALTER TABLE `supplier_payment`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier_phone`
 --
 ALTER TABLE `supplier_phone`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `supplier_product`
 --
 ALTER TABLE `supplier_product`
-  MODIFY `supplier_pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2203;
+  MODIFY `supplier_pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2312;
 
 --
 -- AUTO_INCREMENT for table `supplier_product_price`
 --
 ALTER TABLE `supplier_product_price`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tax_collection`
 --
 ALTER TABLE `tax_collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 
 --
 -- AUTO_INCREMENT for table `tax_settings`
@@ -6338,19 +7465,25 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `unit_cost_history`
 --
 ALTER TABLE `unit_cost_history`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `wastage_dec`
+--
+ALTER TABLE `wastage_dec`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `web_setting`
