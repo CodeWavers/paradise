@@ -2448,8 +2448,8 @@ class Invoices extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('invoice a');
-        $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
-        $this->db->where('b.status', 1);
+        // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
+        $this->db->where('a.status', 2);
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

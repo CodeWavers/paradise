@@ -1546,7 +1546,7 @@ class Cinvoice extends CI_Controller
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-warning btn-sm" >Full Paid</button>
+                    <button type="button" onclick="full_paid()" class="btn btn-warning btn-sm" >Full Paid</button>
                 </td>
                 <td colspan="2" class="text-right">Due</td>
                 <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="" readonly></td>
@@ -1624,7 +1624,7 @@ class Cinvoice extends CI_Controller
                 <td><input id="qty_' . $count . '" type="text" name="adjusted_quantity[]" class="form-control" value="' . $rq['quantity'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
                 <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="' . $rq['rate'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
                 <td><input type="text" id="row_total_' . $count . '" name="item_total[]" class="form-control row_total" value="' . $rq['total_price'] . '" readonly></td>
-                <td><button type="button" class="btn btn-sm btn-danger" onclick="delete_row(' . $rq['invoice_details_id'] . ')"><i class="fa fa-trash"></i></button></td></tr>';
+                <td><button type="button" class="btn btn-sm btn-danger" onclick="delete_row(' . $rq['invoice_details_id'] . ', this)"><i class="fa fa-trash"></i></button></td></tr>';
         }
 
         $output .= '</tbody>
@@ -1656,8 +1656,8 @@ class Cinvoice extends CI_Controller
 
             $data = array(
                 'quantity' => $item_adjs_qty,
-                'rate'     => $item_rate[$i],
-                'total_price'   => $item_total[$i]
+                'rate'     => $item_rate,
+                'total_price'   => $item_total
             );
 
             $this->db->set($data);
@@ -1668,5 +1668,30 @@ class Cinvoice extends CI_Controller
         $this->db->set('status', 2);
         $this->db->where('invoice_id', $invoice_id);
         $this->db->update('invoice');
+
+        redirect(base_url('Cinvoice/manage_sales_order'));
+    }
+
+    public function remove_sales_order_row()
+    {
+        $invoice_id = $this->input->post('inv_id', TRUE);
+        $invoice_details_id = $this->input->post('inv_details_id', TRUE);
+
+        $inv = $this->db->select('*')
+            ->from('invoice_details')
+            ->where('invoice_id', $invoice_id)
+            ->get()->result_array();
+
+        // echo '<pre>';
+        // print_r(count($inv));
+        // exit();
+        // if there is no sales list left remove the sales_order
+        if (count($inv) <= 1) {
+            $this->db->where('invoice_id', $inv[0]['invoice_id']);
+            $this->db->delete('invoice');
+        }
+
+        $this->db->where('invoice_details_id', $invoice_details_id);
+        $this->db->delete('invoice_details');
     }
 }

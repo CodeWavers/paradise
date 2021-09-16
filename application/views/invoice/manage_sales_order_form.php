@@ -123,7 +123,24 @@
 
     }
 
-    function delete_row(inv_details_id) {
+    function delete_row(inv_details_id, e) {
+        var invoice_id = $("#invoice_no").val();
+        var a = e.parentNode.parentNode;
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
 
+
+        $.ajax({
+            url: '<?php echo base_url(); ?>Cinvoice/remove_sales_order_row',
+            method: 'POST',
+            data: {
+                inv_id: invoice_id,
+                inv_details_id: inv_details_id,
+                csrf_test_name: csrf_test_name
+            },
+            success: () => {
+                a.parentNode.removeChild(a);
+                toastr.error('Row removed.');
+            }
+        });
     }
 </script>
