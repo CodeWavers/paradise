@@ -1423,7 +1423,7 @@ class Cinvoice extends CI_Controller
         $invoice_id = $this->input->post('invoice_id', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
-        $contact_person = $this->input->post('contact_person', TRUE);
+        $contact_no = $this->input->post('contact_no', TRUE);
         $vessel_name = $this->input->post('vessel_name', TRUE);
         $paid_amount = $this->input->post('advance', TRUE);
         $due_amount = $this->input->post('due_amount', TRUE);
@@ -1440,7 +1440,7 @@ class Cinvoice extends CI_Controller
             'date'          => $date,
             'customer_id'   => $customer_name,
             'vessel_name'   => $vessel_name,
-            'contact_person'   => $contact_person,
+            'contact_no'   => $conatact_no,
             'total_amount'  => $grand_total,
             'paid_amount'   => $paid_amount,
             'due_amount'    => $due_amount,
@@ -1498,15 +1498,14 @@ class Cinvoice extends CI_Controller
     public function add_deliver()
     {
 
+        $dc_no = $this->input->post('dc_no', TRUE);
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $invoice_id = $this->input->post('invoice_id', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
-        $vessel_name = $this->input->post('vessel_name', TRUE);
-        $paid_amount = $this->input->post('advance', TRUE);
-        $due_amount = $this->input->post('due_amount', TRUE);
-        $discount = $this->input->post('discount', TRUE);
-        $grand_total = $this->input->post('grand_total', TRUE);
+        $contact_person = $this->input->post('contact_person', TRUE);
+        $remarks = $this->input->post('remarks', TRUE);
+
         $product_id = $this->input->post('product_id', TRUE);
 
         $order_qty = $this->input->post('order_quantity', TRUE);
@@ -1515,13 +1514,10 @@ class Cinvoice extends CI_Controller
 
         $data_1 = array(
 
-            'date'          => $date,
-            'customer_id'   => $customer_name,
-            'total_amount'  => $grand_total,
-            'paid_amount'   => $paid_amount,
-            'due_amount'    => $due_amount,
-            'total_discount' => $discount,
-            'status'        => 1
+            'dc_no'          => $dc_no,
+            'contact_person'   => $contact_person,
+            'remarks'  => $remarks,
+            'status'        => 4
         );
 
         $this->db->where('invoice_no', $invoice_no);
@@ -1537,7 +1533,7 @@ class Cinvoice extends CI_Controller
                 'order_qty'         => $item_order_qty,
                 'rate'              => $item_rate,
                 'total_price'       => $item_total,
-                'status'            => 2
+//                'status'            => 2
             );
             $this->db->where('product_id', $pr_id);
             $result = $this->db->update('invoice_details', $data_2);
