@@ -1509,13 +1509,17 @@ class Cinvoice extends CI_Controller
         $product_id = $this->input->post('product_id', TRUE);
 
         $order_qty = $this->input->post('order_quantity', TRUE);
-        $rate = $this->input->post('rate', TRUE);
-        $row_total = $this->input->post('item_total', TRUE);
+        $dc_qty = $this->input->post('dc_quantity', TRUE);
+//        $_qty = $this->input->post('bl_quantity', TRUE);
+        $db_name = $this->input->post('db_name', TRUE);
+        $rb_name = $this->input->post('rb_name', TRUE);
 
         $data_1 = array(
 
             'dc_no'          => $dc_no,
             'contact_person'   => $contact_person,
+            'delivered_by'   => $db_name,
+            'received_by'   => $rb_name,
             'remarks'  => $remarks,
             'status'        => 4
         );
@@ -1525,14 +1529,12 @@ class Cinvoice extends CI_Controller
 
         for ($i = 0; $i < count($product_id); $i++) {
             $pr_id = $product_id[$i];
-            $item_order_qty = $order_qty[$i];
-            $item_rate = $rate[$i];
-            $item_total = $row_total[$i];
+            $item_dc_qty = $dc_qty[$i];
+
 
             $data_2 = array(
-                'order_qty'         => $item_order_qty,
-                'rate'              => $item_rate,
-                'total_price'       => $item_total,
+                'dc_qty'         => $item_dc_qty,
+
 //                'status'            => 2
             );
             $this->db->where('product_id', $pr_id);
