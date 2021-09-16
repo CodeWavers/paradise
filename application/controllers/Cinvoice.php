@@ -1342,6 +1342,15 @@ class Cinvoice extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function delivery_chalan()
+    {
+        $CI = &get_instance();
+        // $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $content = $CI->linvoice->add_new_sales();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function save_sales_order()
     {
 

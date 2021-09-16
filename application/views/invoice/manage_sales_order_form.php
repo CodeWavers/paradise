@@ -74,13 +74,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-12">
+                                    <div class="form-group row">
+                                        <button type="submit" style="float : left" class="btn btn-info">Approve</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="invo_details_div">
                             <h3 align="center">Select an invoice no. to get data.</h3>
                         </div>
 
-                        <button type="submit" style="float : right" class="btn btn-success">Submit</button>
+
 
                     </div>
                 </div>
