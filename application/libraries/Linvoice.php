@@ -1088,4 +1088,26 @@ class Linvoice
         $view = $CI->parser->parse('invoice/add_new_sales_form', $data, true);
         return $view;
     }
+
+    public function delivery_chalan()
+    {
+        $CI = &get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Invoices');
+
+        $approved_list = $CI->Invoices->delivery_chalan();
+
+        $dc_no = $CI->Invoices->generate_dc_no();
+
+
+
+        $data = array(
+            'title'     => 'Delivery Chalan',
+            'approved_list'     => $approved_list,
+            'dc_no'    => $dc_no,
+        );
+
+        $view = $CI->parser->parse('invoice/delivery_chalan', $data, true);
+        return $view;
+    }
 }

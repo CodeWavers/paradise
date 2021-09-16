@@ -1347,7 +1347,7 @@ class Cinvoice extends CI_Controller
         $CI = &get_instance();
         // $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
-        $content = $CI->linvoice->add_new_sales();
+        $content = $CI->linvoice->delivery_chalan();
         $this->template->full_admin_html_view($content);
     }
 
@@ -1417,6 +1417,85 @@ class Cinvoice extends CI_Controller
 
 
     public function add_sale()
+    {
+
+        $invoice_no = $this->input->post('invoice_no', TRUE);
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $date = $this->input->post('invoice_date', TRUE);
+        $customer_name = $this->input->post('customer', TRUE);
+        $contact_person = $this->input->post('contact_person', TRUE);
+        $vessel_name = $this->input->post('vessel_name', TRUE);
+        $paid_amount = $this->input->post('advance', TRUE);
+        $due_amount = $this->input->post('due_amount', TRUE);
+        $discount = $this->input->post('discount', TRUE);
+        $grand_total = $this->input->post('grand_total', TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
+
+        $order_qty = $this->input->post('order_quantity', TRUE);
+        $rate = $this->input->post('rate', TRUE);
+        $row_total = $this->input->post('item_total', TRUE);
+
+        $data_1 = array(
+
+            'date'          => $date,
+            'customer_id'   => $customer_name,
+            'vessel_name'   => $vessel_name,
+            'contact_person'   => $contact_person,
+            'total_amount'  => $grand_total,
+            'paid_amount'   => $paid_amount,
+            'due_amount'    => $due_amount,
+            'total_discount' => $discount,
+            'status'        => 3
+        );
+
+        $this->db->where('invoice_no', $invoice_no);
+        $this->db->update('invoice', $data_1);
+
+        for ($i = 0; $i < count($product_id); $i++) {
+            $pr_id = $product_id[$i];
+            $item_order_qty = $order_qty[$i];
+            $item_rate = $rate[$i];
+            $item_total = $row_total[$i];
+
+            $data_2 = array(
+                'order_qty'         => $item_order_qty,
+                'rate'              => $item_rate,
+                'total_price'       => $item_total,
+//                'status'            => 2
+            );
+            $this->db->where('product_id', $pr_id);
+            $result = $this->db->update('invoice_details', $data_2);
+        }
+
+
+        if (!empty($result)) {
+            $data['status'] = true;
+            $data['invoice_id'] = $invoice_id;
+            $data['message'] = display('save_successfully');
+            $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
+            if ($mailsetting[0]['isinvoice'] == 1) {
+                $mail = $this->invoice_pdf_generate($invoice_id);
+                if ($mail == 0) {
+                    $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
+                }
+            }
+            $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
+        } else {
+            $data['status'] = false;
+            $data['error_message'] = 'Sorry';
+        }
+
+        echo json_encode($data);
+
+        //        $rqsn_id = $this->input->post('rqsn_id', TRUE);
+        //        $this->db->where('rqsn_id', $rqsn_id);
+        //        $this->db->set('is_sold', 1);
+        //        $this->db->update('rqsn');
+
+        //  redirect('Cinvoice/add_new_sales');
+    }
+
+    public function add_deliver()
     {
 
         $invoice_no = $this->input->post('invoice_no', TRUE);
@@ -1581,6 +1660,89 @@ class Cinvoice extends CI_Controller
             'cus_name'  => $details[0]['outlet_name'],
             'cus_id'    => $details[0]['outlet_id'],
             'invoice_id'    => $details[0]['invoice_id']
+        );
+
+        echo json_encode($data);
+    }
+
+    public function get_dc_details()
+    {
+        $CI = &get_instance();
+        $CI->load->model('Invoices');
+
+        $invoice_no = $this->input->post('invoice_no', true);
+
+        $details = $CI->Invoices->approved_dc_details($invoice_no);
+       //  echo '<pre>'; print_r($details); exit();
+
+        $output = "";
+        $count = 0;
+
+        $output .= '<div class="table-responsive">
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <th width="2%">Sl. NO</th>
+                <th width="8%">Product Name</th>
+                <th width="5%">Order Quantity</th>
+                <th width="5%">Delivered  Quantity</th>
+                <th width="5%">Balanced Quantity</th>
+                <th width="5%">Remarks</th>
+               
+            </thead>
+            <tbody>';
+
+        foreach ($details as $rq) {
+            $count++;
+            $output .= '<tr><td>' . $count . '</td>
+                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
+                </td>
+
+                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
+                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"  placeholder="0.00"></td>
+                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
+                  <td><input type="text" name="remarks[]" class="form-control" value="" placeholder="Remarks" >
+             
+                </td>
+                </tr>';
+        }
+
+        $output .= '</tbody>
+      
+    </table>
+                    <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label for="invoice_no" class="col-sm-3 col-form-label">Delivered By</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="db_name" class="form-control" value=\'\' >
+                                    </div>
+                                </div>
+                            </div>
+                            
+                                <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label for="invoice_no" class="col-sm-3 col-form-label">Received By</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="rb_name" class="form-control" value=\'\' >
+                                    </div>
+                                </div>
+                            </div>
+                            
+                    </div>
+
+
+    </div>
+
+    ';
+
+        $data = array(
+            'html' => $output,
+            'cus_name'  => $details[0]['outlet_name'],
+            'cus_id'    => $details[0]['outlet_id'],
+            'rqsn_no'    => $details[0]['rqsn_no'],
+            'invoice_id'    => $details[0]['invoice_id'],
+            'vessel_name'    => $details[0]['vessel_name']
         );
 
         echo json_encode($data);
