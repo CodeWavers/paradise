@@ -548,7 +548,7 @@ class Linvoice
 
         );
 
-        echo '<pre>';print_r($invoice_detail);exit();
+        //echo '<pre>';print_r($invoice_detail);exit();
 
         $chapterList = $CI->parser->parse('invoice/invoice_html_manual_new', $data, true);
         return $chapterList;
