@@ -516,7 +516,7 @@ class Linvoice
         $data = array(
             'title'             => display('invoice_details'),
             'invoice_id'        => $invoice_detail[0]['invoice_id'],
-           // 'invoice_id'        => $invoice_id,
+            // 'invoice_id'        => $invoice_id,
             'invoice_no'        => $invoice_detail[0]['invoice'],
             'customer_name'     => $invoice_detail[0]['customer_name'],
             'customer_address'  => $invoice_detail[0]['customer_address'],
