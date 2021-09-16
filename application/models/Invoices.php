@@ -2424,4 +2424,22 @@ class Invoices extends CI_Model
 
         return false;
     }
+
+    public function get_so_details($invoice_id)
+    {
+        $this->db->select('*');
+        $this->db->from('invoice_details a');
+        $this->db->where('a.invoice_id', $invoice_id);
+        $this->db->join('product_information b', 'b.product_id = a.product_id');
+        $this->db->join('product_brand d', 'd.brand_id = b.brand_id', 'left');
+        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+    }
 }

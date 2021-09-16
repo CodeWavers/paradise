@@ -1405,4 +1405,96 @@ class Cinvoice extends CI_Controller
 
         redirect('Cinvoice/sales_order');
     }
+
+    public function get_po_details()
+    {
+
+        $CI = &get_instance();
+        $CI->load->model('Invoices');
+
+        $invoice_id = $this->input->post('invoice_id', true);
+
+        $rqsn_details = $CI->Invoices->get_so_details($invoice_id);
+        // echo '<pre>'; print_r($rqsn_details); exit();
+
+        $output = "";
+        $count = 0;
+
+        $output .= '<div class="table-responsive">
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <th>Sl. NO</th>
+                <th>Product Name</th>
+                <th>Parts No.</th>
+                <th>SKU</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th width="5%">Order Quantity</th>
+                <th width="5%">Adjusted Quantity</th>
+                <th width="8%">Unit Price</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </thead>
+            <tbody>';
+
+        foreach ($rqsn_details as $rq) {
+            $count++;
+            $output .= '<tr><td>' . $count . '</td>
+                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
+                <input type="hidden" name="invoice_details_id[]" value="' . $rq['invoice_details_id'] . '">
+                </td>
+                <td><input type="text" class="form-control" value="' . $rq['parts'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" value="' . $rq['brand_name'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" value="' . $rq['model_name'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" name="order_quantity[]" value="' . $rq['order_qty'] . '" readonly="readonly"></td>
+                <td><input id="qty_' . $count . '" type="text" name="adjusted_quantity[]" class="form-control" value="' . $rq['quantity'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
+                <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="' . $rq['rate'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
+                <td><input type="text" id="row_total_' . $count . '" name="item_total[]" class="form-control row_total" value="' . $rq['total_price'] . '" readonly></td>
+                <td><button type="button" class="btn btn-sm btn-danger" onclick="delete_row(' . $rq['invoice_details_id'] . ')"><i class="fa fa-trash"></i></button></td></tr>';
+        }
+
+        $output .= '</tbody>
+    </table>
+    </div>';
+
+        $data = array(
+            'html' => $output,
+        );
+
+        echo json_encode($data);
+    }
+
+    public function approve_sales_order()
+    {
+
+        $invoice_id = $this->input->post('invoice_no', TRUE);
+
+        $invoice_details_id = $this->input->post('invoice_details_id', TRUE);
+        $adjusted_qty = $this->input->post('adjusted_quantity', TRUE);
+        $rate = $this->input->post('rate', TRUE);
+        $row_total = $this->input->post('item_total', TRUE);
+
+        for ($i = 0; $i < count($invoice_details_id); $i++) {
+            $item_id = $invoice_details_id[$i];
+            $item_adjs_qty = $adjusted_qty[$i];
+            $item_rate = $rate[$i];
+            $item_total = $row_total[$i];
+
+            $data = array(
+                'quantity' => $item_adjs_qty,
+                'rate'     => $item_rate[$i],
+                'total_price'   => $item_total[$i]
+            );
+
+            $this->db->set($data);
+            $this->db->where('invoice_details_id', $item_id);
+            $this->db->update('invoice_details');
+        }
+
+        $this->db->set('status', 2);
+        $this->db->where('invoice_id', $invoice_id);
+        $this->db->update('invoice');
+    }
 }
