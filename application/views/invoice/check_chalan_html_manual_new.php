@@ -200,7 +200,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                             <th class="text-center">Product name</th>
                                             <th class="text-center">Parts</th>
                                             <th class="text-center">SKU</th>
-                                            <th class="text-right">Order Quantity</th>
+                                            <th class="text-right">Requisition Quantity</th>
                                             <th class="text-right">Delivered Quantity</th>
                                             <th class="text-right">Remarks</th>
 
