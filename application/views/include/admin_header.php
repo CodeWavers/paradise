@@ -215,16 +215,16 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                     </a>
                     <ul class="treeview-menu">
 
-                        <?php if ($this->permission1->method('new_invoice', 'create')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('1') == ("Cinvoice") && $this->uri->segment('2') == ("")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href="<?php echo base_url('Cinvoice') ?>"><?php echo display('new_invoice') ?></a>
-                            </li>
-                        <?php } ?>
+<!--                        --><?php //if ($this->permission1->method('new_invoice', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('1') == ("Cinvoice") && $this->uri->segment('2') == ("")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--"><a href="--><?php //echo base_url('Cinvoice') ?><!--">--><?php //echo display('new_invoice') ?><!--</a>-->
+<!--                            </li>-->
+<!--                        --><?php //} ?>
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
@@ -286,65 +286,65 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             </li>
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("manage_invoice")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>">
-                                <a href="<?php echo base_url('Cinvoice/manage_invoice') ?>"><?php echo display('manage_invoice') ?></a>
-                            </li>
-                        <?php } ?>
+<!--                        --><?php //if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("manage_invoice")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--">-->
+<!--                                <a href="--><?php //echo base_url('Cinvoice/manage_invoice') ?><!--">--><?php //echo display('manage_invoice') ?><!--</a>-->
+<!--                            </li>-->
+<!--                        --><?php //} ?>
 
 
 
 
 
 
-                        <?php if ($this->permission1->method('dispatch_outlet', 'create')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("dispatch_outlet")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href="<?php echo base_url('Cinvoice/dispatch_outlet') ?>">Dispatch Sale</a></li>
-                        <?php } ?>
-                        <?php if ($this->permission1->method('pos_invoice', 'create')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("pos_invoice")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>">
-                                <a href="<?php echo base_url('Cinvoice/pos_invoice') ?>"><?php echo display('pos_invoice') ?></a>
-                            </li>
-                        <?php } ?>
-                        <?php if ($this->permission1->method('gui_pos', 'create')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("gui_pos")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>">
-                                <a href="<?php echo base_url('Cinvoice/gui_pos') ?>"><?php echo display('gui_pos') ?></a>
-                            </li>
-                        <?php } ?>
-
-                        <?php if ($this->permission1->method('sales_cheque_report', 'create')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("sales_cheque_report")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href="<?php echo base_url('Admin_dashboard/sales_cheque_report') ?>">Manage
-                                    Cheque</a></li>
-                        <?php } ?>
+<!--                        --><?php //if ($this->permission1->method('dispatch_outlet', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("dispatch_outlet")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--"><a href="--><?php //echo base_url('Cinvoice/dispatch_outlet') ?><!--">Dispatch Sale</a></li>-->
+<!--                        --><?php //} ?>
+<!--                        --><?php //if ($this->permission1->method('pos_invoice', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("pos_invoice")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--">-->
+<!--                                <a href="--><?php //echo base_url('Cinvoice/pos_invoice') ?><!--">--><?php //echo display('pos_invoice') ?><!--</a>-->
+<!--                            </li>-->
+<!--                        --><?php //} ?>
+<!--                        --><?php //if ($this->permission1->method('gui_pos', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("gui_pos")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--">-->
+<!--                                <a href="--><?php //echo base_url('Cinvoice/gui_pos') ?><!--">--><?php //echo display('gui_pos') ?><!--</a>-->
+<!--                            </li>-->
+<!--                        --><?php //} ?>
+<!---->
+<!--                        --><?php //if ($this->permission1->method('sales_cheque_report', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("sales_cheque_report")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--"><a href="--><?php //echo base_url('Admin_dashboard/sales_cheque_report') ?><!--">Manage-->
+<!--                                    Cheque</a></li>-->
+<!--                        --><?php //} ?>
 
 
                     </ul>
