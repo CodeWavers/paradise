@@ -1847,7 +1847,7 @@ class Invoices extends CI_Model
                         d.product_model,
                         a.paid_amount as paid_amount,
                         a.due_amount as due_amount,
-                        ,
+                        x.rqsn_no,
                        '
 
         );
@@ -1855,6 +1855,7 @@ class Invoices extends CI_Model
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('outlet_warehouse b', 'b.outlet_id = a.customer_id');
         $this->db->join('product_information d', 'd.product_id = c.product_id');
+        $this->db->join('rqsn x', 'x.rqsn_id = a.rqsn_id');
         // $this->db->join('branch_name e', 'e.branch_id = a.branch_id');
         // $this->db->join('courier_name f', 'f.courier_id = a.courier_id');
         $this->db->where('a.invoice_id', $invoice_id);
@@ -2488,7 +2489,7 @@ class Invoices extends CI_Model
 
     public function approved_so_details($invoice_no)
     {
-        $this->db->select('*');
+        $this->db->select('*, a.paid_amount as inv_paid');
         $this->db->from('invoice a');
         $this->db->where('a.invoice_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');

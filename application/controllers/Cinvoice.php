@@ -1356,6 +1356,11 @@ class Cinvoice extends CI_Controller
 
         $invoice_id = $this->generator(10);
 
+
+        $rqsn_id = $this->input->post('rqsn_id', TRUE);
+        $sub_total = $this->input->post('sub_total', TRUE);
+        $other_charges = $this->input->post('other_charges', TRUE);
+
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
@@ -1372,10 +1377,13 @@ class Cinvoice extends CI_Controller
         $row_total = $this->input->post('item_total', TRUE);
 
         $data_1 = array(
+            'rqsn_id'       => $rqsn_id,
             'invoice_id'    => $invoice_id,
             'invoice_no'    => $invoice_no,
             'date'          => $date,
             'customer_id'   => $customer_name,
+            'sub_total'     => $sub_total,
+            'other_charges' => $other_charges,
             'total_amount'  => $grand_total,
             'delivery_type' => $delivery_type,
             'paid_amount'   => $paid_amount,
@@ -1440,7 +1448,7 @@ class Cinvoice extends CI_Controller
             'date'          => $date,
             'customer_id'   => $customer_name,
             'vessel_name'   => $vessel_name,
-            'contact_no'   => $conatact_no,
+            'contact_no'   => $contact_no,
             'total_amount'  => $grand_total,
             'paid_amount'   => $paid_amount,
             'due_amount'    => $due_amount,
@@ -1461,7 +1469,7 @@ class Cinvoice extends CI_Controller
                 'order_qty'         => $item_order_qty,
                 'rate'              => $item_rate,
                 'total_price'       => $item_total,
-//                'status'            => 2
+                //                'status'            => 2
             );
             $this->db->where('product_id', $pr_id);
             $result = $this->db->update('invoice_details', $data_2);
@@ -1472,13 +1480,13 @@ class Cinvoice extends CI_Controller
             $data['status'] = true;
             $data['invoice_id'] = $invoice_id;
             $data['message'] = display('save_successfully');
-            $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
-            if ($mailsetting[0]['isinvoice'] == 1) {
-                $mail = $this->invoice_pdf_generate($invoice_id);
-                if ($mail == 0) {
-                    $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
-                }
-            }
+            // $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
+            // if ($mailsetting[0]['isinvoice'] == 1) {
+            //     $mail = $this->invoice_pdf_generate($invoice_id);
+            //     if ($mail == 0) {
+            //         $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
+            //     }
+            // }
             $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
         } else {
             $data['status'] = false;
@@ -1510,7 +1518,7 @@ class Cinvoice extends CI_Controller
 
         $order_qty = $this->input->post('order_quantity', TRUE);
         $dc_qty = $this->input->post('dc_quantity', TRUE);
-//        $_qty = $this->input->post('bl_quantity', TRUE);
+        //        $_qty = $this->input->post('bl_quantity', TRUE);
         $db_name = $this->input->post('db_name', TRUE);
         $rb_name = $this->input->post('rb_name', TRUE);
 
@@ -1535,7 +1543,7 @@ class Cinvoice extends CI_Controller
             $data_2 = array(
                 'dc_qty'         => $item_dc_qty,
 
-//                'status'            => 2
+                //                'status'            => 2
             );
             $this->db->where('product_id', $pr_id);
             $result = $this->db->update('invoice_details', $data_2);
@@ -1611,23 +1619,23 @@ class Cinvoice extends CI_Controller
         <tfoot>
             <tr>
                 <td colspan="4" class="text-right">Sub Total</td>
-                <td><input id="sub_total" name="sub_total" type="text" class="form-control" value="" readonly="readonly"></td>
+                <td><input id="sub_total" name="sub_total" type="text" class="form-control" value="' . $details[0]['sub_total'] . '" readonly="readonly"></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right">Discount</td>
-                <td><input id="discount" name="discount" type="text" class="form-control" value="" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
+                <td><input id="discount" name="discount" type="text" class="form-control" value="' . $details[0]['total_discount'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right">Other Charges</td>
-                <td><input id="other_charges" name="other_charges" type="text" class="form-control" value="" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
+                <td><input id="other_charges" name="other_charges" type="text" class="form-control" value="' . $details[0]['other_charges'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right"><b>Grand Total</b></td>
-                <td><input id="grand_total" name="grand_total" type="text" class="form-control" value="" readonly="readonly"></td>
+                <td><input id="grand_total" name="grand_total" type="text" class="form-control" value="' . $details[0]['total_amount'] . '" readonly="readonly"></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right">Advance</td>
-                <td><input name="advance" id="advance" type="text" class="form-control" value="" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
+                <td><input name="advance" id="advance" type="text" class="form-control" value="' . $details[0]['inv_paid'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
             </tr>
             <tr>
                 <td></td>
@@ -1635,7 +1643,7 @@ class Cinvoice extends CI_Controller
                     <button type="button" onclick="full_paid()" class="btn btn-warning btn-sm" >Full Paid</button>
                 </td>
                 <td colspan="2" class="text-right">Due</td>
-                <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="" readonly></td>
+                <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="' . $details[0]['due_amount'] . '" readonly></td>
             </tr>
         </tfoot>
     </table>
@@ -1671,7 +1679,7 @@ class Cinvoice extends CI_Controller
         $invoice_no = $this->input->post('invoice_no', true);
 
         $details = $CI->Invoices->approved_dc_details($invoice_no);
-       //  echo '<pre>'; print_r($details); exit();
+        //  echo '<pre>'; print_r($details); exit();
 
         $output = "";
         $count = 0;
@@ -1685,7 +1693,7 @@ class Cinvoice extends CI_Controller
                 <th width="5%">Delivered  Quantity</th>
                 <th width="5%">Balanced Quantity</th>
                 <th width="5%">Remarks</th>
-               
+
             </thead>
             <tbody>';
 
@@ -1700,13 +1708,13 @@ class Cinvoice extends CI_Controller
                 <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"  placeholder="0.00"></td>
                 <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="" placeholder="Remarks" >
-             
+
                 </td>
                 </tr>';
         }
 
         $output .= '</tbody>
-      
+
     </table>
                     <div class="row">
                             <div class="col-sm-6">
@@ -1717,7 +1725,7 @@ class Cinvoice extends CI_Controller
                                     </div>
                                 </div>
                             </div>
-                            
+
                                 <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="invoice_no" class="col-sm-3 col-form-label">Received By</label>
@@ -1726,7 +1734,7 @@ class Cinvoice extends CI_Controller
                                     </div>
                                 </div>
                             </div>
-                            
+
                     </div>
 
 

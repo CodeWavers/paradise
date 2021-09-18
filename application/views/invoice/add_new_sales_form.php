@@ -170,14 +170,13 @@
                                 <div id="outputs" class="hide alert alert-danger"></div>
                                 <h3> <?php echo display('successfully_inserted') ?></h3>
                                 <h4><?php echo display('do_you_want_to_print') ?> ??</h4>
-                                <label class="ab">With Chalan </label>
-                                <input type="checkbox" name="chalan_value" value=''>
+
 
 
                                 <input type="hidden" name="invoice_id" id="inv_id">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="cancelprint()" class="btn btn-default" data-dismiss="modal"><?php echo display('no') ?></button>
+                                <button type="button" onclick="cancelprint_new()" class="btn btn-default" data-dismiss="modal"><?php echo display('no') ?></button>
                                 <button type="submit" class="btn btn-primary" id="yes"><?php echo display('yes') ?></button>
                                 <?php echo form_close() ?>
                             </div>

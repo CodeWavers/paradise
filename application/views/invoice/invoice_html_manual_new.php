@@ -94,7 +94,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                 body {
                                     font-family: 'Times New Roman', Times, serif;
                                     font-size: 18px;
-                                    border: 1px solid white;
+
                                     height: 99%;
                                     page-break-after: avoid;
                                     page-break-before: avoid;
@@ -111,6 +111,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                 th {
                                     border: 1px solid black;
                                 }
+
 
                                 .table td {
                                     border: 1px solid black !important;
@@ -137,11 +138,11 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                 <div class="col-sm-8 company-content " style="margin-top: 0.8in">
 
                                     {company_info}
-                                    <img style="height: 100px;" src="<?php
-                                                                        if (isset($Web_settings[0]['invoice_logo'])) {
-                                                                            echo html_escape($Web_settings[0]['invoice_logo']);
-                                                                        }
-                                                                        ?>" class="img-bottom-m" alt="">
+                                    <img style="height: 80px;" src="<?php
+                                                                    if (isset($Web_settings[0]['invoice_logo'])) {
+                                                                        echo html_escape($Web_settings[0]['invoice_logo']);
+                                                                    }
+                                                                    ?>" class="img-bottom-m" alt="">
 
 
 
@@ -189,7 +190,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                             </div>
 
 
-                            <div class="table-responsive ">
+                            <div class="">
 
                                 <table class="table table-bordered" style="width: 100%;">
                                     <thead>
@@ -229,14 +230,15 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                             </td>
                                             <td colspan="2" class="text-right"><b>Discount:</b></td>
 
-                                            <td align="right"><b><?php echo (($position == 0) ? "$currency {discount}" : "{discount} $currency") ?></b></td>
+                                            <td align="right"><b><?php echo (($position == 0) ? "$currency {total_discount}" : "{total_discount} $currency") ?></b></td>
                                         </tr>
                                         <tr>
                                             <td style="background-color: #cad1dba1 !important;" colspan="2" class="text-right"><b><?php echo display('grand_total') ?>:</b></td>
 
-                                            <td style="background-color: #cad1dba1 !important;" align="right"><b><?php echo (($position == 0) ? "$currency {subTotal_ammount}" : "{subTotal_ammount} $currency") ?></b></td>
+                                            <td style="background-color: #cad1dba1 !important;" align="right"><b><?php echo (($position == 0) ? "$currency {total_amount}" : "{total_amount} $currency") ?></b></td>
                                         </tr>
                                     </tbody>
+
 
                                 </table>
                             </div>
