@@ -750,17 +750,32 @@ class Cinvoice extends CI_Controller
         $CI->load->library('linvoice');
 
 
-        // echo $invoice_id;exit();
-        if (isset($_POST['chalan_value'])) {
-            $content = $CI->linvoice->invoice_chalan_html_data_manual($invoice_id);
-            $this->template->full_admin_html_view($content);
-            //  echo $_POST['chalan_value']; // Displays value of checked checkbox.
-        } else {
+        $content = $CI->linvoice->invoice_html_data_manual($invoice_id);
+        $this->template->full_admin_html_view($content);
+    }
 
-            // echo "value Not found";
-            $content = $CI->linvoice->invoice_html_data_manual($invoice_id);
-            $this->template->full_admin_html_view($content);
-        }
+    public function chalan_inserted_data_manual()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $CI->load->library('linvoice');
+
+
+        $content = $CI->linvoice->chalan_html_data_manual($invoice_id);
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function check_chalan_inserted_data_manual()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $CI->load->library('linvoice');
+
+
+        $content = $CI->linvoice->check_chalan_html_data_manual($invoice_id);
+        $this->template->full_admin_html_view($content);
     }
 
     public function dispatch_inserted_data_manual()
@@ -1351,6 +1366,15 @@ class Cinvoice extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function check_report()
+    {
+        $CI = &get_instance();
+        // $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $content = $CI->linvoice->check_report();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function save_sales_order()
     {
 
@@ -1509,7 +1533,7 @@ class Cinvoice extends CI_Controller
         $dc_no = $this->input->post('dc_no', TRUE);
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $invoice_id = $this->input->post('invoice_id', TRUE);
-        $date = $this->input->post('invoice_date', TRUE);
+        $date = $this->input->post('chalan_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
         $contact_person = $this->input->post('contact_person', TRUE);
         $remarks = $this->input->post('remarks', TRUE);
@@ -1528,21 +1552,22 @@ class Cinvoice extends CI_Controller
             'contact_person'   => $contact_person,
             'delivered_by'   => $db_name,
             'received_by'   => $rb_name,
-            'remarks'  => $remarks,
+            'chalan_date'   => $date,
             'status'        => 4
         );
 
-        $this->db->where('invoice_no', $invoice_no);
+        $this->db->where('invoice_id', $invoice_id);
         $this->db->update('invoice', $data_1);
 
         for ($i = 0; $i < count($product_id); $i++) {
             $pr_id = $product_id[$i];
             $item_dc_qty = $dc_qty[$i];
+            $remark = $remarks[$i];
 
 
             $data_2 = array(
                 'dc_qty'         => $item_dc_qty,
-
+                'remarks'         => $remark,
                 //                'status'            => 2
             );
             $this->db->where('product_id', $pr_id);
@@ -1550,18 +1575,22 @@ class Cinvoice extends CI_Controller
         }
 
 
+        //        echo '<pre>';print_r($data_1);
+        //        echo '<pre>';print_r($data_2);
+
+
         if (!empty($result)) {
             $data['status'] = true;
             $data['invoice_id'] = $invoice_id;
             $data['message'] = display('save_successfully');
-            $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
-            if ($mailsetting[0]['isinvoice'] == 1) {
-                $mail = $this->invoice_pdf_generate($invoice_id);
-                if ($mail == 0) {
-                    $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
-                }
-            }
-            $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
+            //            $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
+            //            if ($mailsetting[0]['isinvoice'] == 1) {
+            //                $mail = $this->invoice_pdf_generate($invoice_id);
+            //                if ($mail == 0) {
+            //                    $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
+            //                }
+            //            }
+            //            $data['details'] = $this->load->view('invoice/invoice_html_manual_new', $data, true);
         } else {
             $data['status'] = false;
             $data['error_message'] = 'Sorry';
@@ -1576,6 +1605,8 @@ class Cinvoice extends CI_Controller
 
         //  redirect('Cinvoice/add_new_sales');
     }
+
+
 
     public function get_so_details()
     {
@@ -1736,6 +1767,77 @@ class Cinvoice extends CI_Controller
                             </div>
 
                     </div>
+
+
+    </div>
+
+    ';
+
+        $data = array(
+            'html' => $output,
+            'cus_name'  => $details[0]['outlet_name'],
+            'cus_id'    => $details[0]['outlet_id'],
+            'rqsn_no'    => $details[0]['rqsn_no'],
+            'invoice_id'    => $details[0]['invoice_id'],
+            'vessel_name'    => $details[0]['vessel_name']
+        );
+
+        echo json_encode($data);
+    }
+
+    public function get_check_details()
+    {
+        $CI = &get_instance();
+        $CI->load->model('Invoices');
+
+        $dc_no = $this->input->post('dc_no', true);
+
+        $details = $CI->Invoices->approved_check_details($dc_no);
+        //  echo '<pre>'; print_r($details); exit();
+
+        $output = "";
+        $count = 0;
+
+        $output .= '<div class="table-responsive">
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <th width="2%">Sl. NO</th>
+                <th width="8%">Product Name</th>
+                <th width="8%">Parts</th>
+                <th width="8%">SKU</th>
+                <th width="5%">Requisition Quantity</th>
+                <th width="5%">Delivered  Quantity</th>
+                <th width="5%">Balanced Quantity</th>
+                <th width="5%">Remarks</th>
+
+            </thead>
+            <tbody>';
+
+        foreach ($details as $rq) {
+            $bl_qty = $rq['quantity'] - $rq['dc_qty'];
+
+            $count++;
+            $output .= '<tr><td>' . $count . '</td>
+                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
+                </td>
+                 <td><input type="text" class="form-control" value="' . $rq['parts'] . '" readonly="readonly"></td>
+                 <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
+
+
+                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" readonly></td>
+                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="' . $rq['dc_qty'] . '"  readonly></td>
+                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="' . $bl_qty . '" readonly></td>
+                  <td><input type="text" name="remarks[]" class="form-control" value="' . $rq['remarks'] . '" placeholder="Remarks" readonly >
+
+                </td>
+                </tr>';
+        }
+
+        $output .= '</tbody>
+
+    </table>
+
 
 
     </div>

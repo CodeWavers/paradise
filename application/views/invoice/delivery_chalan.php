@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <?php echo form_open_multipart('Cinvoice/add_sale', array('class' => 'form-vertical', 'id' => 'insert_sale', 'name' => 'insert_sale')) ?>
+                        <?php echo form_open_multipart('Cinvoice/add_deliver', array('class' => 'form-vertical', 'id' => 'insert_sale', 'name' => 'insert_sale')) ?>
 
                         <div class="row">
 
@@ -76,7 +76,7 @@
                                 <div class="form-group row">
                                     <label for="customer" class="col-sm-4 col-form-label">Delivery Chalan No:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="dc_no" class="form-control" value="{dc_no}" readonly="readonly">
+                                        <input type="text" id="dc_no" name="dc_no" class="form-control" value="{dc_no}" readonly="readonly">
 
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                 <h4 class="modal-tit le" id="myModalLabel"><?php echo display('print') ?></h4>
                             </div>
                             <div class="modal-body">
-                                <?php echo form_open('Cinvoice/invoice_inserted_data_manual', array('class' => 'form-vertical', 'id' => '', 'name' => '')) ?>
+                                <?php echo form_open('Cinvoice/chalan_inserted_data_manual', array('class' => 'form-vertical', 'id' => '', 'name' => '')) ?>
                                 <div id="outputs" class="hide alert alert-danger"></div>
                                 <h3> <?php echo display('successfully_inserted') ?></h3>
                                 <h4><?php echo display('do_you_want_to_print') ?> ??</h4>

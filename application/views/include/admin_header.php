@@ -282,7 +282,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             }
                             ?>">
-                                <a href="<?php echo base_url('Cinvoice/delivery_chalan ') ?>">Order Check Report</a>
+                                <a href="<?php echo base_url('Cinvoice/check_report ') ?>">Order Check Report</a>
                             </li>
                         <?php } ?>
 
