@@ -768,6 +768,19 @@ class Cinvoice extends CI_Controller
 
     }
 
+    public function check_chalan_inserted_data_manual()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $CI->load->library('linvoice');
+
+
+            $content = $CI->linvoice->check_chalan_html_data_manual($invoice_id);
+            $this->template->full_admin_html_view($content);
+
+    }
+
     public function dispatch_inserted_data_manual()
     {
         $CI = &get_instance();
@@ -1356,6 +1369,15 @@ class Cinvoice extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function check_report()
+    {
+        $CI = &get_instance();
+        // $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $content = $CI->linvoice->check_report();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function save_sales_order()
     {
 
@@ -1579,6 +1601,8 @@ class Cinvoice extends CI_Controller
         //  redirect('Cinvoice/add_new_sales');
     }
 
+
+
     public function get_so_details()
     {
         $CI = &get_instance();
@@ -1738,6 +1762,77 @@ class Cinvoice extends CI_Controller
                             </div>
                             
                     </div>
+
+
+    </div>
+
+    ';
+
+        $data = array(
+            'html' => $output,
+            'cus_name'  => $details[0]['outlet_name'],
+            'cus_id'    => $details[0]['outlet_id'],
+            'rqsn_no'    => $details[0]['rqsn_no'],
+            'invoice_id'    => $details[0]['invoice_id'],
+            'vessel_name'    => $details[0]['vessel_name']
+        );
+
+        echo json_encode($data);
+    }
+
+    public function get_check_details()
+    {
+        $CI = &get_instance();
+        $CI->load->model('Invoices');
+
+        $dc_no = $this->input->post('dc_no', true);
+
+        $details = $CI->Invoices->approved_check_details($dc_no);
+       //  echo '<pre>'; print_r($details); exit();
+
+        $output = "";
+        $count = 0;
+
+        $output .= '<div class="table-responsive">
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <th width="2%">Sl. NO</th>
+                <th width="8%">Product Name</th>
+                <th width="8%">Parts</th>
+                <th width="8%">SKU</th>
+                <th width="5%">Requisition Quantity</th>
+                <th width="5%">Delivered  Quantity</th>
+                <th width="5%">Balanced Quantity</th>
+                <th width="5%">Remarks</th>
+               
+            </thead>
+            <tbody>';
+
+        foreach ($details as $rq) {
+            $bl_qty=$rq['quantity']-$rq['dc_qty'];
+
+            $count++;
+            $output .= '<tr><td>' . $count . '</td>
+                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
+                </td>
+                 <td><input type="text" class="form-control" value="' . $rq['parts'] . '" readonly="readonly"></td>
+                 <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
+                
+
+                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" readonly></td>
+                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="' . $rq['dc_qty'] . '"  readonly></td>
+                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="' . $bl_qty . '" readonly></td>
+                  <td><input type="text" name="remarks[]" class="form-control" value="' . $rq['remarks'] . '" placeholder="Remarks" readonly >
+             
+                </td>
+                </tr>';
+        }
+
+        $output .= '</tbody>
+      
+    </table>
+         
 
 
     </div>
