@@ -525,7 +525,10 @@ function  delivery_type(val){
 
     "use strict";
 function cancelprint(){
-   window.location.href = "Cinvoice/add_new_sales";
+   window.location.href = "add_new_sales";
+}
+function cancelprint_d(){
+   window.location.href = "delivery_chalan";
 }
 
 "use strict";

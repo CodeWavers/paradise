@@ -195,7 +195,7 @@
                                 <input type="hidden" name="invoice_id" id="inv_id">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="cancelprint()" class="btn btn-default" data-dismiss="modal"><?php echo display('no') ?></button>
+                                <button type="button" onclick="cancelprint_d()" class="btn btn-default" data-dismiss="modal"><?php echo display('no') ?></button>
                                 <button type="submit" class="btn btn-primary" id="yes"><?php echo display('yes') ?></button>
                                 <?php echo form_close() ?>
                             </div>

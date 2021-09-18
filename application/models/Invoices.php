@@ -2466,6 +2466,7 @@ class Invoices extends CI_Model
         $this->db->from('invoice a');
         // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
         $this->db->where('a.status', 2);
+        $this->db->group_by('a.invoice_no');
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -2480,6 +2481,7 @@ class Invoices extends CI_Model
         $this->db->from('invoice a');
         // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
         $this->db->where('a.status', 3);
+        $this->db->group_by('a.invoice_no');
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -2494,6 +2496,7 @@ class Invoices extends CI_Model
         $this->db->from('invoice a');
         // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
         $this->db->where('a.status', 4);
+        $this->db->group_by('a.dc_no');
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -2536,13 +2539,14 @@ class Invoices extends CI_Model
 
     public function approved_check_details($dc_no)
     {
-        $this->db->select('*');
+        $this->db->select('*,f.quantity as qty');
         $this->db->from('invoice a');
         $this->db->where('a.dc_no', $dc_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
         $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
+        $this->db->join('rqsn_details f', 'f.rqsn_id = e.rqsn_id');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
         $query = $this->db->get();
