@@ -64,12 +64,16 @@
                                     <div class="form-group row">
                                         <label for="invoice_no" class="form-label col-sm-4">Invoice No.</label>
                                         <div class="col-sm-8">
+                                            <?php if($approved_list){?>
                                             <select class="form-control" name="invoice_no" id="invoice_no" onchange="getinvoice_details()">
                                                 <option value="">Select One</option>
                                                 {so_list}
                                                 <option value="{invoice_id}">{invoice_no}</option>
                                                 {/so_list}
                                             </select>
+                                            <?php }else{ ?>
+                                            <input class="form-control" type="text" value="No Invoice/Voucher no to show" readonly>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>

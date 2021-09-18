@@ -74,12 +74,16 @@
                                 <div class="form-group row">
                                     <label for="rqsn_id" class="col-sm-4 col-form-label">Delivery Chalan No:</label>
                                     <div class="col-sm-8">
+                                        <?php if($approved_list){?>
                                         <select class="form-control" name="dc_no" id="dc_no" onchange="get_check_details()">
                                             <option value="">Select One</option>
                                             {approved_list}
                                             <option value="{dc_no}">{dc_no}</option>
                                             {/approved_list}
                                         </select>
+                                        <?php }else{ ?>
+                                            <input class="form-control" type="text" value="No Delivery/chalan no to show" readonly>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

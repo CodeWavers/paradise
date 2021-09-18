@@ -119,12 +119,17 @@
                                 <div class="form-group row">
                                     <label for="rqsn_id" class="col-sm-4 col-form-label">Requisition No.</label>
                                     <div class="col-sm-8">
+
+                                        <?php if($approved_list){?>
                                         <select class="form-control" name="rqsn_id" id="rqsn_id" onchange="get_rqsn_details()">
                                             <option value="">Select One</option>
                                             {approved_list}
                                             <option value="{rqsn_id}">{rqsn_no}</option>
                                             {/approved_list}
                                         </select>
+                                        <?php }else{ ?>
+                                            <input class="form-control" type="text" value="No Requisition to show" readonly>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

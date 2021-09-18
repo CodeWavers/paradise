@@ -150,11 +150,15 @@
                                     <label for="rqsn_id" class="col-sm-4 col-form-label">Invoice/Voucher No:</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" name="invoice_no" id="invoice_no" onchange="get_so_details()">
+                                            <?php if($approved_list){?>
                                             <option value="">Select One</option>
                                             {approved_list}
                                             <option value="{invoice_no}">{invoice_no}</option>
                                             {/approved_list}
                                         </select>
+                                        <?php }else{ ?>
+                                            <input class="form-control" type="text" value="No Invoice/Voucher No to show" readonly>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
