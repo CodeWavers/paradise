@@ -137,7 +137,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                 <div class="col-sm-8 company-content " style="margin-top: 0.8in">
 
                                     {company_info}
-                                    <img style="height: 100px;" src="<?php
+                                    <img style="height: 80px;" src="<?php
                                                                         if (isset($Web_settings[0]['invoice_logo'])) {
                                                                             echo html_escape($Web_settings[0]['invoice_logo']);
                                                                         }
