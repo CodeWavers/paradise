@@ -750,17 +750,22 @@ class Cinvoice extends CI_Controller
         $CI->load->library('linvoice');
 
 
-        // echo $invoice_id;exit();
-        if (isset($_POST['chalan_value'])) {
-            $content = $CI->linvoice->invoice_chalan_html_data_manual($invoice_id);
-            $this->template->full_admin_html_view($content);
-            //  echo $_POST['chalan_value']; // Displays value of checked checkbox.
-        } else {
-
-            // echo "value Not found";
             $content = $CI->linvoice->invoice_html_data_manual($invoice_id);
             $this->template->full_admin_html_view($content);
-        }
+
+    }
+
+    public function chalan_inserted_data_manual()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $invoice_id = $this->input->post('invoice_id', TRUE);
+        $CI->load->library('linvoice');
+
+
+            $content = $CI->linvoice->chalan_html_data_manual($invoice_id);
+            $this->template->full_admin_html_view($content);
+
     }
 
     public function dispatch_inserted_data_manual()
@@ -1501,7 +1506,7 @@ class Cinvoice extends CI_Controller
         $dc_no = $this->input->post('dc_no', TRUE);
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $invoice_id = $this->input->post('invoice_id', TRUE);
-        $date = $this->input->post('invoice_date', TRUE);
+        $date = $this->input->post('chalan_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
         $contact_person = $this->input->post('contact_person', TRUE);
         $remarks = $this->input->post('remarks', TRUE);
@@ -1520,21 +1525,22 @@ class Cinvoice extends CI_Controller
             'contact_person'   => $contact_person,
             'delivered_by'   => $db_name,
             'received_by'   => $rb_name,
-            'remarks'  => $remarks,
+            'chalan_date'   => $date,
             'status'        => 4
         );
 
-        $this->db->where('invoice_no', $invoice_no);
+        $this->db->where('invoice_id', $invoice_id);
         $this->db->update('invoice', $data_1);
 
         for ($i = 0; $i < count($product_id); $i++) {
             $pr_id = $product_id[$i];
             $item_dc_qty = $dc_qty[$i];
+            $remark = $remarks[$i];
 
 
             $data_2 = array(
                 'dc_qty'         => $item_dc_qty,
-
+                'remarks'         => $remark,
 //                'status'            => 2
             );
             $this->db->where('product_id', $pr_id);
@@ -1542,18 +1548,22 @@ class Cinvoice extends CI_Controller
         }
 
 
+//        echo '<pre>';print_r($data_1);
+//        echo '<pre>';print_r($data_2);
+
+
         if (!empty($result)) {
             $data['status'] = true;
             $data['invoice_id'] = $invoice_id;
             $data['message'] = display('save_successfully');
-            $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
-            if ($mailsetting[0]['isinvoice'] == 1) {
-                $mail = $this->invoice_pdf_generate($invoice_id);
-                if ($mail == 0) {
-                    $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
-                }
-            }
-            $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
+//            $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
+//            if ($mailsetting[0]['isinvoice'] == 1) {
+//                $mail = $this->invoice_pdf_generate($invoice_id);
+//                if ($mail == 0) {
+//                    $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
+//                }
+//            }
+//            $data['details'] = $this->load->view('invoice/invoice_html_manual_new', $data, true);
         } else {
             $data['status'] = false;
             $data['error_message'] = 'Sorry';
