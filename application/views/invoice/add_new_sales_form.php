@@ -149,7 +149,7 @@
 
                         <br>
                         <div id="cart_dt">
-                            <h3 align="center">Select Requisition No. from dropdown to get order details.</h3>
+                            <h3 align="center">Select Invoice/Voucher No. from dropdown to get order details.</h3>
                         </div>
 
                         <div class="form-group row">
