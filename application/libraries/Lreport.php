@@ -275,6 +275,35 @@ class Lreport extends CI_Model
         return $reportList;
     }
 
+    public function stock_report_new()
+    {
+        $CI =& get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Categories');
+        $CI->load->model('Brands');
+        $CI->load->model('Models');
+
+        $cat_list    = $CI->Categories->category_list();
+        $subcat_list    = $CI->Categories->subcat_list();
+        $brand_list    = $CI->Brands->category_list();
+        $model_list    = $CI->Models->model_list();
+        $data['title'] = 'stock';
+        $company_info = $CI->Reports->retrieve_company();
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $data['currency'] = $currency_details[0]['currency'];
+        $data['totalnumber'] = $CI->Reports->totalnumberof_product();
+        $data['getList'] = $CI->Reports->getInventoryList();
+        $data['cat_list'] = $cat_list;
+        $data['subcat_list'] = $subcat_list;
+        $data['brand_list'] = $brand_list;
+        $data['model_list'] = $model_list;
+        $data['company_info'] = $company_info;
+
+      //  echo '<pre>';print_r($data);exit();
+        $reportList = $CI->parser->parse('report/stock_report_new', $data, true);
+        return $reportList;
+    }
+
 
     /// supplier wise stock report
     public function stock_supplierwise()

@@ -62,9 +62,9 @@
                             <div class="col-sm-6">
                                 <div class="col-sm-12">
                                     <div class="form-group row">
-                                        <label for="invoice_no" class="form-label col-sm-4">Invoice No.</label>
+                                        <label for="invoice_no" class="form-label col-sm-4">Sales Order No.</label>
                                         <div class="col-sm-8">
-                                            <?php if($approved_list){?>
+                                            <?php if($so_list){?>
                                             <select class="form-control" name="invoice_no" id="invoice_no" onchange="getinvoice_details()">
                                                 <option value="">Select One</option>
                                                 {so_list}
@@ -72,7 +72,7 @@
                                                 {/so_list}
                                             </select>
                                             <?php }else{ ?>
-                                            <input class="form-control" type="text" value="No Invoice/Voucher no to show" readonly>
+                                            <input class="form-control" type="text" value="No SO no. to show" readonly>
                                             <?php } ?>
                                         </div>
                                     </div>

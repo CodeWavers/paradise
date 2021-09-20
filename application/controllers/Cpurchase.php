@@ -1846,6 +1846,7 @@ class Cpurchase extends CI_Controller
                 'aisle_no'   => $aisle_no[$i],
                 'shelf_no'   => $shelf_no[$i],
                 'bin_no'   => $bin_no[$i],
+                'date'      => date('Y-m-d'),
                 'isAprv'      => 1
             );
 

@@ -92,7 +92,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="date" class="col-sm-4 col-form-label"><?php echo display('purchase_date') ?>
+                                    <label for="date" class="col-sm-4 col-form-label">Date
                                         <i class="text-danger">*</i>
                                     </label>
                                     <div class="col-sm-8">
@@ -104,7 +104,7 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="invoice_no" class="col-sm-4 col-form-label">Invoice No.</label>
+                                    <label for="invoice_no" class="col-sm-4 col-form-label">Sales Order No.</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="invoice_no" class="form-control" value={sales_order_no} readonly>
                                     </div>

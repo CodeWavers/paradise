@@ -23,6 +23,59 @@ class Creport extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function stock_report()
+    {
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('lreport');
+
+        $content = $CI->lreport->stock_report_new();
+
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function filter_wise() {
+
+        #
+        #pagination ends
+        #
+        $CI =& get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Categories');
+        $CI->load->model('Brands');
+        $CI->load->model('Models');
+
+        $category_id = $this->input->post('category_id', true);
+        $sub_cat_id = $this->input->post('sub_cat_id', true);
+        $brand_id = $this->input->post('brand_id', true);
+        $model_id = $this->input->post('model_id', true);
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $getList= $CI->Reports->getInventoryList_filter($category_id,$sub_cat_id,$brand_id,$model_id,$from_date,$to_date);
+
+
+        $cat_list    = $CI->Categories->category_list();
+        $subcat_list    = $CI->Categories->subcat_list();
+        $brand_list    = $CI->Brands->category_list();
+        $model_list    = $CI->Models->model_list();
+        $data['title'] = 'stock';
+        $company_info = $CI->Reports->retrieve_company();
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $data['currency'] = $currency_details[0]['currency'];
+        $data['totalnumber'] = $CI->Reports->totalnumberof_product();
+        $data['getList'] = $getList;
+        $data['cat_list'] = $cat_list;
+        $data['subcat_list'] = $subcat_list;
+        $data['brand_list'] = $brand_list;
+        $data['model_list'] = $model_list;
+        $data['company_info'] = $company_info;
+       // echo '<pre>';print_r($all_product);exit();
+        $reportList = $CI->parser->parse('report/stock_report_new', $data, true);
+        $this->template->full_admin_html_view($reportList);
+    }
+
+
     public function wastage_dec()
     {
         $CI = & get_instance();
