@@ -178,6 +178,105 @@ class Lreport extends CI_Model
         return $reportList;
     }
 
+    public function item_ledger()
+    {
+        $CI = &get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Suppliers');
+        $CI->load->model('Web_settings');
+        $CI->load->library('occational');
+
+        $products = $CI->Reports->item_ledger();
+
+
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+
+
+
+
+        $data = array(
+            'title' => 'Stock Item Ledger',
+            'product_price' => $products,
+            'currency' => $currency_details[0]['currency'],
+            'position' => $currency_details[0]['currency_position'],
+        );
+      //   echo '<pre>'; print_r($data);
+      //   exit();
+        $reportList = $CI->parser->parse('report/item_ledger', $data, true);
+        return $reportList;
+    }
+
+    public function stock_item_ledger($product_id) {
+        $CI = & get_instance();
+        $CI->load->model('Products');
+        $CI->load->library('occational');
+        $CI->load->model('Web_settings');
+        $CI->load->model('Reports');
+
+        $purchase_data = $CI->Reports->stock_item_ledger_purchase($product_id);
+        $sale_data = $CI->Reports->stock_item_ledger_sale($product_id);
+        $details_info = $CI->Products->product_details_info($product_id);
+        $purchaseData = $CI->Products->product_purchase_info($product_id);
+
+        $totalPurchase = 0;
+        $totalPrcsAmnt = 0;
+
+        if (!empty($purchaseData)) {
+            foreach ($purchaseData as $k => $v) {
+                $purchaseData[$k]['final_date'] = $CI->occational->dateConvert($purchaseData[$k]['purchase_date']);
+                $totalPrcsAmnt = ($totalPrcsAmnt + $purchaseData[$k]['total_amount']);
+                $totalPurchase = ($totalPurchase + $purchaseData[$k]['quantity']);
+            }
+        }
+
+        $salesData = $CI->Products->invoice_data($product_id);
+
+        $totalSales = 0;
+        $totaSalesAmt = 0;
+        if (!empty($salesData)) {
+            foreach ($salesData as $k => $v) {
+                $salesData[$k]['final_date'] = $CI->occational->dateConvert($salesData[$k]['date']);
+                $totalSales = ($totalSales + $salesData[$k]['quantity']);
+                $totaSalesAmt = ($totaSalesAmt + $salesData[$k]['total_amount']);
+            }
+        }
+
+        $stock = ($totalPurchase - $totalSales);
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $data = array(
+            'title'               => 'Stock Item Ledger',
+            'product_id'        => $details_info[0]['product_id'],
+            'product_name'        => $details_info[0]['product_name'],
+            'category_name'        => $details_info[0]['category_name'],
+            'subcat_name'        => $details_info[0]['subcat_name'],
+            'brand_name'        => $details_info[0]['brand_name'],
+//            'product_model'       => $details_info[0]['product_model'],
+            'model_name'       => $details_info[0]['model_name'],
+            'sku'       => $details_info[0]['sku'],
+            'parts'       => $details_info[0]['parts'],
+            'price'               => $details_info[0]['price'],
+            'purchaseTotalAmount' => number_format($totalPrcsAmnt, 2, '.', ','),
+            'salesTotalAmount'    => number_format($totaSalesAmt, 2, '.', ','),
+            'img'                 => $details_info[0]['image'],
+            'total_purchase'      => $totalPurchase,
+            'total_sales'         => $totalSales,
+            'purchaseData'        => $purchaseData,
+            'purchase_data'        => $purchase_data,
+            'sale_data'        => $sale_data,
+            'salesData'           => $salesData,
+            'stock'               => $stock,
+            'product_statement'   => 'Cproduct/product_sales_supplier_rate/' . $product_id,
+            'currency'            => $currency_details[0]['currency'],
+            'position'            => $currency_details[0]['currency_position'],
+        );
+
+          // echo '<pre>'; print_r($data);
+//           exit();
+
+        $productList = $CI->parser->parse('report/stock_item_ledger', $data, true);
+        return $productList;
+    }
+
 
     public function product_price_date_wise($start_date = null,$end_date = null)
     {
@@ -301,6 +400,34 @@ class Lreport extends CI_Model
 
       //  echo '<pre>';print_r($data);exit();
         $reportList = $CI->parser->parse('report/stock_report_new', $data, true);
+        return $reportList;
+    }
+    public function valuation_report()
+    {
+        $CI =& get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Categories');
+        $CI->load->model('Brands');
+        $CI->load->model('Models');
+
+        $cat_list    = $CI->Categories->category_list();
+        $subcat_list    = $CI->Categories->subcat_list();
+        $brand_list    = $CI->Brands->category_list();
+        $model_list    = $CI->Models->model_list();
+        $data['title'] = 'stock';
+        $company_info = $CI->Reports->retrieve_company();
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $data['currency'] = $currency_details[0]['currency'];
+        $data['totalnumber'] = $CI->Reports->totalnumberof_product();
+        $data['getList'] = $CI->Reports->getInventoryList();
+        $data['cat_list'] = $cat_list;
+        $data['subcat_list'] = $subcat_list;
+        $data['brand_list'] = $brand_list;
+        $data['model_list'] = $model_list;
+        $data['company_info'] = $company_info;
+
+      //  echo '<pre>';print_r($data);exit();
+        $reportList = $CI->parser->parse('report/valuation_report', $data, true);
         return $reportList;
     }
 

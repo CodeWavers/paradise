@@ -1095,6 +1095,7 @@ class Cpurchase extends CI_Controller
                         <td class="span3 supplier">
                             <span>' . $items['product_name'] . '</span>
                             <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
+                            <input type="hidden" name="price[]" id="price_' . $count . '" value="' . $items['rate'] . '">
                             <input type="hidden" class="sl" value="' . $count . '">
                             <input type="hidden" name="sl_id[]" id="sl_id_' . $count . '" value="' . $items['real_id'] . '">
                             <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
@@ -1774,6 +1775,7 @@ class Cpurchase extends CI_Controller
         $aisle_no = $this->input->post('aisle_no', TRUE);
         $shelf_no = $this->input->post('shelf_no', TRUE);
         $bin_no = $this->input->post('bin_no', TRUE);
+        $price = $this->input->post('price', TRUE);
 
 
 
@@ -1837,6 +1839,7 @@ class Cpurchase extends CI_Controller
                 'po_order'   => $po_id,
                 'product_id'   => $product_id[$i],
                 'quantity'   => $quantity[$i],
+                'unit_price'   => $price[$i],
                 'supplier_id'   => $supplier_id[$i],
                 'received_status'   => $received[$i],
                 'return_qty'   => $return[$i],
@@ -1850,7 +1853,7 @@ class Cpurchase extends CI_Controller
                 'isAprv'      => 1
             );
 
-            //    echo '<pre>'; print_r($data);exit();
+              // echo '<pre>'; print_r($data);exit();
 
 
             $this->db->insert('erp_entry_details', $data);

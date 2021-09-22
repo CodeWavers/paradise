@@ -34,6 +34,8 @@ class Creport extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+
+
     public function filter_wise() {
 
         #
@@ -73,6 +75,17 @@ class Creport extends CI_Controller {
        // echo '<pre>';print_r($all_product);exit();
         $reportList = $CI->parser->parse('report/stock_report_new', $data, true);
         $this->template->full_admin_html_view($reportList);
+    }
+
+    public function valuation_report()
+    {
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('lreport');
+
+        $content = $CI->lreport->valuation_report();
+
+        $this->template->full_admin_html_view($content);
     }
 
 
@@ -170,6 +183,14 @@ class Creport extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function valuation_list(){
+        // GET data
+        $this->load->model('Reports');
+        $postData = $this->input->post();
+        $data = $this->Reports->valuation_list($postData);
+        echo json_encode($data);
+    }
+
     public function suppliestock(){
         $this->load->model('Reports');
         $postData = $this->input->post();
@@ -202,6 +223,23 @@ class Creport extends CI_Controller {
         $this->auth->check_admin_auth();
         $CI->load->library('lreport');
         $content = $CI->lreport->product_price();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function stock_item_ledger($product_id) {
+        $this->product_id = $product_id;
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('lreport');
+        $content = $CI->lreport->stock_item_ledger($product_id);
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function item_ledger() {
+        $CI = & get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('lreport');
+        $content = $CI->lreport->item_ledger();
         $this->template->full_admin_html_view($content);
     }
 

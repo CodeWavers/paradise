@@ -798,6 +798,113 @@ $(document).ready(function() {
 
 
 });
+
+
+$(document).ready(function() {
+    "use strict";
+    var CSRF_TOKEN = $('[name="csrf_test_name"]').val();
+    var base_url = $("#base_url").val();
+    var currency = $("#currency").val();
+    var total_stock = $("#total_stock").val();
+    $('#checkListStockList_new').DataTable({
+        responsive: true,
+
+        "aaSorting": [[ 1, "asc" ]],
+        "columnDefs": [
+            { "bSortable": false, "aTargets": [0,1,2,3,4,5] },
+
+        ],
+        'processing': true,
+        'serverSide': true,
+
+
+        'lengthMenu':[[10, 25, 50,100,250,500, total_stock], [10, 25, 50,100,250,500, "All"]],
+
+        dom:"'<'col-sm-4'l><'col-sm-4 text-center'><'col-sm-4'>Bfrtip", buttons:[ {
+            extend: "copy", className: "btn-sm prints"
+        }
+            , {
+                extend: "csv", title: "StockList", className: "btn-sm prints"
+            }
+            , {
+                extend: "excel", title: "StockList", className: "btn-sm prints"
+            }
+            , {
+                extend: "pdf", title: "Stock List", className: "btn-sm prints"
+            }
+            , {
+                extend: "print",title: "<center>Stock List</center>", className: "btn-sm prints"
+            }
+        ],
+
+        'serverMethod': 'post',
+        'ajax': {
+            'url': base_url + 'Creport/valuation_list',
+            data:{
+                csrf_test_name : CSRF_TOKEN,
+            }
+        },
+        'columns': [
+            { data: 'sl' },
+            { data: 'product_name' },
+            { data: 'sku',class:"text-center" },
+            { data: 'stok_quantity',class:"stock text-right" },
+            { data: 'avg_price' ,class:"total_purchase text-right",render: $.fn.dataTable.render.number( ',', '.', 2, currency )},
+            { data: 'stock_value' ,class:"total_purchase text-right",render: $.fn.dataTable.render.number( ',', '.', 2, currency )},
+
+        ],
+
+        "footerCallback": function(row, data, start, end, display) {
+            var api = this.api();
+            api.columns('.stock', {
+                page: 'current'
+            }).every(function() {
+
+                var sum =this
+                    .data()
+                    .reduce(function(a, b) {
+                        var x = parseFloat(a) || 0;
+                        var y = parseFloat(b) || 0;
+                        return x + y;
+                    }, 0);
+                $(this.footer()).html(sum.toLocaleString());
+            });
+
+            api.columns('.total_sale', {
+                page: 'current'
+            }).every(function() {
+                var sum = this
+                    .data()
+                    .reduce(function(a, b) {
+                        var x = parseFloat(a) || 0;
+                        var y = parseFloat(b) || 0;
+                        return x + y;
+                    }, 0);
+                $(this.footer()).html(currency+' '+sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            });
+
+            api.columns('.total_purchase', {
+                page: 'current'
+            }).every(function() {
+                var sum = this
+                    .data()
+                    .reduce(function(a, b) {
+                        var x = parseFloat(a) || 0;
+                        var y = parseFloat(b) || 0;
+                        return x + y;
+                    }, 0);
+                $(this.footer()).html(currency+' '+sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            });
+        }
+
+
+
+    });
+
+
+
+
+});
 $(document).ready(function() {
     "use strict";
     var CSRF_TOKEN = $('[name="csrf_test_name"]').val();

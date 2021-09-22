@@ -396,7 +396,10 @@ class Products extends CI_Model {
     public function product_details_info($product_id) {
         $this->db->select('*');
         $this->db->from('product_information');
-        $this->db->join('product_model','product_model.model_id=product_information.product_model');
+        $this->db->join('product_model','product_model.model_id=product_information.product_model','left');
+        $this->db->join('product_category','product_category.category_id=product_information.category_id','left');
+        $this->db->join('product_brand','product_brand.brand_id=product_information.brand_id','left');
+        $this->db->join('product_subcat','product_subcat.sub_cat_id=product_information.sub_cat_id','left');
         $this->db->where('product_id', $product_id);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
