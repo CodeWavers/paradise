@@ -131,6 +131,7 @@ class Rqsn extends CI_Model
             'date'            => (!empty($this->input->post('invoice_date', true)) ? $this->input->post('invoice_date', true) : date('Y-m-d')),
             'details'         => (!empty($this->input->post('inva_details', true)) ? $this->input->post('inva_details', true) : 'Requisition'),
             // 'rqsn_no'=> $this->input->post('rqsn_no',true),
+            'voyage_no' => $this->input->post('voyage_no', true),
             'from_id' => $this->input->post('rqsn_for', true),
             'to_id'  => 'HK7TGDT69VFMXB7',
             'rqsn_customer_name' => $this->input->post('customer_name', true),
@@ -141,6 +142,7 @@ class Rqsn extends CI_Model
             'date'            => (!empty($this->input->post('invoice_date', true)) ? $this->input->post('invoice_date', true) : date('Y-m-d')),
             'details'         => (!empty($this->input->post('inva_details', true)) ? $this->input->post('inva_details', true) : 'Requisition'),
             'rqsn_no' => $this->input->post('rqsn_no', true),
+            'voyage_no' => $this->input->post('voyage_no', true),
             'from_id' => $this->input->post('rqsn_for', true),
             'to_id'  => 'HK7TGDT69VFMXB7',
             'rqsn_customer_name' => $this->input->post('customer_name', true),
@@ -155,7 +157,7 @@ class Rqsn extends CI_Model
         //            'status'   => 1,
         //        );
 
-        //  echo '<pre>';print_r($datarq);exit();
+       //  echo '<pre>';print_r($data_finalize);exit();
 
         if (isset($_POST['finalize'])) {
             $this->db->insert('rqsn', $data_finalize);

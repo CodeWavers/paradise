@@ -12,7 +12,7 @@ class Lpurchase {
         $CI->load->model('Categories');
         $CI->load->model('Web_settings');
         $all_supplier = $CI->Purchases->select_all_supplier();
-        $order_no = $CI->Purchases->number_generator();
+        $order_no = $CI->Purchases->generate_PO_no();
         $category_list = $CI->Categories->category_list();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $bank_list        = $CI->Web_settings->bank_list();
@@ -25,7 +25,7 @@ class Lpurchase {
             'order_no'      => $order_no,
             'category_list' => $category_list
         );
-        // echo '<pre>';print_r($data);die();
+      //   echo '<pre>';print_r($order_no);die();
         $purchaseForm = $CI->parser->parse('purchase/add_purchase_form', $data, true);
         return $purchaseForm;
     }

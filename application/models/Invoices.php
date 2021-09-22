@@ -2400,16 +2400,58 @@ class Invoices extends CI_Model
 
     public function generate_invoice_no()
     {
-        $this->db->select('invoice_no')->order_by('invoice_no', 'desc');
+        $this->db->select('invoice_no')->order_by('id', 'desc');
         $query = $this->db->get('invoice');
         $result = $query->result_array();
-        $order_no = substr($result[0]['invoice_no'], -4);
-        if ($order_no != '') {
-            $order_no = $order_no + 1;
+
+
+
+      //  $order_no = substr($result[0]['invoice_no'], -1);
+        $order_no = $result[0]['invoice_no'];
+
+        $pattern = "/[-]/";
+
+        $components = preg_split($pattern, $order_no);
+        $so_no=preg_replace('/SO/i','',$components[2]);
+
+        if ($so_no != '') {
+                    $so_no = $so_no + 1;
         } else {
-            $order_no = 1000;
+                    $so_no = 1;
         }
-        return 'SO' . $order_no;
+
+        // print_r($components);
+
+        return $so_no;
+    }
+
+
+
+    public function generate_sv_no()
+    {
+        $this->db->select('invoice')->order_by('id', 'desc');
+        $query = $this->db->get('invoice');
+        $result = $query->result_array();
+
+
+
+      //  $order_no = substr($result[0]['invoice_no'], -1);
+        $order_no = $result[0]['invoice'];
+
+        $pattern = "/[-]/";
+
+        $components = preg_split($pattern, $order_no);
+        $sv_no=preg_replace('/SV/i','',$components[2]);
+
+        if ($sv_no != '') {
+            $sv_no = $sv_no + 1;
+        } else {
+            $sv_no = 1;
+        }
+
+        // print_r($components);
+
+        return $sv_no;
     }
 
     public function generate_dc_no()
@@ -2417,13 +2459,22 @@ class Invoices extends CI_Model
         $this->db->select('invoice_no')->order_by('invoice_no', 'desc');
         $query = $this->db->get('invoice');
         $result = $query->result_array();
-        $order_no = substr($result[0]['dc_no'], -4);
-        if ($order_no != '') {
-            $order_no = $order_no + 1;
+        $order_no = $result[0]['dc_no'];
+
+        $pattern = "/[-]/";
+
+        $components = preg_split($pattern, $order_no);
+        $dc_no=preg_replace('/DC/i','',$components[2]);
+
+        if ($dc_no != '') {
+            $dc_no = $dc_no + 1;
         } else {
-            $order_no = 1000;
+            $dc_no = 1;
         }
-        return 'DC' . $order_no;
+
+        // print_r($components);
+
+        return $dc_no;
     }
 
     public function get_sales_orders()
@@ -2480,7 +2531,8 @@ class Invoices extends CI_Model
         $this->db->select('*');
         $this->db->from('invoice a');
         // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
-        $this->db->where('a.status', 3);
+        $this->db->where('a.status', 2);
+        $this->db->or_where('a.status', 3);
         $this->db->group_by('a.invoice_no');
 
         $query = $this->db->get();

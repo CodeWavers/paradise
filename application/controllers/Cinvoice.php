@@ -1452,6 +1452,7 @@ class Cinvoice extends CI_Controller
     {
 
         $invoice_no = $this->input->post('invoice_no', TRUE);
+        $sv_no = $this->input->post('invoice', TRUE);
         $invoice_id = $this->input->post('invoice_id', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
@@ -1471,6 +1472,7 @@ class Cinvoice extends CI_Controller
 
             'date'          => $date,
             'customer_id'   => $customer_name,
+            'invoice'   => $sv_no,
             'vessel_name'   => $vessel_name,
             'contact_no'   => $contact_no,
             'total_amount'  => $grand_total,
@@ -1479,6 +1481,8 @@ class Cinvoice extends CI_Controller
             'total_discount' => $discount,
             'status'        => 3
         );
+
+      //  echo '<pre>';print_r($data_1);exit();
 
         $this->db->where('invoice_no', $invoice_no);
         $this->db->update('invoice', $data_1);

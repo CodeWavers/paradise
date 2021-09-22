@@ -1289,14 +1289,14 @@ class Linvoice
 
         $approved_list = $CI->Invoices->get_approved_so();
 
-        $so_no = $CI->Invoices->generate_invoice_no();
+        $sv_no = $CI->Invoices->generate_sv_no();
 
 
 
         $data = array(
             'title'     => 'Add Sales',
             'approved_list'     => $approved_list,
-            'sales_order_no'    => $so_no,
+            'sv_no'    => $sv_no,
         );
 
         $view = $CI->parser->parse('invoice/add_new_sales_form', $data, true);

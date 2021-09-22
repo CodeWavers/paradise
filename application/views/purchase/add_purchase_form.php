@@ -104,12 +104,25 @@
                             </div>
 
                         </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col-sm-6">-->
+<!---->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Vessel ame. : </label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        <input type="text" class="form-control" value="" name="voyage_no" id="voyage_no" onchange="generate_number()"  onkeyup="generate_number()">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!---->
+<!--                        </div>   -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label for="date" class="col-sm-4 col-form-label">Purchase Order No.</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="pur_order_no" name="pur_order_no" value="<?= $order_no ?>" readonly>
+                                        <input type="hidden" id="AI" name="" class="form-control" value="<?= $order_no ?>" readonly="readonly">
+                                        <input type="text" class="form-control" id="pur_order_no" name="pur_order_no" value="" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -140,6 +153,8 @@
 <!-- Purchase Report End -->
 
 <script type="text/javascript">
+
+
 
     function add_row(sl) {
         var pr_id = $("#product_id_" + sl).val();
@@ -186,6 +201,26 @@
     }
 
     $( document ).ready(function() {
+
+
+
+        var AI=$('#AI').val();
+        var vsn=$('#vessel_name').val();
+        var date=$('#date').val();
+        var arr1 = date.split('-');
+        // alert(arr1[0])
+        var fix1=arr1[0].slice(-2)
+
+        var fix2=parseInt(fix1)+1;
+
+
+
+
+        var generate_number='MEL-PO'+AI+'-'+fix1+'-'+fix2
+
+        $('#pur_order_no').val(generate_number);
+
+
 
         $('#cart_details').load("<?php echo base_url(); ?>Cpurchase/load");
 

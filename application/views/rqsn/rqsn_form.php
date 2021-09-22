@@ -120,7 +120,7 @@
 
                                             $date = date('Y-m-d');
                                             ?>
-                                            <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" />
+                                            <input class="datepicker form-control" type="text" size="50" name="invoice_date" id="date" required value="<?php echo html_escape($date); ?>" tabindex="4" onchange="generate_number()"  onkeyup="generate_number()" />
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,8 @@
                                     <div class="form-group row ">
                                         <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Requisition For : </label>
                                         <div class="col-sm-8">
-                                            <select name="rqsn_for" id="rqsn_for" class="form-control">
+                                            <select name="rqsn_for" id="rqsn_for" class="form-control" onchange="generate_number()">
+                                                <option value="">Vessele</option>
                                                 {outlet_list}
                                                 <option value="{outlet_id}">{outlet_name}</option>
                                                 {/outlet_list}
@@ -207,9 +208,9 @@
                                 <div class="col-sm-6">
 
                                     <div class="form-group row">
-                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : </label>
+                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Voyage No. : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" value="<?php echo $rqsn_no ?>" name="rqsn_no" id="rqsn_no" readonly>
+                                            <input type="text" class="form-control" value="" name="voyage_no" id="voyage_no" onchange="generate_number()"  onkeyup="generate_number()">
                                         </div>
                                     </div>
                                 </div>
@@ -226,6 +227,25 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
+
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+
+                                    <div class="form-group row">
+                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" value="" name="rqsn_no" id="rqsn_no" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
 
 
 
@@ -290,6 +310,34 @@
 <!-- Invoice Report End -->
 
 <script type="text/javascript">
+
+
+    function generate_number(){
+
+       // alert('Hello')
+
+        var vsn=$('#rqsn_for option:selected').text();
+        var vygn=$('#voyage_no').val();
+        var date=$('#date').val();
+        var arr1 = date.split('-');
+       // alert(arr1[0])
+        var fix1=arr1[0].slice(-2)
+
+        var fix2=parseInt(fix1)+1;
+
+        //alert(fix2)
+
+
+        var generate_number='MEL-'+vsn+'-'+vygn+'-'+fix1+'-'+fix2
+
+        $('#rqsn_no').val(generate_number);
+
+      // console.log(arr2);
+
+    }
+
+
+
     $(document).ready(function() {
         // setInterval(function(){
         //

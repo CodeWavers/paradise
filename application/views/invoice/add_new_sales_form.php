@@ -95,7 +95,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="rqsn_id" class="col-sm-4 col-form-label">Invoice/Voucher No:</label>
+                                    <label for="rqsn_id" class="col-sm-4 col-form-label">SO No:</label>
                                     <div class="col-sm-8">
                                         <?php if($approved_list){?>
                                         <select class="form-control" name="invoice_no" id="invoice_no" onchange="get_so_details()">
@@ -129,8 +129,8 @@
                                 <div class="form-group row">
                                     <label for="invoice_no" class="col-sm-4 col-form-label">Vessel Name</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="vessel_name" class="form-control" value=''>
-                                        <input type="hidden" name="invoice_id" id="invoice_id" class="form-control" value=''>
+                                        <input type="text" name="vessel_name" id="vessel_name" class="form-control" value='' readonly>
+                                        <input type="hidden" name="invoice_id" id="invoice_id" class="form-control" value='' readonly>
                                     </div>
                                 </div>
 
@@ -143,6 +143,19 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label for="invoice_no" class="col-sm-4 col-form-label">Invoice/Voucher No.</label>
+                                    <div class="col-sm-8">
+                                        <input type="hidden" id="AI" name="" class="form-control" value={sv_no} readonly>
+                                        <input type="text" name="invoice" id="invoice" class="form-control" value='' readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
 
 
@@ -209,9 +222,26 @@
                 obj = jQuery.parseJSON(data);
                 $('#cart_dt').html(obj.html);
                 $('#customer').val(obj.cus_name);
+                $('#vessel_name').val(obj.cus_name);
                 $("#cus_id").val(obj.cus_id);
                 $("#invoice_id").val(obj.invoice_id);
                 $("#inv_id").val(obj.invoice_id);
+
+                var AI=$('#AI').val();
+                var vsn=$('#customer').val();
+                var date=$('#date').val();
+                var arr1 = date.split('-');
+                //alert(vsn)
+                var fix1=arr1[0].slice(-2)
+
+                var fix2=parseInt(fix1)+1;
+
+                //alert(fix2)
+
+
+                var generate_number='MEL-'+vsn+'-SV'+AI+'-'+fix1+'-'+fix2
+
+                $('#invoice').val(generate_number);
             }
         })
 

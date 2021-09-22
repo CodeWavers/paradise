@@ -106,7 +106,8 @@
                                 <div class="form-group row">
                                     <label for="invoice_no" class="col-sm-4 col-form-label">Sales Order No.</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="invoice_no" class="form-control" value={sales_order_no} readonly>
+                                        <input type="text" name="invoice_no" id="so_no" class="form-control" value="" readonly>
+                                        <input type="hidden" id="AI" name="" class="form-control" value={sales_order_no} readonly>
                                     </div>
                                 </div>
 
@@ -150,7 +151,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="customer" class="col-sm-4 col-form-label">Customer Name</label>
+                                    <label for="customer" class="col-sm-4 col-form-label">Vessele Name</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="customer" class="form-control" value="" readonly="readonly">
                                         <input type="hidden" name="customer" id="cus_id" value="">
@@ -190,7 +191,31 @@
 <!-- Purchase Report End -->
 
 <script type="text/javascript">
+
+    // function generate_number(){
+    //
+    //     // alert('Hello')
+    //     var AI=$('#AI').val();
+    //     var vsn=$('#customer').val();
+    //     var date=$('#date').val();
+    //     var arr1 = date.split('-');
+    //     // alert(arr1[0])
+    //     var fix1=arr1[0].slice(-2)
+    //
+    //     var fix2=parseInt(fix1)+1;
+    //
+    //     //alert(fix2)
+    //
+    //
+    //     var generate_number='MEL-'+vsn+'-'+SO+AI+'-'+fix1+'-'+fix2
+    //
+    //     $('#rqsn_no').val(generate_number);
+    //
+    //     // console.log(arr2);
+    //
+    // }
     function get_rqsn_details() {
+
         var rqsn_id = $("#rqsn_id").val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
 
@@ -206,8 +231,27 @@
                 $('#cart_dt').html(obj.html);
                 $('#customer').val(obj.cus_name);
                 $("#cus_id").val(obj.cus_id);
+
+
+                var AI=$('#AI').val();
+                var vsn=$('#customer').val();
+                var date=$('#date').val();
+                var arr1 = date.split('-');
+                //alert(vsn)
+                var fix1=arr1[0].slice(-2)
+
+                var fix2=parseInt(fix1)+1;
+
+                //alert(fix2)
+
+
+                var generate_number='MEL-'+vsn+'-SO'+AI+'-'+fix1+'-'+fix2
+
+                $('#so_no').val(generate_number);
             }
         })
+
+
 
     }
 

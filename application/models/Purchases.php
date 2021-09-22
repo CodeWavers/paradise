@@ -1660,6 +1660,33 @@ class Purchases extends CI_Model {
         return 'PO'.$order_no;
     }
 
+    public function generate_PO_no()
+    {
+        $this->db->select('purchase_order')->order_by('id', 'desc');
+        $query = $this->db->get('product_purchase');
+        $result = $query->result_array();
+
+
+
+        //  $order_no = substr($result[0]['invoice_no'], -1);
+        $order_no = $result[0]['purchase_order'];
+
+        $pattern = "/[-]/";
+
+        $components = preg_split($pattern, $order_no);
+        $po_no=preg_replace('/PO/i','',$components[1]);
+
+        if ($po_no != '') {
+            $po_no = $po_no + 1;
+        } else {
+            $po_no = 1;
+        }
+
+        // print_r($components);
+
+        return $po_no;
+    }
+
     public function purchase_list_by_po_no()
     {
         $this->db->select('*');

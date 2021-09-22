@@ -168,16 +168,18 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
 
                                 </div>
 
-                                <div class="col-sm-4 text-left invoice-address" style="margin-bottom: 0;">
-
-
-                                    <div class=""><strong>Date: {final_date}</strong></div>
-                                    <div><strong>Voucher No: {invoice_no}</strong></div>
-
-                                </div>
-
+<!--                                <div class="col-sm-4 text-left invoice-address" style="margin-bottom: 20px;">-->
+<!---->
+<!---->
+<!--                                    <div class=""><strong>Date: {final_date}</strong></div>-->
+<!--                                    <div><strong>Voucher No: {invoice_no}</strong></div>-->
+<!---->
+<!--                                </div>-->
+<!---->
 
                                 <div class="col-sm-12" style="margin-top: -0.5cm">
+                                    <h4><b>Date:</b> {final_date}</h4>
+                                    <h4><b>Voucher No:</b> {invoice_no}</h4>
                                     <h4><b>Customer Name:</b> {customer_name}</h4>
                                     <h4><b>Vessel Name:</b> {vessel_name}</h4>
                                     <div style="display: flex; justify-content: space-between; margin-top: -0.1cm">

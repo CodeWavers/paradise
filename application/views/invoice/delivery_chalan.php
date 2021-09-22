@@ -76,7 +76,8 @@
                                 <div class="form-group row">
                                     <label for="customer" class="col-sm-4 col-form-label">Delivery Chalan No:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="dc_no" name="dc_no" class="form-control" value="{dc_no}" readonly="readonly">
+                                        <input type="text" id="dc_no" name="dc_no" class="form-control" value="" readonly="readonly">
+                                        <input type="hidden" id="AI" name="dc_no" class="form-control" value="{dc_no}" readonly="readonly">
 
                                     </div>
                                 </div>
@@ -149,8 +150,9 @@
                                 <div class="form-group row">
                                     <label for="rqsn_id" class="col-sm-4 col-form-label">Invoice/Voucher No:</label>
                                     <div class="col-sm-8">
+                                        <?php if($approved_list){?>
                                         <select class="form-control" name="invoice_no" id="invoice_no" onchange="get_so_details()">
-                                            <?php if($approved_list){?>
+
                                             <option value="">Select One</option>
                                             {approved_list}
                                             <option value="{invoice_no}">{invoice_no}</option>
@@ -214,6 +216,9 @@
 
 <script type="text/javascript">
     function get_so_details() {
+
+
+
         var invoice_no = $("#invoice_no").val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
 
@@ -233,6 +238,22 @@
                 $("#inv_id").val(obj.invoice_id);
                 $("#rqsn_no").val(obj.rqsn_no);
                 $("#vessel_name").val(obj.vessel_name);
+
+                var AI=$('#AI').val();
+                var vsn=$('#vessel_name').val();
+                var date=$('#date').val();
+                var arr1 = date.split('-');
+                // alert(arr1[0])
+                var fix1=arr1[0].slice(-2)
+
+                var fix2=parseInt(fix1)+1;
+
+
+
+
+                var generate_number='MEL-'+vsn+'-DC'+AI+'-'+fix1+'-'+fix2
+
+                $('#dc_no').val(generate_number);
             }
         })
 
