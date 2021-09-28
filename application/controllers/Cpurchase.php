@@ -1332,6 +1332,30 @@ class Cpurchase extends CI_Controller
                                 <td class="text-right">
 
                                 </td>
+                                      <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+                                      <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
+                                <td class="text-right">
+
+                                </td>
 
 
 

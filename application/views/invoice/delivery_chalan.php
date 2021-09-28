@@ -77,7 +77,7 @@
                                     <label for="customer" class="col-sm-4 col-form-label">Delivery Chalan No:</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="dc_no" name="dc_no" class="form-control" value="" readonly="readonly">
-                                        <input type="hidden" id="AI" name="dc_no" class="form-control" value="{dc_no}" readonly="readonly">
+                                        <input type="hidden" id="AI" name="" class="form-control" value="{dc_no}" readonly="readonly">
 
                                     </div>
                                 </div>

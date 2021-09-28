@@ -2599,6 +2599,7 @@ class Invoices extends CI_Model
         $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
         $this->db->join('rqsn_details f', 'f.rqsn_id = e.rqsn_id');
+        $this->db->group_by('c.product_id');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
         $query = $this->db->get();

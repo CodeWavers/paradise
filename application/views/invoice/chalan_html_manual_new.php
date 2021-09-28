@@ -171,14 +171,16 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
 
 
                                     <div class=""><strong>Chalan Date: {chalan_date}</strong></div>
-                                    <div><strong>Delivery Chalan No: {dc_no}</strong></div>
-                                    <div><strong>Requisition No.: {rqsn_no}</strong></div>
+<!--                                    <div><strong>Delivery Chalan No: {dc_no}</strong></div>-->
+<!--                                    <div><strong>Requisition No.: {rqsn_no}</strong></div>-->
 
 
                                 </div>
 
 
                                 <div class="col-sm-12" style="margin-top: -0.5cm">
+                                    <h4><b>Delivery Chalan No:</b> {dc_no}</h4>
+                                    <h4><b>Requisition No:</b> {rqsn_no}</h4>
                                     <h4><b>Customer Name:</b> {customer_name}</h4>
                                     <h4><b>Vessel Name:</b> {vessel_name}</h4>
                                     <div style="display: flex; justify-content: space-between; margin-top: -0.1cm">

@@ -76,7 +76,7 @@
                                     </label>
                                     <div class="col-sm-8">
 
-                                        <input type="text" tabindex="2" class="form-control" name="purchase_date" value="<?php echo $all_purchase_list[0]['purchase_date']; ?>" id="pur_date"  readonly/>
+                                        <input type="text" tabindex="2" class="form-control" name="purchase_date" value="<?php echo date('Y-m-d') ?>" id="pur_date"  readonly/>
 
                                     </div>
                                 </div>
