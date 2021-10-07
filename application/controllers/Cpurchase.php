@@ -1233,18 +1233,7 @@ class Cpurchase extends CI_Controller
                         <th style="font-size: 12px" class="text-center" width="8%">Shelf No.</th>
                         <th style="font-size: 12px" class="text-center" width="8%">Bin No.</th>
 
-                        <th class="text-center" width="4%">SN</th>
-                        <th class="text-center" width="8%">Product Name</th>
-                        <th class="text-center" width="8%">SKU</th>
-                        <th class="text-center" width="8%">Barcode</th>
-                        <th class="text-center" width="8%">Quantity</th>
-
-                        <th class="text-center" width="8%">Supplier Name</th>
-                        <th class="text-center" width="8%">Received</th>
-                        <th class="text-center" width="8%">Return</th>
-                        <th class="text-center" width="8%">Remarks</th>
-
-                        <th class="text-center" width="8%">Bill No.</th>
+               
 
 
                     </tr>
@@ -1293,8 +1282,7 @@ class Cpurchase extends CI_Controller
 
 
 
-                            <td class="wt">' . $items['sku'] . '</td>
-                            <td class="wt">' . $items['product_id'] . '</td>
+                           
 
 
 
@@ -1302,19 +1290,16 @@ class Cpurchase extends CI_Controller
                             <td class="test">
 
                             </td>
+                              <td class="test">
+
+                            </td>
+
+                         <td class="test">
+
+                            </td>
 
 
 
-                                <td class="text-right">
-
-                                </td>
-
-                                <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
 
                                 <td class="text-right">
 
@@ -1326,36 +1311,20 @@ class Cpurchase extends CI_Controller
                                 <td class="text-right">
 
                                 </td>
+
+                                <td class="text-right">
+
+                                </td>
+
                                 <td class="text-right">
 
                                 </td>
                                 <td class="text-right">
 
                                 </td>
-                                      <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
-                                      <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
-                                <td class="text-right">
-
-                                </td>
+                                
+                                
+  
 
 
 
