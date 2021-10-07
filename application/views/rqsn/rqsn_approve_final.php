@@ -160,7 +160,7 @@
                                         <th>Category</th>
                                         <th>Sub Category</th>
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
-                                        <th>Parts No.</th>
+
                                         <th>SKU</th>
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
@@ -183,7 +183,7 @@
                                             <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="" >
                                             <input type="hidden" value="<?php echo $rqsn_detail['rqsn_detail_id']?>" name="rqsn_detail_id[]" class="form-control" id="" >
                                         </td>
-                                        <td><?php echo $rqsn_detail['parts']?></td>
+
                                         <td><?php echo $rqsn_detail['sku']?></td>
                                         <td><?php echo $rqsn_detail['brand_name']?></td>
                                         <td><?php echo $rqsn_detail['model_name']?></td>

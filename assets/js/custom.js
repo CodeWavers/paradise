@@ -849,7 +849,7 @@ $(document).ready(function() {
             { data: 'product_name' },
             { data: 'sku',class:"text-center" },
             { data: 'stok_quantity',class:"stock text-right" },
-            { data: 'avg_price' ,class:"total_purchase text-right",render: $.fn.dataTable.render.number( ',', '.', 2, currency )},
+            { data: 'avg_price' ,class:" text-right",render: $.fn.dataTable.render.number( ',', '.', 2, currency )},
             { data: 'stock_value' ,class:"total_purchase text-right",render: $.fn.dataTable.render.number( ',', '.', 2, currency )},
 
         ],
