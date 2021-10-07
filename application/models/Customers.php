@@ -98,6 +98,17 @@ class Customers extends CI_Model {
           $jsaction = "return confirm('Are You Sure ?')";
 
 
+          $vessel=$this->db->select('*')->from('customer_vessel')->where('customer_id',$record->customer_id)->get()->result();
+             $html='';
+         foreach ($vessel as $v){
+
+             $html.='<ul>
+
+                <li>'.$v->vessel_name.'</li>
+                </ul>';
+
+
+         }
        
    if($this->permission1->method('manage_customer','update')->access()){
     $button .='<a href="'.$base_url.'Ccustomer/customer_update_form/'.$record->customer_id.'" class="btn btn-info btn-xs"  data-placement="left" title="'. display('update').'"><i class="fa fa-edit"></i></a> ';
@@ -113,8 +124,8 @@ class Customers extends CI_Model {
                 'sl'               =>$sl,
                 'customer_name'    =>html_escape($record->customer_name),
                 'address'          =>html_escape($record->customer_address),
-                'address2'         =>html_escape($record->address2),
-                'mobile'           =>html_escape($record->customer_mobile),
+                'vessel'         =>$html,
+                'contact_person'           =>html_escape($record->contact_person),
                 'phone'            =>html_escape($record->phone),
                 'email'            =>html_escape($record->customer_email),
                 'balance'          =>(!empty($record->balance)?$record->balance:0),
@@ -123,6 +134,8 @@ class Customers extends CI_Model {
             ); 
             $sl++;
          }
+
+       //  echo '<pre>';print_r($data);
 
          ## Response
          $response = array(
@@ -624,6 +637,7 @@ class Customers extends CI_Model {
     public function update_customer($data, $customer_id) {
         $this->db->where('customer_id', $customer_id);
         $this->db->update('customer_information', $data);
+
         $this->db->select('*');
         $this->db->from('customer_information');
         $query = $this->db->get();

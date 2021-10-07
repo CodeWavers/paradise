@@ -223,8 +223,10 @@ class Lcustomer {
         $CI = & get_instance();
         $CI->load->model('Customers');
         $customer_detail = $CI->Customers->retrieve_customer_editdata($customer_id);
+        $vessel_data=$CI->db->select('*')->from('customer_vessel')->where('customer_id',$customer_id)->get()->result();
         $data = array(
             'title'           => display('customer_edit'),
+            'vessel_data'     => $vessel_data,
             'customer_id'     => $customer_detail[0]['customer_id'],
             'customer_id_two'     => $customer_detail[0]['customer_id_two'],
             'customer_name'   => $customer_detail[0]['customer_name'],

@@ -183,29 +183,55 @@ class Ccustomer extends CI_Controller {
         $vouchar_no = $this->auth->generator(10);
 
          $data = array(
-            'customer_id_two'   => $this->input->post('customer_id_two',TRUE),
+          //  'customer_id_two'   => $this->input->post('customer_id_two',TRUE),
             'customer_name'   => $this->input->post('customer_name',TRUE),
             'customer_address'=> $this->input->post('address',TRUE),
-            'address2'        => $this->input->post('address2',TRUE),
-            'customer_mobile' => $this->input->post('mobile',TRUE),
+          //  'address2'        => $this->input->post('address2',TRUE),
+          //  'customer_mobile' => $this->input->post('mobile',TRUE),
             'phone'           => $this->input->post('phone',TRUE),
-            'fax'             => $this->input->post('fax',TRUE),
-            'contact'         => $this->input->post('contact',TRUE),
-            'contact_person'         => $this->input->post('contact_person',TRUE),
-            'city'            => $this->input->post('city',TRUE),
-            'state'           => $this->input->post('state',TRUE),
-            'zip'             => $this->input->post('zip',TRUE),
-            'country'         => $this->input->post('country',TRUE),
+          //  'fax'             => $this->input->post('fax',TRUE),
+          ///  'contact'         => $this->input->post('contact',TRUE),
+           'contact_person'         => $this->input->post('contact_person',TRUE),
+           //'city'            => $this->input->post('city',TRUE),
+           //'state'           => $this->input->post('state',TRUE),
+           //'zip'             => $this->input->post('zip',TRUE),
+           //'country'         => $this->input->post('country',TRUE),
            // 'discount_customer'=> $this->input->post('discount_customer',TRUE),
-            'email_address'   => $this->input->post('emailaddress',TRUE),
-            'website'   => $this->input->post('website',TRUE),
+           // 'email_address'   => $this->input->post('emailaddress',TRUE),
+          //  'website'   => $this->input->post('website',TRUE),
             'customer_email'  => $this->input->post('email',TRUE),
             'status'          => 2,
             'create_by'       => $this->session->userdata('user_id'),
         );
         
         $result = $this->db->insert('customer_information',$data);
+
+
+
+
          $customer_id = $this->db->insert_id();
+                $vessel=$this->input->post('vessel_name',TRUE);
+
+        if ( ! empty($vessel))
+        {
+
+            foreach ($vessel as $key => $value )
+            {
+
+
+                $data6['vessel_name'] = $value;
+                $data6['customer_id']=$customer_id;
+
+
+                //  echo '<pre>';print_r($data);
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data6))
+                {
+                    $this->db->insert('customer_vessel', $data6);
+                }
+            }
+
+        }
         //Customer  basic information adding.
         $coa = $this->Customers->headcode();
            if($coa->HeadCode!=NULL){
@@ -424,26 +450,56 @@ class Ccustomer extends CI_Controller {
         $old_headnam = $customer_id.'-'.$this->input->post('oldname',TRUE);
         $c_acc=$customer_id.'-'.$this->input->post('customer_name',TRUE);
         $data = array(
-            'customer_id_two' =>$this->input->post('customer_id_two',TRUE),
+         //   'customer_id_two' =>$this->input->post('customer_id_two',TRUE),
             'customer_name'   => $this->input->post('customer_name',TRUE),
             'customer_address'=> $this->input->post('address',TRUE),
-            'address2'        => $this->input->post('address2',TRUE),
-            'customer_mobile' => $this->input->post('mobile',TRUE),
+//            'address2'        => $this->input->post('address2',TRUE),
+//            'customer_mobile' => $this->input->post('mobile',TRUE),
             'phone'           => $this->input->post('phone',TRUE),
-            'fax'             => $this->input->post('fax',TRUE),
-            'contact'         => $this->input->post('contact',TRUE),
+//            'fax'             => $this->input->post('fax',TRUE),
+//            'contact'         => $this->input->post('contact',TRUE),
             'contact_person'  => $this->input->post('contact_person',TRUE),
-            'city'            => $this->input->post('city',TRUE),
-            'state'           => $this->input->post('state',TRUE),
-            'zip'             => $this->input->post('zip',TRUE),
-            'country'         => $this->input->post('country',TRUE),
-            'email_address'   => $this->input->post('emailaddress',TRUE),
-            'customer_email'  => $this->input->post('email',TRUE),
-            'website'  => $this->input->post('website',TRUE),
+//            'city'            => $this->input->post('city',TRUE),
+//            'state'           => $this->input->post('state',TRUE),
+//            'zip'             => $this->input->post('zip',TRUE),
+//            'country'         => $this->input->post('country',TRUE),
+//            'email_address'   => $this->input->post('emailaddress',TRUE),
+           'customer_email'  => $this->input->post('email',TRUE),
+//            'website'  => $this->input->post('website',TRUE),
         );
+
+
         $customer_coa = [
              'HeadName'         => $c_acc
         ];
+
+
+        $this->db->where('customer_id', $customer_id);
+        $this->db->delete('customer_vessel');
+
+        $vessel=$this->input->post('vessel_name',TRUE);
+
+        if ( ! empty($vessel))
+        {
+
+            foreach ($vessel as $key => $value )
+            {
+
+
+                $data6['vessel_name'] = $value;
+                $data6['customer_id']=$customer_id;
+
+
+                //  echo '<pre>';print_r($data);
+                // $this->ProductModel->add_products($data);
+                if ( ! empty($data6))
+                {
+                    $this->db->insert('customer_vessel', $data6);
+                }
+            }
+
+        }
+
         $result = $this->Customers->update_customer($data, $customer_id);
 if ($result == TRUE) {
         $this->db->where('HeadName', $old_headnam);

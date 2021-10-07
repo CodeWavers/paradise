@@ -72,65 +72,39 @@
                     <?php echo form_open('Ccustomer/insert_customer', array('class' => 'form-vertical', 'id' => 'insert_customer')) ?>
                     <div class="panel-body">
                      <div class="col-sm-6">
-                        <div class="form-group row">
-                            <label for="customer_id_two" class="col-sm-4 col-form-label">Customer ID: <i class="text-danger">*</i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name ="customer_id_two" id="customer_name" type="text" placeholder="Customer ID"  required="" tabindex="1">
-                            </div>
-                        </div>
+
 
                          <div class="form-group row">
-                            <label for="customer_name" class="col-sm-4 col-form-label"><?php echo display('customer_name') ?> <i class="text-danger">*</i></label>
+                            <label for="customer_name" class="col-sm-4 col-form-label">Company Name<i class="text-danger">*</i></label>
                             <div class="col-sm-8">
-                                <input class="form-control" name ="customer_name" id="customer_name" type="text" placeholder="<?php echo display('customer_name') ?>"  required="" tabindex="1">
+                                <input class="form-control" name ="customer_name" id="customer_name" type="text" placeholder="Company Name"  required="" tabindex="1">
                             </div>
                         </div>
+                         <div class="form-group row" id="multi_contact">
+                             <div class="r_contact" >
+                                 <label for="contact" class="col-sm-4 col-form-label">Vessel Name<i class="text-danger">*</i></label>
+                                 <div class="col-sm-6" style="padding-bottom:10px ">
+                                     <input class="form-control" name="vessel_name[]" id="vessel_name" type="text" placeholder="Vessel Name"   tabindex="2">
 
-                       	<div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label"><?php echo display('customer_email') ?></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name ="email" id="email" type="email" placeholder="<?php echo display('customer_email') ?>" tabindex="2"> 
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="emailaddress" class="col-sm-4 col-form-label"><?php echo display('email').' '.display('address'); ?> <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="emailaddress" id="emailaddress" type="email" placeholder="<?php echo display('email').' '.display('address') ?>"  >
-                            </div>
-                        </div>
-                       
+                                 </div>
 
-                        <div class="form-group row">
-                            <label for="mobile" class="col-sm-4 col-form-label"><?php echo display('customer_mobile') ?> <i class="text-danger">*</i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name ="mobile" id="mobile" type="number" placeholder="<?php echo display('customer_mobile') ?>" min="0" tabindex="3" required>
-                            </div>
-                        </div>
-                         <div class="form-group row">
-                            <label for="phone" class="col-sm-4 col-form-label"><?php echo display('phone') ?> <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="phone" id="phone" type="number" placeholder="<?php echo display('phone') ?>"  min="0" tabindex="2">
-                            </div>
-                        </div>
-                         <div class="form-group row">
-                             <label for="contact_person" class="col-sm-4 col-form-label">Contact Person <i class="text-danger"></i></label>
-                             <div class="col-sm-8">
-                                 <input class="form-control" name="contact_person" id="contact_person" type="text" placeholder="Contact Person"  >
+                                 <div class="col-sm-1">
+                                     <button   class='btn btn-primary text-right add_contact' type='button'><i class='fa fa-plus-circle'></i></button>
+                                 </div>
                              </div>
                          </div>
-                         <div class="form-group row">
-                            <label for="contact" class="col-sm-4 col-form-label">Contact Mobile <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="contact" id="contact" type="number" placeholder="Contact Mobile"  >
-                            </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label for="fax" class="col-sm-4 col-form-label"><?php echo display('fax'); ?> <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="fax" id="fax" type="text" placeholder="<?php echo display('fax') ?>"  >
-                            </div>
-                        </div>
+                         <div class="form-group row">
+                             <label for="phone" class="col-sm-4 col-form-label">Address <i class="text-danger"></i></label>
+                             <div class="col-sm-8">
+                                 <input class="form-control" name="address" id="phone" type="text" placeholder="Address"   tabindex="2">
+                             </div>
+                         </div>
+
+
+
+
+
 
 <!--                         <div class="form-group row">-->
 <!--                             <label for="discount_customer" class="col-sm-4 col-form-label">Discount</label>-->
@@ -139,65 +113,27 @@
 <!--                             </div>-->
 <!--                         </div>-->
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group row">
-                            <label for="city" class="col-sm-4 col-form-label"><?php echo display('city'); ?> <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="city" id="city" type="text" placeholder="<?php echo display('city') ?>"  >
-                            </div>
-                        </div>
-                      <div class="form-group row">
-                            <label for="state" class="col-sm-4 col-form-label">Police Station <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="state" id="state" type="text" placeholder="Police Station"  >
-                            </div>
-                        </div>
-                      
-                         
-                         <div class="form-group row">
-                            <label for="zip" class="col-sm-4 col-form-label"><?php echo display('zip'); ?> <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="zip" id="zip" type="text" placeholder="<?php echo display('zip') ?>"  >
-                            </div>
-                        </div>
-                         <div class="form-group row">
-                            <label for="country" class="col-sm-4 col-form-label"><?php echo display('country') ?> <i class="text-danger"></i></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="country" id="country" type="text" placeholder="<?php echo display('country') ?>"  >
-                            </div>
-                        </div>
+                        <div class="col-sm-6">
 
-
-                        <div class="form-group row">
-                            <label for="address " class="col-sm-4 col-form-label"><?php echo display('customer_address') ?></label>
-                            <div class="col-sm-8">
-                                <textarea class="form-control" name="address" id="address " rows="2" placeholder="<?php echo display('customer_address') ?>"></textarea>
+                            <div class="form-group row">
+                                <label for="phone" class="col-sm-4 col-form-label"><?php echo display('phone') ?> <i class="text-danger"></i></label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="phone" id="phone" type="number" placeholder="<?php echo display('phone') ?>"  min="0" tabindex="2">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="phone" class="col-sm-4 col-form-label">Email <i class="text-danger"></i></label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="email" id="phone" type="email" placeholder="Email"  tabindex="2">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="phone" class="col-sm-4 col-form-label">Contact Person<i class="text-danger"></i></label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="contact_person" id="contact_person" type="text" placeholder="Contact Person"  min="0" tabindex="2">
+                                </div>
                             </div>
                         </div>
-                          <div class="form-group row">
-                            <label for="address2 " class="col-sm-4 col-form-label">District</label>
-                            <div class="col-sm-8">
-                                <textarea class="form-control" name="address2" id="address2" rows="2" placeholder="District" ></textarea>
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <label for="previous_balance" class="col-sm-4 col-form-label"><?php echo display('previous_balance') ?></label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="previous_balance" id="previous_balance" type="text" min="0" placeholder="<?php echo display('previous_balance') ?>" tabindex="5">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="website" class="col-sm-4 col-form-label">Website</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" name="website" id="website" type="text"  placeholder="Website Link" tabindex="5">
-                            </div>
-                        </div>
-                    </div>
-
                         <div class="form-group row">
                             <label for="example-text-input" class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-8">
@@ -264,6 +200,29 @@
     </section>
 </div>
 <!-- Add new customer end -->
+
+<script type="text/javascript">
+
+
+    $(".add_contact").click(function(){
+        $("#multi_contact").append("     <div class=\"r_contact\" style=\"padding-bottom:10px \">\n" +
+            "                            <label for=\"email\" class=\"col-sm-4 col-form-label\"></label>\n" +
+            "                            <div class=\"col-sm-6\" style=\"padding-bottom:10px\" >\n" +
+            "                                <input class=\"form-control\" name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Vessel Name' ?>\"   tabindex=\"2\">\n" +
+            "\n" +
+            "                            </div>\n" +
+            "\n" +
+            "                             <div class=\"col-sm-1\">\n" +
+            "                                 <button   class='btn btn-danger text-right remove_contact' type='button'><i class='fa fa-minus-circle'></i></button>\n" +
+            "                             </div>\n" +
+            "                             </div> ");
+    });
+
+    $("body").on("click",".remove_contact",function(e){
+        $(this).parents('.r_contact').remove();
+        //the above method will remove the user_data div
+    });
+</script>
 
 
 

@@ -160,7 +160,7 @@ $(function($){
             }
             , {
                 extend: "excel", title: "CustomerList", exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4,5,6,7 ] //Your Colume value those you want
+                    columns: [ 0, 1, 2, 3, 4,5,6,7] //Your Colume value those you want
                 },className: "btn-sm prints"
             }
             , {
@@ -185,11 +185,11 @@ $(function($){
         'columns': [
             { data: 'sl' },
             { data: 'customer_name' },
+            { data: 'vessel'},
             { data: 'address'},
-            { data: 'address2'},
-            { data: 'mobile'},
             { data: 'phone'},
-            { data: 'email'},
+             { data: 'email'},
+             { data: 'contact_person'},
             { data: 'balance',class:"balance",render: $.fn.dataTable.render.number( ',', '.', 2, currency ) },
             { data: 'button'},
         ],
