@@ -691,7 +691,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                                     echo "active";
                                                 } else {
                                                     echo " ";
-                                                } ?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit_price') ?>">Requisition List</a>
+                                                } ?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit_price') ?>">Requisition List With Estimation</a>
                             </li>
                         <?php } ?>
 
