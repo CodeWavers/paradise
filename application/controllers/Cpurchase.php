@@ -1060,7 +1060,7 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="8%">Bill Image</th>
                         <th class="text-center">Aisle No</th>
                         <th width=8% class="text-center">Shelf No</th>
-                        <th class="text-center">Bill No</th>
+                        <th class="text-center">Bin No</th>
                     </tr>
                 </thead>
                 <tbody id="addPurchaseItem">';
