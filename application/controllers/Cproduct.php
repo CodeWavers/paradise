@@ -329,7 +329,7 @@ class Cproduct extends CI_Controller {
         #
         $config["base_url"]       = base_url('Cproduct/catalogue/');
         $config["total_rows"]     = $this->db->count_all('product_information');
-        $config["per_page"]       = 6;
+        $config["per_page"]       = 10;
         $config["uri_segment"]    = 3;
         $config["num_links"]      = 1;
         /* This Application Must Be Used With BootStrap 3 * */
@@ -382,7 +382,7 @@ class Cproduct extends CI_Controller {
         #
         $config["base_url"]       = base_url('Cproduct/catalogue/');
         $config["total_rows"]     = $this->db->count_all('product_information');
-        $config["per_page"]       = 4;
+        $config["per_page"]       = 10;
         $config["uri_segment"]    = 3;
         $config["num_links"]      = 1;
         /* This Application Must Be Used With BootStrap 3 * */
@@ -408,75 +408,63 @@ class Cproduct extends CI_Controller {
         #
         #pagination ends
         #
-        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id); //$config["per_page"], $page);
+        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id,$config["per_page"], $page); //$config["per_page"], $page);
 
 
         $html_data = '';
-        foreach ($all_product as $product) {
-            $html_data .= '<div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
-                <div class="col-sm-12 col-md-4">
 
-                    <div class="image_box" >
-                        <img class=\'zoom\' src="'.html_escape($product->image).'" id=\'img1\'  >
-                    </div>
-
-                </div>
-
-
-                <div class="col-sm-12 col-md-8">
-
-                    <div class="col-sm-6 col-md-6 " >
-
-                        <table class="table" width="100%" id="myTable">
-
+        $html_data .= ' <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
+                <table class="table table-striped table-bordered" id="myTable">
+                            <thead>
                             <tr>
-                                <th>Category</th>
-                                <td>'.html_escape($product->category_name).'</td>
-                            </tr>';
 
-            if($product->subcat_name){
-                $html_data .= '<tr>
-                                    <th>Sub-category</th>
-                                    <td>'.html_escape($product->subcat_name).'</td>;
-                                </tr>';
-            }
-            $html_data .= '<tr>
+                                <th>Product Image</th>
                                 <th>Product Name</th>
-                                <td>'.html_escape($product->product_name).'</td>
-                            </tr>
-
-
-                            <tr>
-                                <th>Parts No.</th>
-                                <td>'.html_escape($product->parts).'</td>
-                            </tr>
-                            <tr>
+                                <th>Product Category</th>
+                                <th>Product Sub-Category</th>
                                 <th>SKU</th>
-                                <td>'.html_escape($product->sku).'</td>
-                            </tr>
-                            <tr>
+                                <th>Parts No</th>
                                 <th>Unit Type</th>
-                                <td>'.html_escape($product->unit).'</td>
-                            </tr>
-                            <tr>
                                 <th>Brand</th>
-                                <td>'.html_escape($product->brand_name).'</td>
-                            </tr>
-                            <tr>
                                 <th>Model</th>
-                                <td>'.html_escape($product->model_name).'</td>
-                            </tr>
-                            <tr>
                                 <th>Associated Tag</th>
-                                <td>'.html_escape($product->tag).'</td>
+
                             </tr>
+                            </thead>
+                            <tbody>';
+
+        foreach ($all_product as $product) {
+
+            $html_data .= '
+
+                             <tr>
+                                    <td class="image_box"><img class="zoom" src='.html_escape($product->image).'></td>
+                                  
+
+                                    <td>'.html_escape($product->product_name).'</td>
+                                    <td>'.html_escape($product->category_name).'</td>
+                                    <td>'.html_escape($product->subcat_name).'</td>
+                                    <td>'.html_escape($product->sku).'</td>
+                                    <td>'.html_escape($product->parts).'</td>
+                                    <td>'.html_escape($product->unit).'</td>
+                                    <td>'.html_escape($product->brand_name).'</td>
+                                    <td>'.html_escape($product->model_name).'</td>
+                                    <td>'.html_escape($product->tag).'</td>
+                              
 
 
-                        </table>
-                    </div>
-                </div>
-            </div>';
+
+                                </tr>
+
+
+                ';
         }
+
+        $html_data .= '</tbody>
+
+    </table>
+    </div>';
+
 
 
 

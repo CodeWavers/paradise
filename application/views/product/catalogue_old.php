@@ -82,7 +82,7 @@ Manage Category Start -->
                             </div>
                             <div class="col-sm-2 text-right">
                                 <button type="submit" class="btn btn-success "><?php echo display('search') ?></button>
-                                <a  class="btn btn-warning" href="#" onclick="printDiv('myUL')"><?php echo display('print') ?></a>
+                                <a  class="btn btn-warning" href="#" onclick="printDiv('purchase_div')"><?php echo display('print') ?></a>
                             </div>
                         </div>
                         <?php echo form_close() ?>
@@ -92,50 +92,66 @@ Manage Category Start -->
         </div>
 
         <div style="margin: 0; padding : 0;" id="main_pan">
-<!--        --><?php //foreach ($all_product as $product) { ?>
+        <?php foreach ($all_product as $product) { ?>
             <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
+                <div class="col-sm-12 col-md-2">
+
+                    <div class="image_box" >
+
+                        <?php echo "<img class='zoom' src='".html_escape($product->image)."' id='img1'  >";?>
+                    </div>
+
+                </div>
 
 
+                <div class="col-sm-12 col-md-12">
 
-                        <table class="table table-striped table-bordered " id="myTable">
-                            <thead>
+
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-12 " >
+
+                        <table class="table" id="myTable">
+
+
+                            <!--            <caption  class="resumehead">--><?php //echo display('positional_information')?><!--</caption>-->
+
                             <tr>
-
-                                <th>Product Image</th>
-                                <th>Product Name</th>
-                                <th>Product Category</th>
-                                <th>Product Sub-Category</th>
+                                <th>Category</th>
+                                <!--                        <td>--><?php //echo html_escape($row[0]['designation']);?><!--</td>-->
+                                <td><?php echo html_escape($product->category_name); ?></td>
                                 <th>SKU</th>
-                                <th>Parts No</th>
-                                <th>Unit Type</th>
-                                <th>Brand</th>
-                                <th>Model</th>
-                                <th>Associated TAg</th>
-
+                                <td><?php echo html_escape($product->sku);?></td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($all_product as $product) { ?>
 
+                            <?php if($product->subcat_name):?>
                                 <tr>
-                                    <td class="image_box">     <?php echo "<img class='zoom' src='".html_escape($product->image)."' id='img1'  >";?></td>
-
-                                    <td><?php echo html_escape($product->product_name); ?></td>
-                                    <td><?php echo html_escape($product->category_name); ?></td>
+                                    <th>Sub-category</th>
                                     <td><?php echo html_escape($product->subcat_name); ?></td>
-                                    <td><?php echo html_escape($product->sku); ?></td>
-                                    <td><?php echo html_escape($product->parts); ?></td>
+                                    <th>Unit Type</th>
                                     <td><?php echo html_escape($product->unit); ?></td>
-                                    <td><?php echo html_escape($product->brand_name); ?></td>
-                                    <td><?php echo html_escape($product->model_name); ?></td>
-                                    <td><?php echo html_escape($product->tag);?></td>
-
-
-
                                 </tr>
+                            <?php endif;?>
+                            <tr>
+                                <th>Product Name</th>
+                                <td><?php echo html_escape($product->product_name); ?></td>
+                                <th>Brand</th>
+                                <td><?php echo html_escape($product->brand_name); ?></td>
+                            </tr>
 
-                            <?php } ?>
-                                </tbody>
+
+                            <tr>
+                                <th>Parts No.</th>
+                                <td><?php echo html_escape($product->parts);?></td>
+                                <th>Model</th>
+                                <td><?php echo html_escape($product->model_name); ?></td>
+                                
+                            </tr>
+
+                            <tr>
+                                <th>Associated Tag</th>
+                                <td><?php echo html_escape($product->tag);?></td>
+                            </tr>
 
 
                         </table>
@@ -146,18 +162,20 @@ Manage Category Start -->
                 </div>
 
 
+            </div>
+
+        <?php } ?>
+
+        </div>
 
 
 
 
-
-
-
-
-
+    </section>
     <div id="page_link">
         <?php echo $links;?>
     </div>
+</div>
 
 
 
@@ -241,8 +259,6 @@ function select_type() {
                 success: function( data ) {
                     main_panel.html(data.html_data);
                     links.html("");
-
-                  //  $('#myTable').dataTable();
                 },
                 error: function() {
                     alert("Something went wrong!");
