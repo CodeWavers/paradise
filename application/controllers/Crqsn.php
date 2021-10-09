@@ -90,6 +90,16 @@ class Crqsn extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function draft_rqsn_form($rqsn_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+        $content = $CI->lrqsn->draft_rqsn_add_form($rqsn_id);
+        $this->template->full_admin_html_view($content);
+    }
+
+
 
     public function rqsn_update_form()
     {
@@ -201,6 +211,23 @@ class Crqsn extends CI_Controller
 
         //  echo '<pre>';print_r($data);exit();
         $content = $this->lrqsn->approve_rqsn_new();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function draft_rqsn()
+    {
+        $CI = &get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+        //     $CI->load->model('Reports');
+        //     $data['title'] = 'Approve Requisition';
+        //     $data['t'] = $this->Rqsn->approve_rqsn();
+        //     //$data['t'] = $this->Reports->getCheckList_rqsn();
+        //    // $data = $this->Reports->getCheckLi st_rqsn();
+
+
+        //  echo '<pre>';print_r($data);exit();
+        $content = $this->lrqsn->draft_rqsn();
         $this->template->full_admin_html_view($content);
     }
 
@@ -540,8 +567,11 @@ class Crqsn extends CI_Controller
         $CI->load->library('lrqsn');
 
         $content = $this->lrqsn->approve_rqsn_final($rqsn_id);
+
         $this->template->full_admin_html_view($content);
     }
+
+
 
     public function update_rqsn_final()
     {
@@ -563,6 +593,31 @@ class Crqsn extends CI_Controller
         //   echo "ok";exit();
 
         redirect(base_url('Crqsn/rqsn_print_cw/' . $rqsn_id));
+    }
+
+    public function rqsn_draft_final()
+    {
+        $CI = &get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+
+        $rqsn_id = $this->input->post("rqsn_id", true);
+
+
+      //  echo $rqsn_id;exit();
+
+        $rqsn = $CI->Rqsn->rqsn_draft_final($rqsn_id);
+
+
+
+
+
+        //   echo "ok";exit();
+
+        redirect(base_url('Crqsn/draft_rqsn/'));
     }
 
     public function autosearch()

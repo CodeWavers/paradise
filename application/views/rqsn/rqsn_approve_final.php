@@ -123,18 +123,7 @@
                                     <div class="col-sm-9">
                                     <input type="text" class="form-control" name="" id="" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
                                     <input type="hidden" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['customer_id'] ?>" readonly >
-                                        <!-- <select name="rqsn_for" id="rqsn_for" class="form-control">
-                                            <?php foreach ($outlet_list as $ol){
-                                                if(($rqsn_details[0]['outlet_id']) == $ol['outlet_id']){?>
-                                                     <option value="<?= $ol['outlet_id'] ?>" selected><?= $ol['outlet_name'] ?></option>
-                                                <?php } else { ?>
-                                                    <option value="<?= $ol['outlet_id'] ?>"><?= $ol['outlet_name'] ?></option>
-                                            <?php }
-                                                }
-                                            ?>
 
-
-                                        </select> -->
                                     </div>
                                 </div>
 

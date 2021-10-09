@@ -15,11 +15,11 @@
         </div>
         <div class="header-title">
             <h1>Requisition</h1>
-            <small>Requisition Form</small>
+            <small>Draft Requisition Form</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#">Requisition</a></li>
-                <li class="active">Requisition Form</li>
+                <li class="active">Draft Requisition Form</li>
             </ol>
         </div>
     </section>
@@ -81,7 +81,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4>Requisition Form</h4>
+                            <h4>Draft Requisition Form</h4>
 
                         </div>
                     </div>
@@ -89,7 +89,7 @@
 
 
                     <div class="rqsn_panel" style="margin-top: 10px;">
-                        <?php echo form_open_multipart('Crqsn/insert_rqsn', array('class' => 'form-vertical', 'id' => 'insert_rqsn')) ?>
+                        <?php echo form_open_multipart('Crqsn/rqsn_draft_final', array('class' => 'form-vertical', 'id' => 'insert_rqsn')) ?>
                         <div class="row">
 
                             <div class="col-sm-" id="payment_from_2">
@@ -148,12 +148,9 @@
                                     <div class="form-group row">
                                         <label for="customer_name" class="col-sm-4 col-form-label text-right">Customer Name : </label>
                                         <div class="col-sm-8">
-                                            <select name="customer_name" id="customer_id" class="form-control" onchange="select_vessel()">
-                                                <option value="">Select Customer</option>
-                                                {customers}
-                                                <option value="{customer_id}">{customer_name}</option>
-                                                {/customers}
-                                            </select>
+                                            <input type="text" class="form-control" name="" id="" value="<?= $rqsn_details[0]['customer_name'] ?>" readonly >
+                                            <input type="hidden" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['customer_id'] ?>" readonly >
+
                                         </div>
                                     </div>
                                 </div>
@@ -180,13 +177,8 @@
                                 <div class="col-sm-6" id="vessel_div">
                                     <div class="form-group row ">
                                         <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Vessel Name : </label>
-                                        <div class="col-sm-8">
-                                            <select name="rqsn_for" id="rqsn_for" class="form-control" onchange="generate_number()">
-                                                <option value="">Vessele</option>
-<!--                                                {outlet_list}-->
-<!--                                                <option value="{outlet_id}">{outlet_name}</option>-->
-<!--                                                {/outlet_list}-->
-                                            </select>
+                                        <div class="col-sm-8" >
+                                            <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +207,7 @@
                                     <div class="form-group row">
                                         <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Voyage No. : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" value="" name="voyage_no" id="voyage_no" onchange="generate_number()"  onkeyup="generate_number()">
+                                            <input type="text" class="form-control"  name="voyage_no" id="voyage_no"  value="<?= $rqsn_details[0]['voyage_no'] ?>" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -246,8 +238,9 @@
                                     <div class="form-group row">
                                         <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : </label>
                                         <div class="col-sm-8">
-                                            <input type="hidden" id="AI" name="" class="form-control" value={rqsn_no} readonly>
-                                            <input type="text" class="form-control" value="" name="rqsn_no" id="rqsn_no" readonly>
+                                            <input type="hidden" id="AI" name="" class="form-control" value={rqsn_id} readonly>
+                                            <input type="hidden" id="rqsn_id" name="rqsn_id" class="form-control" value={rqsn_id} readonly>
+                                            <input type="text" class="form-control"  value="<?= $rqsn_details[0]['rqsn_no'] ?>" name="rqsn_no" id="rqsn_no" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +286,7 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                 <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="">
-                                <input type="submit" value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="">
+<!--                                <input type="submit" value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="">-->
                             </div>
                         </div>
 
@@ -317,7 +310,6 @@
 
 <script type="text/javascript">
     function select_vessel() {
-        generate_number()
 
         var customer_id=$('#customer_id').val();
       //      alert(customer_id)
@@ -376,16 +368,10 @@
 
 
     $(document).ready(function() {
-        // setInterval(function(){
-        //
-        //$('#cart_details').load("<?php //echo base_url();
-                                    ?>//Cadd_rqsn/load");
-        //
-        // }, 1000);
 
+        var rqsn_id = $("#rqsn_id").val();
 
-
-        $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/load");
+        $('#cart_details').load("<?php echo base_url(); ?>Cadd_rqsn/draft_load/"+rqsn_id);
 
         $(document).on('click', '.remove_inventory', function() {
             var row_id = $(this).attr("id");
@@ -424,38 +410,7 @@
 
     });
 
-    // function get_subcat() {
-    //     var category_id = $("#select_cat").val();
-    //
-    //     var base_url = "<?//= base_url() ?>//";
-    //     var csrf_test_name = $('[name="csrf_test_name"]').val();
-    //     var sub_cat_selected = "";
-    //
-    //
-    //     $.ajax( {
-    //         url: base_url + "Cproduct/sub_cat_by_category",
-    //         method: 'post',
-    //         data: {
-    //             category_id:category_id,
-    //             sub_cat_selected: sub_cat_selected,
-    //             csrf_test_name:csrf_test_name
-    //         },
-    //         cache: false,
-    //         success: function( data ) {
-    //             var obj = jQuery.parseJSON(data);
-    //             $('#select_subcat').html(obj.sub_cat);
-    //             // $('#cat_id').val(obj.c_id);
-    //             // var cat_id = $("#cat_id").val();
-    //
-    //             if(category_id == obj.c_id ){
-    //                 $("#subCat_div").css("display", "block");
-    //             }else{
-    //                 $("#subCat_div").css("display", "none");
-    //             }
-    //         }
-    //     })
 
-    // }
 
     function productList_with_cat_subcat(sl) {
         var priceClass = 'price_item' + sl;
@@ -473,6 +428,7 @@
         var subcat_id = $("#select_subcat").val();
         var brand_id = $("#select_brand").val();
         var model_id = $("#select_model").val();
+        var rqsn_id = $("#rqsn_id").val();
 
 
         // Auto complete
@@ -522,9 +478,10 @@
 
                 $.ajax({
                     type: "POST",
-                    url: base_url + "Cadd_rqsn/add",
+                    url: base_url + "Cadd_rqsn/draft_add",
                     data: {
                         product_id: id,
+                        rqsn_id: rqsn_id,
                         all_pid: p_id,
                         qty : qty,
                         csrf_test_name: csrf_test_name
@@ -533,7 +490,7 @@
                     success: function(data) {
 
                         toastr.success("Requisition Added");
-                        $('#cart_details').load(base_url + "Cadd_rqsn/load");
+                        $('#cart_details').load(base_url + "Cadd_rqsn/draft_load/"+rqsn_id);
                         $('#' + id).val('');
                         $("#product_name_1").val('');
                         // $('#cart_details').html(data);

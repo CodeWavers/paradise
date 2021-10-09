@@ -43,12 +43,35 @@ class Rqsn extends CI_Model
             ->get()->result_array();
     }
 
+//   function draft_list($rqsn_id)
+//    {
+//        return $list = $this->db->select('*')
+//            ->from('rqsn_cart')
+//            ->group_by('product_id')
+//            ->get()->result_array();
+//    }
+
 
     public function cart_product_details($product_id)
     {
         $list = $this->db->select('*')
             ->from('rqsn_cart')
             ->where('product_id', $product_id)
+            ->get();
+
+        if ($list->num_rows() > 0) {
+            return $list->result_array();
+        }
+
+        return false;
+    }
+
+    public function draft_cart_product_details($product_id,$rqsn_id)
+    {
+        $list = $this->db->select('*')
+            ->from('rqsn_details')
+            ->where('product_id', $product_id)
+            ->where('rqsn_id', $rqsn_id)
             ->get();
 
         if ($list->num_rows() > 0) {
@@ -142,7 +165,7 @@ class Rqsn extends CI_Model
             'rqsn_id'     => $rqsn_id,
             'date'            => (!empty($this->input->post('invoice_date', true)) ? $this->input->post('invoice_date', true) : date('Y-m-d')),
             'details'         => (!empty($this->input->post('inva_details', true)) ? $this->input->post('inva_details', true) : 'Requisition'),
-            // 'rqsn_no'=> $this->input->post('rqsn_no',true),
+             'rqsn_no'=> $this->input->post('rqsn_no',true),
             'voyage_no' => $this->input->post('voyage_no', true),
             'from_id' => $this->input->post('rqsn_for', true),
             'to_id'  => 'HK7TGDT69VFMXB7',
@@ -176,6 +199,7 @@ class Rqsn extends CI_Model
             $this->db->empty_table('rqsn_cart');
         } else {
             $this->db->insert('rqsn', $data_draft);
+            $this->db->empty_table('rqsn_cart');
         }
 
 
@@ -368,7 +392,7 @@ class Rqsn extends CI_Model
 
     public function generate_rq_no()
     {
-        $this->db->select('rqsn_no')->where('status', 3)->order_by('id', 'desc');
+        $this->db->select('rqsn_no')->order_by('id', 'desc');
         $query = $this->db->get('rqsn');
         $result = $query->result_array();
 
@@ -1137,6 +1161,23 @@ class Rqsn extends CI_Model
         return $records;
     }
 
+    public function draft_rqsn_details_data()
+    {
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+            ->from('rqsn a')
+            ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
+            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+            ->join('customer_information e', 'e.customer_id=a.rqsn_customer_name','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->where('a.status', 1)
+            ->group_by('b.rqsn_id')
+            ->order_by('a.rqsn_no', 'desc')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
     public function rqsn_details_data_price()
     {
         $records = $this->db->select('a.*, b.*, c.*, d.*')
@@ -1193,6 +1234,39 @@ class Rqsn extends CI_Model
 
         return $records;
     }
+
+    public function rqsn_draft_final($rqsn_id)
+    {
+
+
+        $quantity = $this->input->post("product_quantity", true);
+        $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
+
+        for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            $rq_id  = $rqsn_detail_id[$i];
+
+
+            //            $rqsn_details = array(
+            //
+            //                'quantity'                => $qty,
+            //            );
+            if (!empty($quantity)) {
+
+                $this->db->where('rqsn_detail_id', $rq_id);
+                $this->db->set('quantity', $qty);
+                $this->db->update('rqsn_details');
+            }
+        }
+
+        $sq = "UPDATE rqsn
+        SET status = 2
+        WHERE rqsn_id = " . $rqsn_id . "
+        ";
+
+        $this->db->query($sq);
+    }
+
 
     public function rqsn_update_final($rqsn_id)
     {
