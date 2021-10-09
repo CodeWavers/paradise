@@ -114,14 +114,15 @@
                                 <div class="form-group row rqsn-form-input">
                                     <label for="customer_name" class="col-sm-3 col-form-label text-right">Customer Name : </label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['rqsn_customer_name'] ?>" readonly >
+                                        <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['customer_name'] ?>" readonly >
                                     </div>
                                 </div>
 
                                 <div class="form-group row  rqsn-form-input">
-                                    <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Requisition For : </label>
+                                    <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Vessel Name : </label>
                                     <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['outlet_name'] ?>" readonly >
+                                    <input type="text" class="form-control" name="" id="" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
+                                    <input type="hidden" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['customer_id'] ?>" readonly >
                                         <!-- <select name="rqsn_for" id="rqsn_for" class="form-control">
                                             <?php foreach ($outlet_list as $ol){
                                                 if(($rqsn_details[0]['outlet_id']) == $ol['outlet_id']){?>

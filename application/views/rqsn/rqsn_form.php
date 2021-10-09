@@ -148,7 +148,12 @@
                                     <div class="form-group row">
                                         <label for="customer_name" class="col-sm-4 col-form-label text-right">Customer Name : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="customer_name" id="customer_name">
+                                            <select name="customer_name" id="customer_id" class="form-control" onchange="select_vessel()">
+                                                <option value="">Select Customer</option>
+                                                {customers}
+                                                <option value="{customer_id}">{customer_name}</option>
+                                                {/customers}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -172,15 +177,15 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" id="vessel_div">
                                     <div class="form-group row ">
-                                        <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Requisition For : </label>
+                                        <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Vessel Name : </label>
                                         <div class="col-sm-8">
                                             <select name="rqsn_for" id="rqsn_for" class="form-control" onchange="generate_number()">
                                                 <option value="">Vessele</option>
-                                                {outlet_list}
-                                                <option value="{outlet_id}">{outlet_name}</option>
-                                                {/outlet_list}
+<!--                                                {outlet_list}-->
+<!--                                                <option value="{outlet_id}">{outlet_name}</option>-->
+<!--                                                {/outlet_list}-->
                                             </select>
                                         </div>
                                     </div>
@@ -241,6 +246,7 @@
                                     <div class="form-group row">
                                         <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : </label>
                                         <div class="col-sm-8">
+                                            <input type="hidden" id="AI" name="" class="form-control" value={rqsn_no} readonly>
                                             <input type="text" class="form-control" value="" name="rqsn_no" id="rqsn_no" readonly>
                                         </div>
                                     </div>
@@ -310,12 +316,42 @@
 <!-- Invoice Report End -->
 
 <script type="text/javascript">
+    function select_vessel() {
+
+        var customer_id=$('#customer_id').val();
+      //      alert(customer_id)
+
+
+        var base_url = "<?= base_url() ?>";
+        var csrf_test_name = $('[name="csrf_test_name"]').val();
+        //var sub_cat_selected = "";
+
+
+        $.ajax( {
+            url: base_url + "Crqsn/vessel_by_customer",
+            method: 'post',
+            data: {
+                customer_id:customer_id,
+                csrf_test_name:csrf_test_name
+            },
+            cache: false,
+            success: function( data ) {
+                var obj = jQuery.parseJSON(data);
+
+              //  console.log(obj)
+                $('#rqsn_for').html(obj.vessel_list);
+
+            }
+        })
+
+    }
 
 
     function generate_number(){
 
        // alert('Hello')
 
+        var AI=$('#AI').val();
         var vsn=$('#rqsn_for option:selected').text();
         var vygn=$('#voyage_no').val();
         var date=$('#date').val();
@@ -328,7 +364,7 @@
         //alert(fix2)
 
 
-        var generate_number='MEL-'+vsn+'-'+vygn+'-'+fix1+'-'+fix2
+        var generate_number='MEL-'+vsn+'-RQ'+AI+'-'+vygn+'-'+fix1+'-'+fix2
 
         $('#rqsn_no').val(generate_number);
 
@@ -389,12 +425,12 @@
 
     // function get_subcat() {
     //     var category_id = $("#select_cat").val();
-
-    //     var base_url = "<?= base_url() ?>";
+    //
+    //     var base_url = "<?//= base_url() ?>//";
     //     var csrf_test_name = $('[name="csrf_test_name"]').val();
     //     var sub_cat_selected = "";
-
-
+    //
+    //
     //     $.ajax( {
     //         url: base_url + "Cproduct/sub_cat_by_category",
     //         method: 'post',
@@ -409,7 +445,7 @@
     //             $('#select_subcat').html(obj.sub_cat);
     //             // $('#cat_id').val(obj.c_id);
     //             // var cat_id = $("#cat_id").val();
-
+    //
     //             if(category_id == obj.c_id ){
     //                 $("#subCat_div").css("display", "block");
     //             }else{

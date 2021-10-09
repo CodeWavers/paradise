@@ -43,7 +43,43 @@ class Crqsn extends CI_Controller
         //   echo $this->view();
     }
 
+    public function vessel_by_customer() {
 
+
+        $CI = & get_instance();
+        $CI->load->library('lpurchase');
+        $CI->load->model('Rqsn');
+        $customer_id = $this->input->post('customer_id',TRUE);
+
+        $vessel = $CI->Rqsn->vessel_list_product_by_customer_id($customer_id);
+
+
+        foreach ($vessel as $vessel_a) {
+            $vessel_list[] =$vessel_a->vessel_name;
+
+        }
+        //echo '<pre>';print_r($vessel_list);exit();
+
+        $ves[]= "";
+        if (empty($vessel_list)) {
+            $ves .="No Vessel Found !";
+        }else{
+            $ves .="<select name=\"rqsn_for\"   class=\" form-control\" id=\"\">";
+            $ves .= "<option value=''>".display('select_one')."</option>";
+            foreach ($vessel_list as $vsl) {
+
+
+                $ves .="<option value=".$vsl.">".$vsl."</option>";
+
+            }
+            $ves .="</select>";
+        }
+
+
+        $data['vessel_list']  =$ves;
+
+        echo json_encode($data);
+    }
 
     public function rqsn_form()
     {

@@ -50,7 +50,7 @@ class Cproduct extends CI_Controller {
         if (empty($sub_cat)) {
             $sub .="No Subcategory Found !";
         }else{
-            $sub .="<select name=\"sub_cat\"   class=\"sub_cat form-control\" id=\"sub_cat\">";
+            $sub .="<select name=\"sub_cat\"  class=\"sub_cat form-control\" id=\"sub_cat\">";
             $sub .= "<option value=''>".display('select_one')."</option>";
             foreach ($sub_cat as $sub_cat) {
                 if(!empty($sub_cat_selected) && ($sub_cat['sub_cat_id'] == $sub_cat_selected)){

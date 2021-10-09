@@ -16,6 +16,18 @@ class Rqsn extends CI_Model
         $this->load->model('Service');
         $this->auth->check_admin_auth();
     }
+    public function vessel_list_product_by_customer_id($customer_id) {
+        $this->db->select('*');
+        $this->db->from('customer_vessel');
+        $this->db->where('customer_id', $customer_id);
+       // $this->db->where('status', 1);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return false;
+    }
+
 
     function product_fetch_all()
     {
@@ -192,7 +204,6 @@ class Rqsn extends CI_Model
             );
             if (!empty($quantity)) {
                 $this->db->insert('rqsn_details', $rqsn_details);
-
                 $this->db->where('product_id', $product_id);
                 $this->db->set('qty', $qty);
                 $this->db->update('rqsn_cart');
@@ -353,6 +364,35 @@ class Rqsn extends CI_Model
         }
         return $rqsn_no;
     }
+
+
+    public function generate_rq_no()
+    {
+        $this->db->select('rqsn_no')->where('status', 3)->order_by('id', 'desc');
+        $query = $this->db->get('rqsn');
+        $result = $query->result_array();
+
+
+
+        //  $order_no = substr($result[0]['invoice_no'], -1);
+        $order_no = $result[0]['rqsn_no'];
+
+        $pattern = "/[-]/";
+
+        $components = preg_split($pattern, $order_no);
+        $rq_no=preg_replace('/RQ/i','',$components[2]);
+
+        if ($rq_no != '') {
+            $rq_no = $rq_no + 1;
+        } else {
+            $rq_no = 1;
+        }
+
+        // print_r($components);
+
+        return $rq_no;
+    }
+
 
 
     public function rqsn_draft_count()
@@ -1082,10 +1122,11 @@ class Rqsn extends CI_Model
 
     public function rqsn_details_data()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*')
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('outlet_warehouse c', 'c.outlet_id=a.from_id')
+            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+            ->join('customer_information e', 'e.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 2)
             ->group_by('b.rqsn_id')
@@ -1114,10 +1155,11 @@ class Rqsn extends CI_Model
 
     public function rqsn_details_data_by_rqsn_id($rqsn_id)
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('outlet_warehouse c', 'c.outlet_id=a.from_id')
+            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+            ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->join('product_category e', 'e.category_id = d.category_id', 'left')
             ->join('product_subcat f', 'f.category_id = e.category_id', 'left')

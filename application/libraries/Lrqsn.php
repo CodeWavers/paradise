@@ -49,7 +49,7 @@ class Lrqsn {
 
         $outlet_list    = $CI->Warehouse->branch_list();
         $outlet_list_to    = $CI->Rqsn->outlet_list_to();
-        $rqsn_no    = $CI->Rqsn->number_generator();
+        $rqsn_no    = $CI->Rqsn->generate_rq_no();
         $customers = $CI->Customers->customer_list();
         $cw_list    = $CI->Rqsn->cw_list();
 
@@ -78,7 +78,7 @@ class Lrqsn {
             'customers'         => $customers,
         );
 
-   //    echo '<pre'; print_r($data);exit();
+      // echo '<pre'; print_r($rqsn_no);exit();
     //    die();
         $invoiceForm = $CI->parser->parse('rqsn/rqsn_form', $data, true);
         return $invoiceForm;
@@ -270,7 +270,7 @@ class Lrqsn {
         }
 
         $data = array(
-            'title'             => 'Print Requisition',
+            'title'             => 'Approve Requisition',
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list
         );
