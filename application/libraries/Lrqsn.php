@@ -340,6 +340,8 @@ class Lrqsn {
 
         $outlet_list    = $CI->Warehouse->branch_list();
         $rqsn_details = $CI->Rqsn->rqsn_details_data_by_rqsn_id($rqsn_id);
+        $grand_total = array_sum(array_column($rqsn_details, 'total'));
+
 
         if(!empty($rqsn_details)){
             $sl = 0;
@@ -352,10 +354,12 @@ class Lrqsn {
         $data = array(
             'title'             => 'Approve Requisition',
             'rqsn_details'      => $rqsn_details,
-            'outlet_list'       => $outlet_list
+            'outlet_list'       => $outlet_list,
+            'grand_total'       => $grand_total,
+            'sl'       => $sl,
         );
 
-     //   echo '<pre>';print_r($rqsn_details);exit();
+      //  echo '<pre>';print_r($grand_total);exit();
 
         return $CI->parser->parse('rqsn/rqsn_approve_final', $data, true);
     }

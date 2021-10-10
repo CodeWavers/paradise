@@ -155,6 +155,7 @@
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Quantity</th>
+                                        <th>Rate</th>
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>
@@ -163,14 +164,14 @@
 
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
                                     <tr class="text-center">
-                                        <td><?php echo $rqsn_detail['sl']?>
+                                        <td><?php echo  $rqsn_detail['sl']?>
                                     </td>
                                         <td><?php echo $rqsn_detail['category_name']?></td>
                                         <td><?php echo $rqsn_detail['subcat_name']?></td>
                                         <td>
                                             <?php echo $rqsn_detail['product_name']?>
 
-                                            <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="" >
+                                            <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="product_id_'<?php $rqsn_detail['sl'] ?> . '"  >
                                             <input type="hidden" value="<?php echo $rqsn_detail['rqsn_detail_id']?>" name="rqsn_detail_id[]" class="form-control" id="" >
                                         </td>
 
@@ -179,11 +180,18 @@
                                         <td><?php echo $rqsn_detail['model_name']?></td>
                                         <td style="width: 5%;" >
 
-
-                                            <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control" id="quantity" >
+                                            <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity" >
 
                                         </td>
-                                        <td style="width: 5%;" ><?php echo $rqsn_detail['total']?></td>
+                                        <td style="width: 10%;" >
+
+
+                                            <input type="text" value="<?php echo $rqsn_detail['supplier_price']?>" name="rate[]" class="form-control rate" id="rate" readonly>
+
+                                        </td>
+                                        <td style="width: 10%;" >
+                                            <input class="form-control total_price" name="total_price[]" id="total_price" value='<?php echo $rqsn_detail['total']?>' readonly/>
+                                        </td>
 
                                         <td width="100" align="center"> <a class="btn btn-danger btn-sm remove_inventory"  value="<?php echo display('delete') ?>" onclick="deleteRow(this,<?php echo $rqsn_detail['rqsn_detail_id']?>)"  tabindex="10"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
@@ -191,6 +199,15 @@
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-right"><b>Grand Total:</b></td>
+                                    <td style="width: 10%">
+                                        <input  class="form-control" name="total" id="grand_total" value='<?php echo number_format($grand_total,2)?>' readonly/>
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
 
                         </div>
@@ -219,10 +236,39 @@
 
 <script type="text/javascript">
 
-    // $(document).ready( function () {
-    //     $('#add_rqsn_table').DataTable();
-    // } );
 
+
+    $(document).ready(function(){
+
+
+       // console.log(data_id);
+        $('.quantity').on('keyup', function() {
+
+            var qty=this.value;
+
+             var rate= $(this).closest('tr').find('.rate').val()
+
+            var total_price=qty*rate
+
+          var row_total=  $(this).closest('tr').find('.total_price').val(total_price)
+
+           calculation()
+
+
+        });
+    });
+
+
+    function calculation() {
+        var t = 0;
+
+
+        $(".total_price").each(function () {
+            isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
+        }),
+
+            $("#grand_total").val(t.toFixed(2,2));
+    }
 
     function deleteRow(e,row_id){
 

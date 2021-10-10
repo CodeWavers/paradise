@@ -565,8 +565,6 @@ class Cpurchase extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
-
-
     public function edit_purchase_order($supplier_id)
     {
         $CI = &get_instance();

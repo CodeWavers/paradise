@@ -1196,12 +1196,13 @@ class Rqsn extends CI_Model
 
     public function rqsn_details_data_by_rqsn_id($rqsn_id)
     {
-        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
             ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
+            ->join('supplier_product z', 'z.product_id = d.product_id', 'left')
             ->join('product_category e', 'e.category_id = d.category_id', 'left')
             ->join('product_subcat f', 'f.category_id = e.category_id', 'left')
             ->join('product_brand g', 'g.brand_id = d.brand_id', 'left')
@@ -1239,22 +1240,27 @@ class Rqsn extends CI_Model
     {
 
 
+        $CI = &get_instance();
+        $p_id = $this->input->post("product_id[]", true);
         $quantity = $this->input->post("product_quantity", true);
         $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
 
         for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
             $qty  = $quantity[$i];
             $rq_id  = $rqsn_detail_id[$i];
+            $product_id  = $p_id[$i];
 
+            $supplier_price = $this->db->select('supplier_price')->from('supplier_product')->where('product_id', $product_id)->get()->row();
 
-            //            $rqsn_details = array(
+            $price = $qty * ($supplier_price->supplier_price);
+
             //
             //                'quantity'                => $qty,
-            //            );
-            if (!empty($quantity)) {
+            //            );            //            $rqsn_details = array(
 
+            if (!empty($quantity)) {
                 $this->db->where('rqsn_detail_id', $rq_id);
-                $this->db->set('quantity', $qty);
+                $this->db->set(array('quantity'=> $qty,'total'=>$price));
                 $this->db->update('rqsn_details');
             }
         }
@@ -1272,12 +1278,14 @@ class Rqsn extends CI_Model
     {
 
 
+        $total_price = $this->input->post("total_price", true);
         $quantity = $this->input->post("quantity", true);
         $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
 
         for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
             $qty  = $quantity[$i];
             $rq_id  = $rqsn_detail_id[$i];
+            $total  = $total_price[$i];
 
 
             //            $rqsn_details = array(
@@ -1287,7 +1295,7 @@ class Rqsn extends CI_Model
             if (!empty($quantity)) {
 
                 $this->db->where('rqsn_detail_id', $rq_id);
-                $this->db->set('quantity', $qty);
+                $this->db->set(array('a_qty'=>$qty,'total'=>$total));
                 $this->db->update('rqsn_details');
             }
         }

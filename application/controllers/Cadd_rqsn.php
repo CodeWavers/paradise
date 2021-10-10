@@ -110,39 +110,40 @@ class Cadd_rqsn extends CI_Controller
         // $i = 0;
 
         for ($i = 0; $i < count($each_pr); $i++) {
+
+            $qty_a= $each_qty[$i];
             $cart_details = $this->Rqsn->draft_cart_product_details($each_pr[$i],$rqsn_id);
             if (empty($cart_details['quantity'])) {
                 $this->db->where('rqsn_id',$rqsn_id);
                 $this->db->where('product_id', $each_pr[$i]);
-                $this->db->set('quantity', $each_qty[$i]);
+                $this->db->set('quantity', $qty_a);
                 $this->db->update('rqsn_details');
+            }
+
+            $product_id = $_POST["product_id"];
+
+            //  echo '<pre>'; print_r($this->Rqsn->cart_product_details($product_id)); exit();
+
+            if (!($this->Rqsn->draft_cart_product_details($product_id,$rqsn_id))) {
+
+                // print_r('yes'); exit();
+
+//                $supplier_price = $this->db->select('supplier_price')->from('supplier_product')->where('product_id', $product_id)->get()->row();
+//
+//                $price = $_POST["product_quantity"] * ($supplier_price->supplier_price);
+                $data = array(
+                    "product_id"  => $_POST["product_id"],
+                    'rqsn_detail_id'     => mt_rand(),
+                    "rqsn_id"  => $rqsn_id,
+                    'status'                => 1,
+                    'purchase_status'       => 1
+                );
+
+                $this->db->insert('rqsn_details', $data);
             }
         }
 
-        $product_id = $_POST["product_id"];
 
-        //  echo '<pre>'; print_r($this->Rqsn->cart_product_details($product_id)); exit();
-
-        if (!($this->Rqsn->draft_cart_product_details($product_id,$rqsn_id))) {
-
-            // print_r('yes'); exit();
-
-//            $cart_product = $this->db->select('*')->from('product_information a')
-//                ->join('product_category b', 'b.category_id=a.category_id')
-//                ->join('product_subcat e', 'e.sub_cat_id=a.sub_cat_id', 'left')
-//                ->join('product_brand c', 'c.brand_id=a.brand_id', 'left')
-//                ->join('product_model d', 'd.model_id=a.product_model', 'left')
-//                ->where('a.product_id', $product_id)->get()->row();
-            $data = array(
-                "product_id"  => $_POST["product_id"],
-                'rqsn_detail_id'     => mt_rand(),
-                "rqsn_id"  => $rqsn_id,
-                'status'                => 1,
-                'purchase_status'       => 1
-            );
-
-            $this->db->insert('rqsn_details', $data);
-        }
 
 
         // json_encode($data);

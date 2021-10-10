@@ -1785,7 +1785,7 @@ class Purchases extends CI_Model {
 
     public function get_rqsn_approved_list()
     {
-        $this->db->select('a.*, sum(b.quantity)as qty, b.*, c.*,d.*, e.*, f.*, g.*');
+        $this->db->select('a.*, sum(b.a_qty)as qty, b.*, c.*,d.*, e.*, f.*, g.*');
         $this->db->from('rqsn a');
         $this->db->join('rqsn_details b', 'b.rqsn_id = a.rqsn_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
