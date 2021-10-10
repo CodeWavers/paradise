@@ -676,7 +676,7 @@ class Cpurchase extends CI_Controller
         $count = 0;
         foreach ($cart_list as $items) {
 
-            $latest_price = $this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->order_by('id', 'DESC')->get()->row()->update_price;
+            $latest_price = $this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->where('status',2)->order_by('id', 'DESC')->get()->row()->update_price;
 
 
             // echo '<pre>'; print_r($latest_price); exit();
@@ -715,10 +715,10 @@ class Cpurchase extends CI_Controller
                                 <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right" value="' . $items['qty'] . '" min="0" tabindex="7" readonly/>
+                                <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right"  value="'. $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "00") . '" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($items['qty'] ? $items['qty'] : "00") . '" min="0" tabindex="7"/>
                             </td>
 
                                 ';
