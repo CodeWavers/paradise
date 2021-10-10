@@ -1416,7 +1416,8 @@ class Rqsn extends CI_Model
         $this->db->join('product_information b', 'c.product_id = b.product_id');
         $this->db->join('product_brand d', 'd.brand_id = b.brand_id', 'left');
         $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
-        $this->db->join('outlet_warehouse f', 'f.outlet_id = a.from_id', 'left');
+        $this->db->join('customer_information x', 'x.customer_id = a.rqsn_customer_name', 'left');
+      //  $this->db->join('customer_vessel y', 'y.customer_id = a.from_id', 'left');
         $query = $this->db->get();
 
         return $query->result_array();

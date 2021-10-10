@@ -105,6 +105,16 @@
                                 </div>
                             </div>
 
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label for="customer" class="col-sm-4 col-form-label">Customer Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="customer" class="form-control" value="" readonly="readonly">
+                                        <input type="hidden" name="customer" id="cus_id" value="">
+                                    </div>
+                                </div>
+                            </div>
+
 
 
                         </div>
@@ -121,6 +131,17 @@
                                         <input type="hidden" id="invoice_id" name="invoice_id" class="form-control" readonly>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label for="invoice_no" class="col-sm-4 col-form-label">Vessel Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="vessel_name" id="vessel_name" class="form-control" value='' readonly>
+
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -192,6 +213,9 @@
                 $("#invoice_id").val(obj.invoice_id);
                 $("#inv_id").val(obj.invoice_id);
                 $("#rqsn_no").val(obj.rqsn_no);
+                $('#customer').val(obj.cus_name);
+                $('#vessel_name').val(obj.vessel_name);
+                $("#cus_id").val(obj.cus_id);
 
             }
         })

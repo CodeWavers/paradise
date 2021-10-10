@@ -952,7 +952,7 @@ class Crqsn extends CI_Controller
                 <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
                 <td><input type="text" class="form-control" value="' . $rq['brand_name'] . '" readonly="readonly"></td>
                 <td><input type="text" class="form-control" value="' . $rq['model_name'] . '" readonly="readonly"></td>
-                <td><input type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" readonly="readonly"></td>
+                <td><input type="text" class="form-control" name="order_quantity[]" value="' . $rq['a_qty'] . '" readonly="readonly"></td>
                 <td><input id="qty_' . $count . '" type="text" name="adjusted_quantity[]" class="form-control" value="" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
                 <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
                 <td><input type="text" id="row_total_' . $count . '" name="item_total[]" class="form-control row_total" value="" readonly></td></tr>';
@@ -994,8 +994,9 @@ class Crqsn extends CI_Controller
 
         $data = array(
             'html' => $output,
-            'cus_name'  => $rqsn_details[0]['outlet_name'],
-            'cus_id'    => $rqsn_details[0]['from_id']
+            'cus_name'  => $rqsn_details[0]['customer_name'],
+            'vessel_name'  => $rqsn_details[0]['from_id'],
+            'cus_id'    => $rqsn_details[0]['customer_id']
         );
 
         echo json_encode($data);

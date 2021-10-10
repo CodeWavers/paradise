@@ -87,6 +87,34 @@
                             </div>
                         </div>
 
+<!--                        <div class="row">-->
+<!---->
+<!--                            <div class="col-sm-6">-->
+<!--                                <div class="col-sm-12">-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="customer" class="col-sm-4 form-label">Customer Name</label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        <input type="text" id="customer" class="form-control" value="" readonly="readonly">-->
+<!--                                        <input type="hidden" name="customer" id="cus_id" value="">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-6">  -->
+<!--                                <div class="col-sm-12">-->
+<!--                                -->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="customer" class="col-sm-4 form-label">Vessel Name</label>-->
+<!--                                    <div class="col-sm-8">-->
+<!--                                        <input type="text" id="vessel" class="form-control" value="" readonly="readonly">-->
+<!---->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!---->
+<!--                        </div>-->
+
                         <div id="invo_details_div">
                             <h3 align="center">Select an invoice no. to get data.</h3>
                         </div>

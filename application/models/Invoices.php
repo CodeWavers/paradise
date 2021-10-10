@@ -2500,6 +2500,8 @@ class Invoices extends CI_Model
         $this->db->join('product_information b', 'b.product_id = a.product_id');
         $this->db->join('product_brand d', 'd.brand_id = b.brand_id', 'left');
         $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
+        $this->db->join('invoice y', 'y.invoice_id = a.invoice_id', 'left');
+        $this->db->join('customer_information x', 'x.customer_id = y.customer_id', 'left');
 
         $query = $this->db->get();
 
@@ -2565,6 +2567,7 @@ class Invoices extends CI_Model
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
         $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
+        $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
         $query = $this->db->get();
@@ -2580,7 +2583,7 @@ class Invoices extends CI_Model
         $this->db->where('a.invoice_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
-        $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
+        $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
@@ -2596,7 +2599,7 @@ class Invoices extends CI_Model
         $this->db->where('a.dc_no', $dc_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
-        $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
+        $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
         $this->db->join('rqsn_details f', 'f.rqsn_id = e.rqsn_id');
         $this->db->group_by('c.product_id');

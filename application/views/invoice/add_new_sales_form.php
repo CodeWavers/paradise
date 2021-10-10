@@ -222,13 +222,13 @@
                 obj = jQuery.parseJSON(data);
                 $('#cart_dt').html(obj.html);
                 $('#customer').val(obj.cus_name);
-                $('#vessel_name').val(obj.cus_name);
+                $('#vessel_name').val(obj.vessel_name);
                 $("#cus_id").val(obj.cus_id);
                 $("#invoice_id").val(obj.invoice_id);
                 $("#inv_id").val(obj.invoice_id);
 
                 var AI=$('#AI').val();
-                var vsn=$('#customer').val();
+                var vsn=$('#vessel_name').val();
                 var date=$('#date').val();
                 var arr1 = date.split('-');
                 //alert(vsn)

@@ -151,7 +151,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
-                                    <label for="customer" class="col-sm-4 col-form-label">Vessele Name</label>
+                                    <label for="customer" class="col-sm-4 col-form-label">Customer Name</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="customer" class="form-control" value="" readonly="readonly">
                                         <input type="hidden" name="customer" id="cus_id" value="">
@@ -166,6 +166,19 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label for="customer" class="col-sm-4 col-form-label">Vessel Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="vessel" name="vessel_name" class="form-control" value="" readonly="readonly">
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
 
@@ -215,7 +228,6 @@
     //
     // }
     function get_rqsn_details() {
-
         var rqsn_id = $("#rqsn_id").val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
 
@@ -231,10 +243,11 @@
                 $('#cart_dt').html(obj.html);
                 $('#customer').val(obj.cus_name);
                 $("#cus_id").val(obj.cus_id);
+                $("#vessel").val(obj.vessel_name);
 
 
                 var AI=$('#AI').val();
-                var vsn=$('#customer').val();
+                var vsn=$('#vessel').val();
                 var date=$('#date').val();
                 var arr1 = date.split('-');
                 //alert(vsn)

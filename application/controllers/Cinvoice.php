@@ -1388,6 +1388,7 @@ class Cinvoice extends CI_Controller
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
+        $vessel_name = $this->input->post('vessel_name', TRUE);
         $delivery_type = $this->input->post('delivery_type', TRUE);
         $grand_total = $this->input->post('grand_total', TRUE);
         $paid_amount = $this->input->post('advance', TRUE);
@@ -1406,6 +1407,7 @@ class Cinvoice extends CI_Controller
             'invoice_no'    => $invoice_no,
             'date'          => $date,
             'customer_id'   => $customer_name,
+            'vessel_name'   => $vessel_name,
             'sub_total'     => $sub_total,
             'other_charges' => $other_charges,
             'total_amount'  => $grand_total,
@@ -1698,8 +1700,9 @@ class Cinvoice extends CI_Controller
 
         $data = array(
             'html' => $output,
-            'cus_name'  => $details[0]['outlet_name'],
-            'cus_id'    => $details[0]['outlet_id'],
+            'cus_name'  => $details[0]['customer_name'],
+            'vessel_name'  => $details[0]['vessel_name'],
+            'cus_id'    => $details[0]['customer_id'],
             'invoice_id'    => $details[0]['invoice_id']
         );
 
@@ -1779,8 +1782,8 @@ class Cinvoice extends CI_Controller
 
         $data = array(
             'html' => $output,
-            'cus_name'  => $details[0]['outlet_name'],
-            'cus_id'    => $details[0]['outlet_id'],
+            'cus_name'  => $details[0]['customer_name'],
+            'cus_id'    => $details[0]['customer_id'],
             'rqsn_no'    => $details[0]['rqsn_no'],
             'invoice_id'    => $details[0]['invoice_id'],
             'vessel_name'    => $details[0]['vessel_name']
@@ -1850,8 +1853,8 @@ class Cinvoice extends CI_Controller
 
         $data = array(
             'html' => $output,
-            'cus_name'  => $details[0]['outlet_name'],
-            'cus_id'    => $details[0]['outlet_id'],
+            'cus_name'  => $details[0]['customer_name'],
+            'cus_id'    => $details[0]['customer_id'],
             'rqsn_no'    => $details[0]['rqsn_no'],
             'invoice_id'    => $details[0]['invoice_id'],
             'vessel_name'    => $details[0]['vessel_name']
@@ -1875,7 +1878,36 @@ class Cinvoice extends CI_Controller
         $output = "";
         $count = 0;
 
-        $output .= '<div class="table-responsive">
+        $output .= '
+
+      <div class="row">
+
+                            <div class="col-sm-6">
+                                <div class="col-sm-12">
+                                <div class="form-group row">
+                                    <label for="customer" class="col-sm-4 form-label">Customer Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="customer" class="form-control" value="' . $rqsn_details[0]['customer_name'] . '"  readonly="readonly">
+                                        <input type="hidden" name="customer" id="cus_id" value="' . $rqsn_details[0]['customer_id'] . '" >
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-12">
+
+                                <div class="form-group row">
+                                    <label for="customer" class="col-sm-4 form-label">Vessel Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="vessel" class="form-control" value="' . $rqsn_details[0]['vessel_name'] . '"  readonly="readonly">
+
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                        </div>
+<div class="table-responsive">
         <table class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <th>Sl. NO</th>
