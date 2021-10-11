@@ -1818,6 +1818,19 @@ class Cinvoice extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function pending_dc()
+    {
+        $CI = &get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Invoices');
+        $CI->load->library('linvoice');
+
+
+        //  echo '<pre>';print_r($data);exit();
+        $content = $this->linvoice->pending_dc();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function update_pending_so()
     {
         $CI = &get_instance();
@@ -1858,6 +1871,16 @@ class Cinvoice extends CI_Controller
         $CI->load->library('linvoice');
 
         $content = $this->linvoice->pending_so_edit($invoice_id);
+
+        $this->template->full_admin_html_view($content);
+    }
+    public function pending_dc_edit($invoice_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+
+        $content = $this->linvoice->pending_dc_edit($invoice_id);
 
         $this->template->full_admin_html_view($content);
     }

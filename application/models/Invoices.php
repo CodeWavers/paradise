@@ -2584,11 +2584,16 @@ class Invoices extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('invoice a');
-        $this->db->where('a.invoice_no', $invoice_no);
+        $this->db->where('a.dc_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
         $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
+        $this->db->join('product_category y', 'y.category_id = b.category_id', 'left');
+        $this->db->join('product_subcat f', 'f.category_id = b.category_id', 'left');
+        $this->db->join('product_brand g', 'g.brand_id = b.brand_id', 'left');
+        $this->db->join('product_model h', 'h.model_id = b.product_model', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
+        $this->db->group_by('c.product_id');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
         $query = $this->db->get();
@@ -2661,6 +2666,23 @@ class Invoices extends CI_Model
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 1)
             ->group_by('a.invoice_no')
+            ->order_by('a.id', 'desc')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function pending_dc()
+    {
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+            ->from('invoice a')
+            ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
+            ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
+            ->join('customer_information e', 'e.customer_id=a.customer_id','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->where('a.status', 4)
+            ->group_by('a.dc_no')
             ->order_by('a.id', 'desc')
             ->get()
             ->result_array();

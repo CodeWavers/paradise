@@ -299,6 +299,18 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             </li>
                         <?php } ?>
 
+                        <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("check_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>">
+                                <a href="<?php echo base_url('Cinvoice/pending_dc ') ?>">Pending Delivery Chalan</a>
+                            </li>
+                        <?php } ?>
+
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
