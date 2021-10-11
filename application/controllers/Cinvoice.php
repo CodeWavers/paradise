@@ -1792,6 +1792,30 @@ class Cinvoice extends CI_Controller
         echo json_encode($data);
     }
 
+    public function sales_order_report()
+    {
+        $CI = &get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Invoices');
+        $CI->load->library('linvoice');
+
+
+        //  echo '<pre>';print_r($data);exit();
+        $content = $this->linvoice->sales_order_report();
+        $this->template->full_admin_html_view($content);
+    }
+    public function approve_so_details($invoice_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+
+        $content = $this->linvoice->approved_so_details($invoice_id);
+
+        $this->template->full_admin_html_view($content);
+    }
+
+
     public function get_check_details()
     {
         $CI = &get_instance();

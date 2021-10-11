@@ -2566,8 +2566,12 @@ class Invoices extends CI_Model
         $this->db->where('a.invoice_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
-        $this->db->join('outlet_warehouse d', 'd.outlet_id = a.customer_id', 'left');
         $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
+       $this->db->join('product_category e', 'e.category_id = b.category_id', 'left');
+       $this->db->join('product_subcat f', 'f.category_id = b.category_id', 'left');
+       $this->db->join('product_brand g', 'g.brand_id = b.brand_id', 'left');
+       $this->db->join('product_model h', 'h.model_id = b.product_model', 'left');
+       $this->db->group_by('c.product_id');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
         $query = $this->db->get();
@@ -2591,6 +2595,24 @@ class Invoices extends CI_Model
 
         return $query->result_array();
     }
+
+    public function sales_order_details()
+    {
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+            ->from('invoice a')
+            ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
+            ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
+            ->join('customer_information e', 'e.customer_id=a.customer_id','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->where('a.status', 2)
+            ->group_by('a.invoice_no')
+            ->order_by('a.id', 'desc')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
 
     public function approved_check_details($dc_no)
     {

@@ -278,13 +278,25 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("add_new_sales")) {
+                            if ($this->uri->segment('2') == ("check_report")) {
                                 echo "active";
                             } else {
                                 echo " ";
                             }
                             ?>">
                                 <a href="<?php echo base_url('Cinvoice/check_report ') ?>">Order Check Report</a>
+                            </li>
+                        <?php } ?>
+
+                        <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("check_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>">
+                                <a href="<?php echo base_url('Cinvoice/sales_order_report ') ?>">Approved Sales Order</a>
                             </li>
                         <?php } ?>
 

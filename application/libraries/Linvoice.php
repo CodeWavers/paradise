@@ -1302,6 +1302,67 @@ class Linvoice
         $view = $CI->parser->parse('invoice/add_new_sales_form', $data, true);
         return $view;
     }
+    public function sales_order_report()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Invoices');
+
+        $details = $CI->Invoices->sales_order_details();
+
+        if(!empty($details)){
+            $sl = 0;
+            foreach ($details as $key => $value) {
+                $sl++;
+                $details[$key]['sl'] = $sl;
+            }
+        }
+
+
+
+        $data = array(
+            'title'             => 'Sales Order Report',
+            'details'      => $details,
+        );
+
+        // echo '<pre>';print_r($data);exit();
+
+
+        return $CI->parser->parse('invoice/sales_order_report', $data, true);
+
+    }
+
+    public function approved_so_details($invoice_no)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Invoices');
+        $CI->load->model('Warehouse');
+
+        $outlet_list    = $CI->Warehouse->branch_list();
+        $rqsn_details = $CI->Invoices->approved_so_details($invoice_no);
+        $grand_total = array_sum(array_column($rqsn_details, 'total'));
+
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'SO Details',
+            'rqsn_details'      => $rqsn_details,
+            'outlet_list'       => $outlet_list,
+            'grand_total'       => $grand_total,
+            'sl'       => $sl,
+        );
+
+        //  echo '<pre>';print_r($grand_total);exit();
+
+        return $CI->parser->parse('invoice/so_details_report', $data, true);
+    }
+
 
     public function delivery_chalan()
     {
