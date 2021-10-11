@@ -1154,7 +1154,24 @@ class Rqsn extends CI_Model
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 2)
             ->group_by('b.rqsn_id')
-            ->order_by('a.rqsn_no', 'desc')
+            ->order_by('a.id', 'desc')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function store_qty_data()
+    {
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+            ->from('rqsn a')
+            ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
+            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+            ->join('customer_information e', 'e.customer_id=a.rqsn_customer_name','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->where('a.status', 3)
+            ->group_by('b.rqsn_id')
+            ->order_by('a.id', 'desc')
             ->get()
             ->result_array();
 
@@ -1171,7 +1188,7 @@ class Rqsn extends CI_Model
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 1)
             ->group_by('b.rqsn_id')
-            ->order_by('a.rqsn_no', 'desc')
+            ->order_by('a.id', 'desc')
             ->get()
             ->result_array();
 
@@ -1187,7 +1204,7 @@ class Rqsn extends CI_Model
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 2)
             ->group_by('b.rqsn_id')
-            ->order_by('a.rqsn_no', 'desc')
+            ->order_by('a.id', 'desc')
             ->get()
             ->result_array();
 
@@ -1216,6 +1233,52 @@ class Rqsn extends CI_Model
         return $records;
     }
 
+    public function rqsn_qty_form($rqsn_id)
+    {
+        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+            ->from('rqsn a')
+            ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
+            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+            ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->join('supplier_product z', 'z.product_id = d.product_id', 'left')
+            ->join('product_category e', 'e.category_id = d.category_id', 'left')
+            ->join('product_subcat f', 'f.category_id = e.category_id', 'left')
+            ->join('product_brand g', 'g.brand_id = d.brand_id', 'left')
+            ->join('product_model h', 'h.model_id = d.product_model', 'left')
+            ->where('b.status', 1)
+            ->where('a.status', 3)
+            ->where('b.rqsn_id', $rqsn_id)
+            ->group_by('b.product_id')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function store_qty_form($rqsn_id)
+    {
+        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+            ->from('rqsn a')
+            ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
+            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+            ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->join('supplier_product z', 'z.product_id = d.product_id', 'left')
+            ->join('product_category e', 'e.category_id = d.category_id', 'left')
+            ->join('product_subcat f', 'f.category_id = e.category_id', 'left')
+            ->join('product_brand g', 'g.brand_id = d.brand_id', 'left')
+            ->join('product_model h', 'h.model_id = d.product_model', 'left')
+            ->where('b.status', 1)
+           // ->where('a.status', 3)
+            ->where('b.rqsn_id', $rqsn_id)
+            ->group_by('b.product_id')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
     public function rqsn_details_data_by_rqsn_id_price($rqsn_id)
     {
         $records = $this->db->select('a.*, b.*, c.*, d.*,e.category_name,f.subcat_name,g.brand_name,h.model_name')
@@ -1235,6 +1298,7 @@ class Rqsn extends CI_Model
 
         return $records;
     }
+
 
     public function rqsn_draft_final($rqsn_id)
     {
@@ -1306,6 +1370,42 @@ class Rqsn extends CI_Model
         ";
 
         $this->db->query($sq);
+    }
+
+    public function rqsn_qty_final($rqsn_id)
+    {
+
+
+        $purchase_qty = $this->input->post("purchase_qty", true);
+        $store_qty = $this->input->post("store_qty", true);
+        $quantity = $this->input->post("quantity", true);
+        $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
+
+        for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            $rq_id  = $rqsn_detail_id[$i];
+            $pur_qty  = $purchase_qty[$i];
+            $str_qty  = $store_qty[$i];
+
+
+            //            $rqsn_details = array(
+            //
+            //                'quantity'                => $qty,
+            //            );
+            if (!empty($pur_qty)) {
+
+                $this->db->where('rqsn_detail_id', $rq_id);
+                $this->db->set(array('a_qty'=>$qty,'purchase_qty'=>$pur_qty,'store_qty'=>$str_qty));
+                $this->db->update('rqsn_details');
+            }
+        }
+
+//        $sq = "UPDATE rqsn
+//        SET status = 3, is_sold = 0
+//        WHERE rqsn_id = " . $rqsn_id . "
+//        ";
+
+      //  $this->db->query($sq);
     }
 
     public function autocompletproductdata($product_name, $category_id = null, $subcat_id = null, $brand_id = null, $model_id = null)

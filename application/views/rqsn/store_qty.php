@@ -4,12 +4,12 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Requisition</h1>
-            <small>List</small>
+            <h1>Store Quantity</h1>
+            <small>Store Quantity</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
-                <li><a href="#">Requisition</a></li>
-                <li class="active">Requisition List</li>
+                <li><a href="#">Store Quantity</a></li>
+                <li class="active">Store Quantity</li>
             </ol>
         </div>
     </section>
@@ -74,7 +74,7 @@
                                 <td><?php echo $rqsn_details['customer_name']?> </td>
                                 <td><?php echo $rqsn_details['date']?> </td>
                                 <td>
-                                    <a href="<?= base_url().'Crqsn/edit_approve_rqsn/'.$rqsn_details['rqsn_id']?>">
+                                    <a href="<?= base_url().'Crqsn/store_qty_form/'.$rqsn_details['rqsn_id']?>">
                                         <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
                                     </a>
                                 </td>

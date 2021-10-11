@@ -711,6 +711,14 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             } ?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn') ?>">Approve Requisition </a></li>
                         <?php } ?>
 
+                        <?php if ($this->permission1->method('aprove_rqsn', 'create')->access()) { ?>
+                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('Crqsn/store_qty') ?>">Store Quantity </a></li>
+                        <?php } ?>
+
 
 <!--                        --><?php //if ($this->permission1->method('cw_purchase', 'create')->access()) { ?>
 <!--                            <li class="treeview --><?php //if ($this->uri->segment('2') == ("cw_purchase")) {
@@ -973,7 +981,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('add_purchase', 'create')->access()) { ?>
                             <li class="treeview <?php
-                                                if ($this->uri->segment('1') == ("Cpurchase") && $this->uri->segment('2') == ("purchase_list")) {
+                                                if ($this->uri->segment('1') == ("purchase_list") && $this->uri->segment('2') == ("purchase_list")) {
                                                     echo "active";
                                                 } else {
                                                     echo " ";
@@ -1003,7 +1011,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('purchase_order', 'create')->access()) { ?>
                             <li class="treeview <?php
-                                                if ($this->uri->segment('1') == ("purchase_order_approve") && $this->uri->segment('2') == ("")) {
+                                                if ($this->uri->segment('1') == ("purchase_order_approve_new") && $this->uri->segment('2') == ("")) {
                                                     echo "active";
                                                 } else {
                                                     echo " ";
@@ -1069,7 +1077,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
             <?php } ?>
             <?php if ($this->permission1->method('add_purchase', 'create')->access() || $this->permission1->method('manage_purchase', 'read')->access()) { ?>
                 <li class="treeview <?php
-                                    if ($this->uri->segment('1') == ("Cpurchase")) {
+                                    if ($this->uri->segment('1') == ("Cpurchase/product_receive_form")) {
                                         echo "active";
                                     } else {
                                         echo " ";

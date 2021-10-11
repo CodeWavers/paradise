@@ -15,12 +15,12 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Requisition</h1>
-            <small>List</small>
+            <h1>Store Qty</h1>
+            <small>Qty</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
-                <li><a href="#">Requisition</a></li>
-                <li class="active">Requisition List</li>
+                <li><a href="#">Store Qty</a></li>
+                <li class="active">Store Qty</li>
             </ol>
         </div>
     </section>
@@ -70,7 +70,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4>Requisition List</h4>
+                            <h4>Store Qty</h4>
 
                         </div>
                     </div>
@@ -78,7 +78,7 @@
 
 
                     <div class="rqsn_panel" style="margin-top: 10px; margin-bottom:10px;">
-<!--                        --><?php //echo form_open_multipart('Crqsn/update_rqsn',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
+<!--                      --><?php //echo form_open_multipart('Crqsn/approve_rqsn_qty',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
                         <div class="row">
 
                             <div class="col-sm-8" id="payment_from_2">
@@ -121,13 +121,11 @@
                                 <div class="form-group row  rqsn-form-input">
                                     <label for="rqsn_for" class="col-sm-3 col-form-label text-right">Vessel Name : </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="" id="" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
-                                        <input type="hidden" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['customer_id'] ?>" readonly >
+                                    <input type="text" class="form-control" name="" id="" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
+                                    <input type="hidden" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['customer_id'] ?>" readonly >
 
                                     </div>
                                 </div>
-
-
 
                                 <div class="form-group row rqsn-form-input">
                                     <label for="rqsn_no" class="col-sm-3 col-form-label text-right">Requisition No. : </label>
@@ -152,50 +150,71 @@
                                         <th>Category</th>
                                         <th>Sub Category</th>
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
-                                        <th>Parts No.</th>
+
                                         <th>SKU</th>
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
+                                        <th> Store QTY</th>
+<!--                                        <th>Rate</th>-->
+<!--                                        <th>Total</th>-->
+<!--                                        <th>Action</th>-->
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
                                     <tr class="text-center">
-                                        <td><?php echo $rqsn_detail['sl']?> </td>
+                                        <td><?php echo  $rqsn_detail['sl']?>
+                                    </td>
                                         <td><?php echo $rqsn_detail['category_name']?></td>
                                         <td><?php echo $rqsn_detail['subcat_name']?></td>
                                         <td>
                                             <?php echo $rqsn_detail['product_name']?>
-                                            <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="" >
+
+                                            <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="product_id_'<?php $rqsn_detail['sl'] ?> . '"  >
+                                            <input type="hidden" value="<?php echo $rqsn_detail['rqsn_detail_id']?>" name="rqsn_detail_id[]" class="form-control" id="" >
                                         </td>
-                                        <td><?php echo $rqsn_detail['parts']?></td>
+
                                         <td><?php echo $rqsn_detail['sku']?></td>
                                         <td><?php echo $rqsn_detail['brand_name']?></td>
                                         <td><?php echo $rqsn_detail['model_name']?></td>
-                                        <td style="width: 5%;" ><?php echo $rqsn_detail['quantity']?></td>
-                                        <td style="width: 5%;" ><?php echo $rqsn_detail['total']?></td>
+<!--                                        <td style="width: 10%;" >-->
+<!---->
+<!--                                            <input type="text" value="--><?php //echo $rqsn_detail['quantity']?><!--" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >-->
+<!--                                            <input type="hidden" value="--><?php //echo $rqsn_detail['quantity']?><!--" name="quantity[]" class="form-control quantity" id="quantity" >-->
+<!---->
+<!--                                        </td>-->
+                                        <td style="width: 10%;" >
 
+                                            <input type="text" value="<?php echo $rqsn_detail['store_qty']?>" name="store_qty[]" class="form-control store_qty" id="store_qty" readonly>
+
+                                        </td>
 
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
                                 </tbody>
+
+<!--                                <tfoot>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="9" class="text-right"><b>Grand Total:</b></td>-->
+<!--                                    <td style="width: 10%">-->
+<!--                                        <input  class="form-control" name="total" id="grand_total" value='--><?php //echo number_format($grand_total,2)?><!--' readonly/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                </tfoot>-->
                             </table>
 
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
-                                 <a href="<?= base_url().'Crqsn/aprove_rqsn_edit_price'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
-                                 <a href="<?= base_url().'Crqsn/rqsn_print/'.$rqsn_detail['rqsn_id']?>"><input type="button" value="Print" name="print_btn" class="btn btn-large btn-warning" id="" ></a>
+                                <a href="<?= base_url().'Crqsn/store_qty'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                             </div>
                         </div>
 
 
-<!--                        --><?php //echo form_close()?>
+<!--                      --><?php //echo form_close()?>
                     </div>
 
                 </div>
@@ -210,22 +229,62 @@
 </div>
 <!-- Invoice Report End -->
 
-<script>
+<script type="text/javascript">
 
 
-    $(document).on('click', '.remove_inventory', function(){
-        var row_id = $(this).attr("id");
+
+    $(document).ready(function(){
+
+
+       // console.log(data_id);
+        $('.purchase_qty').on('keyup', function() {
+
+            var purchase_qty=this.value;
+
+             var qty= $(this).closest('tr').find('.quantity').val();
+
+            var store_qty=qty-purchase_qty;
+
+        $(this).closest('tr').find('.store_qty').val(store_qty);
+
+       //    calculation()
+
+
+        });
+    });
+
+
+    function calculation() {
+        var t = 0;
+
+
+        $(".total_price").each(function () {
+            isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
+        }),
+
+            $("#grand_total").val(t.toFixed(2,2));
+    }
+
+    function deleteRow(e,row_id){
+
+        var a = e.parentNode.parentNode;
+        //var row_id = $(this).attr("data-id");
+        console.log(row_id)
         var csrf_test_name = $('[name="csrf_test_name"]').val();
         if(confirm("Are you sure you want to remove this?"))
         {
             $.ajax({
-                url:"<?php echo base_url(); ?>Cadd_rqsn/remove",
+                url:"<?php echo base_url(); ?>Crqsn/remove",
                 method:"POST",
                 data:{csrf_test_name:csrf_test_name,row_id:row_id},
                 success:function(data)
                 {
-                    toastr.success("Product removed from Cart!");
-                    $('#cart_details').html(data);
+
+                    // console.log(data)
+                    toastr.error("Product removed from Requisition!");
+                    a.parentNode.removeChild(a);
+                    //  $('#add_rqsn_table').load("<?php echo base_url();?>/Crqsn/approve_rqsn_final/"+row_id);
+                    // $('#add_rqsn_table').load();
                 }
             });
         }
@@ -233,5 +292,33 @@
         {
             return false;
         }
-    });
+    }
+
+    //$(document).on('click', '.remove_inventory', function(e){
+    //    var a = e.parentNode.parentNode;
+    //    var row_id = $(this).attr("data-id");
+    //    console.log(row_id)
+    //    var csrf_test_name = $('[name="csrf_test_name"]').val();
+    //    if(confirm("Are you sure you want to remove this?"))
+    //    {
+    //        $.ajax({
+    //            url:"<?php //echo base_url(); ?>//Crqsn/remove",
+    //            method:"POST",
+    //            data:{csrf_test_name:csrf_test_name,row_id:row_id},
+    //            success:function(data)
+    //            {
+    //
+    //               // console.log(data)
+    //                toastr.error("Product removed from Requisition!");
+    //                a.parentNode.removeChild(a);
+    //              //  $('#add_rqsn_table').load("<?php //echo base_url();?>///Crqsn/approve_rqsn_final/"+row_id);
+    //               // $('#add_rqsn_table').load();
+    //            }
+    //        });
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //});
 </script>

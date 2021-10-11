@@ -57,7 +57,7 @@
                             <tr>
                                 <th><?php echo display('sl_no') ?></th>
                                 <th>Requisition No.</th>
-                                <th>Outlet Name</th>
+                                <th>Vessel Name</th>
                                 <th>Customer Name</th>
                                 <th><?php echo display('date') ?></th>
                                 <th><?php echo display('action') ?></th>
@@ -70,8 +70,8 @@
                             <tr>
                                 <td><?php echo $sl++; ?></td>
                                 <td><?php echo $rqsn_details['rqsn_no']?> </td>
-                                <td><?php echo $rqsn_details['outlet_name']?> </td>
-                                <td><?php echo $rqsn_details['rqsn_customer_name']?> </td>
+                                <td><?php echo $rqsn_details['vessel_name']?> </td>
+                                <td><?php echo $rqsn_details['customer_name']?> </td>
                                 <td><?php echo $rqsn_details['date']?> </td>
                                 <td>
                                     <a href="<?= base_url().'Crqsn/edit_approve_rqsn_price/'.$rqsn_details['rqsn_id']?>">

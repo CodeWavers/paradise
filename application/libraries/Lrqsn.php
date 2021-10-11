@@ -236,7 +236,7 @@ class Lrqsn {
         }
 
         $data = array(
-            'title'             => 'Approve Requisition',
+            'title'             => 'Requisition List',
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list
         );
@@ -263,7 +263,7 @@ class Lrqsn {
         }
 
         $data = array(
-            'title'             => 'Approve Requisition',
+            'title'             => 'Requisition List With Price',
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list,
             'rqsn_id'           => $rqsn_id
@@ -300,6 +300,35 @@ class Lrqsn {
 
 
         return $CI->parser->parse('rqsn/rqsn_approve_new', $data, true);
+
+    }
+
+    public function store_qty()
+    {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+
+        $rqsn_details = $CI->Rqsn->store_qty_data();
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+
+
+        $data = array(
+            'title'             => 'Store Qty',
+            'rqsn_details'      => $rqsn_details,
+        );
+
+        // echo '<pre>';print_r($data);exit();
+
+
+        return $CI->parser->parse('rqsn/store_qty', $data, true);
 
     }
 
@@ -362,6 +391,68 @@ class Lrqsn {
       //  echo '<pre>';print_r($grand_total);exit();
 
         return $CI->parser->parse('rqsn/rqsn_approve_final', $data, true);
+    }
+    public function rqsn_qty_form($rqsn_id)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Warehouse');
+
+        $outlet_list    = $CI->Warehouse->branch_list();
+        $rqsn_details = $CI->Rqsn->rqsn_qty_form($rqsn_id);
+        $grand_total = array_sum(array_column($rqsn_details, 'total'));
+
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'Requisition Qty',
+            'rqsn_details'      => $rqsn_details,
+            'outlet_list'       => $outlet_list,
+            'grand_total'       => $grand_total,
+            'sl'       => $sl,
+        );
+
+      //  echo '<pre>';print_r($grand_total);exit();
+
+        return $CI->parser->parse('rqsn/rqsn_qty_form', $data, true);
+    }
+    public function store_qty_form($rqsn_id)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Rqsn');
+        $CI->load->model('Warehouse');
+
+        $outlet_list    = $CI->Warehouse->branch_list();
+        $rqsn_details = $CI->Rqsn->store_qty_form($rqsn_id);
+        $grand_total = array_sum(array_column($rqsn_details, 'total'));
+
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'Store Qty Details',
+            'rqsn_details'      => $rqsn_details,
+            'outlet_list'       => $outlet_list,
+            'grand_total'       => $grand_total,
+            'sl'       => $sl,
+        );
+
+      //  echo '<pre>';print_r($grand_total);exit();
+
+        return $CI->parser->parse('rqsn/store_qty_form', $data, true);
     }
 
 

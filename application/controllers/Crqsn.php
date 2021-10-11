@@ -214,6 +214,16 @@ class Crqsn extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function store_qty()
+    {
+        $CI = &get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+
+        $content = $this->lrqsn->store_qty();
+        $this->template->full_admin_html_view($content);
+    }
+
     public function draft_rqsn()
     {
         $CI = &get_instance();
@@ -571,6 +581,28 @@ class Crqsn extends CI_Controller
         $this->template->full_admin_html_view($content);
     }
 
+    public function rqsn_qty_form($rqsn_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+
+        $content = $this->lrqsn->rqsn_qty_form($rqsn_id);
+
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function store_qty_form($rqsn_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lrqsn');
+
+        $content = $this->lrqsn->store_qty_form($rqsn_id);
+
+        $this->template->full_admin_html_view($content);
+    }
+
 
 
     public function update_rqsn_final()
@@ -592,7 +624,26 @@ class Crqsn extends CI_Controller
 
         //   echo "ok";exit();
 
-        redirect(base_url('Crqsn/rqsn_print_cw/' . $rqsn_id));
+        redirect(base_url('Crqsn/rqsn_qty_form/' . $rqsn_id));
+    }
+
+    public function approve_rqsn_qty()
+    {
+        $CI = &get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Rqsn');
+
+        $rqsn_id = $this->input->post("rqsn_id", true);
+
+        $rqsn = $CI->Rqsn->rqsn_qty_final($rqsn_id);
+
+
+        //   echo "ok";exit();
+
+        redirect(base_url('Crqsn/aprove_rqsn/'));
     }
 
     public function rqsn_draft_final()
