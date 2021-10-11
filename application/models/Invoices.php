@@ -2596,6 +2596,44 @@ class Invoices extends CI_Model
         return $query->result_array();
     }
 
+    public function update_pending_so($invoice_id)
+    {
+
+
+        $total_price = $this->input->post("total_price", true);
+        $item_rate = $this->input->post("rate", true);
+        $quantity = $this->input->post("adjust_qty", true);
+        $inv_detail_id = $this->input->post("invoice_details_id", true);
+
+        for ($i = 0, $n   = count($inv_detail_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            $inv_d_id  = $inv_detail_id[$i];
+            $total  = $total_price[$i];
+            $rate  = $item_rate[$i];
+
+
+//                        $rqsn_details = array(
+//
+//                            'quantity'                => $qty,
+//                            'rate'                => $rate,
+//                            'quantity'                => $qty,
+//                        );
+            if (!empty($quantity)) {
+
+                $this->db->where('invoice_details_id', $inv_d_id);
+                $this->db->set(array('quantity'=>$qty,'rate'=>$rate,'total_price'=>$total));
+                $this->db->update('invoice_details');
+            }
+        }
+
+//        $sq = "UPDATE rqsn
+//        SET status = 3, is_sold = 0
+//        WHERE rqsn_id = " . $rqsn_id . "
+//        ";
+//
+//        $this->db->query($sq);
+    }
+
     public function sales_order_details()
     {
         $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
@@ -2605,6 +2643,23 @@ class Invoices extends CI_Model
             ->join('customer_information e', 'e.customer_id=a.customer_id','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 2)
+            ->group_by('a.invoice_no')
+            ->order_by('a.id', 'desc')
+            ->get()
+            ->result_array();
+
+        return $records;
+    }
+
+    public function pending_sales_order()
+    {
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+            ->from('invoice a')
+            ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
+            ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
+            ->join('customer_information e', 'e.customer_id=a.customer_id','left')
+            ->join('product_information d', 'd.product_id=b.product_id')
+            ->where('a.status', 1)
             ->group_by('a.invoice_no')
             ->order_by('a.id', 'desc')
             ->get()

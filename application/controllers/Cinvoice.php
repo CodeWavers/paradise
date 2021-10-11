@@ -1804,6 +1804,42 @@ class Cinvoice extends CI_Controller
         $content = $this->linvoice->sales_order_report();
         $this->template->full_admin_html_view($content);
     }
+
+    public function pending_sales_order()
+    {
+        $CI = &get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('Invoices');
+        $CI->load->library('linvoice');
+
+
+        //  echo '<pre>';print_r($data);exit();
+        $content = $this->linvoice->pending_sales_order();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function update_pending_so()
+    {
+        $CI = &get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Invoices');
+
+        $invoice_id = $this->input->post("invoice_id", true);
+
+        $invoice_details = $CI->Invoices->update_pending_so($invoice_id);
+
+
+
+
+
+        //   echo "ok";exit();
+
+        redirect(base_url('Cinvoice/pending_sales_order/'));
+    }
+
     public function approve_so_details($invoice_id)
     {
         $CI = &get_instance();
@@ -1811,6 +1847,17 @@ class Cinvoice extends CI_Controller
         $CI->load->library('linvoice');
 
         $content = $this->linvoice->approved_so_details($invoice_id);
+
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function pending_so_edit($invoice_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+
+        $content = $this->linvoice->pending_so_edit($invoice_id);
 
         $this->template->full_admin_html_view($content);
     }
