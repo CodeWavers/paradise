@@ -850,45 +850,13 @@ class reports extends CI_Model {
         } elseif (!empty($model_id)) {
 
             $this->db->where('a.product_model', $model_id);
-        }elseif (!empty($from_date)) {
-
-            $this->db->where('a.product_model', $from_date);
-        }elseif (!empty($to_date)) {
-
-            $this->db->where('a.product_model', $to_date);
-        }elseif (!empty($from_date) && !empty($to_date)) {
+        } elseif (!empty($from_date) && !empty($to_date)) {
 
             $this->db->where($dateRange);
+           // $this->db->where('b.date =<',$to_date);
         }
 
 
-
-
-//echo $yesterday;
-//        if($category_id){
-//            $this->db->where('b.category_id',$category_id);
-//        }
-//        if($sub_cat_id){
-//            $this->db->where('b.sub_cat_id',$sub_cat_id);
-//        }
-//
-//        if($brand_id){
-//            $this->db->where('b.brand_id',$brand_id);
-//        }
-//        if($model_id){
-//            $this->db->where('b.product_model',$model_id);
-//        }
-//        if($from_date){
-//            $this->db->where('a.date',$from_date);
-//        }
-//        if($to_date){
-//            $this->db->where('a.date',$to_date);
-//        }
-//
-//        if ($from_date && $to_date){
-//            $this->db->where($dateRange);
-//
-//        }
 
 
         $records = $this->db->get()->result();
@@ -898,14 +866,20 @@ class reports extends CI_Model {
          // echo '<pre>';print_r($records);exit();
 
         $yesterday=date('Y-m-d',strtotime( "yesterday" ));
+        $today=date('Y-m-d');
 
 
 
         foreach($records as $record ){
-            $stockin = $this->db->select('sum(quantity) as totalPurchaseQnty')
-                ->from('erp_entry_details')
-                ->where('product_id',$record->product_id)
-                ->get()->row();
+            $this->db->select('sum(quantity) as totalPurchaseQnty');
+               $this->db ->from('erp_entry_details');
+               $this->db ->where('product_id',$record->product_id);
+                        if ($from_date && $to_date) {
+
+                         $this->db->where('date >=',$from_date);
+                         $this->db->where('date <=',$to_date);
+                         }
+            $stockin =  $this->db->get()->row();
 
             $stockin_yes = $this->db->select('sum(quantity) as totalPurchaseQnty')
                 ->from('erp_entry_details')
@@ -913,12 +887,17 @@ class reports extends CI_Model {
                 ->where('date <=',$yesterday)
                 ->get()->row();
 
-            $stockout = $this->db->select('sum(a.quantity) as totalSalesQnty')
-                ->from('invoice_details a')
-                ->join('invoice b','a.invoice_id=b.invoice_id')
-                ->where('a.product_id',$record->product_id)
-                ->where('b.status',3)
-                ->get()->row();
+             $this->db->select('sum(a.quantity) as totalSalesQnty');
+                 $this->db->from('invoice_details a');
+                 $this->db->join('invoice b','a.invoice_id=b.invoice_id');
+            if ($from_date && $to_date) {
+
+                $this->db->where('date >=',$from_date);
+                $this->db->where('date <=',$to_date);
+            }
+                 $this->db->where('a.product_id',$record->product_id);
+                 $this->db->where('b.status',3);
+             $stockout =$this->db->get()->row();
             $stockout_yes = $this->db->select('sum(a.quantity) as totalSalesQnty')
                 ->from('invoice_details a')
                 ->join('invoice b','a.invoice_id=b.invoice_id')
@@ -941,7 +920,15 @@ class reports extends CI_Model {
                 ->get()->row();
 
 
-            $wd_stock = $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty')->from('wastage_dec')->where('product_id',$record->product_id)->get()->row();
+            $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty');
+                $this->db->from('wastage_dec');
+                $this->db->where('product_id',$record->product_id);
+            if ($from_date && $to_date) {
+
+                $this->db->where('date >=',$from_date);
+                $this->db->where('date <=',$to_date);
+            }
+             $wd_stock = $this->db->get()->row();
             $wd_stock_yes = $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty')->from('wastage_dec')->where('product_id',$record->product_id)->where('date <=',$yesterday)->get()->row();
 
             $wastage_stock=(!empty($wd_stock->totalWastageQnty)?$wd_stock->totalWastageQnty:0);

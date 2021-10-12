@@ -85,7 +85,7 @@
                              <div class="form-group row">
                                  <label for="select_cat" class="col-sm-4 col-form-label text-right">Brand : </label>
                                  <div class="col-sm-6">
-                                     <select name="select_cat" id="brand_id" class="form-control"">
+                                     <select name="brand_id" id="brand_id" class="form-control"">
                                      <option value="">Select One</option>
                                      {brand_list}
                                      <option value="{brand_id}">{brand_name}</option>
@@ -98,7 +98,7 @@
                              <div class="form-group row">
                                  <label for="select_cat" class="col-sm-4 col-form-label text-right">Model : </label>
                                  <div class="col-sm-6">
-                                     <select name="select_cat" id="model_id" class="form-control"">
+                                     <select name="model_id" id="model_id" class="form-control"">
                                      <option value="">Select One</option>
                                      {model_list}
                                      <option value="{model_id}">{model_name}</option>
