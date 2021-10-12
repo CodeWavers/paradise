@@ -78,7 +78,7 @@
 
 
                     <div class="rqsn_panel" style="margin-top: 10px; margin-bottom:10px;">
-                      <?php echo form_open_multipart('Cinvoice/update_pending_so',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
+                      <?php echo form_open_multipart('Cinvoice/update_pending_dc',array('class' => 'form-vertical', 'id' => 'insert_rqsn'))?>
                         <div class="row">
 
                             <div class="col-sm-8" id="payment_from_2">
@@ -150,19 +150,19 @@
                                         <th>Category</th>
                                         <th>Sub Category</th>
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
-
                                         <th>SKU</th>
-                                        <th>Brand</th>
-                                        <th><?php echo display('product_model') ?></th>
                                         <th>Order Quantity</th>
+                                        <th>Adjusted Quantity</th>
                                         <th>Delivered Quantity</th>
                                         <th>Pending Quantity</th>
+                                        <th>Quantity</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
+                                    <?php if ( $rqsn_detail['quantity'] - $rqsn_detail['dc_qty'] > 0) {?>
                                     <tr class="text-center">
                                         <td><?php echo  $sl=$rqsn_detail['sl']?>
                                     </td>
@@ -170,31 +170,37 @@
                                         <td><?php echo $rqsn_detail['subcat_name']?></td>
                                         <td>
                                             <?php echo $rqsn_detail['product_name']?>
-
                                             <input type="hidden" value="<?php echo $rqsn_detail['product_id']?>" name="product_id[]" class="form-control" id="product_id_'<?php $rqsn_detail['sl'] ?> . '"  >
                                             <input type="hidden" value="<?php echo $rqsn_detail['invoice_details_id']?>" name="invoice_details_id[]" class="form-control" id="" >
                                         </td>
 
                                         <td><?php echo $rqsn_detail['sku']?></td>
-                                        <td><?php echo $rqsn_detail['brand_name']?></td>
-                                        <td><?php echo $rqsn_detail['model_name']?></td>
+
+                                        <td style="width: 5%;" >
+                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity" id="order_quantity"  readonly>
+                                        </td>
+                                        <td style="width: 5%;" >
+                                            <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity"  readonly>
+                                        </td>
                                         <td style="width: 5%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity" id="quantity"  readonly>
+                                            <input type="text" value="<?php echo $rqsn_detail['dc_qty']?>" name="dc_qty[]" class="form-control dc_qty_<?php echo $sl?>" id="dc_qty" onkeyup="row_total(<?php echo $sl?>)" readonly>
+                                            <input type="hidden" value="<?php echo $rqsn_detail['dc_qty']?>" name="d_qty[]" class="form-control d_qty_<?php echo $sl?>" id="d_qty" onkeyup="row_total(<?php echo $sl?>)" readonly>
 
                                         </td>
                                         <td style="width: 5%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['dc_qty']?>" name="dc_qty[]" class="form-control dc_qty_<?php echo $sl?>" id="dc_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)">dc
+                                            <input type="text" value="<?php echo $rqsn_detail['quantity']-$rqsn_detail['dc_qty']?>" name="pending_qty[]" class="form-control pending_qty_<?php echo $sl?>" id="pending_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)" readonly>
+                                            <input type="hidden" value="<?php echo $rqsn_detail['quantity']-$rqsn_detail['dc_qty']?>" name="p_qty[]" class="form-control p_qty_<?php echo $sl?>" id="p_qty"  onkeyup="row_total(<?php echo $sl?>)" readonly>
 
                                         </td>
                                         <td style="width: 5%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']-$rqsn_detail['dc_qty']?>" name="pending_qty[]" class="form-control pending_qty_<?php echo $sl?>" id="pending_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)">
+                                            <input type="text" value="" name="re_qty[]" class="form-control re_qty_<?php echo $sl?>" id="re_qty"  onkeyup="calculation(<?php echo $sl?>)" placeholder="0.00">
 
                                         </td>
 
-
+                                    <?php } ?>
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
@@ -214,7 +220,7 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['invoice_id']?>" name="invoice_id" class="form-control" id="" >
-                                <a href="<?= base_url().'Cinvoice/pending_sales_order'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
+                                <a href="<?= base_url().'Cinvoice/pending_dc'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                                  <input type="submit" value="Submit" name="approve_btn" class="btn btn-large btn-success btn-sm" id="" ></a>
                             </div>
                         </div>
@@ -257,39 +263,33 @@
     }
 
 
-    // $(document).ready(function(){
-    //
-    //
-    //
-    //
-    //
-    //    // console.log(data_id);
-    //     $('.quantity').on('keyup', function() {
-    //
-    //         var qty=this.value;
-    //
-    //          var rate= $(this).closest('tr').find('.rate').val()
-    //
-    //         var total_price=qty*rate
-    //
-    //       var row_total=  $(this).closest('tr').find('.total_price').val(total_price)
-    //
-    //      //  calculation()
-    //
-    //
-    //     });
-    // });
 
 
-    function calculation() {
-        var t = 0;
+
+    function calculation(sl) {
+        var re_quantity = parseFloat($(".re_qty_" + sl).val());
+
+        var p_qty = $(".p_qty_" + sl).val();
+        var d_qty = parseFloat($(".d_qty_" + sl).val());
 
 
-        $(".total_price").each(function () {
-            isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
-        }),
 
-            $("#grand_total").val(t.toFixed(2,2));
+        var new_qty=re_quantity+d_qty
+        var pending_qty=p_qty-re_quantity
+
+        if (re_quantity > p_qty){
+            toastr.error('Yon cannot delivered greater than pending quantity')
+           parseFloat($(".re_qty_" + sl).val(''));
+        }else{
+            $(".dc_qty_" + sl).val(new_qty);
+            $(".pending_qty_" + sl).val(pending_qty);
+        }
+
+    //    console.log(new_qty)
+
+
+
+
     }
 
     function deleteRow(e,row_id){

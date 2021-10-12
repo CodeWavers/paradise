@@ -1717,7 +1717,7 @@ class Cinvoice extends CI_Controller
         $invoice_no = $this->input->post('invoice_no', true);
 
         $details = $CI->Invoices->approved_dc_details($invoice_no);
-        //  echo '<pre>'; print_r($details); exit();
+      //    echo '<pre>'; print_r($details); exit();
 
         $output = "";
         $count = 0;
@@ -1727,7 +1727,7 @@ class Cinvoice extends CI_Controller
             <thead>
                 <th width="2%">Sl. NO</th>
                 <th width="8%">Product Name</th>
-                <th width="5%">Order Quantity</th>
+                <th width="5%">Adjusted Quantity</th>
                 <th width="5%">Delivered  Quantity</th>
                 <th width="5%">Balanced Quantity</th>
                 <th width="5%">Remarks</th>
@@ -1851,6 +1851,28 @@ class Cinvoice extends CI_Controller
         //   echo "ok";exit();
 
         redirect(base_url('Cinvoice/pending_sales_order/'));
+    }
+
+    public function update_pending_dc()
+    {
+        $CI = &get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Invoices');
+
+        $invoice_id = $this->input->post("invoice_id", true);
+
+        $invoice_details = $CI->Invoices->update_pending_dc($invoice_id);
+
+
+
+
+
+        //   echo "ok";exit();
+
+        redirect(base_url('Cinvoice/pending_dc/'));
     }
 
     public function approve_so_details($invoice_id)

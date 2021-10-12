@@ -181,13 +181,13 @@
                                         <td><?php echo $rqsn_detail['model_name']?></td>
                                         <td style="width: 10%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >
+                                            <input type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >
                                             <input type="hidden" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity" >
 
                                         </td>
                                         <td style="width: 10%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="store_qty[]" class="form-control store_qty" id="store_qty" readonly>
+                                            <input type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="store_qty[]" class="form-control store_qty" id="store_qty" readonly>
 
                                         </td>
 

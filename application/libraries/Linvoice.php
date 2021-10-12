@@ -1459,7 +1459,7 @@ class Linvoice
         $CI->load->model('Warehouse');
 
         $outlet_list    = $CI->Warehouse->branch_list();
-        $rqsn_details = $CI->Invoices->approved_dc_details($invoice_no);
+        $rqsn_details = $CI->Invoices->pending_dc_details($invoice_no);
         $grand_total = array_sum(array_column($rqsn_details, 'total'));
 
 

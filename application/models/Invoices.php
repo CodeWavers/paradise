@@ -2456,7 +2456,7 @@ class Invoices extends CI_Model
 
     public function generate_dc_no()
     {
-        $this->db->select('invoice_no')->order_by('invoice_no', 'desc');
+        $this->db->select('dc_no')->order_by('dc_no', 'desc');
         $query = $this->db->get('invoice');
         $result = $query->result_array();
         $order_no = $result[0]['dc_no'];
@@ -2584,6 +2584,23 @@ class Invoices extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('invoice a');
+        $this->db->where('a.invoice_no', $invoice_no);
+        $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
+        $this->db->join('product_information b', 'c.product_id = b.product_id');
+        $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
+        $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
+        $this->db->group_by('c.product_id');
+        //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function pending_dc_details($invoice_no)
+    {
+        $this->db->select('*');
+        $this->db->from('invoice a');
         $this->db->where('a.dc_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
@@ -2627,6 +2644,44 @@ class Invoices extends CI_Model
 
                 $this->db->where('invoice_details_id', $inv_d_id);
                 $this->db->set(array('quantity'=>$qty,'rate'=>$rate,'total_price'=>$total));
+                $this->db->update('invoice_details');
+            }
+        }
+
+//        $sq = "UPDATE rqsn
+//        SET status = 3, is_sold = 0
+//        WHERE rqsn_id = " . $rqsn_id . "
+//        ";
+//
+//        $this->db->query($sq);
+    }
+
+    public function update_pending_dc($invoice_id)
+    {
+
+
+        $total_price = $this->input->post("total_price", true);
+        $item_rate = $this->input->post("rate", true);
+        $quantity = $this->input->post("dc_qty", true);
+        $inv_detail_id = $this->input->post("invoice_details_id", true);
+
+        for ($i = 0, $n   = count($inv_detail_id); $i < $n; $i++) {
+            $qty  = $quantity[$i];
+            $inv_d_id  = $inv_detail_id[$i];
+          //  $total  = $total_price[$i];
+          //  $rate  = $item_rate[$i];
+
+
+//                        $rqsn_details = array(
+//
+//                            'quantity'                => $qty,
+//                            'rate'                => $rate,
+//                            'quantity'                => $qty,
+//                        );
+            if (!empty($quantity)) {
+
+                $this->db->where('invoice_details_id', $inv_d_id);
+                $this->db->set(array('dc_qty'=>$qty));
                 $this->db->update('invoice_details');
             }
         }
