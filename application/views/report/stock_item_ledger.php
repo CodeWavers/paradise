@@ -161,7 +161,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $sl;?></td>
-                                            <td class="text-center"><?php echo $price['chalan_date'];?></td>
+                                            <td class="text-center"><?php echo $price['date'];?></td>
                                             <td class="text-center"><?php echo $price['rate'];?></td>
                                             <td class="text-center"><?php echo $price['quantity'];?></td>
 

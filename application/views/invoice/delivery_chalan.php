@@ -267,7 +267,14 @@
         var bal_qty=order_qty-deliver_qty;
          $("#bl_qty_" + sl).val(bal_qty);
 
+        var t = 0;
 
+
+        $(".bl_qty").each(function () {
+            isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
+        }),
+
+            $("#total_qty").val(t);
 
 
     }

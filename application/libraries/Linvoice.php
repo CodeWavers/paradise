@@ -1371,6 +1371,8 @@ class Linvoice
             foreach ($details as $key => $value) {
                 $sl++;
                 $details[$key]['sl'] = $sl;
+
+
             }
         }
 

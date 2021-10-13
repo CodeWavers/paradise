@@ -163,6 +163,7 @@
                                 <tbody>
 
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
+                                <?php if ( $rqsn_detail['store_qty']> 0) {?>
                                     <tr class="text-center">
                                         <td><?php echo  $rqsn_detail['sl']?>
                                     </td>
@@ -191,6 +192,7 @@
                                         </td>
 
                                     </tr>
+                                    <?php } ?>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
                                 </tbody>

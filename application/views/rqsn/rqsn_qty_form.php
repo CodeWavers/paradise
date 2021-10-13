@@ -187,7 +187,7 @@
                                         </td>
                                         <td style="width: 10%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="store_qty[]" class="form-control store_qty" id="store_qty" readonly>
+                                            <input type="text" value="" name="store_qty[]" class="form-control store_qty" id="store_qty" placeholder="0.00" readonly>
 
                                         </td>
 

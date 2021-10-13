@@ -2573,6 +2573,7 @@ class Invoices extends CI_Model
         $this->db->from('invoice a');
         // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
         $this->db->where('a.status', 2);
+        $this->db->or_where('a.status', 4);
         $this->db->group_by('a.invoice_no');
 
         $query = $this->db->get();
@@ -2791,6 +2792,7 @@ class Invoices extends CI_Model
             ->join('customer_information e', 'e.customer_id=a.customer_id','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 4)
+            ->where('a.is_dc_pending', 1)
             ->group_by('a.dc_no')
             ->order_by('a.id', 'desc')
             ->get()

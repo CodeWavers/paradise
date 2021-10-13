@@ -1548,19 +1548,42 @@ class Cinvoice extends CI_Controller
 
         $order_qty = $this->input->post('order_quantity', TRUE);
         $dc_qty = $this->input->post('dc_quantity', TRUE);
+
         //        $_qty = $this->input->post('bl_quantity', TRUE);
         $db_name = $this->input->post('db_name', TRUE);
         $rb_name = $this->input->post('rb_name', TRUE);
+        $total_bl_qty = $this->input->post('total_qty', TRUE);
 
-        $data_1 = array(
 
-            'dc_no'          => $dc_no,
-            'contact_person'   => $contact_person,
-            'delivered_by'   => $db_name,
-            'received_by'   => $rb_name,
-            'chalan_date'   => $date,
-            'status'        => 4
-        );
+
+       // echo '<pre>';print_r($bl_qty);exit();
+
+        if($total_bl_qty == 0){
+            $data_1 = array(
+
+                'dc_no'          => $dc_no,
+                'contact_person'   => $contact_person,
+                'delivered_by'   => $db_name,
+                'received_by'   => $rb_name,
+                'chalan_date'   => $date,
+                'status'        => 4
+            );
+
+        }else{
+
+            $data_1 = array(
+
+                'dc_no'          => $dc_no,
+                'contact_person'   => $contact_person,
+                'delivered_by'   => $db_name,
+                'received_by'   => $rb_name,
+                'chalan_date'   => $date,
+                'status'        => 4,
+                'is_dc_pending'        => 1,
+            );
+        }
+
+
 
         $this->db->where('invoice_id', $invoice_id);
         $this->db->update('invoice', $data_1);
@@ -1744,9 +1767,9 @@ class Cinvoice extends CI_Controller
 
                 <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
                 <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"  placeholder="0.00"></td>
-                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
+                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control bl_qty" name="bl_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="" placeholder="Remarks" >
-
+                    
                 </td>
                 </tr>';
         }
@@ -1760,6 +1783,7 @@ class Cinvoice extends CI_Controller
                                     <label for="invoice_no" class="col-sm-3 col-form-label">Delivered By</label>
                                     <div class="col-sm-6">
                                         <input type="text" name="db_name" class="form-control" value=\'\' >
+                                        <input class="form-control total_qty" name="total_qty" id="total_qty" value="" readonly/>
                                     </div>
                                 </div>
                             </div>

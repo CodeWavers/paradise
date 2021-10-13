@@ -273,9 +273,8 @@ class reports extends CI_Model {
 
     public function item_ledger() {
 
-        $this->db->select("a.*,b.*");
-        $this->db->from('erp_entry_details a');
-        $this->db->join('product_information b','a.product_id=b.product_id');
+        $this->db->select("a.*");
+        $this->db->from('product_information a');;
         $this->db->group_by('a.product_id');
         $query = $this->db->get();
         $result = $query->result_array();
@@ -297,7 +296,7 @@ class reports extends CI_Model {
 
     public function stock_item_ledger_sale($product_id) {
 
-        $this->db->select("a.*,b.product_name,c.chalan_date");
+        $this->db->select("a.*,b.product_name,c.date");
         $this->db->from('invoice_details a');
         $this->db->join('invoice c','a.invoice_id=c.invoice_id');
         $this->db->join('product_information b','a.product_id=b.product_id');
@@ -653,13 +652,13 @@ class reports extends CI_Model {
         ## Search
         $searchQuery = "";
         if($searchValue != ''){
-            $searchQuery = " (b.product_name like '%".$searchValue."%' or b.sku like '%".$searchValue."%') ";
+            $searchQuery = " (a.product_name like '%".$searchValue."%' or a.sku like '%".$searchValue."%') ";
         }
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
-        $this->db->from('erp_entry_details a');
-        $this->db->join('product_information b','a.product_id=b.product_id');
+        $this->db->from('product_information a');
+//        $this->db->join('product_information b','a.product_id=b.product_id');
         if($searchValue != ''){
             $this->db->where($searchQuery);
         }
@@ -669,8 +668,8 @@ class reports extends CI_Model {
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
-        $this->db->from('erp_entry_details a');
-        $this->db->join('product_information b','a.product_id=b.product_id');
+        $this->db->from('product_information a');
+//        $this->db->join('product_information b','a.product_id=b.product_id');
         if($searchValue != ''){
             $this->db->where($searchQuery);
         }
@@ -680,12 +679,12 @@ class reports extends CI_Model {
 
         ## Fetch records
         $this->db->select("a.*,
-                b.product_name,
+                a.product_name,
                 a.product_id,
                 ");
-        $this->db->select("a.*,b.*");
-        $this->db->from('erp_entry_details a');
-        $this->db->join('product_information b','a.product_id=b.product_id');
+        $this->db->select("a.*");
+        $this->db->from('product_information a');
+//        $this->db->join('product_information b','a.product_id=b.product_id');
         if($searchValue != '')
             $this->db->where($searchQuery);
         $this->db->order_by($columnName, $columnSortOrder);
