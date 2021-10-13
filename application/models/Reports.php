@@ -981,9 +981,8 @@ class reports extends CI_Model {
     public function getInventoryList(){
 
 
-        $this->db->select("a.*,b.*");
-        $this->db->from('erp_entry_details a');
-        $this->db->join('product_information b','a.product_id=b.product_id');
+        $this->db->select("a.*");
+        $this->db->from('product_information a');
         $this->db->group_by('a.product_id');
         $records = $this->db->get()->result();
         $data = array();
