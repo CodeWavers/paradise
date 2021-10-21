@@ -154,6 +154,7 @@
                                         <th>SKU</th>
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
+                                        <th>Current Stock</th>
                                         <th>Approve Purchase QTY</th>
                                         <th>Approve Store QTY</th>
 <!--                                        <th>Rate</th>-->
@@ -181,13 +182,18 @@
                                         <td><?php echo $rqsn_detail['model_name']?></td>
                                         <td style="width: 10%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >
+                                            <input type="text" value="<?php echo $rqsn_detail['stok_quantity']?>" name="" class="form-control current_stock" id="current_stock" readonly>
+
+                                        </td>
+                                        <td style="width: 10%;" >
+
+                                            <input autocomplete="off" type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >
                                             <input type="hidden" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity" >
 
                                         </td>
                                         <td style="width: 10%;" >
 
-                                            <input type="text" value="" name="store_qty[]" class="form-control store_qty" id="store_qty" placeholder="0.00" readonly>
+                                            <input autocomplete="off" type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="store_qty[]" class="form-control store_qty" id="store_qty" placeholder="0.00" >
 
                                         </td>
 
@@ -246,12 +252,42 @@
 
             var store_qty=qty-purchase_qty;
 
-        $(this).closest('tr').find('.store_qty').val(store_qty);
+            $(this).closest('tr').find('.store_qty').val(store_qty);
 
        //    calculation()
 
 
         });
+
+        $('.store_qty').on('keyup', function() {
+
+            var store_qty=this.value;
+
+             var qty= $(this).closest('tr').find('.quantity').val();
+
+            var purchase_qty=qty-store_qty;
+
+            $(this).closest('tr').find('.purchase_qty').val(purchase_qty);
+
+       //    calculation()
+
+
+        });
+
+       //  $('.store_qty').on('keyup', function() {
+       //
+       //      var store_qty=this.value;
+       //
+       //       var qty= $(this).closest('tr').find('.quantity').val();
+       //
+       //      var s_qty=qty-store_qty;
+       //
+       //  $(this).closest('tr').find('.store_qty').val(s_qty);
+       //
+       // //    calculation()
+       //
+       //
+       //  });
     });
 
 
@@ -270,7 +306,7 @@
 
         var a = e.parentNode.parentNode;
         //var row_id = $(this).attr("data-id");
-        console.log(row_id)
+        //console.log(row_id)
         var csrf_test_name = $('[name="csrf_test_name"]').val();
         if(confirm("Are you sure you want to remove this?"))
         {

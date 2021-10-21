@@ -1009,7 +1009,7 @@ class reports extends CI_Model {
                 ->from('invoice_details a')
                 ->join('invoice b','a.invoice_id=b.invoice_id')
                 ->where('a.product_id',$record->product_id)
-                ->where('b.status', )
+                ->where('b.status', 3)
 //                ->or_where('b.status',4)
                 ->get()->row();
             $stockout_yes = $this->db->select('sum(a.quantity) as totalSalesQnty')

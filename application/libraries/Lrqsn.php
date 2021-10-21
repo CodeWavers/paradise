@@ -403,20 +403,20 @@ class Lrqsn {
         $grand_total = array_sum(array_column($rqsn_details, 'total'));
 
 
-        if(!empty($rqsn_details)){
-            $sl = 0;
-            foreach ($rqsn_details as $key => $value) {
-                $sl++;
-                $rqsn_details[$key]['sl'] = $sl;
-            }
-        }
+//        if(!empty($rqsn_details)){
+//            $sl = 0;
+//            foreach ($rqsn_details as $key => $value) {
+//                $sl++;
+//                $rqsn_details[$key]['sl'] = $sl;
+//            }
+//        }
 
         $data = array(
             'title'             => 'Requisition Qty',
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list,
             'grand_total'       => $grand_total,
-            'sl'       => $sl,
+//            'sl'       => $sl,
         );
 
       //  echo '<pre>';print_r($grand_total);exit();
