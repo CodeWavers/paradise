@@ -685,6 +685,10 @@ class Crqsn extends CI_Controller
         $subcat_id   = $this->input->post('subcat_id', TRUE);
         $product_info   = $CI->Rqsn->autocompletproductdata($product_name, $category_id, $subcat_id, $brand_id, $model_id);
 
+
+      //  $json_product[]='';
+
+      //  echo '<pre>';print_r($product_info);exit();
         if (!empty($product_info)) {
             $list[''] = '';
             foreach ($product_info as $value) {

@@ -114,7 +114,7 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group row">
-                                        <label for="date" class="col-sm-4 col-form-label text-right"><?php echo display('date') ?> : </label>
+                                        <label for="date" class="col-sm-4 col-form-label text-right"><?php echo display('date') ?> : <i class="text-danger">*</i> </label>
                                         <div class="col-sm-8">
                                             <?php
 
@@ -131,7 +131,7 @@
                                             <select name="select_cat" id="select_cat" class="form-control"">
                                             <option value="">Select One</option>
                                             {cat_list}
-                                            <option value=" {category_id}">{category_name}</option>
+                                            <option value="{category_id}">{category_name}</option>
                                                 {/cat_list}
                                             </select>
                                         </div>
@@ -146,9 +146,9 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group row">
-                                        <label for="customer_name" class="col-sm-4 col-form-label text-right">Customer Name : </label>
+                                        <label for="customer_name" class="col-sm-4 col-form-label text-right">Customer Name : <i class="text-danger">*</i></label>
                                         <div class="col-sm-8">
-                                            <select name="customer_name" id="customer_id" class="form-control" onchange="select_vessel()">
+                                            <select name="customer_name" id="customer_id" class="form-control" onchange="select_vessel()" required>
                                                 <option value="">Select Customer</option>
                                                 {customers}
                                                 <option value="{customer_id}">{customer_name}</option>
@@ -179,9 +179,9 @@
 
                                 <div class="col-sm-6" id="vessel_div">
                                     <div class="form-group row ">
-                                        <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Vessel Name : </label>
+                                        <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Vessel Name : <i class="text-danger">*</i> </label>
                                         <div class="col-sm-8">
-                                            <select name="rqsn_for" id="rqsn_for" class="form-control" onchange="generate_number()">
+                                            <select name="rqsn_for" id="rqsn_for" class="form-control" onchange="generate_number()" required>
                                                 <option value="">Vessele</option>
 <!--                                                {outlet_list}-->
 <!--                                                <option value="{outlet_id}">{outlet_name}</option>-->
@@ -213,9 +213,9 @@
                                 <div class="col-sm-6">
 
                                     <div class="form-group row">
-                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Voyage No. : </label>
+                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Voyage No. : <i class="text-danger">*</i></label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" value="" name="voyage_no" id="voyage_no" onchange="generate_number()"  onkeyup="generate_number()">
+                                            <input type="text" class="form-control" value="" name="voyage_no" id="voyage_no" onchange="generate_number()"  onkeyup="generate_number()" required>
                                         </div>
                                     </div>
                                 </div>
@@ -244,9 +244,9 @@
                                 <div class="col-sm-6">
 
                                     <div class="form-group row">
-                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : </label>
+                                        <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Requisition No. : <i class="text-danger">*</i></label>
                                         <div class="col-sm-8">
-                                            <input type="hidden" id="AI" name="" class="form-control" value={rqsn_no} readonly>
+                                            <input type="hidden" id="AI" name="" class="form-control" value={rqsn_no} readonly required>
                                             <input type="text" class="form-control" value="" name="rqsn_no" id="rqsn_no" readonly>
                                         </div>
                                     </div>
@@ -292,8 +292,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="">
-                                <input type="submit" value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="">
+                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  value="Finalize" name="finalize" class="btn btn-large btn-success" id="">
+                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  value="Save as Draft" name="save_draft" class="btn btn-large btn-warning" id="">
                             </div>
                         </div>
 

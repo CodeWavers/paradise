@@ -1418,8 +1418,8 @@ class Rqsn extends CI_Model
         $this->db->from('product_information a');
 
         // $this->db->join('product_model b', 'b.model_id = a.product_model');
-        $this->db->join('product_brand c', 'c.brand_id = a.brand_id');
-        // ->where('a.category_id', $category_id)
+        $this->db->join('product_brand c', 'c.brand_id = a.brand_id','left');
+      // $this->db->where('a.category_id', $category_id);
         // ->or_where('a.category_id', $category_id)
         // ->or_where('a.sub_cat_id', $subcat_id)
         // ->or_where('a.brand_id', $brand_id)
