@@ -1009,7 +1009,8 @@ class reports extends CI_Model {
                 ->from('invoice_details a')
                 ->join('invoice b','a.invoice_id=b.invoice_id')
                 ->where('a.product_id',$record->product_id)
-                ->where('b.status',3)
+                ->where('b.status', )
+//                ->or_where('b.status',4)
                 ->get()->row();
             $stockout_yes = $this->db->select('sum(a.quantity) as totalSalesQnty')
                 ->from('invoice_details a')
@@ -1017,6 +1018,7 @@ class reports extends CI_Model {
                 ->where('a.product_id',$record->product_id)
                 ->where('b.date <=',$yesterday)
                 ->where('b.status',3)
+//                ->or_where('b.status',4)
                 ->get()->row();
 
             $oldest_data = $this->db->select('a.*,a.date as stock_date')
@@ -1038,8 +1040,10 @@ class reports extends CI_Model {
 
             $wastage_stock=(!empty($wd_stock->totalWastageQnty)?$wd_stock->totalWastageQnty:0);
             $wastage_stock_yes=(!empty($wd_stock_yes->totalWastageQnty)?$wd_stock_yes->totalWastageQnty:0);
-            $dead_stock=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
-            // $dead_stock_yes=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
+
+            $dead_stock=(!empty($wd_stock->totalDeadQnty)?$wd_stock->totalDeadQnty:0);
+             $dead_stock_yes=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
+
             $purchase_stock=(!empty($stockin->totalPurchaseQnty)?$stockin->totalPurchaseQnty:0);
             $purchase_stock_yes=(!empty($stockin_yes->totalPurchaseQnty)?$stockin_yes->totalPurchaseQnty:0);
             $sales_stock=(!empty($stockout->totalSalesQnty)?$stockout->totalSalesQnty:0);

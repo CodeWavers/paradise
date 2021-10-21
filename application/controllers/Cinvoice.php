@@ -1783,7 +1783,7 @@ class Cinvoice extends CI_Controller
                                     <label for="invoice_no" class="col-sm-3 col-form-label">Delivered By</label>
                                     <div class="col-sm-6">
                                         <input type="text" name="db_name" class="form-control" value=\'\' >
-                                        <input class="form-control total_qty" name="total_qty" id="total_qty" value="" readonly/>
+                                        <input type="hidden" class="form-control total_qty" name="total_qty" id="total_qty" value="" readonly/>
                                     </div>
                                 </div>
                             </div>

@@ -130,7 +130,7 @@
                             <div class="form-group row">
                                 <label for="phone" class="col-sm-4 col-form-label">Contact Person<i class="text-danger"></i></label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" name="contact_person" id="contact_person" type="text" placeholder="Contact Person"  min="0" tabindex="2">
+                                    <input class="form-control" name="contact_person" id="contact_person" type="text" placeholder="Contact Person"  tabindex="2">
                                 </div>
                             </div>
                         </div>
