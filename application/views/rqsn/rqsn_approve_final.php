@@ -186,7 +186,7 @@
                                         <td style="width: 10%;" >
 
 
-                                            <input type="text" value="<?php echo $rqsn_detail['supplier_price']?>" name="rate[]" class="form-control rate" id="rate" readonly>
+                                            <input type="text" value="<?php echo $rqsn_detail['supplier_price']?>" name="rate[]" onkeyup="calculation()" class="form-control rate" id="rate" >
 
                                         </td>
                                         <td style="width: 10%;" >
@@ -250,7 +250,21 @@
 
             var total_price=qty*rate
 
-          var row_total=  $(this).closest('tr').find('.total_price').val(total_price)
+           $(this).closest('tr').find('.total_price').val(total_price)
+
+           calculation()
+
+
+        });
+        $('.rate').on('keyup', function() {
+
+            var rate=this.value;
+
+             var qty= $(this).closest('tr').find('.quantity').val()
+
+            var total_price=qty*rate
+
+         $(this).closest('tr').find('.total_price').val(total_price)
 
            calculation()
 

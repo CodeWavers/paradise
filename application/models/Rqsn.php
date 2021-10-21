@@ -1348,10 +1348,12 @@ class Rqsn extends CI_Model
 
         $total_price = $this->input->post("total_price", true);
         $quantity = $this->input->post("quantity", true);
+        $rate = $this->input->post("rate", true);
         $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
 
         for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
             $qty  = $quantity[$i];
+            $rt  = $rate[$i];
             $rq_id  = $rqsn_detail_id[$i];
             $total  = $total_price[$i];
 
@@ -1363,7 +1365,11 @@ class Rqsn extends CI_Model
             if (!empty($quantity)) {
 
                 $this->db->where('rqsn_detail_id', $rq_id);
-                $this->db->set(array('a_qty'=>$qty,'total'=>$total));
+                $this->db->set(array('a_qty'=>$qty,
+                    'rate'=>$rt,
+                    'total'=>$total,
+
+                ));
                 $this->db->update('rqsn_details');
             }
         }
