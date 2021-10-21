@@ -239,6 +239,8 @@
                 $("#rqsn_no").val(obj.rqsn_no);
                 $("#vessel_name").val(obj.vessel_name);
 
+
+                var customer_name=$('#customer').val().match(/\b(\w)/g).join('').toUpperCase() ;
                 var AI=$('#AI').val();
                 var vsn=$('#vessel_name').val();
                 var date=$('#date').val();
@@ -251,7 +253,7 @@
 
 
 
-                var generate_number='MEL-'+vsn+'-DC'+AI+'-'+fix1+'-'+fix2
+                var generate_number=customer_name+'-'+vsn+'-DC'+AI+'-'+fix1+'-'+fix2
 
                 $('#dc_no').val(generate_number);
             }

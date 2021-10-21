@@ -226,7 +226,7 @@
                 $("#cus_id").val(obj.cus_id);
                 $("#invoice_id").val(obj.invoice_id);
                 $("#inv_id").val(obj.invoice_id);
-
+                var customer_name=$('#customer').val().match(/\b(\w)/g).join('').toUpperCase() ;
                 var AI=$('#AI').val();
                 var vsn=$('#vessel_name').val();
                 var date=$('#date').val();
@@ -239,7 +239,7 @@
                 //alert(fix2)
 
 
-                var generate_number='MEL-'+vsn+'-SV'+AI+'-'+fix1+'-'+fix2
+                var generate_number=customer_name+'-'+vsn+'-SV'+AI+'-'+fix1+'-'+fix2
 
                 $('#invoice').val(generate_number);
             }

@@ -1838,7 +1838,7 @@ class Invoices extends CI_Model
         $this->db->select(
             'a.total_tax,
                         a.*,
-                        b.*,
+                           y.*,
                         c.*,
                         d.*,
                         d.product_id,
@@ -1854,7 +1854,7 @@ class Invoices extends CI_Model
         );
         $this->db->from('invoice a');
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
-        $this->db->join('outlet_warehouse b', 'b.outlet_id = a.customer_id');
+        $this->db->join('customer_information y', 'a.customer_id = y.customer_id');
         $this->db->join('product_information d', 'd.product_id = c.product_id');
         $this->db->join('rqsn x', 'x.rqsn_id = a.rqsn_id');
         // $this->db->join('branch_name e', 'e.branch_id = a.branch_id');

@@ -350,9 +350,9 @@
 
     function generate_number(){
 
-       // alert('Hello')
 
         var AI=$('#AI').val();
+        var customer_name=$('#customer_id option:selected').text().match(/\b(\w)/g).join('').toUpperCase() ;
         var vsn=$('#rqsn_for option:selected').text();
         var vygn=$('#voyage_no').val();
         var date=$('#date').val();
@@ -365,7 +365,7 @@
         //alert(fix2)
 
 
-        var generate_number='MEL-'+vsn+'-RQ'+AI+'-'+vygn+'-'+fix1+'-'+fix2
+        var generate_number=customer_name+'-'+vsn+'-RQ'+AI+'-'+vygn+'-'+fix1+'-'+fix2
 
         $('#rqsn_no').val(generate_number);
 
@@ -424,38 +424,7 @@
 
     });
 
-    // function get_subcat() {
-    //     var category_id = $("#select_cat").val();
-    //
-    //     var base_url = "<?//= base_url() ?>//";
-    //     var csrf_test_name = $('[name="csrf_test_name"]').val();
-    //     var sub_cat_selected = "";
-    //
-    //
-    //     $.ajax( {
-    //         url: base_url + "Cproduct/sub_cat_by_category",
-    //         method: 'post',
-    //         data: {
-    //             category_id:category_id,
-    //             sub_cat_selected: sub_cat_selected,
-    //             csrf_test_name:csrf_test_name
-    //         },
-    //         cache: false,
-    //         success: function( data ) {
-    //             var obj = jQuery.parseJSON(data);
-    //             $('#select_subcat').html(obj.sub_cat);
-    //             // $('#cat_id').val(obj.c_id);
-    //             // var cat_id = $("#cat_id").val();
-    //
-    //             if(category_id == obj.c_id ){
-    //                 $("#subCat_div").css("display", "block");
-    //             }else{
-    //                 $("#subCat_div").css("display", "none");
-    //             }
-    //         }
-    //     })
 
-    // }
 
     function productList_with_cat_subcat(sl) {
         var priceClass = 'price_item' + sl;
