@@ -153,11 +153,11 @@ class Creport extends CI_Controller {
         if ($result == TRUE) {
             $this->session->set_userdata(array('message' => display('successfully_added')));
 
-            redirect(base_url('Creport/wastage_dec'));
+            redirect(base_url('Creport/dead_dec'));
 
         } else {
             $this->session->set_userdata(array('error_message' => display('please_try_again')));
-            redirect(base_url('Creport/wastage_dec'));
+            redirect(base_url('Creport/dead_dec'));
         }
 
 
