@@ -1854,9 +1854,9 @@ class Invoices extends CI_Model
         );
         $this->db->from('invoice a');
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
-        $this->db->join('customer_information y', 'a.customer_id = y.customer_id');
-        $this->db->join('product_information d', 'd.product_id = c.product_id');
-        $this->db->join('rqsn x', 'x.rqsn_id = a.rqsn_id');
+        $this->db->join('customer_information y', 'a.customer_id = y.customer_id','left');
+        $this->db->join('product_information d', 'd.product_id = c.product_id','left');
+        $this->db->join('rqsn x', 'x.rqsn_id = a.rqsn_id','left');
         // $this->db->join('branch_name e', 'e.branch_id = a.branch_id');
         // $this->db->join('courier_name f', 'f.courier_id = a.courier_id');
         $this->db->where('a.invoice_id', $invoice_id);

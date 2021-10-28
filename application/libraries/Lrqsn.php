@@ -312,9 +312,14 @@ class Lrqsn {
 
         if(!empty($rqsn_details)){
             $sl = 0;
+            $sq = 0;
             foreach ($rqsn_details as $key => $value) {
                 $sl++;
                 $rqsn_details[$key]['sl'] = $sl;
+
+
+
+
             }
         }
 
@@ -323,9 +328,10 @@ class Lrqsn {
         $data = array(
             'title'             => 'Store Qty',
             'rqsn_details'      => $rqsn_details,
+
         );
 
-        // echo '<pre>';print_r($data);exit();
+    // echo '<pre>';print_r($data);exit();
 
 
         return $CI->parser->parse('rqsn/store_qty', $data, true);

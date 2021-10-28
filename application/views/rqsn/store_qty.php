@@ -64,9 +64,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($rqsn_details)) ?>
                             <?php $sl = 1; ?>
                             <?php foreach ($rqsn_details as $rqsn_details) { ?>
+                                <?php if (($rqsn_details['sq']) > 0){ ?>
                             <tr>
                                 <td><?php echo $sl++; ?></td>
                                 <td><?php echo $rqsn_details['rqsn_no']?> </td>
@@ -79,6 +79,7 @@
                                     </a>
                                 </td>
                             </tr>
+                            <?php } ?>
                             <?php } ?>
                         </tbody>
                     </table>

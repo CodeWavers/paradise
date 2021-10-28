@@ -1163,7 +1163,7 @@ class Rqsn extends CI_Model
 
     public function store_qty_data()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*,(SUM(b.store_qty))as sq')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
             ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')

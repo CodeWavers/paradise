@@ -289,7 +289,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                         <?php } ?>
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("check_report")) {
+                            if ($this->uri->segment('2') == ("order ")) {
                                 echo "active";
                             } else {
                                 echo " ";
@@ -301,7 +301,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("check_report")) {
+                            if ($this->uri->segment('2') == ("pending_dc")) {
                                 echo "active";
                             } else {
                                 echo " ";
@@ -314,7 +314,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("check_report")) {
+                            if ($this->uri->segment('2') == ("sales_order_report")) {
                                 echo "active";
                             } else {
                                 echo " ";
