@@ -1940,7 +1940,7 @@ class Cinvoice extends CI_Controller
         $dc_no = $this->input->post('dc_no', true);
 
         $details = $CI->Invoices->approved_check_details($dc_no);
-        //  echo '<pre>'; print_r($details); exit();
+          //echo '<pre>'; print_r($details);
 
         $output = "";
         $count = 0;
@@ -1961,7 +1961,10 @@ class Cinvoice extends CI_Controller
             <tbody>';
 
         foreach ($details as $rq) {
-            $bl_qty = $rq['q'] - $rq['dc_qty'];
+
+            $rq_qty=$this->db->select('quantity as qty')->from('rqsn_details')->where(array('rqsn_id'=>$rq['rqsn_id'],'product_id'=>$rq['product_id']))->get()->row();
+
+            $bl_qty =$rq_qty->qty - $rq['dc_qty'];
 
             $count++;
             $output .= '<tr><td>' . $count . '</td>
@@ -1972,7 +1975,7 @@ class Cinvoice extends CI_Controller
                  <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
 
 
-                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['q'] . '" readonly></td>
+                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq_qty->qty . '" readonly></td>
                 <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="' . $rq['dc_qty'] . '"  readonly></td>
                 <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="' . $bl_qty . '" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="' . $rq['remarks'] . '" placeholder="Remarks" readonly >
