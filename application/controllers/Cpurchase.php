@@ -690,6 +690,26 @@ class Cpurchase extends CI_Controller
                 $add_cost = $items['additional_cost'];
             }
 
+            if (!empty($items['rate']) ){
+
+                $rate=$items['rate'];
+
+
+            }else{
+
+                $rate=$latest_price;
+            }
+
+            if (!empty($items['order_qty']) ){
+
+                $qty=$items['order_qty'];
+
+
+            }else{
+
+                $qty=$items['qty'];
+            }
+
 
             $row_total=$items['qty']*$latest_price;
 
@@ -721,7 +741,7 @@ class Cpurchase extends CI_Controller
                                 <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right"  value="'. $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "00") . '" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($qty ? $qty : "00") . '" min="0" tabindex="7"/>
                             </td>
 
                                 ';
@@ -753,7 +773,7 @@ class Cpurchase extends CI_Controller
 
                                 <td class="text-right">
                                     <input type="hidden" style="width: 100px" name="bdt_price[]" id="bdt_price_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="0.00"  tabindex="6"/>
-                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($latest_price ? $latest_price : "0.00") . '"  tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($rate ? $rate : "0.00") . '"  tabindex="6"/>
                                 </td>
 
                                 <td class="text-left">

@@ -188,7 +188,7 @@
 
 
 
-        var generate_number='MEL-PO'+AI+'-'+fix1+'-'+fix2
+        var generate_number='PO'+AI+'-'+fix1+'-'+fix2
 
         $('#pur_order_no').val(generate_number);
 
