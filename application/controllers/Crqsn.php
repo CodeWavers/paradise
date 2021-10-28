@@ -638,10 +638,9 @@ class Crqsn extends CI_Controller
 
         $rqsn_id = $this->input->post("rqsn_id", true);
 
-        $rqsn = $CI->Rqsn->rqsn_qty_final($rqsn_id);
 
+        $CI->Rqsn->rqsn_qty_final($rqsn_id);
 
-        //   echo "ok";exit();
 
         redirect(base_url('Crqsn/aprove_rqsn/'));
     }

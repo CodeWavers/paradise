@@ -66,9 +66,6 @@
                     <?php echo form_open_multipart('Cpurchase/update_po',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
-
-
-
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group row">
@@ -205,12 +202,14 @@ $( document ).ready(function() {
 
 function get_bill_details() {
     var bill_no = $("#bill_no").val();
+    var supplier_id = $("#supplier_id").val();
     var csrf_test_name = $('[name="csrf_test_name"]').val();
 
     $.ajax({
         url : "<?php echo base_url(); ?>Cpurchase/get_bill_details",
         method : 'POST',
         data : {
+            supplier_id : supplier_id,
             bill_no : bill_no,
             csrf_test_name : csrf_test_name
         },

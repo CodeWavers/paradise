@@ -1978,7 +1978,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             </li>
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('bank_ledger', 'read')->access()) { ?>
+                        <?php if ($this->permission1->method('bank_transaction', 'read')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("bank_ledger")) {
                                                     echo "active";
                                                 } else {

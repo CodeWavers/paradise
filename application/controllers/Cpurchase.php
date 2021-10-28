@@ -604,19 +604,15 @@ class Cpurchase extends CI_Controller
             "brand"  => $_POST["brand"],
             "model"  => $_POST["model"],
             "qty"  => $_POST["quantity"],
-            'rqsn_detail_id'     => $_POST["rq_d_id"]
+            'rqsn_no'     => $_POST["rqsn_no"],
+            'rqsn_detail_id'     => $_POST["rq_d_id"],
         );
 
         // echo '<pre>'; print_r($data); exit();
         $this->db->insert('purchase_order_cart', $data);
 
 
-        $product_id = $_POST["product_id"];
-
-        // $data2 = array(
-        //     'purchase_status' => 2
-        // );
-        $this->db->where('product_id', $product_id);
+        $this->db->where('rqsn_detail_id', $_POST["rq_d_id"]);
         $this->db->set('purchase_status', 2);
         $this->db->update('rqsn_details');
 
@@ -643,6 +639,7 @@ class Cpurchase extends CI_Controller
         $this->load->model("Purchases");
         $this->load->model("Products");
         $this->load->model("Suppliers");
+        $this->load->model("Reports");
         //   $product_id=$_POST["product_id"];
         $cart_list = $this->Purchases->purchase_cart_data();
 
@@ -658,6 +655,7 @@ class Cpurchase extends CI_Controller
                 <thead>
                      <tr>
                         <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="12%">RQ No.</th>
                         <th class="text-center" width="8%">Product Name</th>
                         <th class="text-center" width="8%">SKU</th>
                         <th class="text-center">Current Stock</th>
@@ -677,7 +675,7 @@ class Cpurchase extends CI_Controller
         foreach ($cart_list as $items) {
 
             $latest_price = $this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->where('status',2)->order_by('id', 'DESC')->get()->row()->update_price;
-
+            $current_stock = $this->Reports->current_stock($items['product_id']);
 
             // echo '<pre>'; print_r($latest_price); exit();
             $tot = "";
@@ -693,14 +691,18 @@ class Cpurchase extends CI_Controller
             }
 
 
+            $row_total=$items['qty']*$latest_price;
+
+
             $product_id = $items['product_id'];
             $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
             $supplier_list = $this->Products->supplier_product_editdata($product_id);
-            // echo '<pre>'; print_r($items['warrenty_date']); exit();
+            // echo '<pre>'; print_r($row_total); exit();
             $count++;
             $output .= '
                         <tr>
                         <td class="wt"> ' . $count . '</td>
+                        <td class="wt">' . $items['rqsn_no'] . '</td>
                         <td class="span3 supplier">
                             <span>' . $items['product_name'] . '</span>
                             <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
@@ -709,16 +711,17 @@ class Cpurchase extends CI_Controller
                             <input type="hidden" id="product_name_' . $count . '" value="' . $items['product_name'] . '">
                             <input type="hidden" id="item_sku_' . $count . '" value="' . $items['sku'] . '">
                             <input type="hidden" id="rqsn_detail_id_' . $count . '" value="' . $items['rqsn_detail_id'] . '">
+                            <input type="hidden"  name="rqsn_no[]" id="rqsn_no_' . $count . '" value="' . $items['rqsn_no'] . '">
                         </td>
                             <td class="wt">' . $items['sku'] . '</td>
                             <td class="wt">
-                                <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00" readonly/>
+                                <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" value="' . number_format($current_stock,2) . '" placeholder="0.00" readonly/>
                             </td>
                             <td class="test">
                                 <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right"  value="'. $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($items['qty'] ? $items['qty'] : "00") . '" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . ($items['order_qty'] ? $items['order_qty'] : "00") . '" min="0" tabindex="7"/>
                             </td>
 
                                 ';
@@ -743,6 +746,7 @@ class Cpurchase extends CI_Controller
             //     }
             // }
 
+//            <button  class="add_row btn btn-success" type="button" onclick=add_row(' . $count . ')  id="" tabindex="8"><i class="fa fa-plus"></i></button>
 
 
             $output .= '
@@ -757,16 +761,16 @@ class Cpurchase extends CI_Controller
                                 </td>
                                 <td>
                                 <button  class="remove_inventory btn btn-danger text-right" type="button"  id="' . $count . '" tabindex="8"><i class="fa fa-close"></i></button>
-                                    <button  class="add_row btn btn-success" type="button" onclick=add_row(' . $count . ')  id="" tabindex="8"><i class="fa fa-plus"></i></button>
+                         
                                 </td>
-                        </tr>
+                 </tr>
                         ';
         }
         $output .= '
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="7" class="text-right"><b>Grand Total:</b></td>
+                    <td colspan="8" class="text-right"><b>Grand Total:</b></td>
                     <td>
                     <input class="form-control" name="total" id="grand_total" value=' . $total . ' readonly/>
                 </td>
@@ -870,6 +874,7 @@ class Cpurchase extends CI_Controller
         $this->load->model("Purchases");
         $this->load->model("Products");
         $this->load->model("Suppliers");
+        $this->load->model("Reports");
         //   $product_id=$_POST["product_id"];
         $cart_list = $this->Purchases->purchase_details($po_id);
         $grand_total = array_sum(array_column($cart_list, 'total_amount'));
@@ -880,17 +885,18 @@ class Cpurchase extends CI_Controller
             <table class="table table-bordered table-hover" id="purchaseTable">
                 <thead>
                      <tr>
-                        <th class="text-center" width="4%">SN</th>
+                        <th class="text-center" width="2%">SN</th>
+                        <th class="text-center" width="8%">RQ No.</th>
                         <th class="text-center" width="8%">Product Name</th>
                         <th class="text-center" width="8%">SKU</th>
                         <th class="text-center">Current Stock</th>
                         <th class="text-center">Proposed Quantity</th>
                         <th class="text-center">Order Quantity</th>
-                        <th class="text-center" >Supplier Name</th>
-                        <th class="text-center">Warranty</th>
-                        <th class="text-center">Unit Cost</th>
-                        <th class="text-center">Discount</th>
-                        <th class="text-center">Additional Cost</th>
+                        <th class="text-center" width="8%">Supplier Name</th>
+                        <th class="text-center" width="8%">Warranty</th>
+                        <th class="text-center" width="4%">Unit Cost</th>
+                        <th class="text-center" width="4%">Discount</th>
+                        <th class="text-center" width="4%">Additional Cost</th>
                         <th class="text-center">Total</th>
                         <th class="text-center">Chalan/Bill No.</th>
 
@@ -921,11 +927,13 @@ class Cpurchase extends CI_Controller
             $product_id = $items['product_id'];
             // $product_info = $this->Products->retrieve_product_full_data($product_id)[0];
             $supplier_list = $this->Suppliers->supplier_list_by_id($product_id);
+            $current_stock = $this->Reports->current_stock($product_id);
             // echo '<pre>'; print_r($items['warrenty_date']); exit();
             $count++;
             $op .= '
                         <tr>
                         <td class="wt"> ' . $count . '</td>
+                        <td class="wt"> ' . $items['rqsn_no'] . '</td>
                         <td class="span3 supplier">
                             <span>' . $items['product_name'] . '</span>
                             <input type="hidden" name="product_id[]" id="product_id_' . $count . '" value="' . $items['product_id'] . '">
@@ -936,7 +944,7 @@ class Cpurchase extends CI_Controller
                         </td>
                             <td class="wt">' . $items['sku'] . '</td>
                             <td class="wt">
-                                <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00" readonly/>
+                                <input type="text"  id="available_quantity_1" class="form-control text-right stock_ctn_1" placeholder="0.00"  value="' . number_format($current_stock,2) . '"readonly/>
                             </td>
                             <td class="test">
                                 <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right" value="' . $items['quantity'] . '" min="0" tabindex="7" readonly/>
@@ -1009,7 +1017,7 @@ class Cpurchase extends CI_Controller
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="11" class="text-right"><b>Grand Total:</b></td>
+                    <td colspan="12" class="text-right"><b>Grand Total:</b></td>
                     <td>
                     <input class="form-control" name="total" id="grand_total" value="' . ($grand_total ? $grand_total : '') . '" readonly/>
                     </td>
@@ -1452,15 +1460,34 @@ class Cpurchase extends CI_Controller
     {
 
         $bill_no = $this->input->post('bill_no', TRUE);
+        $supplier_id = $this->input->post('supplier_id', TRUE);
 
         $this->load->model("Purchases");
         $this->load->model("Products");
         $this->load->model("Suppliers");
         //   $product_id=$_POST["product_id"];
-        $cart_list = $this->Purchases->bill_details($bill_no);
+        $cart_list = $this->Purchases->bill_details($bill_no,$supplier_id);
+        $supplier_payment = $this->Purchases->supplier_bill_details($bill_no,$supplier_id);
+
+
+        $count = $this->db->select('*')->from('supplier_payment')->where(array('supplier_id'=>$supplier_id,'bill_no'=>$bill_no))->get()->num_rows();
+
+        if($count == 0){
+            $grand_total = array_sum(array_column($cart_list, 'total_amount'));
+            $due_amount = $grand_total;
+            $paid_amount = 0;
+
+
+        }else{
+            $grand_total=$supplier_payment[0]['grand_total'];
+            $paid_amount=$supplier_payment[0]['paid_amount'];
+            $due_amount=$supplier_payment[0]['due_amount'];
+
+
+        }
 
         //echo '<pre>';print_r($cart_list);exit();
-        $grand_total = array_sum(array_column($cart_list, 'total_amount'));
+
         // $total = array_sum(array_column($cart_list, 'total'));
         $op = '';
         $op .= '
@@ -1469,16 +1496,16 @@ class Cpurchase extends CI_Controller
                 <thead>
                      <tr>
                         <th class="text-center" width="4%">SN</th>
-                        <th class="text-center" width="4%">PO No</th>
+                        <th class="text-center" width="12%">PO No</th>
                         <th class="text-center" width="12%">Product Name</th>
                         <th class="text-center" width="8%">Parts No</th>
                         <th class="text-center" width="8%">SKU</th>
-                         <th class="text-center">Origin</th>
-                        <th class="text-center">Order Quantity</th>
+                         <th class="text-center" width="8%">Origin</th>
+                        <th class="text-center" width="8%">Order Quantity</th>
 
-                        <th class="text-center">Rate</th>
-                        <th class="text-center">Discount</th>
-                        <th class="text-center">Total</th>
+                        <th class="text-center" width="8%">Rate</th>
+                        <th class="text-center" width="8%">Discount</th>
+                        <th class="text-center" width="10%">Total</th>
 
                     </tr>
                 </thead>
@@ -1512,7 +1539,7 @@ class Cpurchase extends CI_Controller
                             <td class="wt">' . $items['sku'] . '</td>
                                <td class="wt">' . $items['country'] . '</td>
 
-                            <td class="test">
+                            <td class="text-center">
                                 <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . $items['qty'] . '" min="0" tabindex="7" readonly/>
                             </td>
 
@@ -1520,11 +1547,11 @@ class Cpurchase extends CI_Controller
 
 
 
-                                <td class="text-right">
+                                <td class="text-center">
                                     <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['rate'] ? $items['rate'] : "") . '"  tabindex="6" readonly/>
                                 </td>
 
-                                <td class="text-right">
+                                <td class="text-center">
                                     <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0%" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6" readonly/>
                                 </td>
 
@@ -1575,16 +1602,26 @@ class Cpurchase extends CI_Controller
 
                                         <td class="text-right" colspan="9"><b>Grand Total</b></td>
                                         <td class="text-right" >
-                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="' . ($grand_total ? $grand_total : "") . '" />
+                                            <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="' . ($grand_total ? $grand_total : "0") . '" />
+                                        </td>
+
+                                    </tr>
+                                    
+                                       <tr>
+                                        <td class="text-right" colspan="9"><b>Pay Amount:</b></td>
+                                       <td class="text-right" >
+                                            <input type="text" style="width: 100px"  id="pay_amount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="old_paid_amount" value="0" placeholder="0.00"/>
+                                            <input type="hidden" style="width: 100px"  id="old_paid" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="" value="' . ($paid_amount ? $paid_amount : "0") . '" />
                                         </td>
 
                                     </tr>
 
                                     <tr>
                                         <td class="text-right" colspan="9"><b>Paid Amount:</b></td>
-                                        <td class="text-right" >
-                                            <input type="text" style="width: 100px"  id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="0.00" />
+                                           <td class="text-right" >
+                                            <input type="text" style="width: 100px"  id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="' . ($paid_amount ? $paid_amount : "0") . '" readonly/>
                                         </td>
+                                      
 
                                     </tr>
 
@@ -1592,7 +1629,7 @@ class Cpurchase extends CI_Controller
 
                                         <td class="text-right" colspan="9"><b>Due Amount:</b></td>
                                         <td class="text-right">
-                                            <input type="text" style="width: 100px"  id="dueAmmount" class="text-right form-control" name="due_amount" value="' . ($grand_total ? $grand_total : "") . '"  readonly="readonly" />
+                                            <input type="text" style="width: 100px"  id="dueAmmount" class="text-right form-control" name="due_amount" value="' . ($due_amount ? $due_amount : "") . '"  readonly="readonly" />
                                         </td>
 
 

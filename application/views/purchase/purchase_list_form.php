@@ -58,7 +58,8 @@
                                 <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
-                                        <th><?php echo display('image') ?>s</th>
+                                        <th><?php echo display('image') ?></th>
+                                        <th>RQ No.</th>
 <!--                                        <th>Category</th>-->
 <!--                                        <th>Sub Category</th>-->
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
@@ -79,6 +80,9 @@
 <!--                                        <td>--><?php //echo $row['category_name']?><!--</td>-->
 <!--                                        <td>--><?php //echo $row['subcat_name']?><!--</td>-->
                                         <td>
+                                            <?php echo $row['rqsn_no']?>
+                                        </td>
+                                        <td>
                                             <?php echo $row['product_name']?>
                                         </td>
                                         <td><?php echo $row['parts']?></td>
@@ -86,7 +90,7 @@
                                         <td><?php echo $row['brand_name']?></td>
                                         <td><?php echo $row['model_name']?></td>
                                         <td>
-                                            <input style="text-align: center" size="10" type="text" class="form-control quantity" value="<?php echo $row['qty'];?>" style="width:100%;" name="quantity" id="<?php echo $row['product_id']?>">
+                                            <input style="text-align: center" size="10" type="text" class="form-control quantity" value="<?php echo $row['purchase_qty'];?>" style="width:100%;" name="quantity" id="<?php echo $row['product_id']?>">
                                         </td>
                                         <td>
                                             <button type="button" id="add_btn<?=$row['sl']?>" name="add_cart" title="Add to PO"
@@ -102,6 +106,8 @@
                                                 data-model="<?php echo $row['model_name']?>"
                                                 data-productid="<?php echo $row['product_id']?>"
                                                 data-rqsndetail="<?php echo $row['rqsn_detail_id']?>"
+                                                data-rqsn_no="<?php echo $row['rqsn_no']?>"
+
                                                 onclick="add_and_delete(this)"
                                                 >
                                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -138,11 +144,10 @@ function add_and_delete(e) {
             var quantity = $('#' + product_id).val();
             var sl = $(e).data("sl");
             var rqsn_details = $(e).data('rqsndetail');
+            var rqsn_no = $(e).data('rqsn_no');
+
             var btn = $("#add_btn" + sl);
-            // console.log(product_id)
-            // console.log(product_name)
-            // console.log(category_name)
-            // console.log(quantity)
+
             var csrf_test_name = $('[name="csrf_test_name"]').val();
 
             $.ajax({
@@ -159,7 +164,9 @@ function add_and_delete(e) {
                         brand:brand,
                         model:model,
                         quantity:quantity,
-                        rq_d_id:rqsn_details
+                        rq_d_id:rqsn_details,
+                        rqsn_no:rqsn_no
+
                     },
                     success:function(data)
                     {

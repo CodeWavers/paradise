@@ -169,6 +169,7 @@
                                 <thead>
                                      <tr>
                                         <th class="text-center" width="8%">SL</th>
+                                        <th class="text-center" width="12%">RQ No.</th>
                                         <th class="text-center" width="12%">Product Name</th>
                                         <th class="text-center" width="8%">Parts No.</th>
                                         <th class="text-center" width="8%">SKU</th>
@@ -185,6 +186,7 @@
                                     <tr>
 
                                     <td class="wt"> {sl}</td>
+                                    <td class="wt"> {rqsn_no}</td>
 
                                     <td class="span3 supplier">
                                        <span>{product_name}</span>
@@ -241,7 +243,7 @@
                                 <tfoot>
                                     <tr>
 
-                                        <td class="text-right" colspan="8"><b>Grand Total:</b></td>
+                                        <td class="text-right" colspan="9"><b>Grand Total:</b></td>
                                         <td class="text-right" >
                                             <input type="text" id="total" class="text-center form-control" name="total" value="<?= $total?>" readonly= />
                                             <input type="hidden" name="baseUrl" class="baseUrl" value="<?php echo base_url();?>"/>
@@ -258,9 +260,9 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                 <?php  $po_no=$all_purchase_list[0]['purchase_order']?>
-                                <input type="submit" id="add_purchase" class="btn btn-primary btn-large" name="add-purchase" value="Approve" />
+                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  id="add_purchase" class="btn btn-primary btn-large" name="add-purchase" value="Approve" />
 <!--                                <button  href="--><?php //echo base_url('Cproduct/approve_unit_cost') ?><!--" id="print" class="btn btn-warning btn-large" name="print" value="Print" <button/>-->
-                                <a class="btn btn-warning" href="<?php echo base_url('Cpurchase/po_print/'.$po_no) ?>">Print</a>
+                                <a class="btn btn-warning" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  href="<?php echo base_url('Cpurchase/po_print/'.$po_no) ?>">Print</a>
                             </div>
                         </div>
                     <?php echo form_close()?>

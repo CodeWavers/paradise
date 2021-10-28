@@ -201,13 +201,19 @@ function calculate_total() {
     var total = parseFloat($("#total").val());
     var total_charge = parseFloat($("#total_charge").val());
     var total_dis = parseFloat($("#total_dis").val());
-    var paid_amount = parseFloat($("#paidAmount").val());
+    var pay_amount = parseFloat($("#pay_amount").val());
+    var old_paid = parseFloat($("#old_paid").val());
 
+  //  console.log(paid_amount+old_paid)
+    var paid_amount =old_paid+pay_amount ;
     var grand_total = (total_charge + total) - total_dis;
+    var due_amount = grand_total-(paid_amount);
+       // console.log(due_amount)
 
-    $("#grand_total").val(grand_total.toFixed(2, 2));
+    $("#paidAmount").val(paid_amount.toFixed(2,2));
+    $("#grand_total").val(grand_total.toFixed(2,2));
 
-    $("#dueAmmount").val(grand_total.toFixed(2, 2));
+    $("#dueAmmount").val(due_amount.toFixed(2,2));
 
     // console.log(parseFloat(grand_total))
 
@@ -215,17 +221,22 @@ function calculate_total() {
     // $("#Total").val(gr_tot.toFixed(2,2));
     //var grandtotal = gr_tot;
     //$("#Total").val(grandtotal.toFixed(2,2));
-    invoice_paidamount();
+  //  invoice_paidamount();
 }
 
 
 
 function invoice_paidamount() {
-    var t = $("#grand_total").val(),
-        a = $("#paidAmount").val(),
+    var t = parseFloat($("#grand_total").val()),
+        a = parseFloat($("#paidAmount").val()),
+        o = parseFloat($("#old_paid").val()),
         e = t - a;
-    if (e > 0) {
-        $("#dueAmmount").val(e.toFixed(2, 2))
+
+    console.log(e)
+
+   // $("#dueAmmount").val(e)
+    if (e >= 0) {
+        $("#dueAmmount").val(e.toFixed(2,2))
     } else {
         $("#dueAmmount").val(0)
     }
@@ -236,7 +247,7 @@ function full_paid() {
     var grandTotal = $("#grand_total").val();
     $("#paidAmount").val(grandTotal);
     invoice_paidamount();
-    calculate_total();
+   // calculate_total();
 }
 
 //Delete row

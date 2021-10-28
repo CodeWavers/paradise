@@ -416,6 +416,7 @@ class Lrqsn {
             'rqsn_details'      => $rqsn_details,
             'outlet_list'       => $outlet_list,
             'grand_total'       => $grand_total,
+            'rqsn_id'       => $rqsn_id,
 //            'sl'       => $sl,
         );
 

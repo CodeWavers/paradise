@@ -948,6 +948,7 @@ class Purchases extends CI_Model {
           $bill_no  = $this->input->post('bill_no',TRUE);
         //  $po_no  = $this->input->post('pur_order_no',TRUE);
          // $invoice_no  = $this->input->post('invoice_no',TRUE);
+          $old_paid  = $this->input->post('old_paid_amount',TRUE);
           $paid_amount  = $this->input->post('paid_amount',TRUE);
           $due_amount   = $this->input->post('due_amount',TRUE);
           $total_amount   = $this->input->post('total',TRUE);
@@ -971,8 +972,13 @@ class Purchases extends CI_Model {
         $receive_date=date('Y-m-d');
         $createdate=date('Y-m-d H:i:s');
 
+        $count = $this->db->select('*')->from('supplier_payment')->where(array('supplier_id'=>$supplier_id,'bill_no'=>$bill_no))->get()->num_rows();
 
-        $data = array(
+
+
+
+
+        $data_insert = array(
 
 
             'supplier_id'=>$supplier_id,
@@ -989,11 +995,22 @@ class Purchases extends CI_Model {
 
         );
 
-       // echo '<pre>';print_r($data);exit();
+        $data_update = array(
 
-//            $this->db->where('purchase_order', $po_no);
-            $this->db->insert('supplier_payment',$data);
 
+
+            'payment_date'=>$payment_date,
+
+            'total_amount'=>$grand_total,
+            'other_charge'=>$total_charge,
+            'grand_total'=>$grand_total,
+            'paid_amount'=>$paid_amount,
+            'due_amount'=>$due_amount,
+            'total_discount'=>$total_discount,
+          //  'pay_type'=>$pay_type,
+            //'status'=>1,
+
+        );
 
          $cashinhand = array(
       'VNo'            =>  $bill_no,
@@ -1002,21 +1019,21 @@ class Purchases extends CI_Model {
       'COAID'          =>  1020101,
       'Narration'      =>  'Cash in Hand For Supplier '.$supinfo->supplier_name,
       'Debit'          =>  0,
-      'Credit'         =>  $paid_amount,
+      'Credit'         =>  $old_paid,
       'IsPosted'       =>  1,
       'CreateBy'       =>  $receive_by,
       'CreateDate'     =>  $createdate,
       'IsAppove'       =>  1
     );
-//                  // bank ledger
- $bankc = array(
+//                  // bank ledgera
+         $bankc = array(
       'VNo'            =>  $bill_no,
       'Vtype'          =>  'Purchase',
       'VDate'          =>  $payment_date,
       'COAID'          =>  $bankcoaid,
       'Narration'      =>  'Paid amount for Supplier  '.$supinfo->supplier_name,
-      'Debit'          =>  0,
-      'Credit'         =>  $paid_amount,
+      'Debit'          =>  $old_paid,
+      'Credit'         =>  0,
       'IsPosted'       =>  1,
       'CreateBy'       =>  $receive_by,
       'CreateDate'     =>  $createdate,
@@ -1072,7 +1089,7 @@ class Purchases extends CI_Model {
           'VDate'          =>  $payment_date,
           'COAID'          =>  $sup_coa->HeadCode,
           'Narration'      =>  'Supplier . '.$supinfo->supplier_name,
-          'Debit'          =>  $paid_amount,
+          'Debit'          =>  $old_paid,
           'Credit'         =>  0,
           'IsPosted'       =>  1,
           'CreateBy'       =>  $receive_by,
@@ -1093,47 +1110,51 @@ class Purchases extends CI_Model {
 //            $this->db->update('product_purchase_details');
 //        }
 //
-        $this->db->insert('acc_transaction',$coscr);
-        $this->db->insert('acc_transaction',$purchasecoatran);
-        $this->db->insert('acc_transaction',$expense);
-        if($this->input->post('paytype') == 2){
-          if(!empty($paid_amount)){
-        $this->db->insert('acc_transaction',$bankc);
-        $this->db->insert('acc_transaction',$supplier_debit);
-      }
+
+      //  echo '<pre>';print_r($bankc);exit();
+
+        if ($count == 0){
+            $this->db->insert('supplier_payment',$data_insert);
+
+            $this->db->insert('acc_transaction',$coscr);
+            $this->db->insert('acc_transaction',$purchasecoatran);
+            $this->db->insert('acc_transaction',$expense);
+            if($pay_type == 2){
+                if(!empty($paid_amount)){
+                    $this->db->insert('acc_transaction',$bankc);
+                    $this->db->insert('acc_transaction',$supplier_debit);
+                }
+            }
+            if($pay_type == 1){
+                if(!empty($paid_amount)){
+                    $this->db->insert('acc_transaction',$cashinhand);
+                    $this->db->insert('acc_transaction',$supplier_debit);
+                }
+            }
+
+        }else{
+
+            $this->db->where(array('supplier_id'=>$supplier_id,'bill_no'=>$bill_no));
+            $this->db->update('supplier_payment',$data_update);
+
+            if($pay_type == 2){
+                if(!empty($paid_amount)){
+                    $this->db->insert('acc_transaction',$bankc);
+                    $this->db->insert('acc_transaction',$supplier_debit);
+                }
+            }
+            if($pay_type == 1){
+                if(!empty($paid_amount)){
+                    $this->db->insert('acc_transaction',$cashinhand);
+                    $this->db->insert('acc_transaction',$supplier_debit);
+                }
+            }
+
+//            $this->session->set_userdata(array('error_message'=> 'Already Paid Today'));
+//            redirect(base_url('Cpurchase/edit_purchase_order/'.$supplier_id));exit;
         }
-        if($this->input->post('paytype') == 1){
-          if(!empty($paid_amount)){
-        $this->db->insert('acc_transaction',$cashinhand);
-        $this->db->insert('acc_transaction',$supplier_debit);
-        }
-        }
-//
-//        $rate = $this->input->post('price',TRUE);
-//
-//        for ($i = 0, $n = count($p_id); $i < $n; $i++) {
-//
-//            $product_rate = $rate[$i];
-//            $product_id = $p_id[$i];
-//
-//            $data1 = array(
-//                'supplier_id' => $supplier_id,
-//                'product_id'         => $product_id,
-//                'update_price'         => $product_rate,
-//                'date'         => $purchase_date,
-//                'time'=>date("h:i:sa"),
-//                'status'             => 1
-//            );
-//
-//                $this->db->insert('supplier_product_price', $data1);
-//
-//
-//                $this->db->set('supplier_price',$product_rate);
-//                $this->db->where(array('product_id'=>$product_id,'supplier_id'=>$supplier_id));
-//                $this->db->update('supplier_product');
-//
-//        }
-       // echo "<pre>";print_r($data1);exit();
+
+
         return true;
     }
 
@@ -1530,6 +1551,7 @@ class Purchases extends CI_Model {
         $pur_order_no = $this->input->post('pur_order_no', TRUE);
 
 
+
         //supplier & product id relation ship checker.
         // for ($i = 0, $n = count($p_id); $i < $n; $i++) {
         //     $product_id = $p_id[$i];
@@ -1565,6 +1587,7 @@ class Purchases extends CI_Model {
         $rate = $this->input->post('price',TRUE);
         $quantity = $this->input->post('order_quantity',TRUE);
         $proposed_quantity = $this->input->post('proposed_quantity',TRUE);
+        $rqsn_no = $this->input->post('rqsn_no',TRUE);
         $sn = $this->input->post('sn',TRUE);
         $origin = $this->input->post('origin',TRUE);
         // $warehouse = $this->input->post('warehouse',TRUE);
@@ -1585,6 +1608,7 @@ class Purchases extends CI_Model {
             $product_id = $p_id[$i];
             // $disc = $discount[$i];
             $tp = $t_price[$i];
+            $rqsn = $rqsn_no[$i];
             // $unit_add_cost = $additional_cost[$i];
             // $unit_cost = ($product_rate - ($product_rate * ($disc / 100)) + ($unit_add_cost / $product_quantity));
 
@@ -1595,6 +1619,7 @@ class Purchases extends CI_Model {
             $data1 = array(
                 'purchase_detail_id' => $this->generator(15),
                 'purchase_id'        => $purchase_id,
+                'rqsn_no'        => $rqsn,
                 // 'supplier_id'        => $supp_id,
                 'product_id'         => $product_id,
                 'quantity'           => $prop_qty,
@@ -1785,7 +1810,7 @@ class Purchases extends CI_Model {
 
     public function get_rqsn_approved_list()
     {
-        $this->db->select('a.*, sum(b.purchase_qty)as qty, b.*, c.*,d.*, e.*, f.*, g.*');
+        $this->db->select('a.*, b.*, c.*,d.*, e.*, f.*, g.*');
         $this->db->from('rqsn a');
         $this->db->join('rqsn_details b', 'b.rqsn_id = a.rqsn_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
@@ -1795,7 +1820,7 @@ class Purchases extends CI_Model {
         $this->db->join('product_model g', 'g.model_id = c.product_model','left');
         $this->db->where('a.status', 3);
         $this->db->where('b.purchase_status', 1);
-        $this->db->group_by('b.product_id');
+        $this->db->order_by('a.rqsn_no');
 
         // $this->db->join('supplier_information d', 'd.supplier_id = b.supplier_id');
 
@@ -1830,6 +1855,7 @@ class Purchases extends CI_Model {
         $db_id = $this->input->post('sl_id',TRUE);
         $p_id = $this->input->post('product_id',TRUE);
         $qty = $this->input->post('order_quantity',TRUE);
+
         // $supp_id= $this->input->post('supplier_name',TRUE);
         // $warrenty_date = $this->input->post('warrenty_date',TRUE);
         $price= $this->input->post('price',TRUE);
@@ -1959,14 +1985,31 @@ class Purchases extends CI_Model {
 
     }
 
-    public function bill_details($bill_no)
+    public function bill_details($bill_no,$supplier_id)
     {
         $this->db->select('a.*, b.id AS real_id, b.*, c.*');
         $this->db->from('product_purchase_details b');
         $this->db->join('product_purchase a', 'b.purchase_id = a.purchase_id');
         $this->db->join('product_information c', 'c.product_id = b.product_id');
         $this->db->where('b.chalan_id', $bill_no);
+        $this->db->where('b.supplier_id', $supplier_id);
         $this->db->where('b.isAprv', 1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return false;
+
+    }
+
+    public function supplier_bill_details($bill_no,$supplier_id)
+    {
+        $this->db->select('*');
+        $this->db->from('supplier_payment');
+        $this->db->where('bill_no', $bill_no);
+        $this->db->where('supplier_id', $supplier_id);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

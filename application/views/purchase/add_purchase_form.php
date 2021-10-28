@@ -67,29 +67,6 @@
                         <?php echo form_open_multipart('Cpurchase/insert_purchase_new',array('class' => 'form-vertical', 'id' => 'insert_purchase','name' => 'insert_purchase'))?>
 
 
-                        <!-- <div class="row">
-                            <div class="col-sm-6">
-                               <div class="form-group row">
-                                    <label for="supplier_sss" class="col-sm-4 col-form-label"><?php echo display('supplier') ?>
-                                        <i class="text-danger">*</i>
-                                    </label>
-                                    <div class="col-sm-6">
-                                        <select name="supplier_id" id="supplier_id" class="form-control " required="" tabindex="1">
-                                            <option value=" "><?php echo display('select_one') ?></option>
-                                            {all_supplier}
-                                            <option value="{supplier_id}">{supplier_name}</option>
-                                            {/all_supplier}
-                                        </select>
-                                    </div>
-                                  <?php if($this->permission1->method('add_supplier','create')->access()){ ?>
-                                    <div class="col-sm-2" style="padding: 0px;">
-                                        <a class="btn btn-success" style="margin: 0;" title="Add New Supplier" href="<?php echo base_url('Csupplier'); ?>"><i class="fa fa-user"></i></a>
-                                    </div>
-                                <?php }?>
-                                </div>
-                            </div>
-                        </div> -->
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
@@ -104,18 +81,7 @@
                             </div>
 
                         </div>
-<!--                        <div class="row">-->
-<!--                            <div class="col-sm-6">-->
-<!---->
-<!--                                <div class="form-group row">-->
-<!--                                    <label for="rqsn_no" class="col-sm-4 col-form-label text-right">Vessel ame. : </label>-->
-<!--                                    <div class="col-sm-8">-->
-<!--                                        <input type="text" class="form-control" value="" name="voyage_no" id="voyage_no" onchange="generate_number()"  onkeyup="generate_number()">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!---->
-<!--                        </div>   -->
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
@@ -138,8 +104,8 @@
 
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <input type="submit" id="save_as_draft" class="btn btn-warning btn-large" name="save_as_draft" value="Save As Draft" />
-                                <input type="submit" value="Finalize" name="finalize" class="btn btn-large btn-success" id="finalize" >
+                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  id="save_as_draft" class="btn btn-warning btn-large" name="save_as_draft" value="Save As Draft" />
+                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  value="Finalize" name="finalize" class="btn btn-large btn-success" id="finalize" >
                             </div>
                         </div>
                         <?php echo form_close()?>
@@ -153,6 +119,8 @@
 <!-- Purchase Report End -->
 
 <script type="text/javascript">
+
+
 
 
 
@@ -201,14 +169,18 @@
     }
 
     $( document ).ready(function() {
-
-
+        // var gr_tot = 0;
+        // $(".row_total").each(function() {
+        //     isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
+        // });
+        //
+        //
+        // $("#grand_total").val(gr_tot.toFixed(2,2));
 
         var AI=$('#AI').val();
         var vsn=$('#vessel_name').val();
         var date=$('#date').val();
         var arr1 = date.split('-');
-        // alert(arr1[0])
         var fix1=arr1[0].slice(-2)
 
         var fix2=parseInt(fix1)+1;
@@ -288,5 +260,8 @@
         });
 
     });
+
+
+
 
 </script>

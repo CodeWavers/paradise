@@ -1247,8 +1247,8 @@ class Rqsn extends CI_Model
             ->join('product_subcat f', 'f.sub_cat_id = d.sub_cat_id', 'left')
             ->join('product_brand g', 'g.brand_id = d.brand_id', 'left')
             ->join('product_model h', 'h.model_id = d.product_model', 'left')
-            ->where('b.status', 1)
-            ->where('a.status', 3)
+//            ->where('b.status', 1)
+//            ->where('a.status', 3)
             ->where('b.rqsn_id', $rqsn_id)
             ->group_by('b.product_id')
             ->get()
@@ -1474,12 +1474,12 @@ class Rqsn extends CI_Model
             }
         }
 
-        $sq = "UPDATE rqsn
-        SET status = 3, is_sold = 0
-        WHERE rqsn_id = " . $rqsn_id . "
-        ";
-
-        $this->db->query($sq);
+//        $sq = "UPDATE rqsn
+//        SET status = 3, is_sold = 0
+//        WHERE rqsn_id = " . $rqsn_id . "
+//        ";
+//
+//        $this->db->query($sq);
     }
 
     public function rqsn_qty_final($rqsn_id)
@@ -1510,12 +1510,12 @@ class Rqsn extends CI_Model
             }
         }
 
-//        $sq = "UPDATE rqsn
-//        SET status = 3, is_sold = 0
-//        WHERE rqsn_id = " . $rqsn_id . "
-//        ";
+        $sq = "UPDATE rqsn
+        SET status = 3, is_sold = 0
+        WHERE rqsn_id = " . $rqsn_id . "
+        ";
 
-      //  $this->db->query($sq);
+        $this->db->query($sq);
     }
 
     public function autocompletproductdata($product_name, $category_id = null, $subcat_id = null, $brand_id = null, $model_id = null)
