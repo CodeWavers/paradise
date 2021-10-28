@@ -193,7 +193,7 @@
                                         </td>
                                         <td style="width: 10%;" >
 
-                                            <input autocomplete="off" type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="store_qty[]" class="form-control store_qty" id="store_qty" placeholder="0.00" >
+                                            <input autocomplete="off" type="text" value="0" name="store_qty[]" class="form-control store_qty" id="store_qty" placeholder="0.00" >
 
                                         </td>
 

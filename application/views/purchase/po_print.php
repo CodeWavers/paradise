@@ -113,7 +113,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
 
                                         <div>
                                             <span style="font-weight: bold; font-size:18px">PO Date : </span>
-                                            <span style="font-size: 18px;"> <?= $all_purchase_list[0]['purchase_date'] ?></span>
+                                            <span style="font-size: 18px;"> <?= $all_purchase_list[0]['purchase_order_date'] ?></span>
                                         </div>
 
 

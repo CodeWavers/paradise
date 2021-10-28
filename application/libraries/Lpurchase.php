@@ -530,7 +530,7 @@ class Lpurchase {
         $bank_list        = $CI->Web_settings->bank_list();
         $po_list = $CI->Purchases->PO_approved_list_rcv();
         $data = array(
-            'title'         => display('add_purchase'),
+            'title'         => 'Barcode Print',
             'all_supplier'  => $all_supplier,
             'invoice_no'    => $CI->auth->generator(10),
             'discount_type' => $currency_details[0]['discount_type'],
@@ -557,7 +557,7 @@ class Lpurchase {
         $bank_list        = $CI->Web_settings->bank_list();
         $po_list = $CI->Purchases->PO_approved_list_rcv();
         $data = array(
-            'title'         => display('add_purchase'),
+            'title'         => 'ERP Entry',
             'all_supplier'  => $all_supplier,
             'invoice_no'    => $CI->auth->generator(10),
             'discount_type' => $currency_details[0]['discount_type'],

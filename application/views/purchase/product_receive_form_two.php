@@ -18,12 +18,12 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Purchase</h1>
-            <small>Product Receive</small>
+            <h1>Barcode Print</h1>
+            <small>Barcode Print</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
                 <li><a href="#"><?php echo display('purchase') ?></a></li>
-                <li class="active">Product Receive</li>
+                <li class="active">Barcode Print</li>
             </ol>
         </div>
     </section>
@@ -59,7 +59,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title" >
-                            <h4>Product Receive</h4>
+                            <h4>Barcode Print</h4>
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@
 
                         <br>
                         <div id="cart_dt">
-                            <h3 align="center">Select PO No. from dropdown to product receive details.</h3>
+                            <h3 align="center">Select PO No. from dropdown to barcode print details.</h3>
                         </div>
 
 

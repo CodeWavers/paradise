@@ -35,7 +35,6 @@ class Csupplier extends CI_Controller {
             'country'       => $this->input->post('country',TRUE),
             'details'       => $this->input->post('details',TRUE),
             'supplier_type'       => $this->input->post('supplier_type',TRUE),
-
             'bank_details'      => $this->input->post('bank_details',TRUE),
             'status'        => 1
         );
@@ -117,7 +116,6 @@ class Csupplier extends CI_Controller {
 
                 $data5['address'] = $value;
                 $data5['supplier_id']=$supplier_id;
-
 
                 //  echo '<pre>';print_r($data);
                 // $this->ProductModel->add_products($data);
@@ -244,8 +242,38 @@ class Csupplier extends CI_Controller {
         ];
         $result = $this->Suppliers->update_supplier($data, $supplier_id);
         if ($result == TRUE) {
-        $this->db->where('HeadName', $old_headnam);
-        $this->db->update('acc_coa', $supplier_coa);
+
+
+            $coa = $this->Suppliers->headcode();
+            if($coa->HeadCode!=NULL){
+                $headcode=$coa->HeadCode+1;
+            }
+            else{
+                $headcode="502020001";
+            }
+            $c_acc=$supplier_id.'-'.$this->input->post('supplier_name',TRUE);
+            $createby=$this->session->userdata('user_id');
+            $createdate=date('Y-m-d H:i:s');
+            $supplier_coa = [
+                'HeadCode'       => $headcode,
+                'HeadName'         => $c_acc,
+                'PHeadName'        => 'Account Payable',
+                'HeadLevel'        => '3',
+                'IsActive'         => '1',
+                'IsTransaction'    => '1',
+                'IsGL'             => '0',
+                'HeadType'         => 'L',
+                'IsBudget'         => '0',
+                'supplier_id'      => $supplier_id,
+                'IsDepreciation'   => '0',
+                'DepreciationRate' => '0',
+                'CreateBy'         => $createby,
+                'CreateDate'       => $createdate,
+            ];
+            //Previous balance adding -> Sending to supplier model to adjust the data.
+            $this->db->insert('acc_coa',$supplier_coa);
+//        $this->db->where('HeadName', $old_headnam);
+//        $this->db->update('acc_coa', $supplier_coa);
 
 
         $this->db->where('supplier_id', $supplier_id);

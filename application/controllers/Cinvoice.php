@@ -1481,7 +1481,7 @@ class Cinvoice extends CI_Controller
             'paid_amount'   => $paid_amount,
             'due_amount'    => $due_amount,
             'total_discount' => $discount,
-            'status'        => 3
+          //  'status'        => 4
         );
 
       //  echo '<pre>';print_r($data_1);exit();
@@ -1961,7 +1961,7 @@ class Cinvoice extends CI_Controller
             <tbody>';
 
         foreach ($details as $rq) {
-            $bl_qty = $rq['qty'] - $rq['dc_qty'];
+            $bl_qty = $rq['q'] - $rq['dc_qty'];
 
             $count++;
             $output .= '<tr><td>' . $count . '</td>
@@ -1972,7 +1972,7 @@ class Cinvoice extends CI_Controller
                  <td><input type="text" class="form-control" value="' . $rq['sku'] . '" readonly="readonly"></td>
 
 
-                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['qty'] . '" readonly></td>
+                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['q'] . '" readonly></td>
                 <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="' . $rq['dc_qty'] . '"  readonly></td>
                 <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="' . $bl_qty . '" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="' . $rq['remarks'] . '" placeholder="Remarks" readonly >

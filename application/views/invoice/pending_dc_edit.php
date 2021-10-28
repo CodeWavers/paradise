@@ -280,6 +280,8 @@
         if (re_quantity > p_qty){
             toastr.error('Yon cannot delivered greater than pending quantity')
            parseFloat($(".re_qty_" + sl).val(''));
+            $(".p_qty_" + sl).val(p_qty)
+            parseFloat($(".d_qty_" + sl).val(d_qty));
         }else{
             $(".dc_qty_" + sl).val(new_qty);
             $(".pending_qty_" + sl).val(pending_qty);

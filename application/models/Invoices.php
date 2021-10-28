@@ -2661,7 +2661,7 @@ class Invoices extends CI_Model
         $this->db->join('product_information b', 'c.product_id = b.product_id');
         $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
         $this->db->join('product_category y', 'y.category_id = b.category_id', 'left');
-        $this->db->join('product_subcat f', 'f.category_id = b.category_id', 'left');
+        $this->db->join('product_subcat f', 'f.sub_cat_id = b.sub_cat_id', 'left');
         $this->db->join('product_brand g', 'g.brand_id = b.brand_id', 'left');
         $this->db->join('product_model h', 'h.model_id = b.product_model', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
@@ -2804,7 +2804,7 @@ class Invoices extends CI_Model
 
     public function approved_check_details($dc_no)
     {
-        $this->db->select('*,f.quantity as qty');
+        $this->db->select('*,f.quantity as q');
         $this->db->from('invoice a');
         $this->db->where('a.dc_no', $dc_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');

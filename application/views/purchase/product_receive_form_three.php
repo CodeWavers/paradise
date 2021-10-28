@@ -59,7 +59,7 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title" >
-                            <h4>Product Receive</h4>
+                            <h4>ERP Entry</h4>
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@
 
                         <br>
                         <div id="cart_dt">
-                            <h3 align="center">Select PO No. from dropdown to product receive details.</h3>
+                            <h3 align="center">Select PO No. from dropdown to ERP Entry.</h3>
                         </div>
 
                         <div class="row " >
