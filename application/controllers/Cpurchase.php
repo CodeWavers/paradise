@@ -643,7 +643,7 @@ class Cpurchase extends CI_Controller
         //   $product_id=$_POST["product_id"];
         $cart_list = $this->Purchases->purchase_cart_data();
 
-        $total = array_sum(array_column($cart_list, 'total'));
+
         $output = '';
         $output .= '
             <div class="table-responsive">
@@ -672,18 +672,32 @@ class Cpurchase extends CI_Controller
 
 
         $count = 0;
+      $tot_array=array();
         foreach ($cart_list as $items) {
+             // $total = array_sum(array_column($cart_list, 'total'));
+
 
             $latest_price = $this->db->select('*')->from('supplier_product_price')->where('product_id', $items['product_id'])->where('status',2)->order_by('id', 'DESC')->get()->row()->update_price;
             $current_stock = $this->Reports->current_stock($items['product_id']);
 
             // echo '<pre>'; print_r($latest_price); exit();
-            $tot = "";
+
+          //  $total=0;
+
+
 
             if ($items['total']) {
                 $tot = $items['total'];
+            }else{
+                $tot=  $items['qty']*$latest_price;
             }
 
+            $tot_array[]=array(
+
+                'row_total' => $tot
+
+            );
+          //  echo '<pre>'; print_r($tot); exit();
             $add_cost = "00";
 
             if ($items['additional_cost']) {
@@ -711,7 +725,7 @@ class Cpurchase extends CI_Controller
             }
 
 
-            $row_total=$items['qty']*$latest_price;
+
 
 
             $product_id = $items['product_id'];
@@ -767,7 +781,7 @@ class Cpurchase extends CI_Controller
             // }
 
 //            <button  class="add_row btn btn-success" type="button" onclick=add_row(' . $count . ')  id="" tabindex="8"><i class="fa fa-plus"></i></button>
-
+            $total = array_sum(array_column($tot_array,'row_total'));
 
             $output .= '
 
@@ -792,12 +806,13 @@ class Cpurchase extends CI_Controller
                 <tr>
                     <td colspan="8" class="text-right"><b>Grand Total:</b></td>
                     <td>
-                    <input class="form-control" name="total" id="grand_total" value=' . $total . ' readonly/>
+                    <input class="form-control" name="total" id="grand_total" value=' . number_format($total,2) . ' readonly/>
                 </td>
                 </tr>
             </tfoot>
         </table>
                             ';
+    //    echo '<pre>';print_r(array_sum(array_column($tot_array,'row_total')));exit();
 
         if ($count == 0) {
             $output = '<h3 align="center">Purchase Order is empty</h3>';

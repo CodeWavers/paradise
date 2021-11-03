@@ -749,7 +749,7 @@ class reports extends CI_Model {
             $purchase_stock=(!empty($stockin->totalPurchaseQnty)?$stockin->totalPurchaseQnty:0);
             $purchase_stock_yes=(!empty($stockin_yes->totalPurchaseQnty)?$stockin_yes->totalPurchaseQnty:0);
             $sales_stock=(!empty($stockout->totalSalesQnty)?$stockout->totalSalesQnty:0);
-            $sales_stock_yes=(!empty($stockout_yes->totalSalesQnty)?$stockout_yes->totalSalesQnty:0);
+            $sales_stock_yes=ac;
 
 
             $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
@@ -886,7 +886,7 @@ class reports extends CI_Model {
                 ->where('date <=',$yesterday)
                 ->get()->row();
 
-             $this->db->select('sum(a.quantity) as totalSalesQnty');
+             $this->db->select('sum(a.dc_qty) as totalSalesQnty');
                  $this->db->from('invoice_details a');
                  $this->db->join('invoice b','a.invoice_id=b.invoice_id');
             if ($from_date && $to_date) {
@@ -897,7 +897,7 @@ class reports extends CI_Model {
                  $this->db->where('a.product_id',$record->product_id);
                  $this->db->where('b.status',4);
              $stockout =$this->db->get()->row();
-            $stockout_yes = $this->db->select('sum(a.quantity) as totalSalesQnty')
+            $stockout_yes = $this->db->select('sum(a.dc_qty) as totalSalesQnty')
                 ->from('invoice_details a')
                 ->join('invoice b','a.invoice_id=b.invoice_id')
                 ->where('a.product_id',$record->product_id)
@@ -981,7 +981,6 @@ class reports extends CI_Model {
 
     public function getInventoryList(){
 
-
         $this->db->select("a.*");
         $this->db->from('product_information a');
         $this->db->group_by('a.product_id');
@@ -1007,14 +1006,14 @@ class reports extends CI_Model {
                 ->where('date <=',$yesterday)
                 ->get()->row();
 
-            $stockout = $this->db->select('sum(a.quantity) as totalSalesQnty')
+            $stockout = $this->db->select('sum(a.dc_qty) as totalSalesQnty')
                 ->from('invoice_details a')
                 ->join('invoice b','a.invoice_id=b.invoice_id')
                 ->where('a.product_id',$record->product_id)
                 ->where('b.status', 4)
 //                ->or_where('b.status',4)
                 ->get()->row();
-            $stockout_yes = $this->db->select('sum(a.quantity) as totalSalesQnty')
+            $stockout_yes = $this->db->select('sum(a.dc_qty) as totalSalesQnty')
                 ->from('invoice_details a')
                 ->join('invoice b','a.invoice_id=b.invoice_id')
                 ->where('a.product_id',$record->product_id)
@@ -1093,64 +1092,66 @@ class reports extends CI_Model {
     public function current_stock($product_id){
         $yesterday=date('Y-m-d',strtotime( "yesterday" ));
 
-        $stockin = $this->db->select('sum(quantity) as totalPurchaseQnty')
-            ->from('erp_entry_details')
-            ->where('product_id',$product_id)
-            ->get()->row();
 
-        $stockin_yes = $this->db->select('sum(quantity) as totalPurchaseQnty')
-            ->from('erp_entry_details')
-            ->where('product_id',$product_id)
-            ->where('date <=',$yesterday)
-            ->get()->row();
 
-        $stockout = $this->db->select('sum(a.quantity) as totalSalesQnty')
-            ->from('invoice_details a')
-            ->join('invoice b','a.invoice_id=b.invoice_id')
-            ->where('a.product_id',$product_id)
-            ->where('b.status', 3)
+            $stockin = $this->db->select('sum(quantity) as totalPurchaseQnty')
+                ->from('erp_entry_details')
+                ->where('product_id',$product_id)
+                ->get()->row();
+
+            $stockin_yes = $this->db->select('sum(quantity) as totalPurchaseQnty')
+                ->from('erp_entry_details')
+                ->where('product_id',$product_id)
+                ->where('date <=',$yesterday)
+                ->get()->row();
+
+            $stockout = $this->db->select('sum(a.dc_qty) as totalSalesQnty')
+                ->from('invoice_details a')
+                ->join('invoice b','a.invoice_id=b.invoice_id')
+                ->where('a.product_id',$product_id)
+                ->where('b.status', 4)
 //                ->or_where('b.status',4)
-            ->get()->row();
-        $stockout_yes = $this->db->select('sum(a.quantity) as totalSalesQnty')
-            ->from('invoice_details a')
-            ->join('invoice b','a.invoice_id=b.invoice_id')
-            ->where('a.product_id',$product_id)
-            ->where('b.date <=',$yesterday)
-            ->where('b.status',3)
+                ->get()->row();
+            $stockout_yes = $this->db->select('sum(a.dc_qty) as totalSalesQnty')
+                ->from('invoice_details a')
+                ->join('invoice b','a.invoice_id=b.invoice_id')
+                ->where('a.product_id',$product_id)
+                ->where('b.date <=',$yesterday)
+                ->where('b.status',4)
 //                ->or_where('b.status',4)
-            ->get()->row();
+                ->get()->row();
 
-        $oldest_data = $this->db->select('a.*,a.date as stock_date')
-            ->from('erp_entry_details a')
-            ->where('a.product_id',$product_id)
-            ->order_by('a.entry_id','desc')
-            ->get()->row();
+            $oldest_data = $this->db->select('a.*,a.date as stock_date')
+                ->from('erp_entry_details a')
+                ->where('a.product_id',$product_id)
+                ->order_by('a.entry_id','desc')
+                ->get()->row();
 
-        $oldest_data_yes = $this->db->select('a.*,a.date as stock_date')
-            ->from('erp_entry_details a')
-            ->where('a.product_id',$product_id)
-            ->where('a.date <=',$yesterday)
-            ->order_by('a.entry_id','desc')
-            ->get()->row();
-
-
-        $wd_stock = $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty')->from('wastage_dec')->where('product_id',$product_id)->get()->row();
-        $wd_stock_yes = $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty')->from('wastage_dec')->where('product_id',$product_id)->where('date <=',$yesterday)->get()->row();
-
-        $wastage_stock=(!empty($wd_stock->totalWastageQnty)?$wd_stock->totalWastageQnty:0);
-        $wastage_stock_yes=(!empty($wd_stock_yes->totalWastageQnty)?$wd_stock_yes->totalWastageQnty:0);
-
-        $dead_stock=(!empty($wd_stock->totalDeadQnty)?$wd_stock->totalDeadQnty:0);
-        $dead_stock_yes=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
-
-        $purchase_stock=(!empty($stockin->totalPurchaseQnty)?$stockin->totalPurchaseQnty:0);
-        $purchase_stock_yes=(!empty($stockin_yes->totalPurchaseQnty)?$stockin_yes->totalPurchaseQnty:0);
-        $sales_stock=(!empty($stockout->totalSalesQnty)?$stockout->totalSalesQnty:0);
-        $sales_stock_yes=(!empty($stockout_yes->totalSalesQnty)?$stockout_yes->totalSalesQnty:0);
+            $oldest_data_yes = $this->db->select('a.*,a.date as stock_date')
+                ->from('erp_entry_details a')
+                ->where('a.product_id',$product_id)
+                ->where('a.date <=',$yesterday)
+                ->order_by('a.entry_id','desc')
+                ->get()->row();
 
 
-        $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
-        $closing_stock=$opening_stock+($purchase_stock-$sales_stock-$wastage_stock);
+            $wd_stock = $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty')->from('wastage_dec')->where('product_id',$product_id)->get()->row();
+            $wd_stock_yes = $this->db->select('sum(wastage_quantity) as totalWastageQnty,sum(dead_quantity) as totalDeadQnty')->from('wastage_dec')->where('product_id',$product_id)->where('date <=',$yesterday)->get()->row();
+
+            $wastage_stock=(!empty($wd_stock->totalWastageQnty)?$wd_stock->totalWastageQnty:0);
+            $wastage_stock_yes=(!empty($wd_stock_yes->totalWastageQnty)?$wd_stock_yes->totalWastageQnty:0);
+
+            $dead_stock=(!empty($wd_stock->totalDeadQnty)?$wd_stock->totalDeadQnty:0);
+            $dead_stock_yes=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
+
+            $purchase_stock=(!empty($stockin->totalPurchaseQnty)?$stockin->totalPurchaseQnty:0);
+            $purchase_stock_yes=(!empty($stockin_yes->totalPurchaseQnty)?$stockin_yes->totalPurchaseQnty:0);
+            $sales_stock=(!empty($stockout->totalSalesQnty)?$stockout->totalSalesQnty:0);
+            $sales_stock_yes=(!empty($stockout_yes->totalSalesQnty)?$stockout_yes->totalSalesQnty:0);
+
+
+            $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
+            $closing_stock=$opening_stock+($purchase_stock-$sales_stock-$wastage_stock);
 
         return $closing_stock;
     }

@@ -169,13 +169,8 @@
     }
 
     $( document ).ready(function() {
-        // var gr_tot = 0;
-        // $(".row_total").each(function() {
-        //     isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
-        // });
-        //
-        //
-        // $("#grand_total").val(gr_tot.toFixed(2,2));
+        $('#cart_details').load("<?php echo base_url(); ?>Cpurchase/load");
+
 
         var AI=$('#AI').val();
         var vsn=$('#vessel_name').val();
@@ -185,16 +180,10 @@
 
         var fix2=parseInt(fix1)+1;
 
-
-
-
         var generate_number='PO'+AI+'-'+fix1+'-'+fix2
 
         $('#pur_order_no').val(generate_number);
 
-
-
-        $('#cart_details').load("<?php echo base_url(); ?>Cpurchase/load");
 
         $(document).on('click', '.remove_inventory', function(){
             var sl = $(this).attr("id");
@@ -260,6 +249,16 @@
         });
 
     });
+
+    $(window).on('load', function() {
+
+
+
+
+
+        });
+
+
 
 
 

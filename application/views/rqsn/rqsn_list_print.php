@@ -119,12 +119,12 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
 
                                         <div>
                                             <span style="font-weight: bold; font-size:18px">Requisition For : </span>
-                                            <span style="font-size: 18px;"><?= $rqsn_details[0]['outlet_name'] ?></span>
+                                            <span style="font-size: 18px;"><?= $rqsn_details[0]['from_id'] ?></span>
                                         </div>
 
                                         <div>
                                             <span style="font-weight: bold; font-size:18px">Customer Name : </span>
-                                            <span style="font-size: 18px;"> <?= $rqsn_details[0]['rqsn_customer_name'] ?></span>
+                                            <span style="font-size: 18px;"> <?= $rqsn_details[0]['customer_name'] ?></span>
                                         </div>
 
                                     </div>

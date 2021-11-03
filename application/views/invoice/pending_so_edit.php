@@ -156,6 +156,7 @@
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Order Quantity</th>
                                         <th>Adjusted Quantity</th>
+                                        <th>Pending Quantity</th>
                                         <th>Rate</th>
                                         <th>Total</th>
                                     </tr>
@@ -183,11 +184,17 @@
                                             <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity" id="quantity"  readonly>
 
                                         </td>
+
                                         <td style="width: 5%;" >
 
                                             <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="adjust_qty[]" class="form-control quantity_<?php echo $sl?>" id="order_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)">
 
+                                        <td style="width: 5%;" >
+
+                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']-$rqsn_detail['quantity']?>" name="adjust_qty[]" class="form-control quantity_<?php echo $sl?>" id="order_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)">
+
                                         </td>
+
                                         <td style="width: 10%;" >
 
 

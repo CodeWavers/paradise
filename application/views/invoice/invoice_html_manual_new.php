@@ -179,12 +179,12 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
 
                                 <div class="col-sm-12" style="margin-top: -0.5cm">
                                     <h4><b>Date:</b> {final_date}</h4>
-                                    <h4><b>Voucher No:</b> {invoice_no}</h4>
+                                    <h4><b>SV No:</b> {invoice}</h4>
                                     <h4><b>Customer Name:</b> {customer_name}</h4>
                                     <h4><b>Vessel Name:</b> {vessel_name}</h4>
                                     <div style="display: flex; justify-content: space-between; margin-top: -0.1cm">
                                         <h4><b>Contact No.:</b> {contact_no}</h4>
-                                        <h4 style="padding-right: 0.8in;"><b>Requisition No.:</b> {rqsn_no}</h4>
+                                        <h4 style="padding-right: 0.8in;"><b>SO No.:</b> {invoice_no}</h4>
                                     </div>
                                 </div>
 

@@ -129,6 +129,8 @@
 </div>
 
 <script type="text/javascript">
+
+
     function getinvoice_details() {
         var invoice_id = $("#invoice_no").val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
@@ -143,8 +145,31 @@
             success: function(data) {
                 obj = jQuery.parseJSON(data);
                 $('#invo_details_div').html(obj.html);
+
+                var or_tot=0;
+                var ad_tot=0;
+
+//Total Price
+                $(".order_quantity").each(function() {
+                    isNaN(this.value) || 0 == this.value.length || (or_tot += parseFloat(this.value))
+                })
+
+                $(".adjusted_quantity").each(function() {
+                    isNaN(this.value) || 0 == this.value.length || (ad_tot += parseFloat(this.value))
+                })
+
+                $('#ad_tot').val(or_tot);
+                $('#or_tot').val(ad_tot);
+
+
+
+                // $(".row_total").each(function() {
+                //     isNaN(this.value) || 0 == this.value.length || (ad_tot += parseFloat(this.value))
+                // });
             }
         })
+
+
     }
 
     function add_pur_calc_store(sl) {
