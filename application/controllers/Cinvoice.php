@@ -2088,8 +2088,8 @@ class Cinvoice extends CI_Controller
 
         $output .= '
 
-<input type="text" id="or_tot" name="or_tot" class="form-control" value="0" readonly="readonly">
-<input type="text" id="ad_tot" name="ad_tot" class="form-control" value="0" readonly="readonly">
+<input type="hidden" id="or_tot" name="or_tot" class="form-control" value="0" readonly="readonly">
+<input type="hidden" id="ad_tot" name="ad_tot" class="form-control" value="0" readonly="readonly">
 </tbody>
     </table>
     </div>';

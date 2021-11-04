@@ -141,7 +141,7 @@
         var sku = $("#item_sku_" + sl).val();
         var rqsn_id = $("#rqsn_detail_id_" + sl).val();
         var csrf_test_name = $('[name="csrf_test_name"]').val();
-        console.log(product_name);;
+      //  console.log(product_name);;
         $.ajax({
             url:"<?php echo base_url(); ?>Cpurchase/add_row",
             method:"POST",

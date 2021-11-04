@@ -163,7 +163,11 @@
                                 </thead>
                                 <tbody>
 
+
+
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
+
+<!--                                    --><?php //if ($rqsn_detail['order_qty']-$rqsn_detail['quantity'] > 0){?>
                                     <tr class="text-center">
                                         <td><?php echo  $sl=$rqsn_detail['sl']?>
                                     </td>
@@ -181,7 +185,7 @@
                                         <td><?php echo $rqsn_detail['model_name']?></td>
                                         <td style="width: 5%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity" id="quantity"  readonly>
+                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity_<?php echo $sl?>" id="quantity"  readonly>
 
                                         </td>
 
@@ -191,7 +195,7 @@
 
                                         <td style="width: 5%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']-$rqsn_detail['quantity']?>" name="adjust_qty[]" class="form-control quantity_<?php echo $sl?>" id="order_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)">
+                                            <input type="text" value="<?php echo $rqsn_detail['order_qty']-$rqsn_detail['quantity']?>" name="pending_qty[]" class="form-control pending_quantity" id="pending_qty_<?php echo $sl?>" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)" readonly>
 
                                         </td>
 
@@ -208,13 +212,14 @@
                                     </tr>
                                     <input type ="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash();?>">
                                 <?php } ?>
+<!--                                --><?php //} ?>
                                 </tbody>
 
 <!--                                <tfoot>-->
 <!--                                <tr>-->
 <!--                                    <td colspan="9" class="text-right"><b>Grand Total:</b></td>-->
 <!--                                    <td style="width: 10%">-->
-<!--                                        <input  class="form-control" name="total" id="grand_total" value='--><?php //echo number_format($grand_total,2)?><!--' readonly/>-->
+                                        <input type="hidden" class="form-control" name="total_pending_qty" id="pt_tot" value='0' readonly/>
 <!--                                    </td>-->
 <!--                                </tr>-->
 <!--                                </tfoot>-->
@@ -226,6 +231,7 @@
                                  <input type="hidden" value="<?php echo $rqsn_detail['invoice_id']?>" name="invoice_id" class="form-control" id="" >
                                 <a href="<?= base_url().'Cinvoice/pending_sales_order'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                                  <input type="submit" value="Submit" name="approve_btn" class="btn btn-large btn-success btn-sm" id="" ></a>
+                                 <input type="submit" value="Void" name="void" class="btn btn-large btn-info btn-sm" id="" ></a>
                             </div>
                         </div>
 
@@ -250,20 +256,31 @@
 
     function row_total(sl){
 
-        var quantity = $(".quantity_" + sl).val();
+        var order_quantity = parseFloat($(".order_quantity_" + sl).val());
+        var quantity = parseFloat($(".quantity_" + sl).val());
+
         var rate = $(".rate_" + sl).val();
 
        // alert(rate)
 
 
-        var row_total=quantity*rate
+        var row_total=quantity*rate;
+        var pen_qty=order_quantity-quantity;
 
+     //   console.log(pen_qty)
+         $("#pending_qty_" + sl).val(pen_qty);
         $(".total_price_" + sl).val(row_total.toFixed(2));
+
 
        //  alert(quantity)
 
+        var pt_tot=0;
 
-
+//Total Price
+        $(".pending_quantity").each(function() {
+            isNaN(this.value) || 0 == this.value.length || (pt_tot += parseFloat(this.value))
+        })
+        $("#pt_tot" ).val(pt_tot);
     }
 
 
