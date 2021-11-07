@@ -178,7 +178,7 @@
                                     <div class="form-group row ">
                                         <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Vessel Name : </label>
                                         <div class="col-sm-8" >
-                                            <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
+                                            <input type="text" class="form-control" name="customer_name" id="customer_name" value="<?= $rqsn_details[0]['from_id'] ?>" readonly >
                                         </div>
                                     </div>
                                 </div>

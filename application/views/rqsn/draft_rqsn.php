@@ -70,7 +70,7 @@
                             <tr>
                                 <td><?php echo $sl++; ?></td>
                                 <td><?php echo $rqsn_details['rqsn_no']?> </td>
-                                <td><?php echo $rqsn_details['vessel_name']?> </td>
+                                <td><?php echo $rqsn_details['from_id']?> </td>
                                 <td><?php echo $rqsn_details['customer_name']?> </td>
                                 <td><?php echo $rqsn_details['date']?> </td>
                                 <td>

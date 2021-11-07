@@ -2753,10 +2753,10 @@ class Invoices extends CI_Model
 
     public function sales_order_details()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+        $records = $this->db->select('a.*, b.*, d.*,e.*')
             ->from('invoice a')
             ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
-            ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
+           // ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
             ->join('customer_information e', 'e.customer_id=a.customer_id','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 2)
@@ -2776,7 +2776,7 @@ class Invoices extends CI_Model
           //  ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
             ->join('customer_information e', 'e.customer_id=a.customer_id','left')
             ->join('product_information d', 'd.product_id=b.product_id')
-            ->where('a.status', 2)
+           // ->where('a.status', 2)
             ->where('a.is_so_pending', 1)
             ->group_by('a.invoice_no')
             ->order_by('a.id', 'desc')
@@ -2788,10 +2788,10 @@ class Invoices extends CI_Model
 
     public function pending_dc()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+        $records = $this->db->select('a.*, b.*, d.*,e.*')
             ->from('invoice a')
             ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
-            ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
+           // ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')
             ->join('customer_information e', 'e.customer_id=a.customer_id','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 4)

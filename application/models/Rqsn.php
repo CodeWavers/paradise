@@ -1163,10 +1163,10 @@ class Rqsn extends CI_Model
 
     public function store_qty_data()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*,(SUM(b.store_qty))as sq')
+        $records = $this->db->select('a.*, b.*, d.*,e.*,(SUM(b.store_qty))as sq')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+          //  ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information e', 'e.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 3)
@@ -1180,10 +1180,10 @@ class Rqsn extends CI_Model
 
     public function draft_rqsn_details_data()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+        $records = $this->db->select('a.*, b.*, d.*,e.*')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+           // ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information e', 'e.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 1)
@@ -1197,10 +1197,10 @@ class Rqsn extends CI_Model
 
     public function rqsn_details_data_price()
     {
-        $records = $this->db->select('a.*, b.*, c.*, d.*,e.*')
+        $records = $this->db->select('a.*, b.*, d.*,e.*')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+      //      ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information e', 'e.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->where('a.status', 2)
@@ -1214,10 +1214,10 @@ class Rqsn extends CI_Model
 
     public function rqsn_details_data_by_rqsn_id($rqsn_id)
     {
-        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+        $records = $this->db->select('a.*, b.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+           // ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->join('supplier_product z', 'z.product_id = d.product_id', 'left')
@@ -1239,10 +1239,10 @@ class Rqsn extends CI_Model
         $CI = &get_instance();
         $CI->load->model('Reports');
 
-        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+        $records = $this->db->select('a.*, b.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+          //  ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->join('supplier_product z', 'z.product_id = d.product_id', 'left')
@@ -1280,7 +1280,7 @@ class Rqsn extends CI_Model
                 'rqsn_no'  =>  $record->rqsn_no,
                 'customer_name'  =>  $record->customer_name,
                 'customer_id'  =>  $record->customer_id,
-                'vessel_name'  =>  $record->vessel_name,
+                'from_id'  =>  $record->from_id,
                 'product_name'  =>  $record->product_name,
                 'product_id'  =>  $record->product_id,
                 'rqsn_detail_id'  =>  $record->rqsn_detail_id,
@@ -1306,10 +1306,10 @@ class Rqsn extends CI_Model
 
     public function store_qty_form($rqsn_id)
     {
-        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+        $records = $this->db->select('a.*, b.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+          //  ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->join('supplier_product z', 'z.product_id = d.product_id', 'left')
@@ -1329,10 +1329,10 @@ class Rqsn extends CI_Model
 
     public function rqsn_details_data_by_rqsn_id_price($rqsn_id)
     {
-        $records = $this->db->select('a.*, b.*, c.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
+        $records = $this->db->select('a.*, b.*,e.*,x.*, d.*,z.supplier_price,e.category_name,f.subcat_name,g.brand_name,h.model_name')
             ->from('rqsn a')
             ->join('rqsn_details b', 'a.rqsn_id=b.rqsn_id')
-            ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
+        //    ->join('customer_vessel c', 'c.customer_id=a.rqsn_customer_name','left')
             ->join('customer_information x', 'x.customer_id=a.rqsn_customer_name','left')
             ->join('product_information d', 'd.product_id=b.product_id')
             ->join('supplier_product z', 'z.product_id = d.product_id', 'left')

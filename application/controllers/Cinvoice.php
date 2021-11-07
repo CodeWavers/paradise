@@ -1953,6 +1953,7 @@ class Cinvoice extends CI_Controller
                 <th width="8%">Parts</th>
                 <th width="8%">SKU</th>
                 <th width="5%">Requisition Quantity</th>
+                <th width="5%">Adjusted Quantity</th>
                 <th width="5%">Delivered  Quantity</th>
                 <th width="5%">Balanced Quantity</th>
                 <th width="5%">Remarks</th>
@@ -1976,6 +1977,7 @@ class Cinvoice extends CI_Controller
 
 
                 <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq_qty->qty . '" readonly></td>
+                <td><input  id="ad_qty_' . $count . '" type="text" class="form-control" name="ad_qty[]" value="' . $rq['quantity'] . '" readonly></td>
                 <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="' . $rq['dc_qty'] . '"  readonly></td>
                 <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="' . $bl_qty . '" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="' . $rq['remarks'] . '" placeholder="Remarks" readonly >

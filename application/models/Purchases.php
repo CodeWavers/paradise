@@ -1699,7 +1699,7 @@ class Purchases extends CI_Model {
         $pattern = "/[-]/";
 
         $components = preg_split($pattern, $order_no);
-        $po_no=preg_replace('/PO/i','',$components[1]);
+        $po_no=preg_replace('/PO/i','',$components[0]);
 
         if ($po_no != '') {
             $po_no = $po_no + 1;
