@@ -479,7 +479,7 @@
                                 <div class="form-group row">
                                     <label for="serial_no" class="col-sm-4 col-form-label"><?php echo "Unit Cost Price" ?> </label>
                                     <div class="col-sm-8">
-                                        <input type="text" tabindex="" class="form-control " id="cost_price" name="cost_price" placeholder="111,abc,XYz"   />
+                                        <input type="number" tabindex="" class="form-control " id="cost_price" name="cost_price" placeholder="Unit Cost Price"   />
                                     </div>
                                 </div>
                             </div>

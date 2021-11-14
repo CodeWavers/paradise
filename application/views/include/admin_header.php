@@ -252,7 +252,19 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("add_new_sales")) {
+                            if ($this->uri->segment('2') == ("sales_order_report")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>">
+                                <a href="<?php echo base_url('Cinvoice/sales_order_report ') ?>">Approved Sales Order</a>
+                            </li>
+                        <?php } ?>
+
+                        <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
+                            <li class="treeview <?php
+                            if ($this->uri->segment('2') == ("delivery_chalan")) {
                                 echo "active";
                             } else {
                                 echo " ";
@@ -287,17 +299,17 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 <a href="<?php echo base_url('Cinvoice/check_report ') ?>">Order Check Report</a>
                             </li>
                         <?php } ?>
-                        <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
-                            <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("order ")) {
-                                echo "active";
-                            } else {
-                                echo " ";
-                            }
-                            ?>">
-                                <a href="<?php echo base_url('Cinvoice/pending_sales_order ') ?>">Pending Sales Order</a>
-                            </li>
-                        <?php } ?>
+<!--                        --><?php //if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                            if ($this->uri->segment('2') == ("order ")) {
+//                                echo "active";
+//                            } else {
+//                                echo " ";
+//                            }
+//                            ?><!--">-->
+<!--                                <a href="--><?php //echo base_url('Cinvoice/pending_sales_order ') ?><!--">Pending Sales Order</a>-->
+<!--                            </li>-->
+<!--                        --><?php //} ?>
 
                         <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
                             <li class="treeview <?php
@@ -307,22 +319,12 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             }
                             ?>">
-                                <a href="<?php echo base_url('Cinvoice/pending_dc ') ?>">Pending Delivery Chalan</a>
+                                <a href="<?php echo base_url('Cinvoice/pending_dc ') ?>">Pending Sales Order</a>
                             </li>
                         <?php } ?>
 
 
-                        <?php if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
-                            <li class="treeview <?php
-                            if ($this->uri->segment('2') == ("sales_order_report")) {
-                                echo "active";
-                            } else {
-                                echo " ";
-                            }
-                            ?>">
-                                <a href="<?php echo base_url('Cinvoice/sales_order_report ') ?>">Approved Sales Order</a>
-                            </li>
-                        <?php } ?>
+
 
 <!--                        --><?php //if ($this->permission1->method('manage_invoice', 'read')->access()) { ?>
 <!--                            <li class="treeview --><?php
@@ -639,56 +641,56 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                                 ?>"><a href="<?php echo base_url('Cproduct/approve_price') ?>">Approve Price</a></li>
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('manage_product', 'read')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("approve_unit_cost")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href="<?php echo base_url('Cproduct/approve_unit_cost') ?>">Approve Unit Price</a>
-                            </li>
-                        <?php } ?>
+<!--                        --><?php //if ($this->permission1->method('manage_product', 'read')->access()) { ?>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("approve_unit_cost")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--"><a href="--><?php //echo base_url('Cproduct/approve_unit_cost') ?><!--">Approve Unit Price</a>-->
+<!--                            </li>-->
+<!--                        --><?php //} ?>
                     </ul>
                 </li>
             <?php } ?>
             <!-- Product menu end -->
             <!-- Warehouse menu start -->
-            <?php if ($this->permission1->method('warehouse', 'create')->access() || $this->permission1->method('warehouse', 'create')->access() || $this->permission1->method('warehouse', 'read')->access()) { ?>
-                <li class="treeview <?php
-                                    if ($this->uri->segment('2') == ("index") || $this->uri->segment('2') == ("Ccwarehouse") || $this->uri->segment('2') == ("Ccwarehouse") || $this->uri->segment('2') == ("Ccwarehouse")) {
-                                        echo "active";
-                                    } else {
-                                        echo " ";
-                                    }
-                                    ?>">
-                    <a href="#">
-                        <i class="fa fa-home"></i><span>Warehouse</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <?php if ($this->permission1->method('warehouse', 'create')->access()) { ?>
-                            <li class="treeview <?php if ($this->uri->segment('1') == ("Ccwarehouse") && $this->uri->segment('2') == ("index")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>"><a href="<?php echo base_url('Ccwarehouse') ?>">Central Warehouse</a></li>
-                        <?php } ?>
-
-                        <?php if ($this->permission1->method('outlet', 'read')->access()) { ?>
-                            <li class="treeview <?php if ($this->uri->segment('2') == ("branch")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>"><a href="<?php echo base_url('Ccwarehouse/branch') ?>">Outlet Warehouse </a></li>
-                        <?php } ?>
-
-
-                    </ul>
-                </li>
-            <?php } ?>
+<!--            --><?php //if ($this->permission1->method('warehouse', 'create')->access() || $this->permission1->method('warehouse', 'create')->access() || $this->permission1->method('warehouse', 'read')->access()) { ?>
+<!--                <li class="treeview --><?php
+//                                    if ($this->uri->segment('2') == ("index") || $this->uri->segment('2') == ("Ccwarehouse") || $this->uri->segment('2') == ("Ccwarehouse") || $this->uri->segment('2') == ("Ccwarehouse")) {
+//                                        echo "active";
+//                                    } else {
+//                                        echo " ";
+//                                    }
+//                                    ?><!--">-->
+<!--                    <a href="#">-->
+<!--                        <i class="fa fa-home"></i><span>Warehouse</span>-->
+<!--                        <span class="pull-right-container">-->
+<!--                            <i class="fa fa-angle-left pull-right"></i>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <ul class="treeview-menu">-->
+<!--                        --><?php //if ($this->permission1->method('warehouse', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php //if ($this->uri->segment('1') == ("Ccwarehouse") && $this->uri->segment('2') == ("index")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                } ?><!--"><a href="--><?php //echo base_url('Ccwarehouse') ?><!--">Central Warehouse</a></li>-->
+<!--                        --><?php //} ?>
+<!---->
+<!--                        --><?php //if ($this->permission1->method('outlet', 'read')->access()) { ?>
+<!--                            <li class="treeview --><?php //if ($this->uri->segment('2') == ("branch")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                } ?><!--"><a href="--><?php //echo base_url('Ccwarehouse/branch') ?><!--">Outlet Warehouse </a></li>-->
+<!--                        --><?php //} ?>
+<!---->
+<!---->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--            --><?php //} ?>
             <!-- Warehouse menu start -->
 
             <!-- Reacquisition menu start -->
@@ -730,6 +732,13 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                                 } ?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn_edit_price') ?>">Requisition List With Estimation</a>
                             </li>
                         <?php } ?>
+                        <?php if ($this->permission1->method('aprove_rqsn', 'create')->access()) { ?>
+                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn') ?>">Approve Requisition </a></li>
+                        <?php } ?>
 
                         <?php if ($this->permission1->method('aprove_rqsn', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
@@ -739,13 +748,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             } ?>"><a href="<?php echo base_url('Crqsn/draft_rqsn') ?>">Draft Requisition </a></li>
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('aprove_rqsn', 'create')->access()) { ?>
-                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
-                                echo "active";
-                            } else {
-                                echo " ";
-                            } ?>"><a href="<?php echo base_url('Crqsn/aprove_rqsn') ?>">Approve Requisition </a></li>
-                        <?php } ?>
+
 
                         <?php if ($this->permission1->method('aprove_rqsn', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
@@ -1078,23 +1081,23 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                         <?php } ?>
 
                         <?php if ($this->permission1->method('manage_purchase', 'read')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("manage_purchase")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>">
-                                <a href="<?php echo base_url('Cpurchase/manage_purchase') ?>"><?php echo display('manage_purchase') ?></a>
-                            </li>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("purchase_cheque_report")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href="<?php echo base_url('Creport/purchase_cheque_report') ?>">Manage Cheque</a>
-                            </li>
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("manage_purchase")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--">-->
+<!--                                <a href="--><?php //echo base_url('Cpurchase/manage_purchase') ?><!--">--><?php //echo display('manage_purchase') ?><!--</a>-->
+<!--                            </li>-->
+<!--                            <li class="treeview --><?php
+//                                                if ($this->uri->segment('2') == ("purchase_cheque_report")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                }
+//                                                ?><!--"><a href="--><?php //echo base_url('Creport/purchase_cheque_report') ?><!--">Manage Cheque</a>-->
+<!--                            </li>-->
 
                             <li class="treeview <?php
                                                 if ($this->uri->segment('2') == ("approval_report")) {
@@ -1266,34 +1269,34 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                 </li>
             <?php } ?>
 
-            <?php if ($this->permission1->method('outlet_stock', 'read')->access() || $this->permission1->method('outlet_stock', 'read')->access() || $this->permission1->method('outlet_stock', 'read')->access()) { ?>
-                <li class="treeview <?php
-                                    if ($this->uri->segment('2') == ("index") || $this->uri->segment('2') == ("Crqsn") || $this->uri->segment('2') == ("Crqsn") || $this->uri->segment('2') == ("Crqsn")) {
-                                        echo "active";
-                                    } else {
-                                        echo " ";
-                                    }
-                                    ?>">
-                    <a href="#">
-                        <i class="fa fa-refresh"></i><span>Outlet Stock</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <?php if ($this->permission1->method('outlet_stock', 'create')->access()) { ?>
-                            <li class="treeview <?php if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>"><a href="<?php echo base_url('Crqsn/stock') ?>">Outlet Stock Report</a></li>
-                        <?php } ?>
-
-
-                    </ul>
-                </li>
-            <?php } ?>
+<!--            --><?php //if ($this->permission1->method('outlet_stock', 'read')->access() || $this->permission1->method('outlet_stock', 'read')->access() || $this->permission1->method('outlet_stock', 'read')->access()) { ?>
+<!--                <li class="treeview --><?php
+//                                    if ($this->uri->segment('2') == ("index") || $this->uri->segment('2') == ("Crqsn") || $this->uri->segment('2') == ("Crqsn") || $this->uri->segment('2') == ("Crqsn")) {
+//                                        echo "active";
+//                                    } else {
+//                                        echo " ";
+//                                    }
+//                                    ?><!--">-->
+<!--                    <a href="#">-->
+<!--                        <i class="fa fa-refresh"></i><span>Outlet Stock</span>-->
+<!--                        <span class="pull-right-container">-->
+<!--                            <i class="fa fa-angle-left pull-right"></i>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <ul class="treeview-menu">-->
+<!---->
+<!--                        --><?php //if ($this->permission1->method('outlet_stock', 'create')->access()) { ?>
+<!--                            <li class="treeview --><?php //if ($this->uri->segment('1') == ("Crqsn") && $this->uri->segment('2') == ("index")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                } ?><!--"><a href="--><?php //echo base_url('Crqsn/stock') ?><!--">Outlet Stock Report</a></li>-->
+<!--                        --><?php //} ?>
+<!---->
+<!---->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--            --><?php //} ?>
             <!-- Stock menu end -->
             <?php if ($this->permission1->method('add_return', 'create')->access() || $this->permission1->method('return_list', 'read')->access() || $this->permission1->method('supplier_return_list', 'read')->access() || $this->permission1->method('outlet_return_list', 'read')->access() || $this->permission1->method('wastage_return_list', 'read')->access() || $this->permission1->method('wastage_outlet_return_list', 'read')->access()) { ?>
                 <li class="treeview <?php
@@ -1611,15 +1614,15 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('purchase_report_shelf_wise', 'read')->access()) { ?>
-                            <li class="treeview <?php if ($this->uri->segment('2') == ("purchase_report_shelf_wise")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>"><a href="<?php echo base_url('Admin_dashboard/purchase_report_shelf_wise') ?>">Warehouse
-                                    Wise Report</a></li>
-
-                        <?php } ?>
+<!--                        --><?php //if ($this->permission1->method('purchase_report_shelf_wise', 'read')->access()) { ?>
+<!--                            <li class="treeview --><?php //if ($this->uri->segment('2') == ("purchase_report_shelf_wise")) {
+//                                                    echo "active";
+//                                                } else {
+//                                                    echo " ";
+//                                                } ?><!--"><a href="--><?php //echo base_url('Admin_dashboard/purchase_report_shelf_wise') ?><!--">Warehouse-->
+<!--                                    Wise Report</a></li>-->
+<!---->
+<!--                        --><?php //} ?>
 
                         <?php if ($this->permission1->method('reorder_report', 'read')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("reorder_report")) {

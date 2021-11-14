@@ -18,6 +18,8 @@ Manage Category Start -->
         </div>
     </section>
 
+
+
     <section class="content" >
 
         <!-- Alert Message -->
@@ -83,8 +85,20 @@ Manage Category Start -->
                             <div class="col-sm-2 text-right">
                                 <button type="submit" class="btn btn-success "><?php echo display('search') ?></button>
                                 <a  class="btn btn-warning" href="#" onclick="printDiv('myUL')"><?php echo display('print') ?></a>
+
                             </div>
+
+<!--                             <div class="col-sm-5">-->
+<!--                                 <div class="form-group row" style="width: 100%;">-->
+<!--                                     <label for="category_id" class="col-sm-4 col-form-label">Search</label>-->
+<!--                                     <div class="col-sm-8">-->
+<!--                                         <input class="form-control " type="text" id="myInput" onkeyup="myFunction()" placeholder="Search....">-->
+<!--                                     </div>-->
+<!--                                 </div>-->
+<!--                             </div>-->
+
                         </div>
+
                         <?php echo form_close() ?>
                     </div>
                 </div>
@@ -92,16 +106,18 @@ Manage Category Start -->
         </div>
 
         <div style="margin: 0; padding : 0;" id="main_pan">
+
+
 <!--        --><?php //foreach ($all_product as $product) { ?>
             <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
 
 
 
-                        <table class="table table-striped table-bordered " id="myTable">
+                        <table class="table table-striped table-bordered datatable" id="myTable">
                             <thead>
-                            <tr>
+                            <tr  class="header">
 
-                                <th>Product Image</th>
+
                                 <th>Product Name</th>
                                 <th>Product Category</th>
                                 <th>Product Sub-Category</th>
@@ -110,7 +126,8 @@ Manage Category Start -->
                                 <th>Unit Type</th>
                                 <th>Brand</th>
                                 <th>Model</th>
-                                <th>Associated TAg</th>
+                                <th>Associated Tag</th>
+                                <th>Product Image</th>
 
                             </tr>
                             </thead>
@@ -118,7 +135,7 @@ Manage Category Start -->
                             <?php foreach ($all_product as $product) { ?>
 
                                 <tr>
-                                    <td class="image_box">     <?php echo "<img class='zoom' src='".html_escape($product->image)."' id='img1'  >";?></td>
+
 
                                     <td><?php echo html_escape($product->product_name); ?></td>
                                     <td><?php echo html_escape($product->category_name); ?></td>
@@ -129,6 +146,7 @@ Manage Category Start -->
                                     <td><?php echo html_escape($product->brand_name); ?></td>
                                     <td><?php echo html_escape($product->model_name); ?></td>
                                     <td><?php echo html_escape($product->tag);?></td>
+                                    <td class="image_box">     <?php echo "<img class='zoom' src='".html_escape($product->image)."' id='img1'  >";?></td>
 
 
 
@@ -140,6 +158,7 @@ Manage Category Start -->
 
                         </table>
 
+
                         </div>
 
                     </div>
@@ -155,9 +174,9 @@ Manage Category Start -->
 
 
 
-    <div id="page_link">
-        <?php echo $links;?>
-    </div>
+<!--    <div id="page_link">-->
+<!--        --><?php //echo $links;?>
+<!--    </div>-->
 
 
 
@@ -250,5 +269,27 @@ function select_type() {
             });
         });
     });
+
+function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
 
 </script>

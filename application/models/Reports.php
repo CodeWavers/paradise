@@ -864,7 +864,9 @@ class reports extends CI_Model {
         $sl =1;
          // echo '<pre>';print_r($records);exit();
 
-        $yesterday=date('Y-m-d',strtotime( "yesterday" ));
+
+
+        $yesterday=date('Y-m-d', strtotime($from_date .' -1 day'));
         $today=date('Y-m-d');
 
 

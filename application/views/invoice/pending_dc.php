@@ -4,11 +4,11 @@
             <i class="pe-7s-note2"></i>
         </div>
         <div class="header-title">
-            <h1>Delivery Chalan</h1>
+            <h1>Pending Sales Order</h1>
             <small>Pending</small>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
-                <li><a href="#">Delivery Chalan</a></li>
+                <li><a href="#">Pending Sales Order</a></li>
                 <li class="active">Pending</li>
             </ol>
         </div>
@@ -59,6 +59,7 @@
                                 <th>DC No.</th>
                                 <th>Vessel Name</th>
                                 <th>Customer Name</th>
+                                <th>Due Amount</th>
                                 <th><?php echo display('date') ?></th>
                                 <th><?php echo display('action') ?></th>
                             </tr>
@@ -72,10 +73,14 @@
                                 <td><?php echo $details['dc_no']?> </td>
                                 <td><?php echo $details['vessel_name']?> </td>
                                 <td><?php echo $details['customer_name']?> </td>
+                                <td><?php echo $details['due']?> </td>
                                 <td><?php echo $details['date']?> </td>
                                 <td class="text-center">
                                     <a href="<?= base_url().'Cinvoice/pending_dc_edit/'.$details['dc_no']?>">
                                         <button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
+                                    </a>
+                                    <a href="<?= base_url().'Cinvoice/pending_dc_edit/'.$details['invoice_id']?>">
+                                        <button class="btn btn-sm btn-warning"><i class="fa fa-money"></i></button>
                                     </a>
                                 </td>
                             </tr>

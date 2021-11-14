@@ -210,7 +210,7 @@
                             <div class="form-group row">
                                 <label for="previous_balance" class="col-sm-4 col-form-label">Previous Credit Balance</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" name="previous_balance" id="previous_balance" type="text" min="0" placeholder="Supplier Debit Balance" tabindex="5">
+                                    <input class="form-control" name="previous_balance" id="previous_balance" type="text" min="0" placeholder="Previous Credit Balance" tabindex="5">
                                 </div>
                             </div>
                         </div>

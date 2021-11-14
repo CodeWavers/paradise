@@ -452,6 +452,8 @@ class Lsupplier {
             'links'          => $links,
         );
 
+     // echo '<pre>';print_r($ledger);exit();
+
         $singlecustomerdetails = $CI->parser->parse('supplier/supplier_ledger', $data, true);
         return $singlecustomerdetails;
     }

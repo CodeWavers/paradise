@@ -279,6 +279,16 @@
             $("#total_qty").val(t);
 
 
+        var current_stock=$('#current_stock_'+sl).val();
+
+
+        if (deliver_qty > current_stock){
+
+            toastr.error("You cannot delivered greater than current stock")
+            $("#dc_qty_" + sl).val('');
+        }
+
+
     }
 
     function full_paid() {

@@ -609,6 +609,21 @@ class Suppliers extends CI_Model {
         return false;
     }
 
+    public function suppliers_ledger($supplier_id, $start, $end) {
+        $this->db->select('a.*,b.HeadName');
+        $this->db->from('acc_transaction a');
+        $this->db->join('acc_coa b','a.COAID=b.HeadCode');
+        $this->db->where('b.supplier_id', $supplier_id);
+        $this->db->where(array('VDate >=' => $start, 'VDate <=' => $end));
+        $this->db->where('a.IsAppove',1);
+        $this->db->order_by('a.VDate','desc');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
     // count ledger info
     public function count_supplier_product_info() {
         $this->db->select('a.*,b.HeadName');
@@ -625,20 +640,7 @@ class Suppliers extends CI_Model {
     }
 
     //To get certain supplier's chalan info by which this company got products day by day
-    public function suppliers_ledger($supplier_id, $start, $end) {
-        $this->db->select('a.*,b.HeadName');
-        $this->db->from('acc_transaction a');
-        $this->db->join('acc_coa b','a.COAID=b.HeadCode');
-        $this->db->where('b.supplier_id', $supplier_id);
-        $this->db->where(array('VDate >=' => $start, 'VDate <=' => $end));
-        $this->db->where('a.IsAppove',1);
-        $this->db->order_by('a.VDate','desc');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
-        }
-        return false;
-    }
+
 
 
 
@@ -875,7 +877,7 @@ class Suppliers extends CI_Model {
 
     public function headcode(){
 
-        $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='3' And HeadCode LIKE '50200%'");
+        $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='3' And HeadCode LIKE '5020200%'");
         return $query->row();
 
     }

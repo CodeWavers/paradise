@@ -1026,11 +1026,11 @@ class Cpurchase extends CI_Controller
                                 </td>
 
                                 <td class="text-right">
-                                    <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0%" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6"/>
                                 </td>
 
                                 <td class="text-right">
-                                    <input type="text" style="width: 100px" name="additional_cost[]" id="additional_cost_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1" value="' . ($items['additional_cost'] ? $items['additional_cost'] : "") . '"  placeholder="00" tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="additional_cost[]" id="additional_cost_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1" value="' . ($items['additional_cost'] ? $items['additional_cost'] : "") . '"  placeholder="0.00" tabindex="6"/>
                                 </td>
 
                                 <td class="text-left">
@@ -1540,6 +1540,7 @@ class Cpurchase extends CI_Controller
 
                         <th class="text-center" width="8%">Rate</th>
                         <th class="text-center" width="8%">Discount</th>
+                        <th class="text-center" width="8%">Additional Cost</th>
                         <th class="text-center" width="10%">Total</th>
 
                     </tr>
@@ -1587,7 +1588,11 @@ class Cpurchase extends CI_Controller
                                 </td>
 
                                 <td class="text-center">
-                                    <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0%" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6" readonly/>
+                                    <input type="text" style="width: 100px" name="discount[]" id="discount_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['discount'] ? $items['discount'] : "") . '" tabindex="6" readonly/>
+                                </td> 
+                                
+                                <td class="text-center">
+                                    <input type="text" style="width: 100px" name="additional_cost[]" id="additional_cost_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($items['additional_cost'] ? $items['additional_cost'] : "") . '" tabindex="6" readonly/>
                                 </td>
 
 
@@ -1608,7 +1613,7 @@ class Cpurchase extends CI_Controller
          <tfoot>
                                     <tr>
 
-                                        <td class="text-right" colspan="9"><b>Total:</b></td>
+                                        <td class="text-right" colspan="10"><b>Total:</b></td>
                                         <td class="text-right" >
                                             <input type="text" style="width: 100px"  id="total" class="text-right form-control" name="total" value="' . ($grand_total ? $grand_total : "") . '" readonly= />
 
@@ -1617,7 +1622,7 @@ class Cpurchase extends CI_Controller
 
                                     <tr>
 
-                                        <td class="text-right" colspan="9"><b>Total Discount (If any):</b></td>
+                                        <td class="text-right" colspan="10"><b>Total Discount (If any):</b></td>
                                         <td class="text-right" >
                                             <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="total_dis" class="text-right form-control" name="total_dis" value="0.00"/>
                                         </td>
@@ -1626,7 +1631,7 @@ class Cpurchase extends CI_Controller
 
                                     <tr>
 
-                                        <td class="text-right" colspan="9"><b>Other Charges (If any):</b></td>
+                                        <td class="text-right" colspan="10"><b>Other Charges (If any):</b></td>
                                         <td class="text-right" >
                                             <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="total_charge" class="text-right form-control" name="total_charge" value="0.00"/>
                                         </td>
@@ -1635,7 +1640,7 @@ class Cpurchase extends CI_Controller
 
                                     <tr>
 
-                                        <td class="text-right" colspan="9"><b>Grand Total</b></td>
+                                        <td class="text-right" colspan="10"><b>Grand Total</b></td>
                                         <td class="text-right" >
                                             <input type="text" style="width: 100px"  onkeyup="calculate_total()" onchange="calculate_total()" id="grand_total" class="text-right form-control" name="grand_total" value="' . ($grand_total ? $grand_total : "0") . '" />
                                         </td>
@@ -1643,7 +1648,7 @@ class Cpurchase extends CI_Controller
                                     </tr>
                                     
                                        <tr>
-                                        <td class="text-right" colspan="9"><b>Pay Amount:</b></td>
+                                        <td class="text-right" colspan="10"><b>Pay Amount:</b></td>
                                        <td class="text-right" >
                                             <input type="text" style="width: 100px"  id="pay_amount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="old_paid_amount" value="0" placeholder="0.00"/>
                                             <input type="hidden" style="width: 100px"  id="old_paid" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="" value="' . ($paid_amount ? $paid_amount : "0") . '" />
@@ -1652,7 +1657,7 @@ class Cpurchase extends CI_Controller
                                     </tr>
 
                                     <tr>
-                                        <td class="text-right" colspan="9"><b>Paid Amount:</b></td>
+                                        <td class="text-right" colspan="10"><b>Paid Amount:</b></td>
                                            <td class="text-right" >
                                             <input type="text" style="width: 100px"  id="paidAmount" onkeyup="calculate_total()" onchange="calculate_total()" class="text-right form-control"  name="paid_amount" value="' . ($paid_amount ? $paid_amount : "0") . '" readonly/>
                                         </td>
@@ -1662,7 +1667,7 @@ class Cpurchase extends CI_Controller
 
                                     <tr>
 
-                                        <td class="text-right" colspan="9"><b>Due Amount:</b></td>
+                                        <td class="text-right" colspan="10"><b>Due Amount:</b></td>
                                         <td class="text-right">
                                             <input type="text" style="width: 100px"  id="dueAmmount" class="text-right form-control" name="due_amount" value="' . ($due_amount ? $due_amount : "") . '"  readonly="readonly" />
                                         </td>

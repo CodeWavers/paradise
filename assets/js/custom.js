@@ -146,6 +146,7 @@ $(function($){
         ],
         'processing': true,
         'serverSide': true,
+        'scrollX':true,
 
 
         'lengthMenu':[[10, 25, 50,100,250,500, total_customer], [10, 25, 50,100,250,500, "All"]],
@@ -393,6 +394,7 @@ $(function($){
         ],
         'processing': true,
         'serverSide': true,
+        "scrollX": true,
 
 
         'lengthMenu':[[10, 25, 50,100,250,500, total_supplier], [10, 25, 50,100,250,500, "All"]],

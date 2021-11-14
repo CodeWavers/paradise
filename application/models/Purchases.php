@@ -1111,7 +1111,8 @@ class Purchases extends CI_Model {
 //        }
 //
 
-      //  echo '<pre>';print_r($bankc);exit();
+//        echo '<pre>';print_r($purchasecoatran);;
+//        echo '<pre>';print_r($supplier_debit);exit();
 
         if ($count == 0){
             $this->db->insert('supplier_payment',$data_insert);
@@ -1119,16 +1120,26 @@ class Purchases extends CI_Model {
             $this->db->insert('acc_transaction',$coscr);
             $this->db->insert('acc_transaction',$purchasecoatran);
             $this->db->insert('acc_transaction',$expense);
+
             if($pay_type == 2){
                 if(!empty($paid_amount)){
                     $this->db->insert('acc_transaction',$bankc);
+
+                }
+                if(!empty($old_paid)){
                     $this->db->insert('acc_transaction',$supplier_debit);
+
                 }
             }
             if($pay_type == 1){
                 if(!empty($paid_amount)){
                     $this->db->insert('acc_transaction',$cashinhand);
+//                    $this->db->insert('acc_transaction',$supplier_debit);
+                }
+
+                if(!empty($old_paid)){
                     $this->db->insert('acc_transaction',$supplier_debit);
+
                 }
             }
 
@@ -1583,7 +1594,7 @@ class Purchases extends CI_Model {
 
 
 
-        // $supplier_id = $this->input->post('supplier_name',TRUE);
+         $supplier_id = $this->input->post('supplier_name',TRUE);
         $rate = $this->input->post('price',TRUE);
         $quantity = $this->input->post('order_quantity',TRUE);
         $proposed_quantity = $this->input->post('proposed_quantity',TRUE);
@@ -1598,7 +1609,7 @@ class Purchases extends CI_Model {
         // $additional_cost = $this->input->post('additional_cost',TRUE);
 
         for ($i = 0, $n = count($p_id); $i < $n; $i++) {
-            // $supp_id = $supplier_id[$i];
+             $supp_id = $supplier_id[$i];
             $product_quantity = $quantity[$i];
             $prop_qty = $proposed_quantity[$i];
             // $sn_number = $sn[$i];
@@ -1644,7 +1655,7 @@ class Purchases extends CI_Model {
 
             $data_price = array (
                 'product_id'    => $product_id,
-                // 'supplier_id'   => $supp_id,
+                 'supplier_id'   => $supp_id,
                 'update_price' => $product_rate,
                 'date' => date('Y:m:d'),
                 'time' =>  date('h:i:sa'),
@@ -1652,6 +1663,13 @@ class Purchases extends CI_Model {
             );
 
             $this->db->insert('supplier_product_price', $data_price);
+
+
+
+
+//            $this->db->set('supplier_price',$product_rate);
+//            $this->db->where('product_id',$product_id);
+//            $this->db->update('supplier_product');
 
             // $data_unit = array (
             //     'product_id'    => $product_id,

@@ -151,6 +151,7 @@
                                         <th>Sub Category</th>
                                         <th class="col-md-2"><?php echo display('product_name') ?></th>
                                         <th>SKU</th>
+                                        <th>Current Stock</th>
                                         <th>Order Quantity</th>
                                         <th>Adjusted Quantity</th>
                                         <th>Delivered Quantity</th>
@@ -162,6 +163,15 @@
                                 <tbody>
 
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
+
+
+                                    <?php
+
+                                    $CI = & get_instance();
+                                    $CI->load->model('Reports');
+
+                                    $current_stock=$CI->Reports->current_stock($rqsn_detail['product_id'])
+                                    ?>
                                     <?php if ( $rqsn_detail['quantity'] - $rqsn_detail['dc_qty'] > 0) {?>
                                     <tr class="text-center">
                                         <td><?php echo  $sl=$rqsn_detail['sl']?>
@@ -175,9 +185,11 @@
                                         </td>
 
                                         <td><?php echo $rqsn_detail['sku']?></td>
+                                        <td><?php echo $current_stock?></td>
 
                                         <td style="width: 5%;" >
                                             <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity" id="order_quantity"  readonly>
+                                            <input type="hidden" value="<?php echo $current_stock?>" name="current_stock[]" class="form-control current_stock" id="current_stock"  readonly>
                                         </td>
                                         <td style="width: 5%;" >
                                             <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity"  readonly>
@@ -190,7 +202,7 @@
                                         </td>
                                         <td style="width: 5%;" >
 
-                                            <input type="text" value="<?php echo $rqsn_detail['quantity']-$rqsn_detail['dc_qty']?>" name="pending_qty[]" class="form-control pending_qty_<?php echo $sl?>" id="pending_qty" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)" readonly>
+                                            <input type="text" value="<?php echo $rqsn_detail['quantity']-$rqsn_detail['dc_qty']?>" name="pending_qty[]" class="form-control pending_qty" id="pending_qty_<?php echo $sl?>" onchange="row_total(<?php echo $sl?>)" onkeyup="row_total(<?php echo $sl?>)" readonly>
                                             <input type="hidden" value="<?php echo $rqsn_detail['quantity']-$rqsn_detail['dc_qty']?>" name="p_qty[]" class="form-control p_qty_<?php echo $sl?>" id="p_qty"  onkeyup="row_total(<?php echo $sl?>)" readonly>
 
                                         </td>
@@ -219,6 +231,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
+                                <input type="hidden" class="form-control" name="total_pending_qty" id="pt_tot" value='0' readonly/>
                                  <input type="hidden" value="<?php echo $rqsn_detail['invoice_id']?>" name="invoice_id" class="form-control" id="" >
                                 <a href="<?= base_url().'Cinvoice/pending_dc'?>"><input type="button" value="Back" name="back_btn" class="btn btn-large btn-black" id="" ></a>
                                  <input type="submit" value="Submit" name="approve_btn" class="btn btn-large btn-success btn-sm" id="" ></a>
@@ -281,16 +294,22 @@
             toastr.error('Yon cannot delivered greater than pending quantity')
            parseFloat($(".re_qty_" + sl).val(''));
             $(".dc_qty_" + sl).val(d_qty);
-            $(".pending_qty_" + sl).val(p_qty);
+            $("#pending_qty_" + sl).val(p_qty);
 
         }else{
             $(".dc_qty_" + sl).val(new_qty);
-            $(".pending_qty_" + sl).val(pending_qty);
+            $("#pending_qty_" + sl).val(pending_qty);
         }
 
     //    console.log(new_qty)
 
+        var pt_tot=0;
 
+//Total Price
+        $(".pending_qty").each(function() {
+            isNaN(this.value) || 0 == this.value.length || (pt_tot += parseFloat(this.value))
+        })
+        $("#pt_tot" ).val(pt_tot);
 
 
     }

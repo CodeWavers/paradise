@@ -1415,7 +1415,8 @@ class Cinvoice extends CI_Controller
             'paid_amount'   => $paid_amount,
             'due_amount'    => $due_amount,
             'total_discount' => $discount,
-            'status'        => 1
+            'status'        => 1,
+            'is_so_sold'        => 0
         );
 
         $this->db->insert('invoice', $data_1);
@@ -1481,7 +1482,7 @@ class Cinvoice extends CI_Controller
             'paid_amount'   => $paid_amount,
             'due_amount'    => $due_amount,
             'total_discount' => $discount,
-          //  'status'        => 4
+            'is_so_sold'        => 1
         );
 
       //  echo '<pre>';print_r($data_1);exit();
@@ -1649,6 +1650,13 @@ class Cinvoice extends CI_Controller
 
         $output = "";
         $count = 0;
+        if( $details[0]['due_amount'] == 0){
+
+            $due= $details[0]['total_amount'];
+        }else{
+            $due=$details[0]['due_amount'];
+        }
+
 
         $output .= '<div class="table-responsive">
         <table class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -1665,6 +1673,11 @@ class Cinvoice extends CI_Controller
 
         foreach ($details as $rq) {
             $count++;
+
+
+
+
+
             $output .= '<tr><td>' . $count . '</td>
                 <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
@@ -1703,7 +1716,7 @@ class Cinvoice extends CI_Controller
                     <button type="button" onclick="full_paid()" class="btn btn-warning btn-sm" >Full Paid</button>
                 </td>
                 <td colspan="2" class="text-right">Due</td>
-                <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="' . $details[0]['due_amount'] . '" readonly></td>
+                <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="' . $due . '" readonly></td>
             </tr>
         </tfoot>
     </table>
@@ -1736,6 +1749,7 @@ class Cinvoice extends CI_Controller
     {
         $CI = &get_instance();
         $CI->load->model('Invoices');
+        $CI->load->model('Reports');
 
         $invoice_no = $this->input->post('invoice_no', true);
 
@@ -1750,6 +1764,7 @@ class Cinvoice extends CI_Controller
             <thead>
                 <th width="2%">Sl. NO</th>
                 <th width="8%">Product Name</th>
+                <th width="5%">Closing Stock</th>
                 <th width="5%">Adjusted Quantity</th>
                 <th width="5%">Delivered  Quantity</th>
                 <th width="5%">Balanced Quantity</th>
@@ -1759,15 +1774,18 @@ class Cinvoice extends CI_Controller
             <tbody>';
 
         foreach ($details as $rq) {
+
+            $closing_stock=$CI->Reports->current_stock($rq['product_id']);
             $count++;
             $output .= '<tr><td>' . $count . '</td>
                 <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 </td>
 
-                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
-                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"  placeholder="0.00"></td>
-                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control bl_qty" name="bl_quantity[]" value="" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
+                <td><input  id="current_stock_' . $count . '" type="text" class="form-control " name="current_stock[]" value="' . $closing_stock . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
+                <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
+                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onchange="add_pur_calc_store(' . $count . ')"   placeholder="0.00"></td>
+                <td><input  id="bl_qty_' . $count . '" type="text" class="form-control bl_qty" name="bl_quantity[]" value="" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="" placeholder="Remarks" >
                     
                 </td>

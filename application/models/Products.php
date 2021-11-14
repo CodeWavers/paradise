@@ -58,7 +58,7 @@ class Products extends CI_Model {
                 ->order_by('a.product_id', 'desc')
                 ->get();
             if ($query->num_rows() > 0) {
-                return $query->result_array();
+                return $query->result();
             }
         }
         return false;
@@ -470,7 +470,7 @@ class Products extends CI_Model {
             $this->db->where('b.category_id', $category);
             $this->db->where('d.sub_cat_id', $subcategory);
         }
-        $this->db->limit($config, $page);
+       // $this->db->limit($config, $page);
         $query = $this->db->get();
         return $query->result();
     }
@@ -530,6 +530,8 @@ class Products extends CI_Model {
 
             ->join('product_information b', 'b.product_id = a.product_id' , 'left')
             ->join('supplier_information c', 'c.supplier_id = a.supplier_id', 'left')
+          //  ->group_by('product_id')
+            ->order_by('id','asc')
             //  ->join('supplier_product_price d', 'd.product_id = a.product_id', 'left')
             ->get();
 

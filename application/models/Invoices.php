@@ -2071,6 +2071,7 @@ class Invoices extends CI_Model
 
         $CI = &get_instance();
         $CI->load->model('Web_settings');
+        $CI->load->model('Reports');
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $tablecolumn = $this->db->list_fields('tax_collection');
         $num_column = count($tablecolumn) - 4;
@@ -2119,6 +2120,8 @@ class Invoices extends CI_Model
             }
             $whouse .= "</select>";
         }
+
+        $closing_stock=$CI->Reports->current_stock($product_information->product_id);
 
 
         $data2['total_product']  = $closing_stock;
@@ -2572,8 +2575,9 @@ class Invoices extends CI_Model
         $this->db->select('*');
         $this->db->from('invoice a');
         // $this->db->join('invoice_details b', 'a.invoice_id=b.invoice_id');
-        $this->db->where('a.status', 2);
-        $this->db->or_where('a.status', 4);
+        $this->db->where('a.is_so_sold', 0);
+      //  $this->db->where('a.status', 2);
+        //$this->db->or_where('a.status', 4);
         $this->db->group_by('a.invoice_no');
 
         $query = $this->db->get();
@@ -2721,6 +2725,7 @@ class Invoices extends CI_Model
         $item_rate = $this->input->post("rate", true);
         $quantity = $this->input->post("dc_qty", true);
         $inv_detail_id = $this->input->post("invoice_details_id", true);
+        $total_p_qty = $this->input->post("total_pending_qty", true);
 
         for ($i = 0, $n   = count($inv_detail_id); $i < $n; $i++) {
             $qty  = $quantity[$i];
@@ -2743,12 +2748,17 @@ class Invoices extends CI_Model
             }
         }
 
-//        $sq = "UPDATE rqsn
-//        SET status = 3, is_sold = 0
-//        WHERE rqsn_id = " . $rqsn_id . "
-//        ";
-//
-//        $this->db->query($sq);
+        if ($total_p_qty == 0){
+
+            $sq = "UPDATE invoice
+        SET is_dc_pending = 0
+        WHERE invoice_id = " . $invoice_id . "
+        ";
+
+            $this->db->query($sq);
+        }
+
+
     }
 
     public function sales_order_details()
@@ -2788,7 +2798,7 @@ class Invoices extends CI_Model
 
     public function pending_dc()
     {
-        $records = $this->db->select('a.*, b.*, d.*,e.*')
+        $records = $this->db->select('a.*, b.*, d.*,e.*,a.due_amount as due')
             ->from('invoice a')
             ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
            // ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')

@@ -277,7 +277,7 @@ if (!discount) {
 //console.log(currency_value);
 //console.log(bdt_price);
 
-var total_price = ((item_ctn_qty * vendor_rate) - ((item_ctn_qty * vendor_rate) * (discount / 100))) + additional_cost;
+var total_price = ((item_ctn_qty * vendor_rate) -discount) + additional_cost;
 $("#row_total_" + sl).val(total_price.toFixed(2));
 
 

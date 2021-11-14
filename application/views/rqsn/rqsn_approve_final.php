@@ -154,6 +154,7 @@
                                         <th>SKU</th>
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
+                                        <th>Current Stock</th>
                                         <th>Quantity</th>
                                         <th>Rate</th>
                                         <th>Total</th>
@@ -163,6 +164,14 @@
                                 <tbody>
 
                                 <?php foreach ($rqsn_details as $rqsn_detail) { ?>
+
+                                    <?php
+
+                                    $CI = & get_instance();
+                                    $CI->load->model('Reports');
+
+                                    $current_stock=$CI->Reports->current_stock($rqsn_detail['product_id'])
+                                    ?>
                                     <tr class="text-center">
                                         <td><?php echo  $rqsn_detail['sl']?>
                                     </td>
@@ -178,9 +187,13 @@
                                         <td><?php echo $rqsn_detail['sku']?></td>
                                         <td><?php echo $rqsn_detail['brand_name']?></td>
                                         <td><?php echo $rqsn_detail['model_name']?></td>
+                                        <td><?php echo $current_stock?>
+                                            <input type="hidden" value="<?php echo $current_stock?>" name="current_stock[]" class="form-control current_stock" id="current_stock"  readonly>
+                                        </td>
                                         <td style="width: 5%;" >
 
                                             <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity" >
+                                            <input type="hidden" value="<?php echo $rqsn_detail['quantity']?>" name="qty[]" class="form-control qty" id="qty" >
 
                                         </td>
                                         <td style="width: 10%;" >
@@ -202,7 +215,7 @@
 
                                 <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-right"><b>Grand Total:</b></td>
+                                    <td colspan="10" class="text-right"><b>Grand Total:</b></td>
                                     <td style="width: 10%">
                                         <input  class="form-control" name="total" id="grand_total" value='<?php echo number_format($grand_total,2)?>' readonly/>
                                     </td>
@@ -242,18 +255,26 @@
 
 
        // console.log(data_id);
-        $('.quantity').on('keyup', function() {
+        $('.quantity').on('change', function() {
 
             var qty=this.value;
 
              var rate= $(this).closest('tr').find('.rate').val()
+             var current_stock= $(this).closest('tr').find('.current_stock').val();
+             var quantity= $(this).closest('tr').find('.qty').val();
 
+            // alert(current_stock)
             var total_price=qty*rate
 
-           $(this).closest('tr').find('.total_price').val(total_price)
+            $(this).closest('tr').find('.total_price').val(total_price)
+            if (qty > current_stock){
 
-           calculation()
+                toastr.error("You cannot approved greater than current stock")
 
+                this.value=quantity;
+              //  qty.value('')
+            }
+            calculation()
 
         });
         $('.rate').on('keyup', function() {

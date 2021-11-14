@@ -1384,7 +1384,7 @@ class Linvoice
             'details'      => $details,
         );
 
-        // echo '<pre>';print_r($data);exit();
+         //echo '<pre>';print_r($details);exit();
 
 
         return $CI->parser->parse('invoice/pending_dc', $data, true);
@@ -1460,6 +1460,7 @@ class Linvoice
         $CI = & get_instance();
         $CI->load->model('Invoices');
         $CI->load->model('Warehouse');
+        $CI->load->model('Reports');
 
         $outlet_list    = $CI->Warehouse->branch_list();
         $rqsn_details = $CI->Invoices->pending_dc_details($invoice_no);

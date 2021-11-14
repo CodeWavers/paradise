@@ -25,7 +25,7 @@ class Csupplier extends CI_Controller {
     //Insert supplier
     public function insert_supplier() {
 
-        $supp_id=mt_rand();
+       // $supp_id=mt_rand();
 
         $data = array(
 
@@ -148,7 +148,7 @@ class Csupplier extends CI_Controller {
         }
 
 
-        $supplier_id = $this->db->insert_id();
+     //   $supplier_id = $this->db->insert_id();
         $coa = $this->Suppliers->headcode();
         if($coa->HeadCode!=NULL){
             $headcode=$coa->HeadCode+1;

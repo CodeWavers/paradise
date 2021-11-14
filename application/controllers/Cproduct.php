@@ -358,7 +358,7 @@ class Cproduct extends CI_Controller {
         #pagination ends
         #
         $data['title']            = 'Catalogue';
-        $data['all_product']    = $this->Products->all_product($config["per_page"], $page);
+        $data['all_product']    = $this->Products->all_product();
         $data['category_list'] = $category_list;
         $data['subcategory_list'] = $subcategory_list;
 
@@ -408,13 +408,13 @@ class Cproduct extends CI_Controller {
         #
         #pagination ends
         #
-        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id,$config["per_page"], $page); //$config["per_page"], $page);
+        $all_product   = $this->Products->product_filter_category_wise($post_cat_id, $post_sub_cat_id); //$config["per_page"], $page);
 
 
         $html_data = '';
 
         $html_data .= ' <div class="row panel panel-bd lobidrag catalogue-panel" id="myUL">
-                <table class="table table-striped table-bordered" id="myTable">
+                <table class="table table-striped table-bordered datatable" id="myTable">
                             <thead>
                             <tr>
 
