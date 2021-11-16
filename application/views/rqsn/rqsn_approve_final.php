@@ -227,7 +227,7 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                  <input type="hidden" value="<?php echo $rqsn_detail['rqsn_id']?>" name="rqsn_id" class="form-control" id="" >
-                                 <input type="submit" value="Approve" name="approve_btn" class="btn btn-large btn-success" id="" ></a>
+                                 <input type="submit" value="Save" name="approve_btn" class="btn btn-large btn-info" id="" ></a>
                             </div>
                         </div>
 
