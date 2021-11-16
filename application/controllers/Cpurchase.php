@@ -1091,8 +1091,8 @@ class Cpurchase extends CI_Controller
                         <th class="text-center" width="8%">Product Name</th>
                         <th class="text-center" width="8%">SKU</th>
                         <th class="text-center">Barcode</th>
+                        <th class="text-center">Purchase Qty</th>
                         <th class="text-center">Quantity</th>
-
                         <th class="text-center">Supplier Name</th>
                         <th class="text-center">Received</th>
                         <th class="text-center">Return</th>
@@ -1145,6 +1145,9 @@ class Cpurchase extends CI_Controller
                             <td class="wt">' . $items['sku'] . '</td>
                             <td class="wt">' . $items['product_id'] . '</td>
                             <td class="wt">
+                                <input type="text" value="' . $items['qty'] . '" name="p_qty[]" id="p_qty" required="" class="form-control text-right p_qty_1" placeholder="0.00" readonly/>
+                            </td>
+                              <td class="wt">
                                 <input type="text" name="quantity[]" id="quantity" required="" class="form-control text-right stock_ctn_1" placeholder="0.00" />
                             </td>
 
