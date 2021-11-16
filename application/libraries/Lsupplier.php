@@ -219,7 +219,7 @@ class Lsupplier {
             'title'            => display('supplier_ledger'),
             'ledgers'          => $ledger,
             'supplier_name'    => $supplier_details[0]['supplier_name'],
-            'address'          => $supplier_details[0]['address'],
+            'address'          => $supplier_details[0]['ad'],
             'supplier_ledger'  => 'Csupplier/supplier_ledger',
             'supplier'         => $supplier,
             'currency'         => $currency_details[0]['currency'],

@@ -1722,6 +1722,7 @@ class Cpurchase extends CI_Controller
         $pur_date = $this->input->post('purchase_date', TRUE);
 
         $order_quantity = $this->input->post('order_quantity', TRUE);
+        $product_id = $this->input->post('product_id', TRUE);
         $supplier_id = $this->input->post('supplier_drop', TRUE);
         $warrenty_date = $this->input->post('warrenty_date', TRUE);
         $price = $this->input->post('price', TRUE);
@@ -1822,6 +1823,17 @@ class Cpurchase extends CI_Controller
             $this->db->where('id', $id[$i]);
             $this->db->where('purchase_id', $po_id);
             $this->db->update('product_purchase_details', $data);
+
+            $data_price = array (
+                'product_id'    => $product_id[$i],
+                'supplier_id'   => $supplier_id[$i],
+                'update_price' => $price[$i],
+                'date' => date('Y:m:d'),
+                'time' =>  date('h:i:sa'),
+                'status'        => 1
+            );
+
+            $this->db->insert('supplier_product_price', $data_price);
         }
 
         redirect('Cpurchase/add_purchase/');

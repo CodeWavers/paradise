@@ -188,12 +188,14 @@
                                         <td style="width: 10%;" >
 
                                             <input autocomplete="off" type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >
+                                            <input autocomplete="off" type="hidden" value="<?php echo $rqsn_detail['a_qty']?>" name="p_qty[]" class="form-control p_qty" id="p_qty" >
                                             <input type="hidden" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity" >
 
                                         </td>
                                         <td style="width: 10%;" >
 
                                             <input autocomplete="off" type="text" value="0" name="store_qty[]" class="form-control store_qty" id="store_qty" placeholder="0.00" >
+
 
                                         </td>
 
@@ -259,15 +261,27 @@
 
         });
 
-        $('.store_qty').on('keyup', function() {
+        $('.store_qty').on('change', function() {
 
             var store_qty=this.value;
 
              var qty= $(this).closest('tr').find('.quantity').val();
+             var p_qty= $(this).closest('tr').find('.p_qty').val();
+
+            var current_stock= parseFloat($(this).closest('tr').find('.current_stock').val());
 
             var purchase_qty=qty-store_qty;
 
             $(this).closest('tr').find('.purchase_qty').val(purchase_qty);
+
+            if (store_qty > current_stock){
+
+                toastr.error("You cannot store greater than current stock")
+
+                this.value='';
+                $(this).closest('tr').find('.purchase_qty').val(p_qty);
+                //  qty.value('')
+            }
 
        //    calculation()
 

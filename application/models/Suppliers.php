@@ -508,9 +508,10 @@ class Suppliers extends CI_Model {
 
     //Retrieve supplier Personal Data
     public function supplier_personal_data($supplier_id) {
-        $this->db->select('*');
-        $this->db->from('supplier_information');
-        $this->db->where('supplier_id', $supplier_id);
+        $this->db->select('a.*,b.*,b.address as ad');
+        $this->db->from('supplier_information a');
+        $this->db->join('supplier_address b','a.supplier_id=b.supplier_id','left');
+        $this->db->where('a.supplier_id', $supplier_id);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();

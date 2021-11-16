@@ -1653,16 +1653,7 @@ class Purchases extends CI_Model {
                 $this->db->insert('product_purchase_details', $data1);
             }
 
-            $data_price = array (
-                'product_id'    => $product_id,
-                 'supplier_id'   => $supp_id,
-                'update_price' => $product_rate,
-                'date' => date('Y:m:d'),
-                'time' =>  date('h:i:sa'),
-                'status'        => 1
-            );
 
-            $this->db->insert('supplier_product_price', $data_price);
 
 
 
