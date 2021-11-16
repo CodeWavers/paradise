@@ -2620,7 +2620,7 @@ class Invoices extends CI_Model
 
     public function approved_so_details($invoice_no)
     {
-        $this->db->select('*, a.paid_amount as inv_paid');
+        $this->db->select('*, a.paid_amount as inv_paid,a.due_amount as due');
         $this->db->from('invoice a');
         $this->db->where('a.invoice_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
@@ -2658,7 +2658,7 @@ class Invoices extends CI_Model
 
     public function pending_dc_details($invoice_no)
     {
-        $this->db->select('*');
+        $this->db->select('*,a.due_amount as due');
         $this->db->from('invoice a');
         $this->db->where('a.dc_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
@@ -2670,6 +2670,26 @@ class Invoices extends CI_Model
         $this->db->join('product_model h', 'h.model_id = b.product_model', 'left');
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
         $this->db->group_by('c.product_id');
+        //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    public function customer_payment($invoice_no)
+    {
+        $this->db->select('a.*,x.*,SUM(c.quantity) as qty,SUM(c.dc_qty) as dc_qty');
+        $this->db->from('invoice a');
+        $this->db->where('a.invoice_id', $invoice_no);
+        $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
+       // $this->db->join('product_information b', 'c.product_id = b.product_id');
+        $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
+      //  $this->db->join('product_category y', 'y.category_id = b.category_id', 'left');
+       // $this->db->join('product_subcat f', 'f.sub_cat_id = b.sub_cat_id', 'left');
+       // $this->db->join('product_brand g', 'g.brand_id = b.brand_id', 'left');
+       // $this->db->join('product_model h', 'h.model_id = b.product_model', 'left');
+      //  $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
+      //  $this->db->group_by('c.product_id');
         //        $this->db->join('product_model e', 'e.model_id = b.product_model', 'left');
 
         $query = $this->db->get();
@@ -2723,6 +2743,7 @@ class Invoices extends CI_Model
 
         $total_price = $this->input->post("total_price", true);
         $item_rate = $this->input->post("rate", true);
+        $due_amount = $this->input->post("due_amount", true);
         $quantity = $this->input->post("dc_qty", true);
         $inv_detail_id = $this->input->post("invoice_details_id", true);
         $total_p_qty = $this->input->post("total_pending_qty", true);
@@ -2734,11 +2755,11 @@ class Invoices extends CI_Model
           //  $rate  = $item_rate[$i];
 
 
-//                        $rqsn_details = array(
+//             $rqsn_details = array(
 //
-//                            'quantity'                => $qty,
-//                            'rate'                => $rate,
-//                            'quantity'                => $qty,
+//                 'quantity'                => $qty,
+//                 'rate'                => $rate,
+//                 'quantity'                => $qty,
 //                        );
             if (!empty($quantity)) {
 
@@ -2748,7 +2769,7 @@ class Invoices extends CI_Model
             }
         }
 
-        if ($total_p_qty == 0){
+        if ($total_p_qty == 0 && $due_amount == 0){
 
             $sq = "UPDATE invoice
         SET is_dc_pending = 0
@@ -2758,6 +2779,123 @@ class Invoices extends CI_Model
             $this->db->query($sq);
         }
 
+
+    }
+    public function pay_customer($invoice_id)
+    {
+
+        $this->load->model('Web_settings');
+        $tablecolumn = $this->db->list_fields('tax_collection');
+        $num_column = count($tablecolumn) - 4;
+
+        $createby = $this->session->userdata('user_id');
+        $createdate = date('Y-m-d H:i:s');
+
+
+
+        $customer_id = $this->input->post("customer_id", true);
+        $pending_qty = $this->input->post("pending_qty", true);
+        $pay_amount = $this->input->post("pay_amount", true);
+        $paid_amount = $this->input->post("paid_amount", true);
+        $due_amount = $this->input->post("due_amount", true);
+        $pay_type = $this->input->post("payment_type", true);
+
+
+//        echo '<pre>';print_r($data);exit();
+
+        if($due_amount == 0 && $pending_qty ==0 ){
+            $this->db->set(array('paid_amount'=>$paid_amount,'due_amount'=>$due_amount,'payment_type'=>$pay_type,'is_dc_pending'=>0));
+            $this->db->where('invoice_id',$invoice_id);
+            $this->db->update('invoice');
+
+        }else{
+            $this->db->set(array('paid_amount'=>$paid_amount,'due_amount'=>$due_amount,'payment_type'=>$pay_type));
+            $this->db->where('invoice_id',$invoice_id);
+            $this->db->update('invoice');
+        }
+
+
+
+
+
+
+
+
+
+        $cusifo = $this->db->select('*')->from('customer_information')->where('customer_id', $customer_id)->get()->row();
+        $headn = $customer_id . '-' . $cusifo->customer_name;
+        $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName', $headn)->get()->row();
+        $customer_headcode = $coainfo->HeadCode;
+
+        $cc = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  1020101,
+            'Narration'      =>  'Cash in Hand in Sale for Invoice ID - ' . $invoice_id . ' customer- ' . $cusifo->customer_name,
+            'Debit'          =>  $pay_amount,
+            'Credit'         =>  0,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $createby,
+            'CreateDate'     =>  $createdate,
+            'IsAppove'       =>  1,
+
+        );
+
+                if($this->input->post("payment_type", true) == 1){
+                    $this->db->insert('acc_transaction',$cc);
+                }
+
+        ///Sale Income
+//        $coscr = array(
+//            'VNo'            =>  $invoice_id,
+//            'Vtype'          =>  'INV',
+//            'VDate'          =>  $createdate,
+//            'COAID'          =>  303,
+//            'Narration'      =>  'Sale Income For Invoice ID' . $invoice_id,
+//            'Debit'          =>  0,
+//            'Credit'         =>  $pay_amount, //purchase price asbe
+//            'IsPosted'       => 1,
+//            'CreateBy'       => $createby,
+//            'CreateDate'     => $createdate,
+//            'IsAppove'       => 1
+//        );
+//        $this->db->insert('acc_transaction', $coscr);
+
+        // Customer Transactions
+        //Customer debit for Product Value
+//        $cosdr = array(
+//            'VNo'            =>  $invoice_id,
+//            'Vtype'          =>  'INV',
+//            'VDate'          =>  $createdate,
+//            'COAID'          =>  $customer_headcode,
+//            'Narration'      =>  'Customer debit For Invoice ID -  ' . $invoice_id . ' Customer ' . $cusifo->customer_name,
+//            'Debit'          => $pay_amount,
+//            'Credit'         =>  0,
+//            'IsPosted'       => 1,
+//            'CreateBy'       => $createby,
+//            'CreateDate'     => $createdate,
+//            'IsAppove'       => 1
+//        );
+//        $this->db->insert('acc_transaction', $cosdr);
+
+
+
+        ///Customer credit for Paid Amount
+        $cuscredit = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  $customer_headcode,
+            'Narration'      =>  'Customer credit for Paid Amount For Customer Invoice ID- ' . $invoice_id . ' Customer- ' . $cusifo->customer_name,
+            'Debit'          =>  0,
+            'Credit'         =>  $pay_amount,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $cuscredit);
 
     }
 
@@ -2798,7 +2936,7 @@ class Invoices extends CI_Model
 
     public function pending_dc()
     {
-        $records = $this->db->select('a.*, b.*, d.*,e.*,a.due_amount as due')
+        $records = $this->db->select('a.*, b.*, d.*,e.*,a.due_amount as due,SUM(b.quantity) as qty ,SUM(b.dc_qty) as dc_qty')
             ->from('invoice a')
             ->join('invoice_details b', 'a.invoice_id=b.invoice_id')
            // ->join('customer_vessel c', 'c.customer_id=a.customer_id','left')

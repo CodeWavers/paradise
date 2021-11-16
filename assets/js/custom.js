@@ -137,16 +137,17 @@ $(function($){
     var total_customer = $("#total_customer").val();
     var currency = $("#currency").val();
     $('#customerLIst').DataTable({
-        responsive: true,
+
 
         "aaSorting": [[ 1, "asc" ]],
         "columnDefs": [
-            { "bSortable": false, "aTargets": [0,1,2,3,4,5,6,7] },
+            { "bSortable": false, "aTargets": [0,1,2,3,4,5,6] },
 
         ],
         'processing': true,
         'serverSide': true,
         'scrollX':true,
+        'responsive': true,
 
 
         'lengthMenu':[[10, 25, 50,100,250,500, total_customer], [10, 25, 50,100,250,500, "All"]],
@@ -190,7 +191,7 @@ $(function($){
             { data: 'address'},
             { data: 'phone'},
              { data: 'email'},
-             { data: 'contact_person'},
+             // { data: 'contact_person'},
             { data: 'balance',class:"balance",render: $.fn.dataTable.render.number( ',', '.', 2, currency ) },
             { data: 'button'},
         ],
@@ -385,7 +386,7 @@ $(function($){
     var total_supplier = $("#total_supplier").val();
     var currency = $("#currency").val();
     $('#supplierList').DataTable({
-        responsive: true,
+
 
         "aaSorting": [[ 0, "asc" ]],
         "columnDefs": [
@@ -395,6 +396,8 @@ $(function($){
         'processing': true,
         'serverSide': true,
         "scrollX": true,
+        'responsive': true,
+
 
 
         'lengthMenu':[[10, 25, 50,100,250,500, total_supplier], [10, 25, 50,100,250,500, "All"]],
@@ -432,7 +435,7 @@ $(function($){
             }
         },
         'columns': [
-            { data: 'supplier_name' },
+            { data: 'supplier_name',},
             { data: 'address'},
             { data: 'mobile' },
             //{ data: 'phone' },

@@ -75,7 +75,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-responsive "   id="customerLIst">
+                            <table class="table table-striped table-bordered"   cellspacing="0" width="100%" id="customerLIst">
                                 <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
@@ -84,7 +84,7 @@
                                         <th>Address</th>
                                         <th><?php echo display('phone'); ?></th>
                                         <th>Customer Email</th>
-                                        <th>Contact Person</th>
+<!--                                        <th>Contact Person</th>-->
 
                                         <th><?php echo display('balance') ?></th>
                                         <th><?php echo display('action') ?> </th>
@@ -96,7 +96,7 @@
                                 </tbody>
                                  <tfoot>
                                             <tr>
-                <th colspan="7" class="text-right"><?php echo display('total') ?>:</th>
+                <th colspan="6" class="text-right"><?php echo display('total') ?>:</th>
                 <th id="stockqty"></th>
                    <th></th>
             </tr>

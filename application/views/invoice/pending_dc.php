@@ -59,31 +59,40 @@
                                 <th>DC No.</th>
                                 <th>Vessel Name</th>
                                 <th>Customer Name</th>
+                                <th>Pending Qty</th>
                                 <th>Due Amount</th>
+
                                 <th><?php echo display('date') ?></th>
                                 <th><?php echo display('action') ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($details)) ?>
+                            <?php if (!empty($details)) { ?>
                             <?php $sl = 1; ?>
                             <?php foreach ($details as $details) { ?>
+
+                                    <?php $pending_qty = $details['qty']-$details['dc_qty']; ?>
+                                <?php if (  $details['due'] || $pending_qty > 0) { ?>
                             <tr>
                                 <td><?php echo $sl++; ?></td>
                                 <td><?php echo $details['dc_no']?> </td>
                                 <td><?php echo $details['vessel_name']?> </td>
                                 <td><?php echo $details['customer_name']?> </td>
+                                <td><?php echo $pending_qty?> </td>
                                 <td><?php echo $details['due']?> </td>
+
                                 <td><?php echo $details['date']?> </td>
                                 <td class="text-center">
                                     <a href="<?= base_url().'Cinvoice/pending_dc_edit/'.$details['dc_no']?>">
                                         <button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
                                     </a>
-                                    <a href="<?= base_url().'Cinvoice/pending_dc_edit/'.$details['invoice_id']?>">
+                                    <a href="<?= base_url().'Cinvoice/customer_payment/'.$details['invoice_id']?>">
                                         <button class="btn btn-sm btn-warning"><i class="fa fa-money"></i></button>
                                     </a>
                                 </td>
                             </tr>
+                            <?php } ?>
+                            <?php } ?>
                             <?php } ?>
                         </tbody>
                     </table>

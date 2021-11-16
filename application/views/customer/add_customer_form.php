@@ -52,9 +52,9 @@
                         <?php if($this->permission1->method('paid_customer','read')->access()){ ?>
                     <a href="<?php echo base_url('Ccustomer/paid_customer') ?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i>  <?php echo display('paid_customer') ?> </a>
                     <?php }?>
-                    <?php if($this->permission1->method('add_customer','create')->access()){ ?>
-                     <button type="button" class="btn btn-info m-b-5 m-r-2" data-toggle="modal" data-target="#Customer_modal"><?php echo display('customer_csv_upload')?></button>
-                 <?php }?>
+<!--                    --><?php //if($this->permission1->method('add_customer','create')->access()){ ?>
+<!--                     <button type="button" class="btn btn-info m-b-5 m-r-2" data-toggle="modal" data-target="#Customer_modal">--><?php //echo display('customer_csv_upload')?><!--</button>-->
+<!--                 --><?php //}?>
 
            
             </div>
@@ -84,7 +84,7 @@
                              <div class="r_contact" >
                                  <label for="contact" class="col-sm-4 col-form-label">Vessel Name<i class="text-danger">*</i></label>
                                  <div class="col-sm-6" style="padding-bottom:10px ">
-                                     <input class="form-control" name="vessel_name[]" id="vessel_name" type="text" placeholder="Vessel Name"   tabindex="2">
+                                     <input onkeyup="validation(1)" class="form-control vessel_name_1" name="vessel_name[]" id="vessel_name" type="text" placeholder="Vessel Name"   tabindex="2">
 
                                  </div>
 
@@ -202,13 +202,14 @@
 <!-- Add new customer end -->
 
 <script type="text/javascript">
-
+    var count = 1;
 
     $(".add_contact").click(function(){
+        count++;
         $("#multi_contact").append("     <div class=\"r_contact\" style=\"padding-bottom:10px \">\n" +
             "                            <label for=\"email\" class=\"col-sm-4 col-form-label\"></label>\n" +
             "                            <div class=\"col-sm-6\" style=\"padding-bottom:10px\" >\n" +
-            "                                <input class=\"form-control\" name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Vessel Name' ?>\"   tabindex=\"2\">\n" +
+            "                                <input class=\"form-control vessel_name_" + count + "\"  name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Vessel Name' ?>\"   tabindex=\"2\" onkeyup='validation(" + count + ");'>\n" +
             "\n" +
             "                            </div>\n" +
             "\n" +
@@ -222,6 +223,25 @@
         $(this).parents('.r_contact').remove();
         //the above method will remove the user_data div
     });
+
+    function validation(sl) {
+
+        var var1 =$('.vessel_name_'+sl).val();
+        var myRegEx = new RegExp('.*[\-\ ]+'); //make sure the var is a number
+
+
+
+        if (var1 == myRegEx.exec(var1)) {
+            toastr.error("Please ignore '-' & 'space' when you write vessele name");
+
+            $('.vessel_name_'+sl).val(var1.slice(0,-1));
+        }
+
+    }
+    // $(".vessel_name").keyup(function(){
+    //
+    //
+    // });
 </script>
 
 

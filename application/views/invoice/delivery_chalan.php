@@ -263,8 +263,8 @@
 
     function add_pur_calc_store(sl) {
 
-        var order_qty = $("#or_qty_" + sl).val();
-        var deliver_qty = $("#dc_qty_" + sl).val();
+        var order_qty = parseFloat($("#or_qty_" + sl).val());
+        var deliver_qty = parseFloat($("#dc_qty_" + sl).val());
 
         var bal_qty=order_qty-deliver_qty;
          $("#bl_qty_" + sl).val(bal_qty);
@@ -279,13 +279,16 @@
             $("#total_qty").val(t);
 
 
-        var current_stock=$('#current_stock_'+sl).val();
+        var current_stock=parseFloat($('#current_stock_'+sl).val());
+
+
 
 
         if (deliver_qty > current_stock){
-
+          //  alert(deliver_qty)
             toastr.error("You cannot delivered greater than current stock")
             $("#dc_qty_" + sl).val('');
+            $("#bl_qty_" + sl).val('');
         }
 
 

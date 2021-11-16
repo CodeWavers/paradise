@@ -1454,11 +1454,18 @@ class Cinvoice extends CI_Controller
     public function add_sale()
     {
 
+        $this->load->model('Web_settings');
+        $tablecolumn = $this->db->list_fields('tax_collection');
+
+        $createby = $this->session->userdata('user_id');
+        $createdate = date('Y-m-d H:i:s');
+
         $invoice_no = $this->input->post('invoice_no', TRUE);
         $sv_no = $this->input->post('invoice', TRUE);
         $invoice_id = $this->input->post('invoice_id', TRUE);
         $date = $this->input->post('invoice_date', TRUE);
         $customer_name = $this->input->post('customer', TRUE);
+        $customer_id = $this->input->post('customer', TRUE);
         $contact_no = $this->input->post('contact_no', TRUE);
         $vessel_name = $this->input->post('vessel_name', TRUE);
         $paid_amount = $this->input->post('advance', TRUE);
@@ -1507,17 +1514,89 @@ class Cinvoice extends CI_Controller
         }
 
 
+        $cusifo = $this->db->select('*')->from('customer_information')->where('customer_id', $customer_id)->get()->row();
+        $headn = $customer_id . '-' . $cusifo->customer_name;
+        $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName', $headn)->get()->row();
+        $customer_headcode = $coainfo->HeadCode;
+
+        ///Sale Income
+        $coscr = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  303,
+            'Narration'      =>  'Sale Income For Invoice ID' . $invoice_id,
+            'Debit'          =>  0,
+            'Credit'         =>  $grand_total,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $coscr);
+
+        // Customer Transactions
+        //Customer debit for Product Value
+        $cosdr = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  $customer_headcode,
+            'Narration'      =>  'Customer debit For Invoice ID -  ' . $invoice_id . ' Customer ' . $cusifo->customer_name,
+            'Debit'          => $grand_total,
+            'Credit'         =>  0,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $cosdr);
+
+        $cc = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  1020101,
+            'Narration'      =>  'Cash in Hand in Sale for Invoice ID - ' . $invoice_id . ' customer- ' . $cusifo->customer_name,
+            'Debit'          =>  $paid_amount,
+            'Credit'         =>  0,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $createby,
+            'CreateDate'     =>  $createdate,
+            'IsAppove'       =>  1,
+
+        );
+
+        if($this->input->post("payment_type", true) == 1){
+            $this->db->insert('acc_transaction',$cc);
+        }
+
+
+
+
+
+        ///Customer credit for Paid Amount
+        $cuscredit = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  $customer_headcode,
+            'Narration'      =>  'Customer credit for Paid Amount For Customer Invoice ID- ' . $invoice_id . ' Customer- ' . $cusifo->customer_name,
+            'Debit'          =>  0,
+            'Credit'         =>  $paid_amount,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $cuscredit);
+
+
         if (!empty($result)) {
             $data['status'] = true;
             $data['invoice_id'] = $invoice_id;
             $data['message'] = display('save_successfully');
-            // $mailsetting = $this->db->select('*')->from('email_config')->get()->result_array();
-            // if ($mailsetting[0]['isinvoice'] == 1) {
-            //     $mail = $this->invoice_pdf_generate($invoice_id);
-            //     if ($mail == 0) {
-            //         $data['message2'] = $this->session->set_userdata(array('error_message' => display('please_config_your_mail_setting')));
-            //     }
-            // }
+
             $data['details'] = $this->load->view('invoice/invoice_html', $data, true);
         } else {
             $data['status'] = false;
@@ -1650,11 +1729,11 @@ class Cinvoice extends CI_Controller
 
         $output = "";
         $count = 0;
-        if( $details[0]['due_amount'] == 0){
+        if( $details[0]['due'] == 0){
 
             $due= $details[0]['total_amount'];
         }else{
-            $due=$details[0]['due_amount'];
+            $due=$details[0]['due'];
         }
 
 
@@ -1916,6 +1995,27 @@ class Cinvoice extends CI_Controller
 
         redirect(base_url('Cinvoice/pending_dc/'));
     }
+    public function pay_customer()
+    {
+        $CI = &get_instance();
+
+        //echo "Ok";exit();
+
+        $CI->auth->check_admin_auth();
+        $CI->load->model('Invoices');
+
+        $invoice_id = $this->input->post("invoice_id", true);
+
+        $invoice_details = $CI->Invoices->pay_customer($invoice_id);
+
+
+
+
+
+        //   echo "ok";exit();
+
+        redirect(base_url('Cinvoice/pending_dc/'));
+    }
 
     public function approve_so_details($invoice_id)
     {
@@ -1945,6 +2045,17 @@ class Cinvoice extends CI_Controller
         $CI->load->library('linvoice');
 
         $content = $this->linvoice->pending_dc_edit($invoice_id);
+
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function customer_payment($invoice_id)
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+
+        $content = $this->linvoice->customer_payment($invoice_id);
 
         $this->template->full_admin_html_view($content);
     }

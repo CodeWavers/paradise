@@ -123,6 +123,7 @@
                                     <div class="col-sm-9">
                                     <input type="text" class="form-control" name="" id="" value="<?= $rqsn_details[0]['vessel_name'] ?>" readonly >
                                     <input type="hidden" class="form-control" name="rqsn_for" id="rqsn_for" value="<?= $rqsn_details[0]['customer_id'] ?>" readonly >
+                                        <input type="hidden" value="<?= $rqsn_details[0]['due'] ?>" name="due_amount" class="form-control due_amount" id="due_amount"  readonly>
 
                                     </div>
                                 </div>
@@ -190,6 +191,7 @@
                                         <td style="width: 5%;" >
                                             <input type="text" value="<?php echo $rqsn_detail['order_qty']?>" name="order_qty[]" class="form-control order_quantity" id="order_quantity"  readonly>
                                             <input type="hidden" value="<?php echo $current_stock?>" name="current_stock[]" class="form-control current_stock" id="current_stock"  readonly>
+
                                         </td>
                                         <td style="width: 5%;" >
                                             <input type="text" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity"  readonly>

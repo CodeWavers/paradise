@@ -272,11 +272,11 @@
         //    isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
         //});
 
-        $("#sub_total").val(gr_tot.toFixed(2, 2));
+        $("#sub_total").val(gr_tot.toFixed(2));
 
         var real_gr_tot = gr_tot - (discount ? parseFloat(discount) : 0) + (other_charges ? parseFloat(other_charges) : 0);
 
-        $("#grand_total").val(real_gr_tot.toFixed(2, 2));
+        $("#grand_total").val(real_gr_tot.toFixed(2));
 
         $("#due_amount").val((real_gr_tot - advance).toFixed(2));
 

@@ -1488,6 +1488,39 @@ class Linvoice
         return $CI->parser->parse('invoice/pending_dc_edit', $data, true);
     }
 
+    public function customer_payment($invoice_no)
+    {
+        $CI = & get_instance();
+        $CI->load->model('Invoices');
+        $CI->load->model('Warehouse');
+        $CI->load->model('Reports');
+
+        $outlet_list    = $CI->Warehouse->branch_list();
+        $rqsn_details = $CI->Invoices->customer_payment($invoice_no);
+        $grand_total = array_sum(array_column($rqsn_details, 'total'));
+
+
+        if(!empty($rqsn_details)){
+            $sl = 0;
+            foreach ($rqsn_details as $key => $value) {
+                $sl++;
+                $rqsn_details[$key]['sl'] = $sl;
+            }
+        }
+
+        $data = array(
+            'title'             => 'Customer Payment',
+            'rqsn_details'      => $rqsn_details,
+            'outlet_list'       => $outlet_list,
+            'grand_total'       => $grand_total,
+            'sl'       => $sl,
+        );
+
+        //  echo '<pre>';print_r($grand_total);exit();
+
+        return $CI->parser->parse('invoice/customer_payment', $data, true);
+    }
+
 
     public function delivery_chalan()
     {

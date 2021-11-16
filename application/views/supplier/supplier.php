@@ -69,18 +69,16 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-responsive " cellspacing="0"  id="supplierList">
+                            <table class="table table-striped table-bordered " cellspacing="0" width="100%"   id="supplierList">
                           <thead>
                               <tr>
-                                  <th width="150px"><?php echo display('supplier_name') ?></th>
-                                  <th width="300px"><?php echo display('address') ?></th>
-                                  <th width="150px"><?php echo display('mobile') ?></th>
-<!--                                  <th>--><?php //echo display('phone'); ?><!--</th>-->
-                                  <th width="150px"><?php echo display('email'); ?></th>
-<!--                                  <th>--><?php //echo display('city'); ?><!--</th>-->
-                                  <th width="150px"><?php echo display('country'); ?></th>
-                                  <th width="150px"><?php echo display('balance'); ?></th>
-                                  <th width="150px"><?php echo display('action'); ?>
+                                  <th ><?php echo display('supplier_name') ?></th>
+                                  <th ><?php echo display('address') ?></th>
+                                  <th ><?php echo display('mobile') ?></th>
+                                  <th ><?php echo display('email'); ?></th>
+                                  <th ><?php echo display('country'); ?></th>
+                                  <th ><?php echo display('balance'); ?></th>
+                                  <th ><?php echo display('action'); ?>
                                   </th>
                               </tr>
                           </thead>

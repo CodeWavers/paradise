@@ -68,7 +68,7 @@
                                         if ($vessel_data) {
                                             ?>
                                             {vessel_data}
-                                            <input class="form-control m-b-5" name="vessel_name[]" id="vessel_name" type="text" value="{vessel_name}" placeholder="Vessel Name"  tabindex="2">
+                                            <input class="form-control m-b-5 vessel_name_1" name="vessel_name[]" onkeyup="validation(1)" id="vessel_name" type="text" value="{vessel_name}" placeholder="Vessel Name"  tabindex="2">
 
                                             {/vessel_data}
                                             <?php
@@ -136,13 +136,14 @@
 </div>
 <!-- Edit customer end -->
 <script type="text/javascript">
-
+    var count = 1;
 
     $(".add_contact").click(function(){
+        count++;
         $("#multi_contact").append("     <div class=\"r_contact\" style=\"padding-bottom:10px \">\n" +
             "                            <label for=\"email\" class=\"col-sm-4 col-form-label\"></label>\n" +
             "                            <div class=\"col-sm-6\" style=\"padding-bottom:10px\" >\n" +
-            "                                <input class=\"form-control\" name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Vessel Name' ?>\"   tabindex=\"2\">\n" +
+            "                                <input class=\"form-control vessel_name_" + count + "\"  name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Vessel Name' ?>\"   tabindex=\"2\" onkeyup='validation(" + count + ");'>\n" +
             "\n" +
             "                            </div>\n" +
             "\n" +
@@ -156,6 +157,21 @@
         $(this).parents('.r_contact').remove();
         //the above method will remove the user_data div
     });
+
+    function validation(sl) {
+
+        var var1 =$('.vessel_name_'+sl).val();
+        var myRegEx = new RegExp('.*[\-\ ]+'); //make sure the var is a number
+
+
+
+        if (var1 == myRegEx.exec(var1)) {
+            toastr.error("Please ignore '-' & 'space' when you write vessele name");
+
+            $('.vessel_name_'+sl).val(var1.slice(0,-1));
+        }
+
+    }
 </script>
 
 
