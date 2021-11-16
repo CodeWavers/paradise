@@ -182,7 +182,30 @@
 
 
         var total_price = (item_ctn_qty * vendor_rate);
+        var discount = $("#discount").val()
+        var other_charges = $("#other_charges").val();
+        var advance = $("#advance").val();
+        var due_amount = $("#due_amount").val();
+
+
         $("#row_total_" + sl).val(total_price.toFixed(2));
+
+
+        //Total Price
+        $(".row_total").each(function() {
+            isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
+        });
+        // $(".discount").each(function() {
+        //    isNaN(this.value) || 0 == this.value.length || (dis += parseFloat(this.value))
+        //});
+
+        $("#sub_total").val(gr_tot.toFixed(2));
+
+        var real_gr_tot = gr_tot - (discount ? parseFloat(discount) : 0) + (other_charges ? parseFloat(other_charges) : 0);
+
+        $("#grand_total").val(real_gr_tot.toFixed(2));
+
+        $("#due_amount").val((real_gr_tot - advance).toFixed(2));
 
 
     }

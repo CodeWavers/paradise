@@ -1725,17 +1725,19 @@ class Cinvoice extends CI_Controller
         $invoice_no = $this->input->post('invoice_no', true);
 
         $details = $CI->Invoices->approved_so_details($invoice_no);
+      //  $total_amount=array_sum(array_column($details,'total_price'));
         // echo '<pre>'; print_r($rqsn_details); exit();
 
         $output = "";
         $count = 0;
-        if( $details[0]['due'] == 0){
+//        if( $details[0]['due'] == 0){
+//
+//            $due=$details[0]['total_amount'];
+//        }else{
+//            $due=$details[0]['total_amount']-$details[0]['paid_amount'];
+//        }
 
-            $due= $details[0]['total_amount'];
-        }else{
-            $due=$details[0]['due'];
-        }
-
+        $due=$details[0]['total_amount']-$details[0]['inv_paid'];
 
         $output .= '<div class="table-responsive">
         <table class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -2211,7 +2213,7 @@ class Cinvoice extends CI_Controller
                 <td><input type="text" class="form-control" value="' . $rq['model_name'] . '" readonly="readonly"></td>
                 <td><input type="text" class="form-control order_quantity" name="order_quantity[]" value="' . $rq['order_qty'] . '" readonly="readonly"></td>
                 <td><input id="qty_' . $count . '" type="text" name="adjusted_quantity[]" class="form-control adjusted_quantity" value="' . $rq['quantity'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
-                <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="' . $rq['rate'] . '" onclick="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
+                <td><input id="rate_' . $count . '" name="rate[]" type="text" class="form-control" value="' . $rq['rate'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')"></td>
                 <td><input type="text" id="row_total_' . $count . '" name="item_total[]" class="form-control row_total" value="' . $rq['total_price'] . '" readonly></td>
                 <td><button type="button" class="btn btn-sm btn-danger" onclick="delete_row(' . $rq['invoice_details_id'] . ', this)"><i class="fa fa-trash"></i></button></td></tr>';
         }
@@ -2221,6 +2223,12 @@ class Cinvoice extends CI_Controller
 
 <input type="hidden" id="or_tot" name="or_tot" class="form-control" value="0" readonly="readonly">
 <input type="hidden" id="ad_tot" name="ad_tot" class="form-control" value="0" readonly="readonly">
+<input id="grand_total" name="grand_total" type="hidden" class="form-control" value="' . $rqsn_details[0]['total_amount'] . '" readonly="readonly">
+<input name="advance" id="advance" type="hidden" class="form-control" value="' . $rqsn_details[0]['inv_paid'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
+<input id="other_charges" name="other_chargFes" type="hidden" class="form-control" value="' . $rqsn_details[0]['other_charges'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
+<input id="discount" name="discount" type="hidden" class="form-control" value="' . $rqsn_details[0]['total_discount'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
+<input id="sub_total" name="sub_total" type="hidden" class="form-control" value="' . $rqsn_details[0]['sub_total'] . '" readonly="readonly">
+
 </tbody>
     </table>
     </div>';
@@ -2244,6 +2252,12 @@ class Cinvoice extends CI_Controller
         $rate = $this->input->post('rate', TRUE);
         $row_total = $this->input->post('item_total', TRUE);
 
+        $sub_total = $this->input->post('sub_total', TRUE);
+        $due_amount = $this->input->post('due_amount', TRUE);
+        $discount = $this->input->post('discount', TRUE);
+        $grand_total = $this->input->post('grand_total', TRUE);
+
+
         for ($i = 0; $i < count($invoice_details_id); $i++) {
             $item_id = $invoice_details_id[$i];
             $item_adjs_qty = $adjusted_qty[$i];
@@ -2262,14 +2276,35 @@ class Cinvoice extends CI_Controller
         }
 
 
+
+        $approve_data=array(
+
+            'total_amount'=>$grand_total,
+            'sub_total'=>$sub_total,
+            'due_amount'=>$due_amount,
+            'status'=>2
+
+        );
+
+        $approve_data_pending=array(
+
+            'total_amount'=>$grand_total,
+            'sub_total'=>$sub_total,
+            'due_amount'=>$due_amount,
+            'status'=>2,
+            'is_so_pending'=>1
+
+        );
+
+
         if ($or_tot > $ad_tot){
 
-            $this->db->set(array('status'=>2));
+            $this->db->set($approve_data);
             $this->db->where('invoice_id', $invoice_id);
             $this->db->update('invoice');
         }else{
 
-            $this->db->set(array('status'=>2,'is_so_pending'=>1));
+            $this->db->set($approve_data_pending);
             $this->db->where('invoice_id', $invoice_id);
             $this->db->update('invoice');
         }
