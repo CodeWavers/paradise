@@ -935,7 +935,7 @@ class reports extends CI_Model {
 
             $wastage_stock=(!empty($wd_stock->totalWastageQnty)?$wd_stock->totalWastageQnty:0);
             $wastage_stock_yes=(!empty($wd_stock_yes->totalWastageQnty)?$wd_stock_yes->totalWastageQnty:0);
-            $dead_stock=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
+            $dead_stock=(!empty($wd_stock->totalDeadQnty)?$wd_stock->totalDeadQnty:0);
            // $dead_stock_yes=(!empty($wd_stock_yes->totalDeadQnty)?$wd_stock_yes->totalDeadQnty:0);
             $purchase_stock=(!empty($stockin->totalPurchaseQnty)?$stockin->totalPurchaseQnty:0);
             $purchase_stock_yes=(!empty($stockin_yes->totalPurchaseQnty)?$stockin_yes->totalPurchaseQnty:0);

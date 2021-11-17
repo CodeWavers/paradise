@@ -1401,6 +1401,14 @@ class Cinvoice extends CI_Controller
         $rate = $this->input->post('rate', TRUE);
         $row_total = $this->input->post('item_total', TRUE);
 
+        $cusifo = $this->db->select('*')->from('customer_information')->where('customer_id', $customer_name)->get()->row();
+        $headn = $customer_name . '-' . $cusifo->customer_name;
+        $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName', $headn)->get()->row();
+        $customer_headcode = $coainfo->HeadCode;
+
+        $createby = $this->session->userdata('user_id');
+        $createdate = date('Y-m-d H:i:s');
+
         $data_1 = array(
             'rqsn_id'       => $rqsn_id,
             'invoice_id'    => $invoice_id,
@@ -1447,6 +1455,40 @@ class Cinvoice extends CI_Controller
         $this->db->set('is_sold', 1);
         $this->db->update('rqsn');
 
+
+        $coscr = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  $customer_headcode,
+            'Narration'      =>  'Customer credit For Invoice ID -  ' . $invoice_id . ' Customer ' . $cusifo->customer_name,
+            'Debit'          => 0,
+            'Credit'         => $paid_amount,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $coscr);
+
+        $cc = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  1020101,
+            'Narration'      =>  'Cash in Hand in Sale for Invoice ID - ' . $invoice_id . ' customer- ' . $cusifo->customer_name,
+            'Debit'          =>  $paid_amount,
+            'Credit'         =>  0,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $createby,
+            'CreateDate'     =>  $createdate,
+            'IsAppove'       =>  1,
+
+        );
+        $this->db->insert('acc_transaction', $cc);
+
+
+
         redirect('Cinvoice/sales_order');
     }
 
@@ -1469,6 +1511,7 @@ class Cinvoice extends CI_Controller
         $contact_no = $this->input->post('contact_no', TRUE);
         $vessel_name = $this->input->post('vessel_name', TRUE);
         $paid_amount = $this->input->post('advance', TRUE);
+        $paid_amount_new = $this->input->post('advance_new', TRUE);
         $due_amount = $this->input->post('due_amount', TRUE);
         $discount = $this->input->post('discount', TRUE);
         $grand_total = $this->input->post('grand_total', TRUE);
@@ -1486,7 +1529,7 @@ class Cinvoice extends CI_Controller
             'vessel_name'   => $vessel_name,
             'contact_no'   => $contact_no,
             'total_amount'  => $grand_total,
-            'paid_amount'   => $paid_amount,
+            'paid_amount'   => $paid_amount+$paid_amount_new,
             'due_amount'    => $due_amount,
             'total_discount' => $discount,
             'is_so_sold'        => 1
@@ -1558,7 +1601,7 @@ class Cinvoice extends CI_Controller
             'VDate'          =>  $createdate,
             'COAID'          =>  1020101,
             'Narration'      =>  'Cash in Hand in Sale for Invoice ID - ' . $invoice_id . ' customer- ' . $cusifo->customer_name,
-            'Debit'          =>  $paid_amount,
+            'Debit'          =>  $paid_amount_new,
             'Credit'         =>  0,
             'IsPosted'       =>  1,
             'CreateBy'       =>  $createby,
@@ -1583,7 +1626,7 @@ class Cinvoice extends CI_Controller
             'COAID'          =>  $customer_headcode,
             'Narration'      =>  'Customer credit for Paid Amount For Customer Invoice ID- ' . $invoice_id . ' Customer- ' . $cusifo->customer_name,
             'Debit'          =>  0,
-            'Credit'         =>  $paid_amount,
+            'Credit'         =>  $paid_amount_new,
             'IsPosted'       => 1,
             'CreateBy'       => $createby,
             'CreateDate'     => $createdate,
@@ -1789,7 +1832,12 @@ class Cinvoice extends CI_Controller
             </tr>
             <tr>
                 <td colspan="4" class="text-right">Advance</td>
-                <td><input name="advance" id="advance" type="text" class="form-control" value="' . $details[0]['inv_paid'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
+                <td><input name="advance" id="advance" type="text" class="form-control" value="' . $details[0]['inv_paid'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" readonly>
+                <input name="" id="ad_v" type="hidden" class="form-control" value="' . $details[0]['inv_paid'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" readonly></td>
+            </tr> 
+            <tr>
+                <td colspan="4" class="text-right">Pay Amount</td>
+                <td><input name="advance_new" id="advance_new" type="text" class="form-control" value="0" placeholder="0.00" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)"></td>
             </tr>
             <tr>
                 <td></td>
@@ -2096,7 +2144,7 @@ class Cinvoice extends CI_Controller
 
             $rq_qty=$this->db->select('quantity as qty')->from('rqsn_details')->where(array('rqsn_id'=>$rq['rqsn_id'],'product_id'=>$rq['product_id']))->get()->row();
 
-            $bl_qty =$rq_qty->qty - $rq['dc_qty'];
+            $bl_qty =$rq['quantity'] - $rq['dc_qty'];
 
             $count++;
             $output .= '<tr><td>' . $count . '</td>

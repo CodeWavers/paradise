@@ -377,7 +377,7 @@
     function quantity_calculate(t) {
 
 
-        var current_stock=$('.available_quantity_'+t).val();
+        var current_stock=parseFloat($('.available_quantity_'+t).val());
 
         var qty=$('.total_qntt_'+t).val();
 

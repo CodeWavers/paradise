@@ -257,7 +257,11 @@
 
         var discount = $("#discount").val()
         var other_charges = $("#other_charges").val();
-        var advance = $("#advance").val();
+       // var advance = $("#advance").val();
+        var ad_v = parseFloat($("#ad_v").val());
+
+
+        var advance_new = parseFloat($("#advance_new").val());
         var due_amount = $("#due_amount").val();
 
         var total_price = (item_ctn_qty * vendor_rate);
@@ -278,7 +282,16 @@
 
         $("#grand_total").val(real_gr_tot.toFixed(2));
 
-        $("#due_amount").val((real_gr_tot - advance).toFixed(2));
+
+        var t=ad_v+advance_new;
+        $("#advance").val(t.toFixed(2));
+        var due=real_gr_tot - t;
+
+
+        // console.log(ad_v)
+        // console.log(advance_new)
+        // console.log(ad_v+advance_new)
+        $("#due_amount").val(due.toFixed(2));
 
     }
 
