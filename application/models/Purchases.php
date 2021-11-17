@@ -1041,47 +1041,47 @@ class Purchases extends CI_Model {
     );
 //
 //
-         $purchasecoatran = array(
-          'VNo'            =>  $bill_no,
-          'Vtype'          =>  'Purchase',
-          'VDate'          =>  $payment_date,
-          'COAID'          =>  $sup_coa->HeadCode,
-          'Narration'      =>  'Supplier -'.$supinfo->supplier_name,
-          'Debit'          =>  0,
-          'Credit'         => $grand_total,
-          'IsPosted'       =>  1,
-          'CreateBy'       =>  $receive_by,
-          'CreateDate'     =>  $receive_date,
-          'IsAppove'       =>  1
-        );
+//         $purchasecoatran = array(
+//          'VNo'            =>  $bill_no,
+//          'Vtype'          =>  'Purchase',
+//          'VDate'          =>  $payment_date,
+//          'COAID'          =>  $sup_coa->HeadCode,
+//          'Narration'      =>  'Supplier -'.$supinfo->supplier_name,
+//          'Debit'          =>  0,
+//          'Credit'         => $grand_total,
+//          'IsPosted'       =>  1,
+//          'CreateBy'       =>  $receive_by,
+//          'CreateDate'     =>  $receive_date,
+//          'IsAppove'       =>  1
+//        );
           ///Inventory credit
-       $coscr = array(
-      'VNo'            =>  $bill_no,
-      'Vtype'          =>  'Purchase',
-      'VDate'          =>  $payment_date,
-      'COAID'          =>  10107,
-      'Narration'      =>  'Inventory Devit Supplier '.$supinfo->supplier_name,
-      'Debit'          =>  $grand_total,
-      'Credit'         =>  0,//purchase price asbe
-      'IsPosted'       => 1,
-      'CreateBy'       => $receive_by,
-      'CreateDate'     => $createdate,
-      'IsAppove'       => 1
-    );
+//       $coscr = array(
+//      'VNo'            =>  $bill_no,
+//      'Vtype'          =>  'Purchase',
+//      'VDate'          =>  $payment_date,
+//      'COAID'          =>  10107,
+//      'Narration'      =>  'Inventory Devit Supplier '.$supinfo->supplier_name,
+//      'Debit'          =>  $grand_total,
+//      'Credit'         =>  0,//purchase price asbe
+//      'IsPosted'       => 1,
+//      'CreateBy'       => $receive_by,
+//      'CreateDate'     => $createdate,
+//      'IsAppove'       => 1
+//    );
           // Expense for company
-         $expense = array(
-      'VNo'            => $bill_no,
-      'Vtype'          => 'Purchase',
-      'VDate'          =>$payment_date,
-      'COAID'          => 402,
-      'Narration'      => 'Company Credit For Supplier'.$supinfo->supplier_name,
-      'Debit'          => $grand_total,
-      'Credit'         => 0,//purchase price asbe
-      'IsPosted'       => 1,
-      'CreateBy'       => $receive_by,
-      'CreateDate'     => $createdate,
-      'IsAppove'       => 1
-    );
+//         $expense = array(
+//      'VNo'            => $bill_no,
+//      'Vtype'          => 'Purchase',
+//      'VDate'          =>$payment_date,
+//      'COAID'          => 402,
+//      'Narration'      => 'Company Credit For Supplier'.$supinfo->supplier_name,
+//      'Debit'          => $grand_total,
+//      'Credit'         => 0,//purchase price asbe
+//      'IsPosted'       => 1,
+//      'CreateBy'       => $receive_by,
+//      'CreateDate'     => $createdate,
+//      'IsAppove'       => 1
+//    );
 //
          $supplier_debit = array(
           'VNo'            =>  $bill_no,
@@ -1117,9 +1117,9 @@ class Purchases extends CI_Model {
         if ($count == 0){
             $this->db->insert('supplier_payment',$data_insert);
 
-            $this->db->insert('acc_transaction',$coscr);
-            $this->db->insert('acc_transaction',$purchasecoatran);
-            $this->db->insert('acc_transaction',$expense);
+//            $this->db->insert('acc_transaction',$coscr);
+//            $this->db->insert('acc_transaction',$purchasecoatran);
+//            $this->db->insert('acc_transaction',$expense);
 
             if($pay_type == 2){
                 if(!empty($paid_amount)){

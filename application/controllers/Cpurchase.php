@@ -1739,6 +1739,10 @@ class Cpurchase extends CI_Controller
         $grand_total = $this->input->post('total', TRUE);
         $po_id = $this->input->post('pur_order_no', TRUE);
 
+
+
+
+
         $this->db->where('purchase_id', $po_id);
         $this->db->set(array('grand_total_amount' => $grand_total, 'purchase_date' => $pur_date));
         $this->db->update('product_purchase');
@@ -1837,6 +1841,47 @@ class Cpurchase extends CI_Controller
             );
 
             $this->db->insert('supplier_product_price', $data_price);
+
+            $supinfo =$this->db->select('*')->from('supplier_information')->where('supplier_id',$supplier_id[$i])->get()->row();
+            $sup_head = $supinfo->supplier_id.'-'.$supinfo->supplier_name;
+            $sup_coa = $this->db->select('*')->from('acc_coa')->where('HeadName',$sup_head)->get()->row();
+            $receive_by=$this->session->userdata('user_id');
+            $receive_date=date('Y-m-d');
+            $createdate=date('Y-m-d H:i:s');
+
+
+
+
+            $purchasecoatran = array(
+                'VNo'            =>  $chalan_no[$i],
+                'Vtype'          =>  'Purchase',
+                'VDate'          =>  date('Y:m:d'),
+                'COAID'          =>  $sup_coa->HeadCode,
+                'Narration'      =>  'Supplier -'.$supinfo->supplier_name,
+                'Debit'          =>  0,
+                'Credit'         => $per_item_total[$i],
+                'IsPosted'       =>  1,
+                'CreateBy'       =>  $receive_by,
+                'CreateDate'     =>  $receive_date,
+                'IsAppove'       =>  1
+            );
+
+            $expense = array(
+                'VNo'            => $chalan_no[$i],
+                'Vtype'          => 'Purchase',
+                'VDate'          => date('Y:m:d'),
+                'COAID'          => 402,
+                'Narration'      => 'Company Debit For Supplier'.$supinfo->supplier_name,
+                'Debit'          => $per_item_total[$i],
+                'Credit'         => 0,//purchase price asbe
+                'IsPosted'       => 1,
+                'CreateBy'       => $receive_by,
+                'CreateDate'     => $createdate,
+                'IsAppove'       => 1
+            );
+            $this->db->insert('acc_transaction',$purchasecoatran);
+            $this->db->insert('acc_transaction',$expense);
+
         }
 
         redirect('Cpurchase/add_purchase/');

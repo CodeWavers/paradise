@@ -752,8 +752,9 @@ class reports extends CI_Model {
             $sales_stock_yes=ac;
 
 
-            $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
-            $closing_stock=$opening_stock+($purchase_stock-$sales_stock-$wastage_stock);
+           // $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
+            $opening_stock=0;
+            $closing_stock=($purchase_stock-$sales_stock-$wastage_stock);
 
 
 
@@ -1053,7 +1054,8 @@ class reports extends CI_Model {
             $sales_stock_yes=(!empty($stockout_yes->totalSalesQnty)?$stockout_yes->totalSalesQnty:0);
 
 
-            $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
+          //  $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
+            $opening_stock=0;
             $closing_stock=$opening_stock+($purchase_stock-$sales_stock-$wastage_stock);
 
 
@@ -1152,7 +1154,8 @@ class reports extends CI_Model {
             $sales_stock_yes=(!empty($stockout_yes->totalSalesQnty)?$stockout_yes->totalSalesQnty:0);
 
 
-            $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
+            //$opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;
+            $opening_stock=0;
             $closing_stock=$opening_stock+($purchase_stock-$sales_stock-$wastage_stock);
 
         return $closing_stock;
