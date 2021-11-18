@@ -1529,7 +1529,7 @@ class Cinvoice extends CI_Controller
             'vessel_name'   => $vessel_name,
             'contact_no'   => $contact_no,
             'total_amount'  => $grand_total,
-            'paid_amount'   => $paid_amount+$paid_amount_new,
+            'paid_amount'   => $paid_amount,
             'due_amount'    => $due_amount,
             'total_discount' => $discount,
             'is_so_sold'        => 1
