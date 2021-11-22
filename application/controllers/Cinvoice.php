@@ -2119,7 +2119,7 @@ class Cinvoice extends CI_Controller
         $dc_no = $this->input->post('dc_no', true);
 
         $details = $CI->Invoices->approved_check_details($dc_no);
-          //echo '<pre>'; print_r($details);
+        //  echo '<pre>'; print_r($details);
 
         $output = "";
         $count = 0;
@@ -2136,6 +2136,7 @@ class Cinvoice extends CI_Controller
                 <th width="5%">Delivered  Quantity</th>
                 <th width="5%">Balanced Quantity</th>
                 <th width="5%">Remarks</th>
+                <th width="5%">Total</th>
 
             </thead>
             <tbody>';
@@ -2160,12 +2161,32 @@ class Cinvoice extends CI_Controller
                 <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="' . $rq['dc_qty'] . '"  readonly></td>
                 <td><input  id="bl_qty_' . $count . '" type="text" class="form-control" name="bl_quantity[]" value="' . $bl_qty . '" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="' . $rq['remarks'] . '" placeholder="Remarks" readonly >
+                  <td><input type="text" name="row_total[]" class="form-control" value="' . $rq['total_price'] . '" placeholder="Remarks" readonly >
 
                 </td>
                 </tr>';
         }
 
         $output .= '</tbody>
+        <tfoot>
+       
+          
+        
+            <tr>
+                <td colspan="9" class="text-right"><b>Grand Total</b></td>
+                <td><input id="grand_total" name="grand_total" type="text" class="form-control" value="' . $details[0]['total_amount'] . '" readonly="readonly"></td>
+            </tr>
+         
+            <tr>
+                <td colspan="9" class="text-right">Paid Amount</td>
+                <td><input name="advance_new" id="advance_new" type="text" class="form-control" value="' . $details[0]['paid'] . '"  readonly></td>
+            </tr>
+            <tr>
+               
+                <td colspan="9" class="text-right">Due Amount</td>
+                <td><input name="due_amount" id="due_amount" type="text" class="form-control"  value="' . $details[0]['due'] . '" readonly></td>
+            </tr>
+        </tfoot>
 
     </table>
 

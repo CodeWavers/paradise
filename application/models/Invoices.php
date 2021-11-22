@@ -2959,7 +2959,7 @@ class Invoices extends CI_Model
 
 
 
-        $this->db->select('*');
+        $this->db->select('a.*,c.*,b.*,x.*,e.*,a.due_amount as due,a.paid_amount as paid');
         $this->db->from('invoice a');
         $this->db->where('a.dc_no', $dc_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
@@ -2968,6 +2968,8 @@ class Invoices extends CI_Model
         $this->db->join('rqsn e', 'a.rqsn_id = e.rqsn_id', 'left');
 
         $query = $this->db->get();
+       // echo '<pre>'; print_r($query->result_array());
+
 
         return $query->result_array();
     }

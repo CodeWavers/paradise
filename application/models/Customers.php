@@ -104,7 +104,7 @@ class Customers extends CI_Model {
 
              $html.='<ul>
 
-                <li>'.$v->vessel_name.'</li>
+                <li>'.$v->vessel_full_name.'('.$v->vessel_name.')'.'</li>
                 </ul>';
 
 

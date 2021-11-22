@@ -211,6 +211,7 @@ class Ccustomer extends CI_Controller {
 
          $customer_id = $this->db->insert_id();
                 $vessel=$this->input->post('vessel_name',TRUE);
+                $vessel_full_name=$this->input->post('vessel_full_name',TRUE);
 
         if ( ! empty($vessel))
         {
@@ -220,10 +221,11 @@ class Ccustomer extends CI_Controller {
 
 
                 $data6['vessel_name'] = $value;
+                $data6['vessel_full_name'] = $vessel_full_name[$key];
                 $data6['customer_id']=$customer_id;
 
 
-                //  echo '<pre>';print_r($data);
+                //  echo '<pre>';print_r($data6); exit();
                 // $this->ProductModel->add_products($data);
                 if ( ! empty($data6))
                 {
@@ -478,6 +480,7 @@ class Ccustomer extends CI_Controller {
         $this->db->delete('customer_vessel');
 
         $vessel=$this->input->post('vessel_name',TRUE);
+        $vessel_full_name=$this->input->post('vessel_full_name',TRUE);
 
         if ( ! empty($vessel))
         {
@@ -487,6 +490,7 @@ class Ccustomer extends CI_Controller {
 
 
                 $data6['vessel_name'] = $value;
+                $data6['vessel_full_name'] = $vessel_full_name[$key];
                 $data6['customer_id']=$customer_id;
 
 

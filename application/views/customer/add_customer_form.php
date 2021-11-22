@@ -83,8 +83,13 @@
                          <div class="form-group row" id="multi_contact">
                              <div class="r_contact" >
                                  <label for="contact" class="col-sm-4 col-form-label">Vessel Name<i class="text-danger">*</i></label>
-                                 <div class="col-sm-6" style="padding-bottom:10px ">
-                                     <input onkeyup="validation(1)" class="form-control vessel_name_1" name="vessel_name[]" id="vessel_name" type="text" placeholder="Vessel Name"   tabindex="2">
+                                 <div class="col-sm-4" style="padding-bottom:10px ">
+                                     <input  class="form-control vessel_full_name_1" name="vessel_full_name[]" id="vessel_full_name" type="text" placeholder="Full Form"   >
+
+                                 </div>
+
+                                 <div class="col-sm-2" style="padding-bottom:10px ">
+                                     <input onkeyup="validation(1)" class="form-control vessel_name_1" name="vessel_name[]" id="vessel_name" type="text" placeholder="Short Form"   >
 
                                  </div>
 
@@ -208,8 +213,13 @@
         count++;
         $("#multi_contact").append("     <div class=\"r_contact\" style=\"padding-bottom:10px \">\n" +
             "                            <label for=\"email\" class=\"col-sm-4 col-form-label\"></label>\n" +
-            "                            <div class=\"col-sm-6\" style=\"padding-bottom:10px\" >\n" +
-            "                                <input class=\"form-control vessel_name_" + count + "\"  name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Vessel Name' ?>\"   tabindex=\"2\" onkeyup='validation(" + count + ");'>\n" +
+            "                            <div class=\"col-sm-4\" style=\"padding-bottom:10px\" >\n" +
+            "                                <input class=\"form-control vessel_full_name_" + count + "\"  name=\"vessel_full_name[]\" id=\"vessel_full_name\" type=\"text\" placeholder=\"<?php echo 'Full Form' ?>\" >\n" +
+            "\n" +
+            "                            </div>\n" +
+
+            "                            <div class=\"col-sm-2\"  >\n" +
+            "                                <input class=\"form-control vessel_name_" + count + "\"  name=\"vessel_name[]\" id=\"vessel_name\" type=\"text\" placeholder=\"<?php echo 'Short Form' ?>\"   onkeyup='validation(" + count + ");'>\n" +
             "\n" +
             "                            </div>\n" +
             "\n" +
@@ -225,14 +235,16 @@
     });
 
     function validation(sl) {
+     //   alert(sl)
 
         var var1 =$('.vessel_name_'+sl).val();
-        var myRegEx = new RegExp('.*[\-\ ]+'); //make sure the var is a number
 
+
+        var myRegEx = new RegExp('.*[\-\ ]+');
 
 
         if (var1 == myRegEx.exec(var1)) {
-            toastr.error("Please ignore '-' & 'space' when you write vessele name");
+            toastr.error("Please ignore '-' and 'space' when you write vessel name");
 
             $('.vessel_name_'+sl).val(var1.slice(0,-1));
         }
