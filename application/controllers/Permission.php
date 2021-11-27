@@ -338,7 +338,7 @@ class Permission extends CI_Controller
    'name'        => $this->input->post('menu_name',true),
    'description' => null,
    'image'       => null,
-   'directory'   => null,
+   'directory'   => $this->input->post('menu_name',true),
    'status'      => 1,
     ];
     if(!empty($this->input->post('id',TRUE))){
