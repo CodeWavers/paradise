@@ -2292,13 +2292,52 @@ class Cinvoice extends CI_Controller
 
 <input type="hidden" id="or_tot" name="or_tot" class="form-control" value="0" readonly="readonly">
 <input type="hidden" id="ad_tot" name="ad_tot" class="form-control" value="0" readonly="readonly">
-<input id="grand_total" name="grand_total" type="hidden" class="form-control" value="' . $rqsn_details[0]['total_amount'] . '" readonly="readonly">
-<input name="advance" id="advance" type="hidden" class="form-control" value="' . $rqsn_details[0]['inv_paid'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
-<input id="other_charges" name="other_chargFes" type="hidden" class="form-control" value="' . $rqsn_details[0]['other_charges'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
-<input id="discount" name="discount" type="hidden" class="form-control" value="' . $rqsn_details[0]['total_discount'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
-<input id="sub_total" name="sub_total" type="hidden" class="form-control" value="' . $rqsn_details[0]['sub_total'] . '" readonly="readonly">
+<input type="hidden" id="" name="customer_id" class="form-control" value="' . $rqsn_details[0]['customer_id'] . '" readonly="readonly">
+<input type="hidden" id="" name="invoice_id" class="form-control" value="' . $rqsn_details[0]['invoice_id'] . '" readonly="readonly">
+
+
+
+
+
 
 </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9" class="text-right">Sub Total</td>
+                <td><input id="sub_total" name="sub_total" type="text" class="form-control" value="' . $rqsn_details[0]['sub_total'] . '" readonly="readonly"></td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-right">Discount</td>
+                <td>
+            <input id="discount" name="total_discount" type="text" class="form-control" value="' . $rqsn_details[0]['total_discount'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-right">Other Charges</td>
+                <td>
+            <input id="other_charges" name="other_charges" type="text" class="form-control" value="' . $rqsn_details[0]['other_charges'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-right"><b>Grand Total</b></td>
+                <td>
+            <input id="grand_total" name="grand_total" type="text" class="form-control" value="' . $rqsn_details[0]['total_amount'] . '" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-right">Advance</td>
+                <td>
+                <input name="advance" id="advance" type="text" class="form-control" value="' . $rqsn_details[0]['paid_amount'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" >
+                <input name="" id="ad_v" type="hidden" class="form-control" value="' . $rqsn_details[0]['paid_amount'] . '" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" readonly></td>
+            </tr> 
+          
+       
+            <tr>
+              
+                <td colspan="9" class="text-right">Due</td>
+                <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="' . $rqsn_details[0]['due_amount'] . '" readonly></td>
+            </tr>
+        </tfoot>
     </table>
     </div>';
 
@@ -2313,6 +2352,9 @@ class Cinvoice extends CI_Controller
     {
 
         $invoice_id = $this->input->post('invoice_no', TRUE);
+        $invoice_id_v = $this->input->post('invoice_id', TRUE);
+
+        $customer_id = $this->input->post('customer_id', TRUE);
 
         $invoice_details_id = $this->input->post('invoice_details_id', TRUE);
         $adjusted_qty = $this->input->post('adjusted_quantity', TRUE);
@@ -2322,8 +2364,10 @@ class Cinvoice extends CI_Controller
         $row_total = $this->input->post('item_total', TRUE);
 
         $sub_total = $this->input->post('sub_total', TRUE);
+        $advance = $this->input->post('advance', TRUE);
+        $other_charges = $this->input->post('other_charges', TRUE);
         $due_amount = $this->input->post('due_amount', TRUE);
-        $discount = $this->input->post('discount', TRUE);
+        $discount = $this->input->post('total_discount', TRUE);
         $grand_total = $this->input->post('grand_total', TRUE);
 
 
@@ -2348,6 +2392,9 @@ class Cinvoice extends CI_Controller
 
         $approve_data=array(
 
+            'paid_amount'=>$advance,
+            'other_charges'=>$other_charges,
+            'total_discount'=>$discount,
             'total_amount'=>$grand_total,
             'sub_total'=>$sub_total,
             'due_amount'=>$due_amount,
@@ -2357,6 +2404,9 @@ class Cinvoice extends CI_Controller
 
         $approve_data_pending=array(
 
+            'paid_amount'=>$advance,
+            'other_charges'=>$other_charges,
+            'total_discount'=>$discount,
             'total_amount'=>$grand_total,
             'sub_total'=>$sub_total,
             'due_amount'=>$due_amount,
@@ -2377,6 +2427,49 @@ class Cinvoice extends CI_Controller
             $this->db->where('invoice_id', $invoice_id);
             $this->db->update('invoice');
         }
+
+        $customer_name = $this->input->post('customer', TRUE);
+
+        $cusifo = $this->db->select('*')->from('customer_information')->where('customer_id', $customer_id)->get()->row();
+        $headn = $customer_name . '-' . $cusifo->customer_name;
+        $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName', $headn)->get()->row();
+        $customer_headcode = $coainfo->HeadCode;
+
+        $createby = $this->session->userdata('user_id');
+        $createdate = date('Y-m-d H:i:s');
+
+        $this->db->where('VNo', $invoice_id_v);
+        $this->db->delete('acc_transaction');
+        $coscr = array(
+            'VNo'            =>  $invoice_id_v,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  $customer_headcode,
+            'Narration'      =>  'Customer credit For Invoice ID -  ' . $invoice_id . ' Customer ' . $cusifo->customer_name,
+            'Debit'          => 0,
+            'Credit'         => $advance,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $coscr);
+
+        $cc = array(
+            'VNo'            =>  $invoice_id_v,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  1020101,
+            'Narration'      =>  'Cash in Hand in Sale for Invoice ID - ' . $invoice_id . ' customer- ' . $cusifo->customer_name,
+            'Debit'          =>  $advance,
+            'Credit'         =>  0,
+            'IsPosted'       =>  1,
+            'CreateBy'       =>  $createby,
+            'CreateDate'     =>  $createdate,
+            'IsAppove'       =>  1,
+
+        );
+        $this->db->insert('acc_transaction', $cc);
 
 
 

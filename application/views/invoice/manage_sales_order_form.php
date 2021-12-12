@@ -116,6 +116,7 @@
 <!--                        </div>-->
 
                         <div id="invo_details_div">
+
                             <h3 align="center">Select an invoice no. to get data.</h3>
                         </div>
 

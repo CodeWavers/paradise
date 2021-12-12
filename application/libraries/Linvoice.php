@@ -1418,8 +1418,8 @@ class Linvoice
             'sl'       => $sl,
         );
 
-        //  echo '<pre>';print_r($grand_total);exit();
-
+          //echo '<pre>';print_r($rqsn_details);exit();
+//
         return $CI->parser->parse('invoice/so_details_report', $data, true);
     }
 

@@ -2620,7 +2620,7 @@ class Invoices extends CI_Model
 
     public function approved_so_details($invoice_no)
     {
-        $this->db->select('*, a.paid_amount as inv_paid,a.due_amount as due');
+        $this->db->select('*, a.paid_amount as inv_paid,a.due_amount as due,a.total_discount,a.other_charges,a.total_amount');
         $this->db->from('invoice a');
         $this->db->where('a.invoice_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');

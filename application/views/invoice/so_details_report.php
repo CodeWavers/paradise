@@ -203,14 +203,43 @@
                                 <?php } ?>
                                 </tbody>
 
-<!--                                <tfoot>-->
-<!--                                <tr>-->
-<!--                                    <td colspan="9" class="text-right"><b>Grand Total:</b></td>-->
-<!--                                    <td style="width: 10%">-->
-<!--                                        <input  class="form-control" name="total" id="grand_total" value='--><?php //echo number_format($grand_total,2)?><!--' readonly/>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                                </tfoot>-->
+                                <tfoot>
+                                <tr>
+                                    <td colspan="10" class="text-right">Sub Total</td>
+                                    <td><input id="sub_total" name="sub_total" type="text" class="form-control" value="<?php echo $rqsn_detail['sub_total']?>" readonly="readonly"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="text-right">Discount</td>
+                                    <td>
+                                        <input id="discount" name="total_discount" type="text" class="form-control" value="<?php echo $rqsn_detail['total_discount']?>" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="text-right">Other Charges</td>
+                                    <td>
+                                        <input id="other_charges" name="other_charges" type="text" class="form-control" value="<?php echo $rqsn_detail['other_charges']?>" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="text-right"><b>Grand Total</b></td>
+                                    <td>
+                                        <input id="grand_total" name="grand_total" type="text" class="form-control" value="<?php echo $rqsn_detail['total_amount']?>" readonly="readonly">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="text-right">Advance</td>
+                                    <td>
+                                        <input name="advance" id="advance" type="text" class="form-control" value="<?php echo $rqsn_detail['inv_paid']?>" onchange="add_pur_calc_store(1)" onkeyup="add_pur_calc_store(1)" readonly>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+
+                                    <td colspan="10" class="text-right">Due</td>
+                                    <td><input name="due_amount" id="due_amount" type="text" class="form-control" value="<?php echo $rqsn_detail['due']?>" readonly></td>
+                                </tr>
+                                </tfoot>
                             </table>
 
                         </div>
