@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Laccounts extends CI_Model{
+class Laccounts {
 
     //Retrieve  daily closing List	
     public function daily_closing_list($links = null, $per_page = null, $page = null) {
@@ -77,51 +77,6 @@ class Laccounts extends CI_Model{
         return $reportList;
     }
 
-
-    public function money_receipt_html_data($coaid,$id) {
-        $CI = & get_instance();
-        $CI->load->model('Invoices');
-        $CI->load->model('Accounts_model');
-        $CI->load->model('Web_settings');
-        $CI->load->library('occational');
-        $CI->load->library('numbertowords');
-        $this->load->library('session');
-
-        $user_id=$this->session->userdata('user_id');
-
-        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
-
-
-        $mr_detail=$CI->Accounts_model->retrieve_mr_html_data($coaid,$id,$user_id);
-
-
-        $cod=$mr_detail['data'][0]['Credit'];
-
-        $credit_inword = $CI->numbertowords->convert_number($cod);
-
-       // $sumDebit=$this->db->select('SUM(Debit)')->from('acc_transaction')->where('COAID',102030000001)->get()->result_array();
-
-        $company_info = $CI->Invoices->retrieve_company();
-
-        $data=array(
-
-            'company_info'=>$company_info,
-            'mr_detail'=>$mr_detail,
-          'credit_inword'=>$credit_inword,
-            'currency'         => $currency_details[0]['currency'],
-            'cheque_no'=>$mr_detail['data'][0]['cheque_no'],
-            'other'=>$mr_detail['data'][0]['other_name'],
-            'pay_type'=>$mr_detail['data'][0]['pay_type'],
-          //'user'=>$user
-          //  'cod'=>$sumDebit
-        );
-
-
-
-       //echo '<pre>';print_r($data);exit();
-        $chapterList = $CI->parser->parse('newaccount/mr_html',$data,true);
-        return $chapterList;
-    }
 }
 
 ?>

@@ -358,7 +358,7 @@ class Lpurchase {
         $CI->load->model('Purchases');
         $purchase_list = $CI->Purchases->purchase_list_by_po_no();
 
-        //echo '<pre>';print_r($supplier_total);exit();
+       // echo '<pre>';print_r($purchase_list);exit();
 
         $data = array(
             'title'     => 'Supplier Payment',

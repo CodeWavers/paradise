@@ -41,20 +41,20 @@ class Accounts extends CI_Model {
     }
     public function taxsetup_create($data = array())
     {
+ 
 
-
-        $this->db->insert('payroll_tax_setup',$data);
+$this->db->insert('payroll_tax_setup',$data);
     }
-    public function viewTaxsetup()
+        public function viewTaxsetup()
     {
-        return $this->db->select('*')
+        return $this->db->select('*')   
             ->from('payroll_tax_setup')
             ->order_by('tax_setup_id', 'asc')
             ->get()
             ->result();
     }
 
-    public function taxsetup_updateForm($id){
+ public function taxsetup_updateForm($id){
         $this->db->where('tax_setup_id',$id);
         $query = $this->db->get('payroll_tax_setup');
         return $query->result_array();
@@ -67,7 +67,7 @@ class Accounts extends CI_Model {
 
     }
 
-    public function taxsetup_delete($id = null)
+        public function taxsetup_delete($id = null)
     {
         $this->db->where('tax_setup_id',$id)
             ->delete('payroll_tax_setup');
@@ -253,7 +253,7 @@ class Accounts extends CI_Model {
                 $serial++;
             }
 
-
+         
         }
         $this->sub_total = $total;
 
@@ -264,7 +264,7 @@ class Accounts extends CI_Model {
         $this->db->select(" * ");
         $this->db->from($table);
         $this->db->where(array('date >=' => $start, 'date <=' => $end));
-
+     
         $result_account = $this->db->get();
         $account = $result_account->result_array();
         $serial = 1;
@@ -592,23 +592,23 @@ class Accounts extends CI_Model {
     //tax report query
     public function taxdata($from_date,$to_date){
         return $this->db->select('a.*,b.invoice')
-            ->from('tax_collection a')
-            ->join('invoice b','a.relation_id = b.invoice_id','left')
-            ->where('a.date >=', $from_date)
-            ->where('a.date <=', $to_date)
-            ->get()
-            ->result_array();
+                        ->from('tax_collection a')
+                        ->join('invoice b','a.relation_id = b.invoice_id','left')
+                        ->where('a.date >=', $from_date)
+                        ->where('a.date <=', $to_date)
+                        ->get()
+                        ->result_array();
     }
     // customer information for tax info
     public function tax_customer(){
         return $this->db->select('*')
-            ->from('customer_information')
-            ->get()
-            ->result_array();
+                        ->from('customer_information')
+                        ->get()
+                        ->result_array();
     }
 
     // customer wise tax data
-    public function customer_taxdata($from_date,$to_date,$invoice_id){
+       public function customer_taxdata($from_date,$to_date,$invoice_id){
         $this->db->select('a.*,b.invoice');
         $this->db->from('tax_collection a');
         $this->db->join('invoice b','a.relation_id = b.invoice_id','left');

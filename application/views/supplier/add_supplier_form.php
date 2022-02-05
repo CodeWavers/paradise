@@ -201,7 +201,7 @@
                             <div class="form-group row">
                                 <label for="address2 " class="col-sm-4 col-form-label">Bank Details (If Any)</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" name="bank_details" id="bank_details" rows="2" placeholder="<?php echo display('supplier_address') ?>2" ></textarea>
+                                    <textarea class="form-control" name="bank_details" id="bank_details" rows="2" placeholder="Bank Details" ></textarea>
                                 </div>
                             </div>
 

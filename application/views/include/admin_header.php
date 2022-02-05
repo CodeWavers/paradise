@@ -983,16 +983,18 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                                 }
                                                 ?>"><a href="<?php echo base_url('Cpurchase/purchase_order_approve_new') ?>">PO Approve</a>
                             </li>
+
+                            <li class="treeview <?php
+                            if ($this->uri->segment('1') == ("add_purchase") && $this->uri->segment('2') == ("add_purchase")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href="<?php echo base_url('Cpurchase/add_purchase') ?>">Add Purchase</a></li>
                         <?php } ?>
 
                         <?php if ($this->permission1->method('add_purchase', 'create')->access()) { ?>
-                            <li class="treeview <?php
-                                                if ($this->uri->segment('1') == ("add_purchase") && $this->uri->segment('2') == ("add_purchase")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href="<?php echo base_url('Cpurchase/add_purchase') ?>">Add Purchase</a></li>
+
                         <?php } ?>
 
                         <?php if ($this->permission1->method('purchase_order_approve', 'create')->access()) { ?>
@@ -1600,12 +1602,12 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
             <!--New Account start-->
             <?php if ($this->permission1->method('show_tree', 'read')->access() || $this->permission1->method('supplier_payment', 'create')->access() || $this->permission1->method('customer_receive', 'create')->access() || $this->permission1->method('debit_voucher', 'create')->access() || $this->permission1->method('credit_voucher', 'create')->access() || $this->permission1->method('aprove_v', 'read')->access() || $this->permission1->method('contra_voucher', 'create')->access() || $this->permission1->method('journal_voucher', 'create')->access()) { ?>
                 <li class="treeview <?php
-                                    if ($this->uri->segment('1') == ("accounts")) {
-                                        echo "active";
-                                    } else {
-                                        echo " ";
-                                    }
-                                    ?>">
+                if ($this->uri->segment('1') == ("accounts")) {
+                    echo "active";
+                } else {
+                    echo " ";
+                }
+                ?>">
                     <a href="#">
                         <i class="fa fa-money"></i><span><?php echo display('accounts') ?></span>
                         <span class="pull-right-container">
@@ -1615,104 +1617,78 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                     <ul class="treeview-menu">
                         <?php if ($this->permission1->method('show_tree', 'read')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("show_tree")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/show_tree') ?>"><?php echo display('c_o_a'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/show_tree') ?>"><?php echo display('c_o_a'); ?></a></li>
                         <?php } ?>
                         <?php if ($this->permission1->method('supplier_payment', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("supplier_payment")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/supplier_payment') ?>"><?php echo display('supplier_payment'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/supplier_payment') ?>"><?php echo display('supplier_payment'); ?></a></li>
                         <?php } ?>
                         <?php if ($this->permission1->method('customer_receive', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("customer_receive")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/customer_receive') ?>"><?php echo display('customer_receive'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/customer_receive') ?>"><?php echo display('customer_receive'); ?></a></li>
                         <?php } ?>
 
                         <?php if ($this->permission1->method('cash_adjustment', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("cash_adjustment")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/cash_adjustment') ?>"><?php echo display('cash_adjustment'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/cash_adjustment') ?>"><?php echo display('cash_adjustment'); ?></a></li>
                         <?php } ?>
                         <?php if ($this->permission1->method('debit_voucher', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("debit_voucher")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/debit_voucher') ?>"><?php echo display('debit_voucher') ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/debit_voucher') ?>"><?php echo display('debit_voucher') ?></a></li>
                         <?php } ?>
                         <?php if ($this->permission1->method('credit_voucher', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("credit_voucher")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/credit_voucher') ?>"><?php echo display('credit_voucher'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/credit_voucher') ?>"><?php echo display('credit_voucher'); ?></a></li>
                         <?php } ?>
 
                         <?php if ($this->permission1->method('contra_voucher', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("contra_voucher")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/contra_voucher') ?>"><?php echo display('contra_voucher'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/contra_voucher') ?>"><?php echo display('contra_voucher'); ?></a></li>
                         <?php } ?>
                         <?php if ($this->permission1->method('journal_voucher', 'create')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("journal_voucher")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/journal_voucher') ?>"><?php echo display('journal_voucher'); ?></a>
-                            </li>
+                                echo "active";
+                            } else {
+                                echo " ";
+                            } ?>"><a href="<?php echo base_url('accounts/journal_voucher') ?>"><?php echo display('journal_voucher'); ?></a></li>
                         <?php } ?>
-
-                        <?php if ($this->permission1->method('credit_voucher', 'create')->access()) { ?>
-                            <li class="treeview <?php if ($this->uri->segment('2') == ("credit_voucher")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>"><a href="<?php echo base_url('accounts/money_reciept') ?>">Money Reciept</a></li>
-                        <?php } ?>
-
+                        <!--
                         <?php if ($this->permission1->method('aprove_v', 'read')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("aprove_v")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                } ?>">
-                                <a href="<?php echo base_url('accounts/aprove_v') ?>"><?php echo display('voucher_approval'); ?></a>
-                            </li>
-                        <?php } ?>
+                            echo "active";
+                        } else {
+                            echo " ";
+                        } ?>"><a href="<?php echo base_url('accounts/aprove_v') ?>"><?php echo display('voucher_approval'); ?></a></li>
+                        <?php } ?> -->
                         <?php if ($this->permission1->method('ac_report', 'create')->access()) { ?>
                             <li class="treeview <?php
-                                                if ($this->uri->segment('2') == ("voucher_report") || $this->uri->segment('2') == ("cash_book") || $this->uri->segment('2') == ("bank_book") || $this->uri->segment('2') == ("general_ledger") || $this->uri->segment('2') == ("trial_balance") || $this->uri->segment('2') == ("profit_loss_report") || $this->uri->segment('2') == ("cash_flow_report") || $this->uri->segment('2') == ("inventory_ledger") || $this->uri->segment('2') == ("coa_print")) {
-                                                    echo "active";
-                                                } else {
-                                                    echo " ";
-                                                }
-                                                ?>"><a href=""><?php echo display('report') ?>
+                            if ($this->uri->segment('2') == ("voucher_report") || $this->uri->segment('2') == ("cash_book") || $this->uri->segment('2') == ("bank_book") || $this->uri->segment('2') == ("general_ledger") || $this->uri->segment('2') == ("trial_balance_new") || $this->uri->segment('2') == ("profit_loss_report") || $this->uri->segment('2') == ("cash_flow_report") || $this->uri->segment('2') == ("inventory_ledger") || $this->uri->segment('2') == ("coa_print")) {
+                                echo "active";
+                            } else {
+                                echo " ";
+                            }
+                            ?>"><a href=""><?php echo display('report') ?>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -1720,104 +1696,89 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 <ul class="treeview-menu">
                                     <?php if ($this->permission1->method('cash_book', 'read')->access()) { ?>
                                         <li class="treeview <?php if ($this->uri->segment('2') == ("cash_book")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/cash_book') ?>"><?php echo display('cash_book'); ?></a>
-                                        </li>
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url('accounts/cash_book') ?>"><?php echo display('cash_book'); ?></a></li>
                                     <?php } ?>
-                                    <?php if ($this->permission1->method('inventory_ledger', 'read')->access()) { ?>
-                                        <li class="treeview <?php if ($this->uri->segment('2') == ("inventory_ledger")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/inventory_ledger') ?>"><?php echo display('Inventory_ledger'); ?></a>
-                                        </li>
-                                    <?php } ?>
+<!--                                    --><?php //if ($this->permission1->method('inventory_ledger', 'read')->access()) { ?>
+<!--                                        <li class="treeview --><?php //if ($this->uri->segment('2') == ("inventory_ledger")) {
+//                                            echo "active";
+//                                        } else {
+//                                            echo " ";
+//                                        } ?><!--"><a href="--><?php //echo base_url('accounts/inventory_ledger') ?><!--">--><?php //echo display('Inventory_ledger'); ?><!--</a></li>-->
+<!--                                    --><?php //} ?>
                                     <?php if ($this->permission1->method('bank_book', 'read')->access()) { ?>
                                         <li class="treeview <?php if ($this->uri->segment('2') == ("bank_book")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/bank_book') ?>"><?php echo display('bank_book'); ?></a>
-                                        </li>
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url('accounts/bank_book') ?>"><?php echo display('bank_book'); ?></a></li>
                                     <?php } ?>
                                     <?php if ($this->permission1->method('general_ledger', 'read')->access()) { ?>
                                         <li class="treeview <?php if ($this->uri->segment('2') == ("general_ledger")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/general_ledger') ?>"><?php echo display('general_ledger'); ?></a>
-                                        </li>
-                                    <?php } ?>
-
-                                    <?php if ($this->permission1->method('supplier_payment_report', 'read')->access()) { ?>
-                                        <li class="treeview <?php if ($this->uri->segment('2') == ("general_ledger")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('admin_dashboard/supplier_payment_report') ?>">Supplier
-                                                Payment Report</a>
-                                        </li>
-                                    <?php } ?>
-
-                                    <?php if ($this->permission1->method('customer_recieve_report', 'read')->access()) { ?>
-                                        <li class="treeview <?php if ($this->uri->segment('2') == ("general_ledger")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('admin_dashboard/customer_recieve_report') ?>">Customer
-                                                Recieve Report</a>
-                                        </li>
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url('accounts/general_ledger') ?>"><?php echo display('general_ledger'); ?></a></li>
                                     <?php } ?>
                                     <?php if ($this->permission1->method('trial_balance', 'read')->access()) { ?>
                                         <li class="treeview <?php if ($this->uri->segment('2') == ("trial_balance")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/trial_balance') ?>"><?php echo display('trial_balance'); ?></a>
-                                        </li>
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url('accounts/trial_balance_new') ?>"><?php echo display('trial_balance'); ?></a></li>
                                     <?php } ?>
                                     <li class="treeview <?php if ($this->uri->segment('2') == ("profit_loss_report")) {
-                                                            echo "active";
-                                                        } else {
-                                                            echo " ";
-                                                        } ?>">
-                                        <a href="<?php echo base_url('accounts/profit_loss_report') ?>"><?php echo display('profit_loss'); ?></a>
-                                    </li>
-                                    <?php if ($this->permission1->method('cash_flow_report', 'read')->access()) { ?>
-                                        <li class="treeview <?php if ($this->uri->segment('2') == ("cash_flow_report")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/cash_flow_report') ?>"><?php echo display('cash_flow'); ?></a>
-                                        </li>
+                                        echo "active";
+                                    } else {
+                                        echo " ";
+                                    } ?>"><a href="<?php echo base_url('accounts/profit_loss_report') ?>"><?php echo display('profit_loss'); ?></a></li>
+                                    <?php if (
+                                    $this->permission1
+                                        ->method('cash_flow_report', 'read')
+                                        ->access()
+                                    ) { ?>
+                                        <li class="treeview <?php if (
+                                            $this->uri->segment('2') == "profit_and_loss"
+                                        ) {
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url(
+                                                'accounts/profit_and_loss'
+                                            ); ?>"><?php echo "Profit And Loss Account"; ?></a></li>
                                     <?php } ?>
 
-                                    <?php if ($this->permission1->method('balance_sheet_report', 'read')->access()) { ?>
-                                        <li class="treeview <?php if ($this->uri->segment('2') == ("balance_sheet_report")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>"><a href="<?php echo base_url('accounts/balance_sheet_report') ?>">Balance
-                                                Sheet</a></li>
+                                    <?php if (
+                                    $this->permission1
+                                        ->method('cash_flow_report', 'read')
+                                        ->access()
+                                    ) { ?>
+                                        <li class="treeview <?php if (
+                                            $this->uri->segment('2') == "balance_sheet_report"
+                                        ) {
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url(
+                                                'accounts/balance_sheet_report_search_new'
+                                            ); ?>">Balance Sheet</a></li>
+                                    <?php } ?>
+
+                                    <?php if ($this->permission1->method('cash_flow_report', 'read')->access()) { ?>
+                                        <li class="treeview <?php if ($this->uri->segment('2') == ("cash_flow_report")) {
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url('accounts/cash_flow_report') ?>"><?php echo display('cash_flow'); ?></a></li>
                                     <?php } ?>
                                     <?php if ($this->permission1->method('coa_print', 'read')->access()) { ?>
                                         <li class="treeview <?php if ($this->uri->segment('2') == ("coa_print")) {
-                                                                echo "active";
-                                                            } else {
-                                                                echo " ";
-                                                            } ?>">
-                                            <a href="<?php echo base_url('accounts/coa_print') ?>"><?php echo display('coa_print'); ?></a>
-                                        </li>
+                                            echo "active";
+                                        } else {
+                                            echo " ";
+                                        } ?>"><a href="<?php echo base_url('accounts/coa_print') ?>"><?php echo display('coa_print'); ?></a></li>
                                     <?php } ?>
                                 </ul>
 
@@ -1827,6 +1788,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                 </li>
             <?php } ?>
             <!-- New Account End -->
+
 
             <!-- Bank menu start -->
             <?php if ($this->permission1->method('add_bank', 'create')->access() || $this->permission1->method('bank_transaction', 'create')->access() || $this->permission1->method('bank_list', 'read')->access()) { ?>

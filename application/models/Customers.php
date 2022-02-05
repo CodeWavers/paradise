@@ -94,6 +94,7 @@ class Customers extends CI_Model {
   
          foreach($records as $record ){
           $button = '';
+
           $base_url = base_url();
           $jsaction = "return confirm('Are You Sure ?')";
 
@@ -110,12 +111,12 @@ class Customers extends CI_Model {
 
          }
        
-   if($this->permission1->method('manage_customer','update')->access()){
+    if($this->permission1->method('manage_customer','update')->access()){
     $button .='<a href="'.$base_url.'Ccustomer/customer_update_form/'.$record->customer_id.'" class="btn btn-info btn-xs"  data-placement="left" title="'. display('update').'"><i class="fa fa-edit"></i></a> ';
-}
+        }
    if($this->permission1->method('manage_customer','delete')->access()){
      $button .='<a href="'.$base_url.'Ccustomer/customer_delete/'.$record->customer_id.'" class="btn btn-danger btn-xs " onclick="'.$jsaction.'"><i class="fa fa-trash"></i></a>';
- }
+    }
 
 
         
