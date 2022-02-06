@@ -1729,11 +1729,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                             echo " ";
                                         } ?>"><a href="<?php echo base_url('accounts/trial_balance_new') ?>"><?php echo display('trial_balance'); ?></a></li>
                                     <?php } ?>
-                                    <li class="treeview <?php if ($this->uri->segment('2') == ("profit_loss_report")) {
-                                        echo "active";
-                                    } else {
-                                        echo " ";
-                                    } ?>"><a href="<?php echo base_url('accounts/profit_loss_report') ?>"><?php echo display('profit_loss'); ?></a></li>
+
                                     <?php if (
                                     $this->permission1
                                         ->method('cash_flow_report', 'read')
@@ -1746,7 +1742,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                         } else {
                                             echo " ";
                                         } ?>"><a href="<?php echo base_url(
-                                                'accounts/profit_and_loss'
+                                                'accounts/profit_loss_report_search'
                                             ); ?>"><?php echo "Profit And Loss Account"; ?></a></li>
                                     <?php } ?>
 

@@ -813,30 +813,7 @@ class Accounts extends CI_Controller
     $this->template->full_admin_html_view($content);
   }
   //Profit loss serch result
-  public function profit_loss_report_search()
-  {
-    $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
-    $dtpToDate   = $this->input->post('dtpToDate', TRUE);
 
-    $get_profit_bl  = $this->accounts_model->balance_sheet_search();
-    $get_profit  = $this->accounts_model->profit_loss_serach();
-
-    $data['oResultIncome']  = $get_profit_bl['oResultIncome'];
-    $data['oResultExpence']  = $get_profit_bl['oResultExpence'];
-    $data['oResultAsset'] = $get_profit_bl['oResultAsset'];
-    $data['oResultLiability']  = $get_profit_bl['oResultLiability'];
-    $data['dtpFromDate']  = $dtpFromDate;
-    $data['dtpToDate']    = $dtpToDate;
-    $data['pdf']    = 'assets/data/pdf/Statement of Comprehensive Income From ' . $dtpFromDate . ' To ' . $dtpToDate . '.pdf';
-    $data['title']  = display('profit_loss_report');
-
-    // echo '<pre>';
-    // print_r($data);
-    // exit();
-
-    $content = $this->parser->parse('newaccount/profit_loss_report_search', $data, true);
-    $this->template->full_admin_html_view($content);
-  }
   //Cash flow page
   public function cash_flow_report()
   {
@@ -981,17 +958,64 @@ class Accounts extends CI_Controller
     $this->template->full_admin_html_view($content);
   }
 
-    public function profit_and_loss()
+    public function profit_loss_report_search()
     {
-        $this->load->model('accounts_model');
-        $this->load->model('invoices');
-        $this->load->model('purchases');
-        $this->load->model('reports');
-        $this->load->model('service');
+        $CI = &get_instance();
+        $CI->load->model('Reports');
+        $CI->load->model('Rqsn');
 
-        $data = array();
 
-        $content = $this->parser->parse('newaccount/profit_and_loss_report', $data, true);
+
+        $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
+        $dtpToDate   = $this->input->post('dtpToDate', TRUE);
+        $today   = date('Y-m-d');
+
+        $get_profit  = $this->accounts_model->profit_loss_serach();
+
+
+
+        $closing_inventory = $this->Reports->getCheckList();
+
+
+
+
+
+
+        $data['oResultAsset'] = $get_profit['oResultAsset'];
+        $data['oResultLiability']  = $get_profit['oResultLiability'];
+        $data['product_sale']  = $get_profit['product_sale'];
+        $data['opening_inventory']  = $get_profit['opening_inventory'];
+        $data['product_purchase']  = $get_profit['product_purchase'];
+        $data['abc']  = $get_profit['product_purchase'] + $get_profit['opening_inventory'] + $get_profit['direct_expense'];
+        $data['closing_inventory']  = $closing_inventory['closing_inventory'];
+        $data['service_income']  = $get_profit['service_income'];
+        $data['direct_expense']  = $get_profit['direct_expense'];
+        $data['indirect_expense']  = $get_profit['indirect_expense'];
+        $data['indirect_income']  = $get_profit['indirect_income'];
+        $data['sale_return']  = $get_profit['sale_return'];
+        $data['expense']  = $get_profit['expense'];
+        $data['indirect_expense_c']  = $get_profit['indirect_expense_c'];
+        $data['indirect_income_c']  = $get_profit['indirect_income_c'];
+        $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['closing_inventory'];
+        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $data['closing_inventory'];
+
+        $data['total_sale']  = $get_profit['product_sale'] - $get_profit['sale_return'] + $get_profit['service_income'];
+        $data['gross_profit']  =    $data['total_sale'] -  $data['total_i'];
+
+
+
+        $data['right_total']  =    $data['gross_profit'] +  $data['indirect_income'];
+        $data['net_profit']  =    ($data['gross_profit'] - $data['indirect_expense']) + $get_profit['indirect_income'];
+        $data['left_total']  =    $data['indirect_expense'] +  $data['net_profit'];
+        $data['dtpFromDate']  = $dtpFromDate;
+        $data['dtpToDate']    = $dtpToDate;
+        $data['today']    = $today;
+        $data['pdf']    = 'assets/data/pdf/Statement of Comprehensive Income Till ' . $today . '.pdf';
+        $data['title']  = display('profit_loss_report');
+
+        // echo '<pre>';print_r( $data['expense'] );exit();
+
+        $content = $this->parser->parse('newaccount/profit_loss', $data, true);
         $this->template->full_admin_html_view($content);
     }
 
@@ -999,36 +1023,21 @@ class Accounts extends CI_Controller
     {
         $CI = &get_instance();
         $CI->load->model('Reports');
-        $CI->load->model('Warehouse');
         $CI->load->model('Rqsn');
         $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
         $dtpToDate   = $this->input->post('dtpToDate', TRUE);
         $today   = date('Y-m-d');
 
-        $outlet_id = $this->input->post('outlet');
-        $outlet_user        = $CI->Warehouse->get_outlet_user();
-        $cw = $CI->Warehouse->central_warehouse();
-        $outlet_list = $CI->Warehouse->branch_list_product();
 
-        $get_profit  = $this->accounts_model->balance_sheet($outlet_id);
+        $get_profit  = $this->accounts_model->balance_sheet();
 
-        if (!$outlet_id) {
-            $outlet_id = $outlet_user[0]['outlet_id'];
-        }
-
-        if ($outlet_id) {
-            $closing_inventory = $this->Rqsn->outlet_stock();
-        } else {
-            $closing_inventory = $this->Reports->getCheckList();
-        }
 
 
         //$postData = $this->input->post();
         $closing_inventory = $this->Reports->getCheckList();
 
-        $data['outlet'] = $outlet_user;
-        $data['cw'] = $cw;
-        $data['outlet_list'] = $outlet_list;
+
+
         $data['oResultAsset'] = $get_profit['oResultAsset'];
         $data['oResultLiability']  = $get_profit['oResultLiability'];
         $data['product_sale']  = $get_profit['product_sale'];
