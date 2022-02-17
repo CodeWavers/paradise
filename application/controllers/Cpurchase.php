@@ -989,7 +989,7 @@ class Cpurchase extends CI_Controller
                             </td>
 
                             <td>
-                            <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control" onchange="add_pur_calc_store(' . $count . ');" >
+                            <select name="supplier_drop[]" id="supplier_drop_' . $count . '" class="form-control" onchange="add_pur_calc_store(' . $count . ');"  required>
                                 ';
 
 
@@ -1850,7 +1850,20 @@ class Cpurchase extends CI_Controller
             $createdate=date('Y-m-d H:i:s');
 
 
-
+            ///Inventory Debit
+            $coscr = array(
+                'VNo'            =>  $chalan_no[$i],
+                'Vtype'          =>  'Purchase',
+                'VDate'          =>  $this->input->post('purchase_date',TRUE),
+                'COAID'          =>  10107,
+                'Narration'      =>  'Inventory Debit For Supplier '.$supinfo->supplier_name,
+                'Debit'          =>  $per_item_total[$i],
+                'Credit'         =>  0,//purchase price asbe
+                'IsPosted'       => 1,
+                'CreateBy'       => $receive_by,
+                'CreateDate'     => $createdate,
+                'IsAppove'       => 1
+            );
 
             $purchasecoatran = array(
                 'VNo'            =>  $chalan_no[$i],
@@ -1879,6 +1892,7 @@ class Cpurchase extends CI_Controller
                 'CreateDate'     => $createdate,
                 'IsAppove'       => 1
             );
+            $this->db->insert('acc_transaction',$coscr);
             $this->db->insert('acc_transaction',$purchasecoatran);
             $this->db->insert('acc_transaction',$expense);
 

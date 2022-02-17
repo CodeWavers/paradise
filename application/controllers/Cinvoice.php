@@ -1562,6 +1562,21 @@ class Cinvoice extends CI_Controller
         $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName', $headn)->get()->row();
         $customer_headcode = $coainfo->HeadCode;
 
+        //Inventory Credt
+        $coscr = array(
+            'VNo'            =>  $invoice_id,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  10107,
+            'Narration'      =>  'Inventory credit For Invoice No' . $invoice_id,
+            'Debit'          =>  0,
+            'Credit'         =>  $grand_total, //purchase price asbe
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+        $this->db->insert('acc_transaction', $coscr);
         ///Sale Income
         $coscr = array(
             'VNo'            =>  $invoice_id,

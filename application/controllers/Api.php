@@ -343,6 +343,7 @@ class Api extends CI_Controller {
                 $params['savename'] = FCPATH . 'my-assets/image/qr/' . $image_name;
                 $this->ciqrcode->generate($params);
 
+                $products[$k]['stock']  =$this->Api_model->current_stock($products[$k]['product_id']);
                 $products[$k]['qr_code']  = base_url('my-assets/image/qr/'.$image_name);
                 $products[$k]['bar_code'] = base_url('Cbarcode/barcode_generator/'.$products[$k]['product_id']);
 

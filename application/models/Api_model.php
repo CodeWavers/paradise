@@ -128,6 +128,29 @@ class Api_model extends CI_Model {
 
         return $data2;
     }
+    public function current_stock($product_id) {
+        $this->db->select('SUM(a.quantity) as total_purchase');
+        $this->db->from('product_purchase_details a');
+        $this->db->where('a.product_id', $product_id);
+        $total_purchase = $this->db->get()->row();
+
+        $this->db->select('SUM(b.quantity) as total_sale');
+        $this->db->from('invoice_details b');
+        $this->db->where('b.product_id', $product_id);
+        $total_sale = $this->db->get()->row();
+
+        $this->db->select('*');
+        $this->db->from('product_information');
+        $this->db->where(array('product_id' => $product_id, 'status' => 1));
+        $product_information = $this->db->get()->row();
+
+        $available_quantity = ($total_purchase->total_purchase - $total_sale->total_sale);
+
+
+
+
+        return $available_quantity;
+    }
 
     // Category List
     public function category_list($limit = null,$start = null){
