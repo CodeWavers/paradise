@@ -1,2 +1,2 @@
- Sl,Supplier Name,Barcode,Superseded Code,Product name,Brand Name,Model,Category ,Product Type,Unit,Sale Price,Supplier Price
-,"ABC Company,",T1267,225519,Grandtrek,Dunlop,AT20,Wheel,Car Wheel,mileage,6000,5000
+ Sl,Supplier Name,Barcode,Product name,Brand Name,Model,Category ,Purchase Type,Unit,Unit Cost Price,Supplier Price,Parts,Tag,Country,SKU
+,TRT COMpany,TR123,tEST PRODUCT,Dunlop,WER,Category ,Import,mileage,6000,5000,xyz,xyz,AF,AB-12-122

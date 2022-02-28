@@ -589,39 +589,23 @@ class Csupplier extends CI_Controller {
                 {                  
            $insert_csv = array();
            $insert_csv['supplier_name'] = (!empty($csv_line[0])?$csv_line[0]:null);
-           $insert_csv['email'] = (!empty($csv_line[1])?$csv_line[1]:'');
-           $insert_csv['emailaddress'] = (!empty($csv_line[2])?$csv_line[2]:'');
-           $insert_csv['mobile'] = (!empty($csv_line[3])?$csv_line[3]:'');
-           $insert_csv['phone'] = (!empty($csv_line[4])?$csv_line[4]:'');
-           $insert_csv['fax'] = (!empty($csv_line[5])?$csv_line[5]:'');
-           $insert_csv['contact'] = (!empty($csv_line[6])?$csv_line[6]:'');
-           $insert_csv['city'] = (!empty($csv_line[7])?$csv_line[7]:'');
-           $insert_csv['state'] = (!empty($csv_line[8])?$csv_line[8]:'');
-           $insert_csv['zip'] = (!empty($csv_line[9])?$csv_line[9]:'');
-           $insert_csv['country'] = (!empty($csv_line[10])?$csv_line[10]:'');
-           $insert_csv['address'] = (!empty($csv_line[11])?$csv_line[11]:'');
-           $insert_csv['address2'] = (!empty($csv_line[12])?$csv_line[12]:'');
-           $insert_csv['previousbalance'] = (!empty($csv_line[13])?$csv_line[13]:0);
+           $insert_csv['supplier_type'] = (!empty($csv_line[1])?$csv_line[1]:null);
+           $insert_csv['country'] = (!empty($csv_line[2])?$csv_line[2]:null);
+           $insert_csv['city'] = (!empty($csv_line[3])?$csv_line[3]:null);
+           $insert_csv['previousbalance'] = (!empty($csv_line[4])?$csv_line[4]:0);
                 }
                 $depid = date('Ymdis');
                 $supplierdata = array(  
            'supplier_name'  => $insert_csv['supplier_name'],
-            'address'       => $insert_csv['address'],
-            'address2'      => $insert_csv['address2'],
-            'mobile'        => $insert_csv['mobile'],
-            'phone'         => $insert_csv['phone'],
-            'contact'       => $insert_csv['contact'],
-            'emailnumber'   => $insert_csv['email'],
-            'email_address' => $insert_csv['emailaddress'],
-            'fax'           => $insert_csv['fax'],
-            'city'          => $insert_csv['city'],
-            'state'         => $insert_csv['state'],
-            'zip'           => $insert_csv['zip'],
+           'supplier_type'  => $insert_csv['supplier_type'],
+            'state'          => $insert_csv['city'],
             'country'       => $insert_csv['country'],
             'status'        => 1
                 );
 
                 if ($count > 0) {
+
+                    //echo '<pre>';print_r($supplierdata);exit();
                     $this->db->insert('supplier_information',$supplierdata);
 
                 $supplier_id    = $this->db->insert_id();
