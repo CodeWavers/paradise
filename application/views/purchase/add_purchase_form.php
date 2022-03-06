@@ -104,8 +104,8 @@
 
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  id="save_as_draft" class="btn btn-warning btn-large" name="save_as_draft" value="Save As Draft" />
-                                <input type="submit" onclick="return confirm('<?php echo display("are_you_sure") ?>')"  value="Finalize" name="finalize" class="btn btn-large btn-success" id="finalize" >
+                                <input type="submit"  onclick="return confirm('<?php echo display("are_you_sure") ?>')"   id="save_as_draft" class="btn btn-warning btn-large" name="save_as_draft" value="Save As Draft" />
+                                <input type="submit"  onclick="return confirm('<?php echo display("are_you_sure") ?>')"  value="Finalize" name="finalize" class="btn btn-large btn-success" id="finalize" >
                             </div>
                         </div>
                         <?php echo form_close()?>
@@ -120,7 +120,40 @@
 
 <script type="text/javascript">
 
+        function require_check() {
 
+
+            $('.rate').each(function() {
+                if ($(this).val() == "") {
+                    var confirm=confirm('Are you sure?');
+                    if (confirm==true) {
+                        alert('true');
+                    } else {
+                        alert('false');
+                    }
+                }else{
+                    toastr.error('Please fill the all estimation price!')
+                    return false;
+                }
+
+            });
+
+
+
+        }
+
+        $('#insert_purchase').on('submit', function() {
+            $('.rate').each(function() {
+
+                if ($(this).val() == "") {
+                    toastr.error('Please fill the all estimation price!')
+                    return
+                }else{
+
+                    return confirm('Are you sure?')
+                }
+            });
+        });
 
 
 

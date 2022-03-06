@@ -787,7 +787,7 @@ class Cpurchase extends CI_Controller
 
                                 <td class="text-right">
                                     <input type="hidden" style="width: 100px" name="bdt_price[]" id="bdt_price_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="0.00"  tabindex="6"/>
-                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right store_cal_1"  placeholder="0.00" value="' . ($rate ? $rate : "0.00") . '"  tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="price[]" id="product_rate_' . $count . '" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" required="" min="0" class="form-control text-right rate store_cal_1"  placeholder="0.00" value="' . ($rate ? $rate : "") . '"  tabindex="6"/>
                                 </td>
 
                                 <td class="text-left">
@@ -1205,7 +1205,7 @@ class Cpurchase extends CI_Controller
                                 </td>
 
                                 <td class="text-right">
-                                    <input type="text" style="width: 100px" name="bill_no[]"  class="form-control text-right store_cal_1" value=""  placeholder="00" tabindex="6"/>
+                                    <input type="text" style="width: 100px" name="bill_no[]"  class="form-control text-right store_cal_1" value="' . $items['chalan_id'] . '"  placeholder="00" tabindex="6" readonly/>
                                 </td>
 
 

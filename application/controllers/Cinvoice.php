@@ -1928,7 +1928,7 @@ class Cinvoice extends CI_Controller
 
                 <td><input  id="current_stock_' . $count . '" type="text" class="form-control " name="current_stock[]" value="' . $closing_stock . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
                 <td><input  id="or_qty_' . $count . '" type="text" class="form-control" name="order_quantity[]" value="' . $rq['quantity'] . '" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" readonly></td>
-                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onchange="add_pur_calc_store(' . $count . ')"   placeholder="0.00"></td>
+                <td><input  id="dc_qty_' . $count . '" type="text" class="form-control" name="dc_quantity[]" value="" onchange="add_pur_calc_store(' . $count . ')"   placeholder="0.00" required></td>
                 <td><input  id="bl_qty_' . $count . '" type="text" class="form-control bl_qty" name="bl_quantity[]" value="" onchange="add_pur_calc_store(' . $count . ')" onkeyup="add_pur_calc_store(' . $count . ')" placeholder="0.00" readonly></td>
                   <td><input type="text" name="remarks[]" class="form-control" value="" placeholder="Remarks" >
                     

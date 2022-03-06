@@ -267,16 +267,17 @@
             var total_price=qty*rate
 
             $(this).closest('tr').find('.total_price').val(total_price)
-            if (qty > current_stock){
-
-                toastr.error("You cannot approved greater than current stock")
-
-                this.value=quantity;
-              //  qty.value('')
-            }
+            // if (qty > current_stock){
+            //
+            //     toastr.error("You cannot approved greater than current stock")
+            //
+            //     this.value=quantity;
+            //   //  qty.value('')
+            // }
             calculation()
 
         });
+
         $('.rate').on('keyup', function() {
 
             var rate=this.value;

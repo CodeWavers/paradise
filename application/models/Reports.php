@@ -749,7 +749,7 @@ class reports extends CI_Model {
             $purchase_stock=(!empty($stockin->totalPurchaseQnty)?$stockin->totalPurchaseQnty:0);
             $purchase_stock_yes=(!empty($stockin_yes->totalPurchaseQnty)?$stockin_yes->totalPurchaseQnty:0);
             $sales_stock=(!empty($stockout->totalSalesQnty)?$stockout->totalSalesQnty:0);
-            $sales_stock_yes=ac;
+            $sales_stock_yes='ac';
 
 
            // $opening_stock=$purchase_stock_yes-$sales_stock_yes-$wastage_stock_yes;

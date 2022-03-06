@@ -261,7 +261,7 @@ class Cproduct extends CI_Controller {
 
         $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
 
-
+        $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
         $data['product_id']   = $product_id;
         $data['product_id_two']   = $product_id_two;
@@ -272,7 +272,7 @@ class Cproduct extends CI_Controller {
         $data['country'] = $this->input->post('country',TRUE);
         $data['parts'] = $this->input->post('parts',TRUE);
         $data['tag'] = $this->input->post('tag',TRUE);
-        $data['sku'] = $sku;
+        $data['sku'] = $sk;
         $data['price']        = $this->input->post('cost_price',TRUE);
         $data['product_model']= $this->input->post('model_id',TRUE);
         $data['ptype_id']  = $this->input->post('ptype_id',TRUE);
@@ -618,6 +618,7 @@ class Cproduct extends CI_Controller {
 
         $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
 
+        $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
 
         $tablecolumn = $this->db->list_fields('tax_collection');
@@ -639,7 +640,7 @@ class Cproduct extends CI_Controller {
         $data['country'] = $this->input->post('country',TRUE);
         $data['parts'] = $this->input->post('parts',TRUE);
         $data['tag'] = $this->input->post('tag',TRUE);
-        $data['sku'] = $sku;
+        $data['sku'] = $sk;
         $data['price']        = $this->input->post('cost_price',TRUE);
         $data['product_model']= $this->input->post('model_id',TRUE);
         $data['brand_id']    = $this->input->post('brand_id',TRUE);

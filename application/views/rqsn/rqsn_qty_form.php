@@ -253,8 +253,21 @@
              var qty= $(this).closest('tr').find('.quantity').val();
 
             var store_qty=qty-purchase_qty;
+            var p_qty= $(this).closest('tr').find('.p_qty').val();
+
+            var current_stock= parseFloat($(this).closest('tr').find('.current_stock').val());
+
 
             $(this).closest('tr').find('.store_qty').val(store_qty);
+
+            if (store_qty > current_stock){
+
+                toastr.error("You cannot store greater than current stock")
+
+                $(this).closest('tr').find('.store_qty').val('');
+                // $(this).closest('tr').find('.purchase_qty').val(p_qty);
+                //  qty.value('')
+            }
 
        //    calculation()
 

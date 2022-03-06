@@ -149,6 +149,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                         <th>Brand</th>
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Quantity</th>
+                                        <th>Unit Price</th>
                                         <th>Total Price</th>
                                     </tr>
                                 </thead>
@@ -168,13 +169,24 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                             <td><?php echo $rqsn_detail['brand_name'] ?></td>
                                             <td><?php echo $rqsn_detail['model_name'] ?></td>
                                             <td style="width: 5%;"><?php echo $rqsn_detail['quantity'] ?></td>
-                                            <td style="width: 5%;"><?php echo $rqsn_detail['total'] ?></td>
+                                            <td style="width: 5%;" ><?php echo number_format($rqsn_detail['rate'],2)?></td>
+                                            <td style="width: 5%;" class="text-left"><?php echo number_format($rqsn_detail['total'],2) ?></td>
+
 
 
                                         </tr>
                                         <input type="hidden" name="csrf_test_name" id="" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                     <?php } ?>
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <td colspan="10" class="text-right"><b>Grand Total:</b></td>
+                                    <td class="text-left" style="width: 5%;">
+                                        <?php echo number_format(array_sum(array_column($rqsn_details,'total')),2)?>
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
 
 
