@@ -104,6 +104,33 @@ class Admin_dashboard extends CI_Controller {
         $this->template->full_admin_html_view($content);
     }
 
+    public function product_receive_form()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->product_receive_form();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function product_receive_form_two()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->product_receive_form_two();
+        $this->template->full_admin_html_view($content);
+    }
+
+    public function product_receive_form_three()
+    {
+        $CI = &get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lpurchase');
+        $content = $CI->lpurchase->product_receive_form_three();
+        $this->template->full_admin_html_view($content);
+    }
+
 //    ============ its for see_all_best_sales =============
     public function see_all_best_sales() {
         $CI = & get_instance();

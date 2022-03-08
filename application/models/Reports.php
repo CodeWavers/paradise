@@ -998,10 +998,12 @@ class reports extends CI_Model {
 
 
         foreach($records as $record ){
-            $stockin = $this->db->select('sum(quantity) as totalPurchaseQnty')
+            $stockin = $this->db->select('sum(quantity) as totalPurchaseQnty,Avg(unit_price) as avg_price')
                 ->from('erp_entry_details')
                 ->where('product_id',$record->product_id)
                 ->get()->row();
+
+
 
             $stockin_yes = $this->db->select('sum(quantity) as totalPurchaseQnty')
                 ->from('erp_entry_details')
@@ -1072,6 +1074,7 @@ class reports extends CI_Model {
                 'totalSalesQnty'=>sprintf('%0.2f',$sales_stock),
                 'closing_stock'=>sprintf('%0.2f',$closing_stock),
                 'opening_stock'=>sprintf('%0.2f',$opening_stock),
+                'cgs'=>sprintf('%0.2f',$sales_stock*$stockin->avg_price)
 
                // 'return_rcv'=>  $return_rcv->totalReturnQnty,
                // 'stok_quantity' => sprintf('%0.2f',$main_stock),

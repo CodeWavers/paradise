@@ -993,9 +993,6 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                             ?>"><a href="<?php echo base_url('Cpurchase/add_purchase') ?>">Add Purchase</a></li>
                         <?php } ?>
 
-                        <?php if ($this->permission1->method('add_purchase', 'create')->access()) { ?>
-
-                        <?php } ?>
 
                         <?php if ($this->permission1->method('purchase_order_approve', 'create')->access()) { ?>
                             <li class="treeview <?php
@@ -1046,7 +1043,7 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
             <!-- Product Receive menu start -->
             <?php if ($this->permission1->method('product_receive_form', 'create')->access() || $this->permission1->method('product_receive_form_two', 'create')->access() || $this->permission1->method('product_receive_form_three', 'create')->access()) { ?>
                 <li class="treeview <?php
-                                    if ($this->uri->segment('1') == ("Cpurchase/product_receive_form")) {
+                                    if ($this->uri->segment('1') == ("Admin_dashboard")) {
                                         echo "active";
                                     } else {
                                         echo " ";
@@ -1062,23 +1059,23 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
                         <?php if ($this->permission1->method('product_receive_form', 'create')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('1') == ("product_receive_form") && $this->uri->segment('2') == ("")) {
+                            if ($this->uri->segment('2') == ("product_receive_form")) {
                                 echo "active";
                             } else {
                                 echo " ";
                             }
-                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form') ?>">Product Receive Form
+                            ?>"><a href="<?php echo base_url('Admin_dashboard/product_receive_form') ?>">Product Receive Form
                                     </a></li>
                         <?php } ?>
 
                         <?php if ($this->permission1->method('product_receive_form_two', 'create')->access()) { ?>
                             <li class="treeview <?php
-                            if ($this->uri->segment('1') == ("product_receive_form_two") && $this->uri->segment('2') == ("")) {
+                            if ($this->uri->segment('2') == ("product_receive_form_two")) {
                                 echo "active";
                             } else {
                                 echo " ";
                             }
-                            ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_two') ?>">Print Barcode Sticker
+                            ?>"><a href="<?php echo base_url('Admin_dashboard/product_receive_form_two') ?>">Print Barcode Sticker
                                     </a></li>
                         <?php } ?>
 
@@ -1088,12 +1085,12 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
 
 
                             <li class="treeview <?php
-                                                if ($this->uri->segment('3') == ("product_receive_form_three")) {
+                                                if ($this->uri->segment('2') == ("product_receive_form_three")) {
                                                     echo "active";
                                                 } else {
                                                     echo " ";
                                                 }
-                                                ?>"><a href="<?php echo base_url('Cpurchase/product_receive_form_three') ?>">ERP Entry</a>
+                                                ?>"><a href="<?php echo base_url('Admin_dashboard/product_receive_form_three') ?>">ERP Entry</a>
                             </li>
                         <?php } ?>
 

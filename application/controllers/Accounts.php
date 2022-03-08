@@ -622,8 +622,41 @@ class Accounts extends CI_Controller
   public function trial_balance_new()
   {
     $CI = &get_instance();
+    $CI->load->model('Reports');
+      $closing_inventory = $this->Reports->valuation_list();
 
+      $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
+
+          //  echo '<pre>';print_r($stock_value);exit();
     // $CI->load->model('Warehouse');
+          $vno=  date('Ymdhs');
+          $createby = $this->session->userdata('user_id');
+          $createdate = date('Y-m-d H:i:s');
+          $closing_inventory_value = array(
+          'VNo'            =>  $vno,
+          'Vtype'          =>  'INV',
+          'VDate'          =>  $createdate,
+          'COAID'          =>  10206,
+          'Narration'      =>  'Closing Inventory Value',
+          'Debit'          =>  $stock_value,
+          'Credit'         =>  0,
+          'IsPosted'       => 1,
+          'CreateBy'       => $createby,
+          'CreateDate'     => $createdate,
+          'IsAppove'       => 1
+      );
+
+          $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
+
+          if ($rows > 0){
+              $this->db->where('COAID',10206);
+              $this->db->set('Debit',$stock_value);
+              $this->db->update('acc_transaction');
+          }else{
+                    $this->db->insert('acc_transaction',$closing_inventory_value);
+
+          }
+//      echo '<pre>';print_r($rows);exit();
 
     $outlet_id = $this->input->post('outlet', true);
     $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
@@ -648,7 +681,7 @@ class Accounts extends CI_Controller
     $data['today']    = $today;
     $data['pdf']    = 'assets/data/pdf/Statement of Comprehensive Income till ' . $today . 'pdf';
     $data['title']  = 'Trial Balance Report';
-    //  echo '<pre>';print_r($get_profit['total']);exit();
+
     $content = $this->parser->parse('newaccount/trial_new', $data, true);
 
     $this->template->full_admin_html_view($content);
@@ -965,6 +998,11 @@ class Accounts extends CI_Controller
         $CI->load->model('Rqsn');
 
 
+        $inventory = $this->Reports->getInventoryList();
+
+//        echo '<pre>';print_r($inventory);exit();
+
+        $cgs=array_sum(array_column($inventory,'cgs'));
 
         $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
         $dtpToDate   = $this->input->post('dtpToDate', TRUE);
@@ -974,7 +1012,9 @@ class Accounts extends CI_Controller
 
 
 
-        $closing_inventory = $this->Reports->getCheckList();
+        $clos_inv = $this->Reports->valuation_list();
+
+        $closing_inventory=array_sum(array_column($clos_inv['aaData'],'stock_value'));
 
 
 
@@ -997,7 +1037,8 @@ class Accounts extends CI_Controller
         $data['indirect_expense_c']  = $get_profit['indirect_expense_c'];
         $data['indirect_income_c']  = $get_profit['indirect_income_c'];
         $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['closing_inventory'];
-        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $data['closing_inventory'];
+//        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $data['closing_inventory'];
+        $data['total_i']  =$cgs;
 
         $data['total_sale']  = $get_profit['product_sale'] - $get_profit['sale_return'] + $get_profit['service_income'];
         $data['gross_profit']  =    $data['total_sale'] -  $data['total_i'];
