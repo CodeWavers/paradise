@@ -1976,7 +1976,7 @@ class Cpurchase extends CI_Controller
             $this->db->insert('erp_entry_details', $data);
         }
 
-        redirect('Cpurchase/product_receive_form_three/');
+        redirect('Admin_dashboard/product_receive_form_three/');
     }
 
     public function remove_from_list()

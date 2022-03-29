@@ -368,6 +368,71 @@ class Api extends CI_Controller {
         echo json_encode($json,JSON_UNESCAPED_UNICODE);
 
     }
+    public function product_list_drop(){
+
+
+        $products = $this->Api_model->searchproduct_list();
+        if (!empty($products)) {
+            foreach ($products as $k => $v) {
+
+                $products[$k]['stock']  =$this->Api_model->current_stock($products[$k]['product_id']);
+                $products[$k]['id']  =$products[$k]['product_id'];
+                $products[$k]['name']  =$products[$k]['product_name'];
+
+            }
+        }
+
+
+
+        if(!empty($products)){
+            $json['response'] = array(
+                'status'       => 'ok',
+                'product_list' => $products,
+                'total_val'    => $this->db->count_all("product_information"),
+            );
+        }else{
+            $json['response'] = array(
+                'status'  => 'error',
+                'message' => 'No Product Found',
+            );
+        }
+
+        echo json_encode($json,JSON_UNESCAPED_UNICODE);
+
+    }
+    public function customer_list_drop(){
+
+
+        $customer_list = $this->Api_model->customer_list($limit=15);
+
+        if (!empty($customer_list)) {
+            foreach ($customer_list as $k => $v) {
+
+
+                $customer[$k]['id']  =$customer_list[$k]['customer_id'];
+                $customer[$k]['name']  =$customer_list[$k]['customer_name'];
+
+            }
+        }
+
+
+
+        if(!empty($customer)){
+            $json['response'] = array(
+                'status'       => 'ok',
+                'customer_list' => $customer,
+
+            );
+        }else{
+            $json['response'] = array(
+                'status'  => 'error',
+                'message' => 'No Customer Found',
+            );
+        }
+
+        echo json_encode($json,JSON_UNESCAPED_UNICODE);
+
+    }
 
 
 

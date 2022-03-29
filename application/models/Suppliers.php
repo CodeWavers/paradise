@@ -878,7 +878,7 @@ class Suppliers extends CI_Model {
 
     public function headcode(){
 
-        $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='3' And HeadCode LIKE '5020200%'");
+        $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='3' And HeadCode LIKE '50202%'");
         return $query->row();
 
     }

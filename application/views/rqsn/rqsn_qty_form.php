@@ -190,6 +190,7 @@
                                             <input autocomplete="off" type="text" value="<?php echo $rqsn_detail['a_qty']?>" name="purchase_qty[]" class="form-control purchase_qty" id="purchase_qty" >
                                             <input autocomplete="off" type="hidden" value="<?php echo $rqsn_detail['a_qty']?>" name="p_qty[]" class="form-control p_qty" id="p_qty" >
                                             <input type="hidden" value="<?php echo $rqsn_detail['quantity']?>" name="quantity[]" class="form-control quantity" id="quantity" >
+                                            <input type="hidden" value="<?php echo $rqsn_detail['a_qty']?>" name="a_qty[]" class="form-control a_qty" id="a_qty" >
 
                                         </td>
                                         <td style="width: 10%;" >

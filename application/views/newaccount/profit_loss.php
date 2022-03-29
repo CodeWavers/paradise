@@ -98,6 +98,35 @@
 
                                             </tr>
 
+                                            <tr>
+                                                <td><b>Direct Expense</b></td>
+
+                                                <td></td>
+                                                <td></td>
+                                                <?php if($direct_expense):?>
+                                                    <td><b><?php echo  number_format($direct_expense,2)?></b></td>
+                                                <?php else:?>
+                                                    <td><b><?php echo number_format('0',2)?></b></td>
+                                                <?php endif;?>
+                                            </tr>
+                                            <?php foreach ($expense as $direct_expense){ ?>
+                                                <?php if ($i['amount'] > 0 ){ ?>
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><?php echo $direct_expense['HeadName'] ?></td>
+                                                        <td><?php echo $direct_expense['amount']?></td>
+                                                        <td></td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <?php } ?>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b><?php echo number_format($abc,2)?></b></td>
+                                            </tr>
+
                                         </tbody>
                                     </table>
 
@@ -199,6 +228,7 @@
                                                     <td><b><?php echo number_format('0', 2) ?></b></td>
                                                 <?php endif; ?>
                                             </tr>
+
                                         </tbody>
                                     </table>
 

@@ -1069,13 +1069,46 @@ class Accounts extends CI_Controller
         $dtpToDate   = $this->input->post('dtpToDate', TRUE);
         $today   = date('Y-m-d');
 
+       $closing_inventory = $this->Reports->valuation_list();
+       // exit();
+       $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
 
-        $get_profit  = $this->accounts_model->balance_sheet();
+        //  echo '<pre>';print_r($stock_value);exit();
+        // $CI->load->model('Warehouse');
+        $vno=  date('Ymdhs');
+        $createby = $this->session->userdata('user_id');
+        $createdate = date('Y-m-d H:i:s');
+        $closing_inventory_value = array(
+            'VNo'            =>  $vno,
+            'Vtype'          =>  'INV',
+            'VDate'          =>  $createdate,
+            'COAID'          =>  10206,
+            'Narration'      =>  'Closing Inventory Value',
+            'Debit'          =>  $stock_value,
+            'Credit'         =>  0,
+            'IsPosted'       => 1,
+            'CreateBy'       => $createby,
+            'CreateDate'     => $createdate,
+            'IsAppove'       => 1
+        );
+
+        $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
+
+        if ($rows > 0){
+            $this->db->where('COAID',10206);
+            $this->db->set('Debit',$stock_value);
+            $this->db->update('acc_transaction');
+        }else{
+            $this->db->insert('acc_transaction',$closing_inventory_value);
+
+        }
+//
+       $get_profit  = $this->accounts_model->balance_sheet();
 
 
 
         //$postData = $this->input->post();
-        $closing_inventory = $this->Reports->getCheckList();
+       // $closing_inventory = $this->Reports->getCheckList();
 
 
 
@@ -1084,7 +1117,7 @@ class Accounts extends CI_Controller
         $data['product_sale']  = $get_profit['product_sale'];
         $data['opening_inventory']  = $get_profit['opening_inventory'];
         $data['product_purchase']  = $get_profit['product_purchase'];
-        $data['closing_inventory']  = $closing_inventory['closing_inventory'];
+        $data['closing_inventory']  =$stock_value;
         $data['service_income']  = $get_profit['service_income'];
         $data['direct_expense']  = $get_profit['direct_expense'];
         $data['indirect_expense']  = $get_profit['indirect_expense'];

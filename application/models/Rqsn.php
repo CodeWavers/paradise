@@ -1435,11 +1435,11 @@ class Rqsn extends CI_Model
 
         $purchase_qty = $this->input->post("purchase_qty", true);
         $store_qty = $this->input->post("store_qty", true);
-        $quantity = $this->input->post("quantity", true);
+        $a_qty = $this->input->post("a_qty", true);
         $rqsn_detail_id = $this->input->post("rqsn_detail_id", true);
 
         for ($i = 0, $n   = count($rqsn_detail_id); $i < $n; $i++) {
-            $qty  = $quantity[$i];
+            $qty  = $a_qty[$i];
             $rq_id  = $rqsn_detail_id[$i];
             $pur_qty  = $purchase_qty[$i];
             $str_qty  = $store_qty[$i];

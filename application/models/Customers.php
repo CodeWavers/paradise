@@ -687,7 +687,7 @@ class Customers extends CI_Model {
 
   
     public function headcode(){
-        $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='4' And HeadCode LIKE '1020300%'");
+        $query=$this->db->query("SELECT MAX(HeadCode) as HeadCode FROM acc_coa WHERE HeadLevel='4' And HeadCode LIKE '10203%'");
         return $query->row();
 
     }
