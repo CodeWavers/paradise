@@ -960,7 +960,7 @@ class Cpurchase extends CI_Controller
                                 <input type="text" name="proposed_quantity[]" required="" id="proposed_quantity_' . $count . '" class="form-control product_rate_1 text-right" value="' . $items['quantity'] . '" min="0" tabindex="7" readonly/>
                             </td>
                             <td class="test">
-                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . $items['qty'] . '" min="0" tabindex="7"/>
+                                <input type="text" name="order_quantity[]" required=""  id="order_quantity_' . $count . '" class="form-control product_rate_1 text-right" onkeyup="add_pur_calc_store(' . $count . ');" onchange="add_pur_calc_store(' . $count . ');" placeholder="1234" value="' . $items['quantity'] . '" min="0" tabindex="7"/>
                             </td>
 
                             <td>

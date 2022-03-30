@@ -141,7 +141,7 @@ function add_and_delete(e) {
             var sku = $(e).data("sku");
             var brand = $(e).data("brand");
             var model = $(e).data("model");
-            var quantity = $('#' + product_id).val();
+            var quantity = $('#'+product_id).val();
             var sl = $(e).data("sl");
             var rqsn_details = $(e).data('rqsndetail');
             var rqsn_no = $(e).data('rqsn_no');

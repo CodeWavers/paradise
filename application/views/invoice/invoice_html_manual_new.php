@@ -209,7 +209,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                         <tr>
                                             <td class="text-center">{sl}</td>
                                             <td class="text-center">
-                                                <div>{product_name} - ({product_model})</div>
+                                                <div>{product_name} - ({sku})</div>
                                             </td>
 
                                             <td align="right">{quantity}</td>
@@ -222,17 +222,33 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td style="background-color: #cad1dba1 !important;" class="text-right" colspan="2"><b>Sub-Total:</b></td>
+                                            <td  class="text-right" colspan="2"><b>Sub-Total:</b></td>
 
-                                            <td style="background-color: #cad1dba1 !important;" align="right"><b><?php echo (($position == 0) ? "$currency {subt}" : "{subt} $currency") ?></b></td>
+                                            <td  align="right"><b><?php echo (($position == 0) ? "$currency {subt}" : "{subt} $currency") ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" rowspan="2" style="background-color: #cad1dba1 !important;">
+                                            <td colspan="2" rowspan="5" style="background-color: #cad1dba1 !important;">
                                                 <strong>Notes:</strong>
                                             </td>
-                                            <td colspan="2" class="text-right"><b>Discount:</b></td>
+                                            <td style="background-color: #cad1dba1 !important;" colspan="2" class="text-right"><b>Discount:</b></td>
 
-                                            <td align="right"><b><?php echo (($position == 0) ? "$currency {total_discount}" : "{total_discount} $currency") ?></b></td>
+                                            <td style="background-color: #cad1dba1 !important;" align="right"><b><?php echo (($position == 0) ? "$currency {total_discount}" : "{total_discount} $currency") ?></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="text-right"><b>Other Charges:</b></td>
+
+                                            <td  align="right"><b><?php echo (($position == 0) ? "$currency {total_amount}" : "{total_amount} $currency") ?></b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="background-color: #cad1dba1 !important;" colspan="2" class="text-right"><b>Paid Amount:</b></td>
+
+                                            <td style="background-color: #cad1dba1 !important;" align="right"><b><?php echo (($position == 0) ? "$currency {paid_amount}" : "{paid_amount} $currency") ?></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td  colspan="2" class="text-right"><b>Due Amount:</b></td>
+
+                                            <td  align="right"><b><?php echo (($position == 0) ? "$currency {due_amount}" : "{due_amount} $currency") ?></b></td>
                                         </tr>
                                         <tr>
                                             <td style="background-color: #cad1dba1 !important;" colspan="2" class="text-right"><b><?php echo display('grand_total') ?>:</b></td>
