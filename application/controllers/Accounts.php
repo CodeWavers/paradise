@@ -160,26 +160,30 @@ class Accounts extends CI_Controller
       'CreateBy'       => $createby,
       'CreateDate'     => $createdate,
     );
+
+
     $upinfo = $this->db->select('*')
       ->from('acc_coa')
       ->where('HeadCode', $headcode)
       ->get()
-      ->row();
-    if (empty($upinfo)) {
-      $this->db->insert('acc_coa', $postData);
-    } else {
+      ->num_rows();
+       // echo '<pre>';print_r($upinfo);exit();
 
-      $hname = $this->input->post('HeadName', TRUE);
-      $updata = array(
-        'PHeadName'      =>  $HeadName,
-      );
+        if ($upinfo > 0){
+            $hname = $this->input->post('HeadName', TRUE);
+            $updata = array(
+                'PHeadName'      =>  $HeadName,
+            );
+
+            $this->db->where('HeadCode', $headcode)
+                ->update('acc_coa', $postData);
+            $this->db->where('PHeadName', $hname)
+                ->update('acc_coa', $updata);
+        }else{
+            $this->db->insert('acc_coa', $postData);
+        }
 
 
-      $this->db->where('HeadCode', $headcode)
-        ->update('acc_coa', $postData);
-      $this->db->where('PHeadName', $hname)
-        ->update('acc_coa', $updata);
-    }
     redirect($_SERVER['HTTP_REFERER']);
   }
 
