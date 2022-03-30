@@ -167,14 +167,13 @@ class Accounts extends CI_Controller
       ->where('HeadCode', $headcode)
       ->get()
       ->num_rows();
-       // echo '<pre>';print_r($upinfo);exit();
+   // echo '<pre>';print_r($postData);exit();
 
         if ($upinfo > 0){
             $hname = $this->input->post('HeadName', TRUE);
             $updata = array(
                 'PHeadName'      =>  $HeadName,
             );
-
             $this->db->where('HeadCode', $headcode)
                 ->update('acc_coa', $postData);
             $this->db->where('PHeadName', $hname)
