@@ -213,7 +213,7 @@ class Rqsn extends CI_Model
             //   $un  = $unit[$i];
             $product_id   = $p_id[$i];
 
-            $supplier_price = $this->db->select('supplier_price')->from('supplier_product')->where('product_id', $product_id)->get()->row();
+            $supplier_price = $this->db->select('supplier_price')->from('supplier_product')->where('product_id', $product_id)->order_by('supplier_pr_id','desc')->get()->row();
 
             $price = $qty * ($supplier_price->supplier_price);
             $rqsn_details = array(
@@ -221,6 +221,7 @@ class Rqsn extends CI_Model
                 'rqsn_id'     => $rqsn_id,
                 'product_id'         => $product_id,
                 'quantity'                => $qty,
+                'unit_rate'                => $supplier_price->supplier_price,
                 'total'                => $price,
                 'status'                => 1,
                 'purchase_status'       => 1
@@ -1413,7 +1414,7 @@ class Rqsn extends CI_Model
 
                 $this->db->where('rqsn_detail_id', $rq_id);
                 $this->db->set(array('a_qty'=>$qty,
-                    'rate'=>$rt,
+                    'unit_rate'=>$rt,
                     'total'=>$total,
 
                 ));

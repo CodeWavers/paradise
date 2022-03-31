@@ -156,7 +156,7 @@
                                         <th><?php echo display('product_model') ?></th>
                                         <th>Current Stock</th>
                                         <th>Quantity</th>
-                                        <th>Rate</th>
+                                        <th>Unit Rate</th>
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>
@@ -199,7 +199,7 @@
                                         <td style="width: 10%;" >
 
 
-                                            <input type="text" value="<?php echo $rqsn_detail['supplier_price']?>" name="rate[]" onkeyup="calculation()" class="form-control rate" id="rate" >
+                                            <input type="text" value="<?php echo $rqsn_detail['unit_rate']?>" name="rate[]" onkeyup="calculation()" class="form-control rate" id="rate" >
 
                                         </td>
                                         <td style="width: 10%;" >
