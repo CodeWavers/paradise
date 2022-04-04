@@ -77,24 +77,24 @@
                                         <tr>
                                             <td colspan="8"><b>Current Assets</b></td>
 
-                                            <?php if ($current_assets) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($current_assets, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($current_assets) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($current_assets, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
 
 
                                         <tr>
                                             <td></td>
-                                            <td colspan="7">Cash & Cash Equivalent</td>
+                                            <td colspan="8">Cash & Cash Equivalent</td>
 
-                                            <?php if ($cash_eq) : ?>
-                                                <td colspan="7"><?php echo  number_format($cash_eq, 2) ?></td>
-                                            <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($cash_eq) : ?>
+<!--                                                <td colspan="7">--><?php //echo  number_format($cash_eq, 2) ?><!--</td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="7">--><?php //echo number_format('0', 2) ?><!--</td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
                                         <tr>
                                             <td></td>
@@ -180,13 +180,13 @@
                                         <?php } ?>
                                         <tr>
                                             <td></td>
-                                            <td colspan="7">Account Receivable</td>
+                                            <td colspan="8">Account Receivable</td>
 
-                                            <?php if ($acc_rcv) : ?>
-                                                <td colspan="7"><?php echo  number_format($acc_rcv, 2) ?></td>
-                                            <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($acc_rcv) : ?>
+<!--                                                <td colspan="7">--><?php //echo  number_format($acc_rcv, 2) ?><!--</td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="7">--><?php //echo number_format('0', 2) ?><!--</td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
 
@@ -222,14 +222,14 @@
                                             <?php endif; ?>
                                         </tr>
                                         <tr>
+                                            <td></td>
+                                            <td colspan="8">Other Current Asset</td>
 
-                                            <td colspan="8"><b>Other Current Assets</b></td>
-
-                                            <?php if ($other_current) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($other_current, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($other_current) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($other_current, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
 
@@ -238,8 +238,9 @@
 
                                             <tr>
                                                 <td></td>
-                                                <td colspan="7"><?php echo $c['HeadName'] ?></td>
-                                                <td colspan="7"><?php echo $c['amount'] ?></td>
+                                                <td></td>
+                                                <td colspan="6"><?php echo $c['HeadName'] ?></td>
+                                                <td colspan="6"><?php echo $c['amount'] ?></td>
 
                                             </tr>
                                         <?php } ?>
@@ -258,11 +259,11 @@
 
                                             <td colspan="8"><b>Fixed Assets</b></td>
 
-                                            <?php if ($fixed_assets) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($fixed_assets, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($fixed_assets) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($fixed_assets, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
 
@@ -301,11 +302,11 @@
                                         <tr>
                                             <td colspan="8"><b>Current Liabilities</b></td>
 
-                                            <?php if ($current_liabilities) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($current_liabilities, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($current_liabilities) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($current_liabilities, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
                                         <tr>
@@ -341,13 +342,14 @@
 
 
                                         <tr>
-                                            <td colspan="8"><b>Long Term Liabilities</b></td>
 
-                                            <?php if ($long_term_l) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($long_term_l, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+                                            <td colspan="9"><b>Long Term Liabilities</b></td>
+
+<!--                                            --><?php //if ($long_term_l) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($long_term_l, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
 
@@ -371,13 +373,14 @@
 
                                         </tr>
                                         <tr>
-                                            <td colspan="8"><b>Other Liabilities</b></td>
 
-                                            <?php if ($non_current_liabilities) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($non_current_liabilities, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+                                            <td colspan="9"><b>Other Liabilities</b></td>
+
+<!--                                            --><?php //if ($non_current_liabilities) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($non_current_liabilities, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
                                         </tr>
 
 
@@ -409,13 +412,13 @@
                                             <td colspan="9" style="color: white;text-transform: uppercase"><b>Equities</b></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="8"><b>Equities</b></td>
+                                            <td colspan="9"><b>Equities</b></td>
 
-                                            <?php if ($capital) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($capital, 2) ?></b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
+<!--                                            --><?php //if ($capital) : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo  number_format($capital, 2) ?><!--</b></td>-->
+<!--                                            --><?php //else : ?>
+<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                            --><?php //endif; ?>
 
                                         </tr>
 

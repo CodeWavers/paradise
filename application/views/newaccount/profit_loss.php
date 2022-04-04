@@ -71,14 +71,14 @@
                                 <table class="table table-striped">
                                     <tbody>
                                     <tr>
-                                        <td colspan="8"><b>Operating Income</b></td>
+                                        <td colspan="9"><b>Operating Income</b></td>
 
 
-                                        <?php if ($total_sale) : ?>
-                                            <td colspan="8"><b><?php echo  number_format($total_sale, 2) ?></b></td>
-                                        <?php else : ?>
-                                            <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                        <?php endif; ?>
+<!--                                        --><?php //if ($total_sale) : ?>
+<!--                                            <td colspan="8"><b>--><?php //echo  number_format($total_sale, 2) ?><!--</b></td>-->
+<!--                                        --><?php //else : ?>
+<!--                                            <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                        --><?php //endif; ?>
                                     </tr>
 
                                     <tr>
@@ -190,13 +190,13 @@
 
 
                                     <tr>
-                                        <td colspan="8"><b>Operating Expenses</b></td>
+                                        <td colspan="9"><b>Operating Expenses</b></td>
 
-                                        <?php if($op_expense):?>
-                                            <td  colspan="8"><b><?php echo  number_format($op_expense,2)?></b></td>
-                                        <?php else:?>
-                                            <td  colspan="8"><b><?php echo number_format('0',2)?></b></td>
-                                        <?php endif;?>
+<!--                                        --><?php //if($op_expense):?>
+<!--                                            <td  colspan="8"><b>--><?php //echo  number_format($op_expense,2)?><!--</b></td>-->
+<!--                                        --><?php //else:?>
+<!--                                            <td  colspan="8"><b>--><?php //echo number_format('0',2)?><!--</b></td>-->
+<!--                                        --><?php //endif;?>
                                     </tr>
                                     <?php foreach ($o_expense as $o){ ?>
                                         <?php if ($o['HeadLevel'] == 2 ){
@@ -247,14 +247,14 @@
 <!---->
 <!--                                    </tr>-->
                                     <tr>
-                                        <td colspan="8"><b>Non Operating Income</b></td>
+                                        <td colspan="9"><b>Non Operating Income</b></td>
 
 
-                                        <?php if ($indirect_income > 0) : ?>
-                                            <td colspan="8"><b><?php echo  number_format($indirect_income, 2) ?></b></td>
-                                        <?php else : ?>
-                                            <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                        <?php endif; ?>
+<!--                                        --><?php //if ($indirect_income > 0) : ?>
+<!--                                            <td colspan="8"><b>--><?php //echo  number_format($indirect_income, 2) ?><!--</b></td>-->
+<!--                                        --><?php //else : ?>
+<!--                                            <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                        --><?php //endif; ?>
                                     </tr>
 
                                     <?php foreach ($indirect_income_c as $i) { ?>
@@ -275,13 +275,13 @@
                                     </tr>
 
                                     <tr>
-                                        <td  colspan="8"><b>Non Operating Expense</b></td>
+                                        <td  colspan="9"><b>Non Operating Expense</b></td>
 
-                                        <?php if ($indirect_expense) : ?>
-                                            <td  colspan="8"><b><?php echo  number_format($indirect_expense, 2) ?></b></td>
-                                        <?php else : ?>
-                                            <td  colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                        <?php endif; ?>
+<!--                                        --><?php //if ($indirect_expense) : ?>
+<!--                                            <td  colspan="8"><b>--><?php //echo  number_format($indirect_expense, 2) ?><!--</b></td>-->
+<!--                                        --><?php //else : ?>
+<!--                                            <td  colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
+<!--                                        --><?php //endif; ?>
                                     </tr>
 
                                     <?php foreach ($indirect_expense_c as $i) { ?>
