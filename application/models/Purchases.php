@@ -321,7 +321,7 @@ class Purchases extends CI_Model {
             'VNo'            =>  $purchase_id,
             'Vtype'          =>  'Purchase',
             'VDate'          =>  $this->input->post('purchase_date',TRUE),
-            'COAID'          =>  10107,
+            'COAID'          =>  10207,
             'Narration'      =>  'Inventory Debit For Supplier '.$supinfo->supplier_name,
             'Debit'          =>  $this->input->post('grand_total_price',TRUE),
             'Credit'         =>  0,//purchase price asbe
@@ -557,7 +557,7 @@ class Purchases extends CI_Model {
             'VNo'            =>  $purchase_id,
             'Vtype'          =>  'Purchase',
             'VDate'          =>  $this->input->post('purchase_date',TRUE),
-            'COAID'          =>  10107,
+            'COAID'          =>  10207,
             'Narration'      =>  'Inventory Debit For Supplier '.$supinfo->supplier_name,
             'Debit'          =>  $this->input->post('grand_total_price',TRUE),
             'Credit'         =>  0,//purchase price asbe
@@ -823,7 +823,7 @@ class Purchases extends CI_Model {
       'VNo'            =>  $purchase_id,
       'Vtype'          =>  'Purchase',
       'VDate'          =>  $this->input->post('purchase_date',TRUE),
-      'COAID'          =>  10107,
+      'COAID'          =>  10207,
       'Narration'      =>  'Inventory Devit Supplier '.$supinfo->supplier_name,
       'Debit'          =>  $this->input->post('grand_total_price',TRUE),
       'Credit'         =>  0,//purchase price asbe
@@ -1059,7 +1059,7 @@ class Purchases extends CI_Model {
 //      'VNo'            =>  $bill_no,
 //      'Vtype'          =>  'Purchase',
 //      'VDate'          =>  $payment_date,
-//      'COAID'          =>  10107,
+//      'COAID'          =>  10207,
 //      'Narration'      =>  'Inventory Devit Supplier '.$supinfo->supplier_name,
 //      'Debit'          =>  $grand_total,
 //      'Credit'         =>  0,//purchase price asbe
@@ -1324,7 +1324,7 @@ class Purchases extends CI_Model {
 //      'VNo'            =>  $purchase_id,
 //      'Vtype'          =>  'Purchase',
 //      'VDate'          =>  $this->input->post('purchase_date',TRUE),
-//      'COAID'          =>  10107,
+//      'COAID'          =>  10207,
 //      'Narration'      =>  'Inventory Devit Supplier '.$supinfo->supplier_name,
 //      'Debit'          =>  $this->input->post('grand_total_price',TRUE),
 //      'Credit'         =>  0,//purchase price asbe

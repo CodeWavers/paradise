@@ -1033,17 +1033,19 @@ class Accounts extends CI_Controller
         $data['closing_inventory']  = $closing_inventory['closing_inventory'];
         $data['service_income']  = $get_profit['service_income'];
         $data['direct_expense']  = $get_profit['direct_expense'];
+        $data['op_expense']  = $get_profit['op_expense'];
         $data['indirect_expense']  = $get_profit['indirect_expense'];
         $data['indirect_income']  = $get_profit['indirect_income'];
         $data['sale_return']  = $get_profit['sale_return'];
         $data['expense']  = $get_profit['expense'];
+        $data['o_expense']  = $get_profit['o_expense'];
         $data['indirect_expense_c']  = $get_profit['indirect_expense_c'];
         $data['indirect_income_c']  = $get_profit['indirect_income_c'];
         $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['closing_inventory'];
 //        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $data['closing_inventory'];
         $data['total_i']  =$cgs;
 
-        $data['total_sale']  = $get_profit['product_sale'] - $get_profit['sale_return'] + $get_profit['service_income'];
+        $data['total_sale']  = $get_profit['product_sale'];
         $data['gross_profit']  =    $data['total_sale'] -  $data['total_i'];
 
 
@@ -1056,8 +1058,7 @@ class Accounts extends CI_Controller
         $data['today']    = $today;
         $data['pdf']    = 'assets/data/pdf/Statement of Comprehensive Income Till ' . $today . '.pdf';
         $data['title']  = display('profit_loss_report');
-
-        // echo '<pre>';print_r( $data['expense'] );exit();
+       //  echo '<pre>';print_r( $data['o_expense'] );exit();
 
         $content = $this->parser->parse('newaccount/profit_loss', $data, true);
         $this->template->full_admin_html_view($content);
@@ -1114,7 +1115,6 @@ class Accounts extends CI_Controller
        // $closing_inventory = $this->Reports->getCheckList();
 
 
-
         $data['oResultAsset'] = $get_profit['oResultAsset'];
         $data['oResultLiability']  = $get_profit['oResultLiability'];
         $data['product_sale']  = $get_profit['product_sale'];
@@ -1137,14 +1137,19 @@ class Accounts extends CI_Controller
 
 
         $data['capital']  =    $get_profit['capital'];
+        $data['inventory']  =    $get_profit['inventory'];
         $data['current_liabilities']  =    $get_profit['current_liabilities'];
         $data['acc_pay_c']  =    $get_profit['acc_pay_c'];
         $data['non_current_liabilities']  =    $get_profit['non_current_liabilities'];
         $data['non_current_liabilities_c']  =    $get_profit['non_current_liabilities_c'];
         $data['fixed_assets']  =    $get_profit['fixed_assets'];
+        $data['equities']  =    $get_profit['equities'];
+        $data['other_current']  =    $get_profit['other_current'];
         $data['fixed_assets_c']  =    $get_profit['fixed_assets_c'];
+        $data['equities_c']  =    $get_profit['equities_c'];
         $data['current_assets']  =    $get_profit['current_assets'] + $data['closing_inventory'];
         $data['current_assets_c']  =    $get_profit['current_assets_c'];
+        $data['other_current_C']  =    $get_profit['other_current_C'];
         $data['acc_rcv']  =    $get_profit['acc_rcv'];
         $data['acc_pay']  =    $get_profit['acc_pay'];
         $data['emp_led']  =    $get_profit['emp_led'];
@@ -1174,7 +1179,7 @@ class Accounts extends CI_Controller
 
         //  echo '<pre>';print_r( $data['emp_led_c']);
         // echo '<pre>';print_r( $data['cash_hand']);exit();
-        //    echo '<pre>';print_r( $data);exit();
+         //   echo '<pre>';print_r( $arr_ex_o);exit();
 
         $content = $this->parser->parse('newaccount/balance_sheet_new', $data, true);
         $this->template->full_admin_html_view($content);

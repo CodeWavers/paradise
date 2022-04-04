@@ -1116,30 +1116,38 @@ class Accounts_model extends CI_Model
 
 
         $product_sale = $this->db->select('(sum(credit)-sum(debit)) as product_sale')->from('acc_transaction')->where('COAID', 303)->get()->result_array();
-        $indirect_income = $this->db->select('(sum(credit)-sum(debit)) as indirect_income')->from('acc_transaction')->like('COAID', '3040')->get()->result_array();
+        $indirect_income = $this->db->select('(sum(credit)-sum(debit)) as indirect_income')->from('acc_transaction')->like('COAID', '304')->get()->result_array();
         $service_income = $this->db->select('(sum(credit)-sum(debit)) as service_income')->from('acc_transaction')->where('COAID', 304)->get()->result_array();
         $sale_return = $this->db->select('(sum(credit)-sum(debit)) as sale_return')->from('acc_transaction')->where('Vtype', 'Return')->get()->result_array();
 
-        $indirect_income_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'I')->like('COAID', '3040')->group_by('a.HeadCode')->get()->result();
 
 
         $product_purchase = $this->db->select('(sum(debit)-sum(credit)) as product_purchase')->from('acc_transaction')->where('COAID', 402)->get()->result_array();
         $opening_inventory = $this->db->select('(sum(debit)-sum(credit)) as opening_inventory')->from('acc_transaction')->where('COAID', 10205)->get()->result_array();
-        $direct_expense = $this->db->select('(sum(debit)-sum(credit)) as direct_expense')->from('acc_transaction')->like('COAID', '4010')->get()->result_array();
-        $indirect_expense = $this->db->select('(sum(debit)-sum(credit)) as indirect_expense')->from('acc_transaction')->like('COAID', '4040')->get()->result_array();
+        $direct_expense = $this->db->select('(sum(debit)-sum(credit)) as direct_expense')->from('acc_transaction')->like('COAID', '401')->get()->result_array();
+        $operating_expense = $this->db->select('(sum(debit)-sum(credit)) as op_expense')->from('acc_transaction')->like('COAID', '403')->get()->result_array();
+        $indirect_expense = $this->db->select('(sum(debit)-sum(credit)) as indirect_expense')->from('acc_transaction')->like('COAID', '404')->get()->result_array();
 
-        $expense = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'E')->like('COAID', '4010')->group_by('a.HeadCode')->get()->result();
-        $indirect_expense_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'E')->like('COAID', '4040')->group_by('a.HeadCode')->get()->result();
+        $expense = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'E')->like('a.HeadCode', '4010')->group_by('a.HeadCode')->get()->result();
+
+
+        $o_expense = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID','left')->where('a.HeadType', 'E')->like('a.HeadCode', '403')->group_by('a.HeadCode')->get()->result();
+
+
+        $indirect_expense_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID','left')->where('HeadType', 'E')->like('a.HeadCode', '404')->group_by('a.HeadCode')->get()->result();
         //  $closing_inventory=$this->db->select('sum(grand_total_amount) as closing_inventory')->from('product_purchase')->get()->result_array();
 
-        // echo '<pre>';
-        // print_r($indirect_expense_c);
+//         echo '<pre>';
+//         print_r($o_expense);
 
         $coa = $this->db->select('*')->from('acc_coa')->where('HeadLevel', '0')->get()->result_array();
 
 
         $data = array();
         $sl = 1;
+
+//        $arr_ex = [];
+//        $arr_ex_o = [];
         foreach ($expense as $i) {
 
             $amount = $this->db->select('sum(debit)-sum(credit) as amount')->from('acc_transaction')->where('COAID', $i->COAID)->get()->row();
@@ -1147,7 +1155,25 @@ class Accounts_model extends CI_Model
 
             $arr_ex[] = array(
                 'HeadName' => $i->HeadName,
-                'amount' => $amount->amount
+                'amount' => $amount->amount,
+                'HeadLevel' => $i->HeadLevel,
+                'COAID' => $i->HeadCode,
+
+
+            );
+        }
+        foreach ($o_expense as $i) {
+
+            $amount = $this->db->select('sum(debit)-sum(credit) as amount')->from('acc_transaction')->where('COAID', $i->COAID)->get()->row();
+
+          //  $row_total=$this->db->select('sum(debit)-sum(credit) as row_total')->from('acc_transaction')->like('COAID', $i->COAID ,'after')->get()->row();
+
+            $arr_ex_o[] = array(
+                'HeadName' => $i->HeadName,
+                'amount' => $amount->amount,
+                 'HeadLevel' => $i->HeadLevel,
+                 'COAID' => $i->HeadCode,
+                // 'row_total' => $row_total->row_total,
 
 
             );
@@ -1162,7 +1188,9 @@ class Accounts_model extends CI_Model
 
             array_push($arr_ind_ex, array(
                 'HeadName' => $i->HeadName,
-                'amount' => $amount->amount
+                'amount' => $amount->amount,
+                'HeadLevel' => $i->HeadLevel,
+                'COAID' => $i->HeadCode,
             ));
             // echo '<pre>';
             // print_r($arr_ind_ex);
@@ -1178,7 +1206,9 @@ class Accounts_model extends CI_Model
                 $arr_ind_in,
                 array(
                     'HeadName' => $i->HeadName,
-                    'amount' => $amount->amount
+                    'amount' => $amount->amount,
+                    'HeadLevel' => $i->HeadLevel,
+                    'COAID' => $i->HeadCode,
                 )
             );
         }
@@ -1191,10 +1221,12 @@ class Accounts_model extends CI_Model
             // 'closing_inventory' =>$closing_inventory[0]['closing_inventory'],
             'service_income' => $service_income[0]['service_income'],
             'direct_expense' => $direct_expense[0]['direct_expense'],
+            'op_expense' => $operating_expense[0]['op_expense'],
             'indirect_expense' => $indirect_expense[0]['indirect_expense'],
             'indirect_income' => $indirect_income[0]['indirect_income'],
             'sale_return' => $sale_return[0]['sale_return'],
             'expense' => $arr_ex,
+            'o_expense' => $arr_ex_o,
             'indirect_expense_c' => $arr_ind_ex,
             'indirect_income_c' => $arr_ind_in,
             'oResultCoa'     => $coa,
@@ -1203,9 +1235,9 @@ class Accounts_model extends CI_Model
         );
         $sl++;
 
-        // echo '<pre>';
-        // print_r($data);
-        // exit();
+//         echo '<pre>';
+//         print_r($o_expense);
+//         exit();
 
         return $data;
     }
@@ -1215,27 +1247,32 @@ class Accounts_model extends CI_Model
 
 
         $capital = $this->db->select('(sum(credit)-sum(debit)) as capital')->from('acc_transaction')->where('COAID', 2)->get()->result_array();
-        $current_liabilities = $this->db->select('(sum(credit)-sum(debit)) as current_liabilities')->from('acc_transaction')->like('COAID', '5020')->get()->result_array();
-        $non_current_liabilities = $this->db->select('(sum(credit)-sum(debit)) as non_current_liabilities')->from('acc_transaction')->like('COAID', '5010')->get()->result_array();
-        $acc_pay = $this->db->select('(sum(credit)-sum(debit)) as acc_pay')->from('acc_transaction')->like('COAID', '502020')->get()->result_array();
-        $emp_led = $this->db->select('(sum(credit)-sum(debit)) as emp_led')->from('acc_transaction')->like('COAID', '502040')->get()->result_array();
-        $acc_pay_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('COAID', '502020')->group_by('a.HeadCode')->get()->result();
-        $emp_led_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('COAID', '502040')->group_by('a.HeadCode')->get()->result();
-        $non_current_liabilities_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('COAID', '5010')->group_by('a.HeadCode')->get()->result();
+        $inventory = $this->db->select('(sum(credit)-sum(debit)) as inventory')->from('acc_transaction')->where('COAID', 10207)->get()->result_array();
+        $current_liabilities = $this->db->select('(sum(credit)-sum(debit)) as current_liabilities')->from('acc_transaction')->like('COAID', '502')->get()->result_array();
+        $equities = $this->db->select('(sum(credit)-sum(debit)) as equities')->from('acc_transaction')->like('COAID', '2','after')->get()->result_array();
+        $non_current_liabilities = $this->db->select('(sum(credit)-sum(debit)) as non_current_liabilities')->from('acc_transaction')->like('COAID', '501')->get()->result_array();
+        $long_term_l = $this->db->select('(sum(credit)-sum(debit)) as long_term_l')->from('acc_transaction')->like('COAID', '507')->get()->result_array();
+        $acc_pay = $this->db->select('(sum(credit)-sum(debit)) as acc_pay')->from('acc_transaction')->like('COAID', '50202')->get()->result_array();
+        $emp_led = $this->db->select('(sum(credit)-sum(debit)) as emp_led')->from('acc_transaction')->like('COAID', '50204')->get()->result_array();
+        $acc_pay_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('HeadCode', '50202')->group_by('a.HeadCode')->get()->result();
+        $emp_led_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('HeadCode', '50204')->group_by('a.HeadCode')->get()->result();
+        $non_current_liabilities_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('a.HeadCode', '501','after')->group_by('a.HeadCode')->get()->result();
+        $long_term_l_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'L')->like('a.HeadCode', '501','after')->group_by('a.HeadCode')->get()->result();
+        $equities_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID','left')->where('HeadType', 'L')->like('a.HeadCode', '2','after')->group_by('a.HeadCode')->get()->result();
 
-        $fixed_assets = $this->db->select('(sum(debit)-sum(credit)) as fixed_assets')->from('acc_transaction')->like('COAID', '1030')->get()->result_array();
+        $fixed_assets = $this->db->select('(sum(debit)-sum(credit)) as fixed_assets')->from('acc_transaction')->like('COAID', '103')->get()->result_array();
+        $other_current = $this->db->select('(sum(debit)-sum(credit)) as other_current')->from('acc_transaction')->like('COAID', '10205')->get()->result_array();
 
-        $current_assets = $this->db->select('(sum(debit)-sum(credit)) as current_assets')->from('acc_transaction')->like('COAID', '1020')->get()->result_array();
-        $current_assets_c = $this->db->select('*,(sum(b.debit)-sum(b.credit)) as total_debit')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '1020')->get()->result();
+        $current_assets = $this->db->select('(sum(debit)-sum(credit)) as current_assets')->from('acc_transaction')->like('COAID', '102')->get()->result_array();
+        $current_assets_c = $this->db->select('*,(sum(b.debit)-sum(b.credit)) as total_debit')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '102')->get()->result();
         $acc_rcv = $this->db->select('(sum(debit)-sum(credit)) as acc_rcv')->from('acc_transaction')->like('COAID', '102030')->get()->result_array();
 
-        $acc_rcv_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '102030')->group_by('a.HeadCode')->get()->result();
-        $cash_bank_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '10201020')->group_by('a.HeadCode')->get()->result();
-        $cash_bkash_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '10201030')->group_by('a.HeadCode')->get()->result();
-
-        $cash_nagad_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '10201040')->group_by('a.HeadCode')->get()->result();
-
-        $fixed_assets_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '1030')->group_by('a.HeadCode')->get()->result();
+        $fixed_assets_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '103','after')->group_by('a.HeadCode')->get()->result();
+        $acc_rcv_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '10203','after')->group_by('a.HeadCode')->get()->result();
+        $cash_bank_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '1020102','after')->group_by('a.HeadCode')->get()->result();
+        $cash_bkash_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '1020103','after')->group_by('a.HeadCode')->get()->result();
+        $cash_nagad_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '1020104','after')->group_by('a.HeadCode')->get()->result();
+        $other_current_c = $this->db->select('*')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('a.HeadCode', '10205','after')->group_by('a.HeadCode')->get()->result();
 
         $cash_eq = $this->db->select('(sum(debit)-sum(credit)) as cash_eq')->from('acc_transaction')->like('COAID', '102010')->get()->result_array();
         $cash_hand = $this->db->select('(sum(debit)-sum(credit)) as cash_hand')->from('acc_transaction')->like('COAID', '1020101')->get()->result_array();
@@ -1245,8 +1282,8 @@ class Accounts_model extends CI_Model
         $cash_nagad = $this->db->select('(sum(debit)-sum(credit)) as cash_nagad')->from('acc_transaction')->like('COAID', '1020103')->get()->result_array();
 
 
-        $cash_eq_c = $this->db->select('*,(sum(b.debit)-sum(b.credit)) as total_debit')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '102010')->get()->result();
-        $cash_hand_c = $this->db->select('*,(sum(b.debit)-sum(b.credit)) as total_debit')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '10201010')->get()->result();
+        $cash_eq_c = $this->db->select('*,(sum(b.debit)-sum(b.credit)) as total_debit')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '10201')->get()->result();
+        $cash_hand_c = $this->db->select('*,(sum(b.debit)-sum(b.credit)) as total_debit')->from('acc_coa a')->join('acc_transaction b', 'a.HeadCode=b.COAID')->where('HeadType', 'A')->like('COAID', '1020101')->get()->result();
 
 
         $product_sale = $this->db->select('sum(credit) as product_sale')->from('acc_transaction')->where('COAID', 303)->get()->result_array();
@@ -1277,6 +1314,18 @@ class Accounts_model extends CI_Model
 
             );
         }
+        foreach ($equities_c as $i) {
+
+            $amount = $this->db->select('sum(credit)-sum(debit) as amount')->from('acc_transaction')->where('COAID', $i->COAID)->get()->row();
+
+
+            $arr_eq[] = array(
+                'HeadName' => $i->HeadName,
+                'amount' => $amount->amount
+
+
+            );
+        }
         foreach ($emp_led_c as $i) {
 
             $amount = $this->db->select('sum(credit)-sum(debit) as amount')->from('acc_transaction')->where('COAID', $i->COAID)->get()->row();
@@ -1295,6 +1344,18 @@ class Accounts_model extends CI_Model
 
 
             $arr_ncl[] = array(
+                'HeadName' => $i->HeadName,
+                'amount' => $amount->amount
+
+
+            );
+        }
+        foreach ($long_term_l_c as $i) {
+
+            $amount = $this->db->select('sum(credit)-sum(debit) as amount')->from('acc_transaction')->where('COAID', $i->COAID)->get()->row();
+
+
+            $arr_lt[] = array(
                 'HeadName' => $i->HeadName,
                 'amount' => $amount->amount
 
@@ -1366,6 +1427,18 @@ class Accounts_model extends CI_Model
 
             );
         }
+        foreach ($other_current_c as $i) {
+
+            $amount = $this->db->select('sum(debit)-sum(credit) as amount')->from('acc_transaction')->where('COAID', $i->COAID)->get()->row();
+
+
+            $arr_other_assets[] = array(
+                'HeadName' => $i->HeadName,
+                'amount' => $amount->amount
+
+
+            );
+        }
         //
         $data = array(
             'product_sale' => $product_sale[0]['product_sale'],
@@ -1385,11 +1458,18 @@ class Accounts_model extends CI_Model
 
 
             'capital' => $capital[0]['capital'],
+            'inventory' => $inventory[0]['inventory'],
             'current_liabilities' => $current_liabilities[0]['current_liabilities'],
             'acc_pay_c' => $arr_ac_pay,
+            'other_current_C' => $arr_other_assets,
             'non_current_liabilities' => $non_current_liabilities[0]['non_current_liabilities'],
+            'long_term_l' => $long_term_l[0]['long_term_l'],
+            'equities' => $equities[0]['equities'],
             'non_current_liabilities_c' => $arr_ncl,
+            'equities_c' => $arr_eq,
+            'long_term_l_c' => $arr_lt,
             'fixed_assets' => $fixed_assets[0]['fixed_assets'],
+            'other_current' => $other_current[0]['other_current'],
             'fixed_assets_c' => $arr_fixed_assets,
 
             'current_assets' => $current_assets[0]['current_assets'],

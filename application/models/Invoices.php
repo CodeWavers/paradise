@@ -831,7 +831,7 @@ class Invoices extends CI_Model
             'VNo'            =>  $invoice_id,
             'Vtype'          =>  'INV',
             'VDate'          =>  $createdate,
-            'COAID'          =>  10107,
+            'COAID'          =>  10207,
             'Narration'      =>  'Inventory credit For Invoice No' . $invoice_no_generated,
             'Debit'          =>  0,
             'Credit'         =>  $sumval, //purchase price asbe
@@ -1347,7 +1347,7 @@ class Invoices extends CI_Model
             'VNo'            =>  $invoice_id,
             'Vtype'          =>  'INV',
             'VDate'          =>  $createdate,
-            'COAID'          =>  10107,
+            'COAID'          =>  10207,
             'Narration'      =>  'Inventory credit For Invoice No' . $invoice_no_generated,
             'Debit'          =>  0,
             'Credit'         =>  $sumval, //purchase price asbe
@@ -1666,7 +1666,7 @@ class Invoices extends CI_Model
             'VNo'            =>  $invoice_id,
             'Vtype'          =>  'INV',
             'VDate'          =>  $createdate,
-            'COAID'          =>  10107,
+            'COAID'          =>  10207,
             'Narration'      =>  'Inventory credit For Invoice No' . $invoice_no,
             'Debit'          =>  0,
             'Credit'         =>  $sumval, //purchase price asbe
