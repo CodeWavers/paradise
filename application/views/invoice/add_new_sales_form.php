@@ -130,6 +130,7 @@
                                     <label for="invoice_no" class="col-sm-4 col-form-label">Vessel Name</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="vessel_name" id="vessel_name" class="form-control" value='' readonly>
+                                        <input type="hidden" name="voyage_no" id="voyage_no" class="form-control" value='' readonly>
                                         <input type="hidden" name="invoice_id" id="invoice_id" class="form-control" value='' readonly>
                                     </div>
                                 </div>
@@ -223,12 +224,14 @@
                 $('#cart_dt').html(obj.html);
                 $('#customer').val(obj.cus_name);
                 $('#vessel_name').val(obj.vessel_name);
+                $('#voyage_no').val(obj.voyage_no);
                 $("#cus_id").val(obj.cus_id);
                 $("#invoice_id").val(obj.invoice_id);
                 $("#inv_id").val(obj.invoice_id);
                 var customer_name=$('#customer').val().match(/\b(\w)/g).join('').toUpperCase() ;
                 var AI=$('#AI').val();
                 var vsn=$('#vessel_name').val();
+                var vygn=$('#voyage_no').val();
                 var date=$('#date').val();
                 var arr1 = date.split('-');
                 //alert(vsn)
@@ -239,9 +242,9 @@
                 //alert(fix2)
 
 
-                var generate_number=customer_name+'-'+vsn+'-SV'+AI+'-'+fix1+'-'+fix2
-
-                $('#invoice').val(generate_number);
+               // var generate_number=customer_name+'-'+vsn+'-SV'+AI+'-'+fix1+'-'+fix2
+                var generate_number=vsn+vygn+'-SV'+AI;
+                $('#invoice').val(generate_number.toUpperCase());
             }
         })
 

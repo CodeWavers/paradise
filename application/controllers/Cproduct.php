@@ -259,8 +259,13 @@ class Cproduct extends CI_Controller {
             $brand_new_words .= $w[0].$w[1].$w[2];
         }
 
-        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
 
+        $last_id=$this->db->select('id')->from('product_information')->order_by('id','desc')->get()->row()->id;
+
+        $AI=$last_id+1;
+//        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+        $sku=$product_new_words.$cat_new_words.$AI;
+       // echo $sku;exit();
         $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
         $data['product_id']   = $product_id;
@@ -290,16 +295,6 @@ class Cproduct extends CI_Controller {
       //  echo  $sku; exit();
         $result = $CI->lproduct->insert_product($data);
 
-        $data_service=array(
-
-            'service_name' =>$this->input->post('product_name',TRUE),
-            'description' =>$this->input->post('description',TRUE)
-
-
-        );
-
-
-        $this->db->insert('product_service', $data_service);
 
 
 

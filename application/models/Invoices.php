@@ -2469,7 +2469,7 @@ class Invoices extends CI_Model
         $pattern = "/[-]/";
 
         $components = preg_split($pattern, $order_no);
-        $so_no=preg_replace('/SO/i','',$components[2]);
+        $so_no=preg_replace('/SO/i','',$components[1]);
 
         if ($so_no != '') {
                     $so_no = $so_no + 1;
@@ -2498,7 +2498,7 @@ class Invoices extends CI_Model
         $pattern = "/[-]/";
 
         $components = preg_split($pattern, $order_no);
-        $sv_no=preg_replace('/SV/i','',$components[2]);
+        $sv_no=preg_replace('/SV/i','',$components[1]);
 
         if ($sv_no != '') {
             $sv_no = $sv_no + 1;
@@ -2521,7 +2521,7 @@ class Invoices extends CI_Model
         $pattern = "/[-]/";
 
         $components = preg_split($pattern, $order_no);
-        $dc_no=preg_replace('/DC/i','',$components[2]);
+        $dc_no=preg_replace('/DC/i','',$components[1]);
 
         if ($dc_no != '') {
             $dc_no = $dc_no + 1;
@@ -2620,10 +2620,11 @@ class Invoices extends CI_Model
 
     public function approved_so_details($invoice_no)
     {
-        $this->db->select('*, a.paid_amount as inv_paid,a.due_amount as due,a.total_discount,a.other_charges,a.total_amount');
+        $this->db->select('*,rq.voyage_no, a.paid_amount as inv_paid,a.due_amount as due,a.total_discount,a.other_charges,a.total_amount');
         $this->db->from('invoice a');
         $this->db->where('a.invoice_no', $invoice_no);
         $this->db->join('invoice_details c', 'c.invoice_id = a.invoice_id');
+        $this->db->join('rqsn rq', 'a.rqsn_id = rq.rqsn_id','left');
         $this->db->join('product_information b', 'c.product_id = b.product_id');
         $this->db->join('customer_information x', 'x.customer_id = a.customer_id', 'left');
        $this->db->join('product_category e', 'e.category_id = b.category_id', 'left');

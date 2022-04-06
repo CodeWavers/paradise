@@ -218,7 +218,7 @@ if (isset($_POST['btnSave'])) {
 
                                     <div class="col-sm-8">
 
-                                        <input type="text" name="dtpFromDate" value="" placeholder="<?php echo display('date') ?>" class="datepicker form-control">
+                                        <input autocomplete="off" type="text" name="dtpFromDate" value="" placeholder="<?php echo display('date') ?>" class="datepicker form-control">
 
                                     </div>
 
@@ -232,7 +232,7 @@ if (isset($_POST['btnSave'])) {
 
                                     <div class="col-sm-8">
 
-                                        <input type="text" name="dtpToDate" value="" placeholder="<?php echo display('date') ?>" class="datepicker form-control">
+                                        <input autocomplete="off"  type="text" name="dtpToDate" value="" placeholder="<?php echo display('date') ?>" class="datepicker form-control">
 
                                     </div>
 

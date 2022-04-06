@@ -600,6 +600,7 @@ class Cpurchase extends CI_Controller
             "category"  => $_POST["category_name"],
             "subcat"  => $_POST["subcat"],
             "parts"  => $_POST["parts"],
+            "rate"  => $_POST["unit_rate"],
             "sku"  => $_POST["sku"],
             "brand"  => $_POST["brand"],
             "model"  => $_POST["model"],
@@ -686,8 +687,8 @@ class Cpurchase extends CI_Controller
 
 
 
-            if ($items['total']) {
-                $tot = $items['total'];
+            if (!empty($items['rate'])) {
+                $tot = $items['qty']*$items['rate'];
             }else{
                 $tot=  $items['qty']*$latest_price;
             }

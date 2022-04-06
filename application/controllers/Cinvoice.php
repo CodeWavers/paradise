@@ -1512,6 +1512,7 @@ class Cinvoice extends CI_Controller
         $vessel_name = $this->input->post('vessel_name', TRUE);
         $paid_amount = $this->input->post('advance', TRUE);
         $paid_amount_new = $this->input->post('advance_new', TRUE);
+        $other_charges = $this->input->post('other_charges', TRUE);
         $due_amount = $this->input->post('due_amount', TRUE);
         $discount = $this->input->post('discount', TRUE);
         $grand_total = $this->input->post('grand_total', TRUE);
@@ -1530,6 +1531,7 @@ class Cinvoice extends CI_Controller
             'contact_no'   => $contact_no,
             'total_amount'  => $grand_total,
             'paid_amount'   => $paid_amount,
+            'other_charges'   => $other_charges,
             'due_amount'    => $due_amount,
             'total_discount' => $discount,
             'is_so_sold'        => 1
@@ -1818,7 +1820,7 @@ class Cinvoice extends CI_Controller
 
 
             $output .= '<tr><td>' . $count . '</td>
-                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <td><input type="text" class="form-control" value="' . html_escape($rq['product_name'] ) . '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 </td>
 
@@ -1882,6 +1884,7 @@ class Cinvoice extends CI_Controller
             'html' => $output,
             'cus_name'  => $details[0]['customer_name'],
             'vessel_name'  => $details[0]['vessel_name'],
+            'voyage_no'  => $details[0]['voyage_no'],
             'cus_id'    => $details[0]['customer_id'],
             'invoice_id'    => $details[0]['invoice_id']
         );
@@ -1922,7 +1925,7 @@ class Cinvoice extends CI_Controller
             $closing_stock=$CI->Reports->current_stock($rq['product_id']);
             $count++;
             $output .= '<tr><td>' . $count . '</td>
-                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <td><input type="text" class="form-control" value="' . html_escape($rq['product_name'] ) . '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 </td>
 
@@ -1972,7 +1975,8 @@ class Cinvoice extends CI_Controller
             'cus_id'    => $details[0]['customer_id'],
             'rqsn_no'    => $details[0]['rqsn_no'],
             'invoice_id'    => $details[0]['invoice_id'],
-            'vessel_name'    => $details[0]['from_id']
+            'vessel_name'    => $details[0]['from_id'],
+            'voyage_no'    => $details[0]['voyage_no']
         );
 
         echo json_encode($data);
@@ -2164,7 +2168,7 @@ class Cinvoice extends CI_Controller
 
             $count++;
             $output .= '<tr><td>' . $count . '</td>
-                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <td><input type="text" class="form-control" value="' . html_escape($rq['product_name'] ) . '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 </td>
                  <td><input type="text" class="form-control" value="' . $rq['parts'] . '" readonly="readonly"></td>
@@ -2287,7 +2291,7 @@ class Cinvoice extends CI_Controller
         foreach ($rqsn_details as $rq) {
             $count++;
             $output .= '<tr><td>' . $count . '</td>
-                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <td><input type="text" class="form-control" value="' . html_escape($rq['product_name'] ). '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 <input type="hidden" name="invoice_details_id[]" value="' . $rq['invoice_details_id'] . '">
                 </td>

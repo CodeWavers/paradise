@@ -169,7 +169,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                             <td><?php echo $rqsn_detail['brand_name'] ?></td>
                                             <td><?php echo $rqsn_detail['model_name'] ?></td>
                                             <td style="width: 5%;"><?php echo $rqsn_detail['quantity'] ?></td>
-                                            <td style="width: 5%;" ><?php echo number_format($rqsn_detail['rate'],2)?></td>
+                                            <td style="width: 5%;" ><?php echo number_format($rqsn_detail['unit_rate'],2)?></td>
                                             <td style="width: 5%;" class="text-left"><?php echo number_format($rqsn_detail['total'],2) ?></td>
 
 

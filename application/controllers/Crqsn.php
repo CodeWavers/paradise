@@ -999,7 +999,7 @@ class Crqsn extends CI_Controller
         foreach ($rqsn_details as $rq) {
             $count++;
             $output .= '<tr><td>' . $count . '</td>
-                <td><input type="text" class="form-control" value="' . $rq['product_name'] . '" readonly="readonly">
+                <td><input type="text" class="form-control" value="' . html_escape($rq['product_name'] ). '" readonly="readonly">
                 <input type="hidden" name="product_id[]" value="' . $rq['product_id'] . '">
                 </td>
                 <td><input type="text" class="form-control" value="' . $rq['parts'] . '" readonly="readonly"></td>
@@ -1050,6 +1050,7 @@ class Crqsn extends CI_Controller
             'html' => $output,
             'cus_name'  => $rqsn_details[0]['customer_name'],
             'vessel_name'  => $rqsn_details[0]['from_id'],
+            'voyage_no'  => $rqsn_details[0]['voyage_no'],
             'cus_id'    => $rqsn_details[0]['customer_id']
         );
 

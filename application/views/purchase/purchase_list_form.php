@@ -102,6 +102,7 @@
                                                 data-productname="<?php echo $row['product_name']?>"
                                                 data-parts="<?php echo $row['parts']?>"
                                                 data-sku="<?php echo $row['sku']?>"
+                                                data-unit_rate="<?php echo $row['unit_rate']?>"
                                                 data-brand="<?php echo $row['brand_name']?>"
                                                 data-model="<?php echo $row['model_name']?>"
                                                 data-productid="<?php echo $row['product_id']?>"
@@ -145,6 +146,7 @@ function add_and_delete(e) {
             var sl = $(e).data("sl");
             var rqsn_details = $(e).data('rqsndetail');
             var rqsn_no = $(e).data('rqsn_no');
+            var unit_rate = $(e).data('unit_rate');
 
             var btn = $("#add_btn" + sl);
 
@@ -161,6 +163,7 @@ function add_and_delete(e) {
                         subcat:subcat,
                         parts:parts,
                         sku:sku,
+                        unit_rate:unit_rate,
                         brand:brand,
                         model:model,
                         quantity:quantity,

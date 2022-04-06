@@ -174,6 +174,7 @@
                                     <label for="customer" class="col-sm-4 col-form-label">Vessel Name</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="vessel" name="vessel_name" class="form-control" value="" readonly="readonly">
+                                        <input type="hidden" id="voyage_no" name="voyage_no" class="form-control" value="" readonly="readonly">
 
                                     </div>
                                 </div>
@@ -244,10 +245,12 @@
                 $('#customer').val(obj.cus_name);
                 $("#cus_id").val(obj.cus_id);
                 $("#vessel").val(obj.vessel_name);
+                $("#voyage_no").val(obj.voyage_no);
 
                 var customer_name=$('#customer').val().match(/\b(\w)/g).join('').toUpperCase() ;
                 var AI=$('#AI').val();
                 var vsn=$('#vessel').val();
+                var vygn=$('#voyage_no').val();
                 var date=$('#date').val();
                 var arr1 = date.split('-');
                 //alert(vsn)
@@ -258,9 +261,10 @@
                 //alert(fix2)
 
 
-                var generate_number=customer_name+'-'+vsn+'-SO'+AI+'-'+fix1+'-'+fix2
+              //  var generate_number=customer_name+'-'+vsn+'-SO'+AI+'-'+fix1+'-'+fix2
+                var generate_number=vsn+vygn+'-SO'+AI;
 
-                $('#so_no').val(generate_number);
+                $('#so_no').val(generate_number.toUpperCase());
             }
         })
 

@@ -402,10 +402,14 @@ class Rqsn extends CI_Model
         //  $order_no = substr($result[0]['invoice_no'], -1);
         $order_no = $result[0]['rqsn_no'];
 
+       // $pattern = "/[-]/";
         $pattern = "/[-]/";
 
         $components = preg_split($pattern, $order_no);
-        $rq_no=preg_replace('/RQ/i','',$components[2]);
+
+        $rq_no=preg_replace('/VR/i','',$components[1]);
+
+      //  echo print_r($rq_no);exit();
 
         if ($rq_no != '') {
             $rq_no = $rq_no + 1;

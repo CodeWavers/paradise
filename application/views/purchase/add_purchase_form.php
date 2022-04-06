@@ -120,27 +120,27 @@
 
 <script type="text/javascript">
 
-        function require_check() {
-
-
-            $('.rate').each(function() {
-                if ($(this).val() == "") {
-                    var confirm=confirm('Are you sure?');
-                    if (confirm==true) {
-                        alert('true');
-                    } else {
-                        alert('false');
-                    }
-                }else{
-                    toastr.error('Please fill the all estimation price!')
-                    return false;
-                }
-
-            });
-
-
-
-        }
+        // function require_check() {
+        //
+        //
+        //     $('.rate').each(function() {
+        //         if ($(this).val() == "") {
+        //             var confirm=confirm('Are you sure?');
+        //             if (confirm==true) {
+        //                 alert('true');
+        //             } else {
+        //                 alert('false');
+        //             }
+        //         }else{
+        //             toastr.error('Please fill the all estimation price!')
+        //             return false;
+        //         }
+        //
+        //     });
+        //
+        //
+        //
+        // }
 
         $('#insert_purchase').on('submit', function() {
             $('.rate').each(function() {
@@ -148,9 +148,6 @@
                 if ($(this).val() == "") {
                     toastr.error('Please fill the all estimation price!')
                     return
-                }else{
-
-                    return confirm('Are you sure?')
                 }
             });
         });

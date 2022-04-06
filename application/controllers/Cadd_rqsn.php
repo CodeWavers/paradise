@@ -219,7 +219,7 @@ class Cadd_rqsn extends CI_Controller
     <td><input name="" type="text" class="form-control" value="' . $items["category"] . '" readonly></td>
     <td><input name="" type="text" class="form-control" value="' . $items["subcat"] . '" readonly></td>
     <td>
-    <input name="" type="text" class="form-control" value="' . $items["product_name"] . '"  readonly>
+    <input name="" type="text" class="form-control" value="' . html_escape($items["product_name"]) . '"  readonly>
     <input name="product_id[]" type="hidden" class="form-control" value="' . $items["product_id"] . '"  readonly>
     <input name="rqsn_id[]" type="hidden" class="form-control" value="' . $items["rqsn_id"] . '"  readonly>
     </td>

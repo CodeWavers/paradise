@@ -237,7 +237,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                                         <tr>
                                             <td colspan="2" class="text-right"><b>Other Charges:</b></td>
 
-                                            <td  align="right"><b><?php echo (($position == 0) ? "$currency {total_amount}" : "{total_amount} $currency") ?></b></td>
+                                            <td  align="right"><b><?php echo (($position == 0) ? "$currency {other_charges}" : "{other_charges} $currency") ?></b></td>
                                         </tr>
 
                                         <tr>

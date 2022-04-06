@@ -182,7 +182,7 @@
                                         <label for="rqsn_for" class="col-sm-4 col-form-label text-right">Vessel Name : <i class="text-danger">*</i> </label>
                                         <div class="col-sm-8">
                                             <select name="rqsn_for" id="rqsn_for" class="form-control" onchange="generate_number()" required>
-                                                <option value="">Vessele</option>
+                                                <option value=""></option>
 <!--                                                {outlet_list}-->
 <!--                                                <option value="{outlet_id}">{outlet_name}</option>-->
 <!--                                                {/outlet_list}-->
@@ -364,10 +364,11 @@
 
         //alert(fix2)
 
+        //old generate number
+      //  var generate_number=customer_name+'-'+vsn+'-RQ'+AI+'-'+vygn+'-'+fix1+'-'+fix2
 
-        var generate_number=customer_name+'-'+vsn+'-RQ'+AI+'-'+vygn+'-'+fix1+'-'+fix2
-
-        $('#rqsn_no').val(generate_number);
+        var generate_number=vsn+vygn+'-VR'+AI;
+        $('#rqsn_no').val(generate_number.toUpperCase());
 
       // console.log(arr2);
 
