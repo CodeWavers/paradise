@@ -38,31 +38,59 @@
                             <h3 align="center">Balance Sheet Report</h3>
                             <table class="print-table" width="100%">
 
+
+
                                 <tr>
+
                                     <td align="left" class="print-table-tr">
-                                        <img src="<?php echo $software_info[0]['logo']; ?>" alt="logo">
+
+                                        <img src="<?php echo $software_info[0]->logo;?>" alt="logo">
+
                                     </td>
+
                                     <td align="center" class="print-cominfo">
-                                        <span class="company-txt">
-                                            <?php echo $company[0]['company_name']; ?>
 
-                                        </span><br>
-                                        <?php echo $company[0]['address']; ?>
+                                                        <span class="company-txt">
+
+                                                            <?php echo $company[0]['company_name'];?>
+
+
+
+                                                        </span><br>
+
+                                        <?php echo $company[0]['address'];?>
+
                                         <br>
-                                        <?php echo $company[0]['email']; ?>
+
+                                        <?php echo $company[0]['email'];?>
+
                                         <br>
-                                        <?php echo $company[0]['mobile']; ?>
+
+                                        <?php echo $company[0]['mobile'];?>
+
+
 
                                     </td>
+
+
 
                                     <td align="right" class="print-table-tr">
+
                                         <date>
-                                            <?php echo display('date') ?>: <?php
-                                                                            echo date('d-M-Y');
-                                                                            ?>
+
+                                            <?php echo display('date')?>: <?php
+
+                                            echo date('d-M-Y');
+
+                                            ?>
+
                                         </date>
+
                                     </td>
+
                                 </tr>
+
+
 
                             </table>
                             <div class=" col-xs-12 row">
@@ -87,14 +115,15 @@
 
 
                                         <tr>
-                                            <td></td>
-                                            <td colspan="8">Cash & Cash Equivalent</td>
 
-<!--                                            --><?php //if ($cash_eq) : ?>
-<!--                                                <td colspan="7">--><?php //echo  number_format($cash_eq, 2) ?><!--</td>-->
-<!--                                            --><?php //else : ?>
-<!--                                                <td colspan="7">--><?php //echo number_format('0', 2) ?><!--</td>-->
-<!--                                            --><?php //endif; ?>
+                                            <td></td>
+                                            <td colspan="7">Cash & Cash Equivalent</td>
+
+                                            <?php if ($cash_eq) : ?>
+                                                <td colspan="7"><?php echo  number_format($cash_eq, 2) ?></td>
+                                            <?php else : ?>
+                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
+                                            <?php endif; ?>
                                         </tr>
                                         <tr>
                                             <td></td>
@@ -257,6 +286,7 @@
 
                                         <tr>
 
+                                            <td></td>
                                             <td colspan="8"><b>Fixed Assets</b></td>
 
 <!--                                            --><?php //if ($fixed_assets) : ?>
@@ -412,15 +442,17 @@
                                             <td colspan="9" style="color: white;text-transform: uppercase"><b>Equities</b></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="9"><b>Equities</b></td>
+                                            <td colspan="8"><b>Equities</b></td>
 
-<!--                                            --><?php //if ($capital) : ?>
-<!--                                                <td colspan="8"><b>--><?php //echo  number_format($capital, 2) ?><!--</b></td>-->
-<!--                                            --><?php //else : ?>
-<!--                                                <td colspan="8"><b>--><?php //echo number_format('0', 2) ?><!--</b></td>-->
-<!--                                            --><?php //endif; ?>
+                                            <?php if ($capital) : ?>
+                                                <td colspan="8"><b><?php echo  number_format($capital, 2) ?></b></td>
+                                            <?php else : ?>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+                                            <?php endif; ?>
 
                                         </tr>
+
+
 
                                         <?php foreach ($equities_c as $eq) { ?>
                                             <?php if ($eq['amount'] > 0) { ?>
@@ -433,11 +465,21 @@
                                                 </tr>
                                             <?php } ?>
                                         <?php } ?>
+                                        <tr>
+                                            <td colspan="8"><b>Drawings</b></td>
+
+                                            <?php if ($drawing) : ?>
+                                                <td colspan="8"><b><?php echo  number_format($drawing, 2) ?></b></td>
+                                            <?php else : ?>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+                                            <?php endif; ?>
+
+                                        </tr>
 
                                         <tr >
 
                                             <td  colspan="8"><b>Total Equities:</b></td>
-                                            <td  colspan="8"><b><?php echo  number_format($capital, 2) ?></b></td>
+                                            <td  colspan="8"><b><?php echo  number_format($capital+$drawing, 2) ?></b></td>
                                         </tr>
 
                                         <tr style="color: green;border: 2px solid black">

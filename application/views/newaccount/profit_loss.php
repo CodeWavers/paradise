@@ -40,36 +40,72 @@
                             <h3 align="center">Profit Loss Report</h3>
                             <table class="print-table" width="100%">
 
+
+
                                 <tr>
+
                                     <td align="left" class="print-table-tr">
-                                        <img src="<?php echo $software_info[0]['logo']; ?>" alt="logo">
+
+                                        <img src="<?php echo $software_info[0]->logo;?>" alt="logo">
+
                                     </td>
+
                                     <td align="center" class="print-cominfo">
-                                        <span class="company-txt">
-                                            <?php echo $company[0]['company_name']; ?>
 
-                                        </span><br>
-                                        <?php echo $company[0]['address']; ?>
+                                                        <span class="company-txt">
+
+                                                            <?php echo $company[0]['company_name'];?>
+
+
+
+                                                        </span><br>
+
+                                        <?php echo $company[0]['address'];?>
+
                                         <br>
-                                        <?php echo $company[0]['email']; ?>
+
+                                        <?php echo $company[0]['email'];?>
+
                                         <br>
-                                        <?php echo $company[0]['mobile']; ?>
+
+                                        <?php echo $company[0]['mobile'];?>
+
+
 
                                     </td>
+
+
 
                                     <td align="right" class="print-table-tr">
+
                                         <date>
-                                            <?php echo display('date') ?>: <?php
-                                                                            echo date('d-M-Y');
-                                                                            ?>
+
+                                            <?php echo display('date')?>: <?php
+
+                                            echo date('d-M-Y');
+
+                                            ?>
+
                                         </date>
+
                                     </td>
+
                                 </tr>
+
+
 
                             </table>
                             <div class=" col-xs-12 ">
                                 <table class="table table-striped">
                                     <tbody>
+
+                                    <tr style="background-color: green;color: white;text-transform: uppercase">
+
+
+                                        <td colspan="9" ><b>Accounts</b></td>
+
+
+                                    </tr>
                                     <tr>
                                         <td colspan="9"><b>Operating Income</b></td>
 

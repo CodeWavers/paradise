@@ -884,6 +884,130 @@ class Accounts extends CI_Controller
     $content = $this->parser->parse('newaccount/cash_flow_report_search', $data, true);
     $this->template->full_admin_html_view($content);
   }
+  public function cash_flow_report_search_new()
+  {
+      $CI = &get_instance();
+      $CI->load->model('Reports');
+      $CI->load->model('Rqsn');
+      $CI->load->model('Invoices');
+      $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
+      $dtpToDate   = $this->input->post('dtpToDate', TRUE);
+      $today   = date('Y-m-d');
+
+      $closing_inventory = $this->Reports->valuation_list();
+      // exit();
+      $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
+
+      //  echo '<pre>';print_r($stock_value);exit();
+      // $CI->load->model('Warehouse');
+      $vno=  date('Ymdhs');
+      $createby = $this->session->userdata('user_id');
+      $createdate = date('Y-m-d H:i:s');
+      $closing_inventory_value = array(
+          'VNo'            =>  $vno,
+          'Vtype'          =>  'INV',
+          'VDate'          =>  $createdate,
+          'COAID'          =>  10206,
+          'Narration'      =>  'Closing Inventory Value',
+          'Debit'          =>  $stock_value,
+          'Credit'         =>  0,
+          'IsPosted'       => 1,
+          'CreateBy'       => $createby,
+          'CreateDate'     => $createdate,
+          'IsAppove'       => 1
+      );
+
+      $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
+
+      if ($rows > 0){
+          $this->db->where('COAID',10206);
+          $this->db->set('Debit',$stock_value);
+          $this->db->update('acc_transaction');
+      }else{
+          $this->db->insert('acc_transaction',$closing_inventory_value);
+
+      }
+//
+      $get_profit  = $this->accounts_model->cash_flow($dtpFromDate,$dtpToDate);
+
+
+
+      //$postData = $this->input->post();
+      // $closing_inventory = $this->Reports->getCheckList();
+//echo '<pre>';print_r($this->accounts_model->software_setting_info());exit();
+      $data['company'] = $this->Invoices->retrieve_company();
+      $data['software_info'] = $this->accounts_model->software_setting_info();
+      $data['oResultAsset'] = $get_profit['oResultAsset'];
+      $data['oResultLiability']  = $get_profit['oResultLiability'];
+      $data['product_sale']  = $get_profit['product_sale'];
+      $data['drawing']  = $get_profit['drawing'];
+      $data['opening_inventory']  = $get_profit['opening_inventory'];
+      $data['product_purchase']  = $get_profit['product_purchase'];
+      $data['closing_inventory']  =$stock_value;
+      $data['service_income']  = $get_profit['service_income'];
+      $data['direct_expense']  = $get_profit['direct_expense'];
+      $data['indirect_expense']  = $get_profit['indirect_expense'];
+      $data['indirect_income']  = $get_profit['indirect_income'];
+      $data['op_expense;']  = $get_profit['op_expense;'];
+      $data['sale_return']  = $get_profit['sale_return'];
+      $data['expense']  = $get_profit['expense'];
+      $data['indirect_expense_c']  = $get_profit['indirect_expense_c'];
+      $data['indirect_income_c']  = $get_profit['indirect_income_c'];
+      $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $stock_value;
+      $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $stock_value;
+
+      $data['total_sale']  = $get_profit['product_sale'] - $get_profit['sale_return'] + $get_profit['service_income'];
+      $data['gross_profit']  =    $data['total_sale'] -  $data['total_i'];
+
+
+      $data['capital']  =    $get_profit['capital'];
+      $data['inventory']  =    $get_profit['inventory'];
+      $data['current_liabilities']  =    $get_profit['current_liabilities'];
+      $data['acc_pay_c']  =    $get_profit['acc_pay_c'];
+      $data['non_current_liabilities']  =    $get_profit['non_current_liabilities'];
+      $data['non_current_liabilities_c']  =    $get_profit['non_current_liabilities_c'];
+      $data['fixed_assets']  =    $get_profit['fixed_assets'];
+      $data['equities']  =    $get_profit['equities'];
+      $data['other_current']  =    $get_profit['other_current'];
+      $data['fixed_assets_c']  =    $get_profit['fixed_assets_c'];
+      $data['equities_c']  =    $get_profit['equities_c'];
+      $data['current_assets']  =    $get_profit['current_assets'] + $data['closing_inventory'];
+      $data['current_assets_c']  =    $get_profit['current_assets_c'];
+      $data['other_current_C']  =    $get_profit['other_current_C'];
+      $data['acc_rcv']  =    $get_profit['acc_rcv'];
+      $data['acc_pay']  =    $get_profit['acc_pay'];
+      $data['emp_led']  =    $get_profit['emp_led'];
+
+      $data['emp_led_c']  =    $get_profit['emp_led_c'];
+      $data['cash_eq']  =    $get_profit['cash_eq'];
+      $data['cash_hand']  =    $get_profit['cash_hand'];
+      $data['cash_bkash']  =    $get_profit['cash_bkash'];
+
+      $data['cash_nagad']  =    $get_profit['cash_nagad'];
+      $data['cash_bank']  =    $get_profit['cash_bank'];
+      $data['emp_led_c']  =    $get_profit['emp_led_c'];
+      $data['acc_rcv_c']  =    $get_profit['acc_rcv_c'];
+      $data['cash_eq_c']  =    $get_profit['cash_eq_c'];
+      $data['cash_hand_c']  =    $get_profit['cash_hand_c'];
+      $data['cash_bkash_c']  =    $get_profit['cash_bkash_c'];
+      $data['cash_nagad_c']  =    $get_profit['cash_nagad_c'];
+      $data['cash_bank_c']  =    $get_profit['cash_bank_c'];
+      $data['right_total']  =    $data['current_assets'] +  $get_profit['fixed_assets'];
+      $data['net_profit']  =    ($data['gross_profit'] - $data['indirect_expense']) + $get_profit['indirect_income'];
+      $data['left_total']  =    $get_profit['capital'] +  $get_profit['current_liabilities'] + $get_profit['non_current_liabilities'] + $data['net_profit'];
+      $data['dtpFromDate']  = $dtpFromDate;
+      $data['dtpToDate']    = $dtpToDate;
+      $data['today']    = $today;
+      $data['pdf']    = 'assets/data/pdf/Statement of Comprehensive Income Till ' . $today . '.pdf';
+      $data['title']  = 'Cash Flow Report';
+
+      //  echo '<pre>';print_r( $data['emp_led_c']);
+      // echo '<pre>';print_r( $data['cash_hand']);exit();
+      //   echo '<pre>';print_r( $arr_ex_o);exit();
+
+      $content = $this->parser->parse('newaccount/cash_flow_new', $data, true);
+      $this->template->full_admin_html_view($content);
+  }
 
   //Supplier payment information
   public function supplier_payment()
@@ -999,6 +1123,7 @@ class Accounts extends CI_Controller
         $CI = &get_instance();
         $CI->load->model('Reports');
         $CI->load->model('Rqsn');
+        $CI->load->model('Invoices');
 
 
         $inventory = $this->Reports->getInventoryList();
@@ -1022,7 +1147,8 @@ class Accounts extends CI_Controller
 
 
 
-
+        $data['company'] = $this->Invoices->retrieve_company();
+        $data['software_info'] = $this->accounts_model->software_setting_info();
 
         $data['oResultAsset'] = $get_profit['oResultAsset'];
         $data['oResultLiability']  = $get_profit['oResultLiability'];
@@ -1069,6 +1195,7 @@ class Accounts extends CI_Controller
         $CI = &get_instance();
         $CI->load->model('Reports');
         $CI->load->model('Rqsn');
+        $CI->load->model('Invoices');
         $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
         $dtpToDate   = $this->input->post('dtpToDate', TRUE);
         $today   = date('Y-m-d');
@@ -1114,13 +1241,15 @@ class Accounts extends CI_Controller
         //$postData = $this->input->post();
        // $closing_inventory = $this->Reports->getCheckList();
 
-
+        $data['company'] = $this->Invoices->retrieve_company();
+        $data['software_info'] = $this->accounts_model->software_setting_info();
         $data['oResultAsset'] = $get_profit['oResultAsset'];
         $data['oResultLiability']  = $get_profit['oResultLiability'];
         $data['product_sale']  = $get_profit['product_sale'];
         $data['opening_inventory']  = $get_profit['opening_inventory'];
         $data['product_purchase']  = $get_profit['product_purchase'];
         $data['closing_inventory']  =$stock_value;
+        $data['drawing']  = $get_profit['drawing'];
         $data['service_income']  = $get_profit['service_income'];
         $data['direct_expense']  = $get_profit['direct_expense'];
         $data['indirect_expense']  = $get_profit['indirect_expense'];
