@@ -1739,12 +1739,24 @@ class Api extends CI_Controller {
     |______________________________________________________________________
     */
 
+//    public function insert_sale(){
+//        $customer_id = $this->input->get('customer_id');
+//        $json['response'] = [
+//                'status'     => 'ok',
+//                'message'    => 'Successfully Added',
+//                'permission' => 'write',
+//                'post' =>json_decode($_POST['product_data'])
+//
+//            ];
+//        echo json_encode($json,JSON_UNESCAPED_UNICODE);
+//    }
     public function insert_sale(){
         $invoice_id = date('YmdHis');
         $invoice_id = strtoupper($invoice_id);
-        $createby   = $this->input->get('createby');
+      //  $createby   = $this->input->get('createby');
+        $createby   = 'MPOS';
         $createdate = date('Y-m-d H:i:s');
-        $detailsinfo  = $this->input->get('detailsinfo');
+        $detailsinfo  = $_POST['product_data'];
         $saledetails     = json_decode($detailsinfo,true);
         $products[] = '';
         $quant[]    = '';
@@ -1754,9 +1766,9 @@ class Api extends CI_Controller {
         $i=0;
         foreach ($saledetails as $key => $value) {
             $products[$i]   = $saledetails[$i]['product_id'];
-            $quant[$i]     = $saledetails[$i]['product_quantity'];
+            $quant[$i]     = $saledetails[$i]['quantity'];
             $rate[$i]     = $saledetails[$i]['product_rate'];
-            $serialn[$i]     = $saledetails[$i]['serial_no'];
+            $serialn[$i]     = $saledetails[$i]['product_sn: '];
             $i++;}
         $product_id   = $products;
         $quantity     = $quant;
@@ -1766,7 +1778,7 @@ class Api extends CI_Controller {
 
 
 
-        $customer_id = $this->input->get('customer_id');
+        $customer_id = $this->input->post('customer_id');
 
 
         $transection_id = $this->auth->generator(15);
@@ -1776,9 +1788,9 @@ class Api extends CI_Controller {
             'transaction_id'      => $transection_id,
             'relation_id'         => $customer_id,
             'transection_type'    => 2,
-            'date_of_transection' => (!empty($this->input->get('invoice_date'))?$this->input->get('invoice_date'):date('Y-m-d')),
+            'date_of_transection' => (!empty($this->input->post('invoice_date'))?$this->input->post('invoice_date'):date('Y-m-d')),
             'transection_category'=> 2,
-            'amount'              => $this->input->get('paid_amount'),
+            'amount'              => $this->input->post('paid_amount'),
             'transection_mood'    => 1,
             'is_transaction'      => 0,
             'description'         => 'Paid by customer'
@@ -1791,16 +1803,18 @@ class Api extends CI_Controller {
         $datainv = array(
             'invoice_id'      => $invoice_id,
             'customer_id'     => $customer_id,
-            'date'            => (!empty($this->input->get('invoice_date'))?$this->input->get('invoice_date'):date('Y-m-d')),
-            'total_amount'    => $this->input->get('grand_total_price')-$this->input->get('total_discount'),
-            'total_tax'       => $this->input->get('total_tax'),
+            'date'            => (!empty($this->input->post('invoice_date'))?$this->input->post('invoice_date'):date('Y-m-d')),
+            'total_amount'    => $this->input->post('grand_total'),
+            'total_tax'       => $this->input->get('tax'),
             'invoice'         => $this->invoice_generator(),
-            'invoice_details' => (!empty($this->input->get('inva_details'))?$this->input->get('inva_details'):''),
+            'invoice_details' => (!empty($this->input->post('inva_details'))?$this->input->post('inva_details'):''),
             'invoice_discount'=> 0,
-            'total_discount'  => $this->input->get('total_discount'),
+            'total_discount'  => $this->input->post('total_discount'),
+            'paid_amount'        => $this->input->post('paid_amount'),
+            'due_amount'         => $this->input->post('due_amount'),
             'prevous_due'     => 0,
             'shipping_cost'   => 0,
-            'sales_by'        => $this->input->get('createby'),
+            'sales_by'        => $createby,
             'status'          => 1,
             'payment_type'    => 1,
             'bank_id'         => null,
@@ -1831,7 +1845,7 @@ class Api extends CI_Controller {
             'VDate'          =>  $createdate,
             'COAID'          =>  1020101,
             'Narration'      =>  'Cash in Hand in Sale for '.$cusifo->customer_name,
-            'Debit'          =>  $this->input->get('paid_amount'),
+            'Debit'          =>  $this->input->post('paid_amount'),
             'Credit'         =>  0,
             'IsPosted'       =>  1,
             'CreateBy'       =>  $createby,
@@ -1864,7 +1878,7 @@ class Api extends CI_Controller {
             'VDate'          =>  $createdate,
             'COAID'          =>  $customer_headcode,
             'Narration'      =>  'Customer debit For  '.$cusifo->customer_name,
-            'Debit'          =>  $this->input->get('grand_total_price')-$this->input->get('total_discount'),
+            'Debit'          =>  $this->input->post('grand_total'),
             'Credit'         =>  0,
             'IsPosted'       => 1,
             'CreateBy'       => $createby,
@@ -1880,7 +1894,7 @@ class Api extends CI_Controller {
             'COAID'          =>  303,
             'Narration'      =>  'Sale Income For '.$cusifo->customer_name,
             'Debit'          =>  0,
-            'Credit'         =>  $this->input->get('grand_total_price')-$this->input->get('total_discount'),
+            'Credit'         =>  $this->input->post('grand_total'),
             'IsPosted'       => 1,
             'CreateBy'       => $createby,
             'CreateDate'     => $createdate,
@@ -1896,13 +1910,13 @@ class Api extends CI_Controller {
             'COAID'          =>  $customer_headcode,
             'Narration'      =>  'Customer credit for Paid Amount For Customer '.$cusifo->customer_name,
             'Debit'          =>  0,
-            'Credit'         =>  $this->input->get('paid_amount'),
+            'Credit'         =>  $this->input->post('paid_amount'),
             'IsPosted'       => 1,
             'CreateBy'       => $createby,
             'CreateDate'     => $createdate,
             'IsAppove'       => 1
         );
-        if(!empty($this->input->get('paid_amount'))){
+        if(!empty($this->input->post('paid_amount'))){
             $this->db->insert('acc_transaction',$cuscredit);
 
             $this->db->insert('acc_transaction',$cc);
@@ -1943,29 +1957,34 @@ class Api extends CI_Controller {
                 'description'        => '',
                 'discount_per'       => '',
                 'tax'                => 0,
-                'paid_amount'        => $this->input->get('paid_amount'),
-                'due_amount'         => $this->input->get('due_amount'),
+//                'paid_amount'        => $this->input->get('paid_amount'),
+//                'due_amount'         => $this->input->get('due_amount'),
                 'supplier_rate'      => $supplier_rate[0]['supplier_price'],
                 'total_price'        => $total_price,
                 'status'             => 1
             );
 
-            $this->db->insert('invoice_details', $invdetails);
+
+            if ($product_quantity > 0){
+                $this->db->insert('invoice_details', $invdetails);
+
+            }
 
         }
-        $message = 'Mr.'.$customerinfo->customer_name.',
-        '.'You have purchase  '.$this->input->get('grand_total_price').' You have paid .'.$this->input->get('paid_amount');
-        $config_data = $this->db->select('*')->from('sms_settings')->get()->row();
-        if($config_data->isinvoice == 1){
-            $this->smsgateway->send([
-                'apiProvider' => 'nexmo',
-                'username'    => $config_data->api_key,
-                'password'    => $config_data->api_secret,
-                'from'        => $config_data->from,
-                'to'          => $customerinfo->customer_mobile,
-                'message'     => $message
-            ]);
-        }
+
+//        $message = 'Mr.'.$customerinfo->customer_name.',
+//        '.'You have purchase  '.$this->input->get('grand_total_price').' You have paid .'.$this->input->get('paid_amount');
+//        $config_data = $this->db->select('*')->from('sms_settings')->get()->row();
+//        if($config_data->isinvoice == 1){
+//            $this->smsgateway->send([
+//                'apiProvider' => 'nexmo',
+//                'username'    => $config_data->api_key,
+//                'password'    => $config_data->api_secret,
+//                'from'        => $config_data->from,
+//                'to'          => $customerinfo->customer_mobile,
+//                'message'     => $message
+//            ]);
+//        }
 
         $message_sent = true ;
         if($message_sent == true){
@@ -1984,7 +2003,6 @@ class Api extends CI_Controller {
 
         echo json_encode($json,JSON_UNESCAPED_UNICODE);
     }
-
 
 
 

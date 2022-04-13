@@ -1113,16 +1113,21 @@ class Accounts_model extends CI_Model
     public function profit_loss_serach()
     {
 
+        $last_date=date('Y-m-d',strtotime("-1 days"));
+
+
+
 
 
         $product_sale = $this->db->select('(sum(credit)-sum(debit)) as product_sale')->from('acc_transaction')->where('COAID', 303)->get()->result_array();
         $service_income = $this->db->select('(sum(credit)-sum(debit)) as service_income')->from('acc_transaction')->where('COAID', 304)->get()->result_array();
         $sale_return = $this->db->select('(sum(credit)-sum(debit)) as sale_return')->from('acc_transaction')->where('Vtype', 'Return')->get()->result_array();
 
+        $inventory = $this->db->select('(sum(credit)-sum(debit)) as inventory')->from('acc_transaction')->where('COAID', 10207)->get()->result_array();
+        $opening_inventory = $this->db->select('(sum(debit)-sum(credit)) as opening_inventory')->from('acc_transaction')->where('COAID', 10207)->where('VDate <= ',$last_date)->get()->result_array();
 
 
         $product_purchase = $this->db->select('(sum(debit)-sum(credit)) as product_purchase')->from('acc_transaction')->where('COAID', 402)->get()->result_array();
-        $opening_inventory = $this->db->select('(sum(debit)-sum(credit)) as opening_inventory')->from('acc_transaction')->where('COAID', 10205)->get()->result_array();
         $direct_expense = $this->db->select('(sum(debit)-sum(credit)) as direct_expense')->from('acc_transaction')->like('COAID', '401')->get()->result_array();
         $operating_expense = $this->db->select('(sum(debit)-sum(credit)) as op_expense')->from('acc_transaction')->like('COAID', '403')->get()->result_array();
 
@@ -1222,6 +1227,7 @@ class Accounts_model extends CI_Model
             'direct_expense' => $direct_expense[0]['direct_expense'],
             // 'closing_inventory' =>$closing_inventory[0]['closing_inventory'],
             'service_income' => $service_income[0]['service_income'],
+            'inventory' => $inventory[0]['inventory'],
 
             'op_expense' => $operating_expense[0]['op_expense'],
             'indirect_expense' => $indirect_expense[0]['indirect_expense'],
@@ -1246,7 +1252,7 @@ class Accounts_model extends CI_Model
 
     public function balance_sheet()
     {
-
+        $last_date=date('Y-m-d',strtotime("-1 days"));
 
         $capital = $this->db->select('(sum(credit)-sum(debit)) as capital')->from('acc_transaction')->where('COAID', 2)->get()->result_array();
         $inventory = $this->db->select('(sum(credit)-sum(debit)) as inventory')->from('acc_transaction')->where('COAID', 10207)->get()->result_array();
@@ -1302,7 +1308,8 @@ class Accounts_model extends CI_Model
         $sale_return = $this->db->select('sum(credit) as sale_return')->from('acc_transaction')->where('Vtype', 'Return')->get()->result_array();
         $product_sale = $this->db->select('sum(credit) as product_sale')->from('acc_transaction')->where('COAID', 303)->get()->result_array();
         $product_purchase = $this->db->select('sum(debit) as product_purchase')->from('acc_transaction')->where('COAID', 402)->get()->result_array();
-        $opening_inventory = $this->db->select('sum(debit) as opening_inventory')->from('acc_transaction')->where('COAID', 10205)->get()->result_array();
+        $opening_inventory = $this->db->select('(sum(debit)-sum(credit)) as opening_inventory')->from('acc_transaction')->where('COAID', 10207)->where('VDate <= ',$last_date)->get()->result_array();
+
         $direct_expense = $this->db->select('sum(Debit) as direct_expense')->from('acc_transaction')->like('COAID', '4010')->get()->result_array();
         $drawing = $this->db->select('(sum(debit)-sum(credit)) as drawing')->from('acc_transaction')->like('COAID', '405')->get()->result_array();
 
@@ -1507,7 +1514,7 @@ class Accounts_model extends CI_Model
 
     public function cash_flow($from_date,$to_date)
     {
-
+        $last_date=date('Y-m-d',strtotime("-1 days"));
 
         $current_assets_to = $this->db->select('(sum(debit)-sum(credit)) as current_assets')->from('acc_transaction')->where('Vdate',$to_date)->like('COAID', '102')->get()->result_array();
         $current_assets_from = $this->db->select('(sum(debit)-sum(credit)) as current_assets')->from('acc_transaction')->where('Vdate',$from_date)->like('COAID', '102')->get()->result_array();
@@ -1590,9 +1597,13 @@ class Accounts_model extends CI_Model
         $product_sale_to = $this->db->select('sum(credit) as product_sale')->from('acc_transaction')->where('Vdate',$to_date)->where('COAID', 303)->get()->result_array();
         $product_sale_from = $this->db->select('sum(credit) as product_sale')->from('acc_transaction')->where('Vdate',$from_date)->where('COAID', 303)->get()->result_array();
         $product_purchase_to = $this->db->select('sum(debit) as product_purchase')->from('acc_transaction')->where('Vdate',$to_date)->where('COAID', 402)->get()->result_array();
+
         $product_purchase_from = $this->db->select('sum(debit) as product_purchase')->from('acc_transaction')->where('Vdate',$from_date)->where('COAID', 402)->get()->result_array();
-        $opening_inventory_to = $this->db->select('sum(debit) as opening_inventory')->from('acc_transaction')->where('Vdate',$to_date)->where('COAID', 10205)->get()->result_array();
-        $opening_inventory_from = $this->db->select('sum(debit) as opening_inventory')->from('acc_transaction')->where('Vdate',$from_date)->where('COAID', 10205)->get()->result_array();
+
+//        $opening_inventory = $this->db->select('(sum(debit)-sum(credit)) as opening_inventory')->from('acc_transaction')->where('COAID', 10207)->where('VDate <= ',$last_date)->get()->result_array();
+
+        $opening_inventory_to = $this->db->select('sum(debit) as opening_inventory')->from('acc_transaction')->where('Vdate',$to_date)->where('COAID', 10207)->get()->result_array();
+        $opening_inventory_from = $this->db->select('sum(debit) as opening_inventory')->from('acc_transaction')->where('Vdate',$from_date)->where('COAID', 10207)->get()->result_array();
         $direct_expense_to = $this->db->select('sum(Debit) as direct_expense')->from('acc_transaction')->where('Vdate',$to_date)->like('COAID', '4010')->get()->result_array();
         $direct_expense_from = $this->db->select('sum(Debit) as direct_expense')->from('acc_transaction')->where('Vdate',$from_date)->like('COAID', '4010')->get()->result_array();
         $operating_expense_to = $this->db->select('(sum(debit)-sum(credit)) as op_expense')->from('acc_transaction')->where('Vdate',$to_date)->like('COAID', '403')->get()->result_array();

@@ -240,16 +240,7 @@
                                                 <td colspan="7"><?php echo number_format('0', 2) ?></td>
                                             <?php endif; ?>
                                         </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td colspan="7">Closing Inventory</td>
 
-                                            <?php if ($closing_inventory) : ?>
-                                                <td colspan="7"><?php echo  number_format($closing_inventory, 2) ?></td>
-                                            <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
-                                        </tr>
                                         <tr>
                                             <td></td>
                                             <td colspan="8">Other Current Asset</td>

@@ -626,39 +626,39 @@ class Accounts extends CI_Controller
   {
     $CI = &get_instance();
     $CI->load->model('Reports');
-      $closing_inventory = $this->Reports->valuation_list();
-
-      $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
-
-          //  echo '<pre>';print_r($stock_value);exit();
-    // $CI->load->model('Warehouse');
-          $vno=  date('Ymdhs');
-          $createby = $this->session->userdata('user_id');
-          $createdate = date('Y-m-d H:i:s');
-          $closing_inventory_value = array(
-          'VNo'            =>  $vno,
-          'Vtype'          =>  'INV',
-          'VDate'          =>  $createdate,
-          'COAID'          =>  10206,
-          'Narration'      =>  'Closing Inventory Value',
-          'Debit'          =>  $stock_value,
-          'Credit'         =>  0,
-          'IsPosted'       => 1,
-          'CreateBy'       => $createby,
-          'CreateDate'     => $createdate,
-          'IsAppove'       => 1
-      );
-
-          $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
-
-          if ($rows > 0){
-              $this->db->where('COAID',10206);
-              $this->db->set('Debit',$stock_value);
-              $this->db->update('acc_transaction');
-          }else{
-                    $this->db->insert('acc_transaction',$closing_inventory_value);
-
-          }
+//      $closing_inventory = $this->Reports->valuation_list();
+//
+//      $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
+//
+//          //  echo '<pre>';print_r($stock_value);exit();
+//    // $CI->load->model('Warehouse');
+//          $vno=  date('Ymdhs');
+//          $createby = $this->session->userdata('user_id');
+//          $createdate = date('Y-m-d H:i:s');
+//          $closing_inventory_value = array(
+//          'VNo'            =>  $vno,
+//          'Vtype'          =>  'INV',
+//          'VDate'          =>  $createdate,
+//          'COAID'          =>  10206,
+//          'Narration'      =>  'Closing Inventory Value',
+//          'Debit'          =>  $stock_value,
+//          'Credit'         =>  0,
+//          'IsPosted'       => 1,
+//          'CreateBy'       => $createby,
+//          'CreateDate'     => $createdate,
+//          'IsAppove'       => 1
+//      );
+//
+//          $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
+//
+//          if ($rows > 0){
+//              $this->db->where('COAID',10206);
+//              $this->db->set('Debit',$stock_value);
+//              $this->db->update('acc_transaction');
+//          }else{
+//                    $this->db->insert('acc_transaction',$closing_inventory_value);
+//
+//          }
 //      echo '<pre>';print_r($rows);exit();
 
     $outlet_id = $this->input->post('outlet', true);
@@ -1125,12 +1125,14 @@ class Accounts extends CI_Controller
         $CI->load->model('Rqsn');
         $CI->load->model('Invoices');
 
-
-        $inventory = $this->Reports->getInventoryList();
-
+//
+//        $inventory = $this->Reports->getInventoryList();
+//
+////        echo '<pre>';print_r($inventory);exit();
+//
+//        $cgs=array_sum(array_column($inventory,'cgs'));
 //        echo '<pre>';print_r($inventory);exit();
 
-        $cgs=array_sum(array_column($inventory,'cgs'));
 
         $dtpFromDate = $this->input->post('dtpFromDate', TRUE);
         $dtpToDate   = $this->input->post('dtpToDate', TRUE);
@@ -1140,9 +1142,9 @@ class Accounts extends CI_Controller
 
 
 
-        $clos_inv = $this->Reports->valuation_list();
-
-        $closing_inventory=array_sum(array_column($clos_inv['aaData'],'stock_value'));
+//        $clos_inv = $this->Reports->valuation_list();
+//
+//        $closing_inventory=array_sum(array_column($clos_inv['aaData'],'stock_value'));
 
 
 
@@ -1156,7 +1158,7 @@ class Accounts extends CI_Controller
         $data['opening_inventory']  = $get_profit['opening_inventory'];
         $data['product_purchase']  = $get_profit['product_purchase'];
         $data['abc']  = $get_profit['product_purchase'] + $get_profit['opening_inventory'] + $get_profit['direct_expense'];
-        $data['closing_inventory']  = $closing_inventory['closing_inventory'];
+        $data['closing_inventory']  =$get_profit['inventory'];
         $data['service_income']  = $get_profit['service_income'];
         $data['direct_expense']  = $get_profit['direct_expense'];
         $data['op_expense']  = $get_profit['op_expense'];
@@ -1169,7 +1171,7 @@ class Accounts extends CI_Controller
         $data['indirect_income_c']  = $get_profit['indirect_income_c'];
         $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['closing_inventory'];
 //        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $data['closing_inventory'];
-        $data['total_i']  =$cgs;
+        $data['total_i']  =$get_profit['inventory'] ;
 
         $data['total_sale']  = $get_profit['product_sale'];
         $data['gross_profit']  =    $data['total_sale'] -  $data['total_i'];
@@ -1200,39 +1202,39 @@ class Accounts extends CI_Controller
         $dtpToDate   = $this->input->post('dtpToDate', TRUE);
         $today   = date('Y-m-d');
 
-       $closing_inventory = $this->Reports->valuation_list();
-       // exit();
-       $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
-
-        //  echo '<pre>';print_r($stock_value);exit();
-        // $CI->load->model('Warehouse');
-        $vno=  date('Ymdhs');
-        $createby = $this->session->userdata('user_id');
-        $createdate = date('Y-m-d H:i:s');
-        $closing_inventory_value = array(
-            'VNo'            =>  $vno,
-            'Vtype'          =>  'INV',
-            'VDate'          =>  $createdate,
-            'COAID'          =>  10206,
-            'Narration'      =>  'Closing Inventory Value',
-            'Debit'          =>  $stock_value,
-            'Credit'         =>  0,
-            'IsPosted'       => 1,
-            'CreateBy'       => $createby,
-            'CreateDate'     => $createdate,
-            'IsAppove'       => 1
-        );
-
-        $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
-
-        if ($rows > 0){
-            $this->db->where('COAID',10206);
-            $this->db->set('Debit',$stock_value);
-            $this->db->update('acc_transaction');
-        }else{
-            $this->db->insert('acc_transaction',$closing_inventory_value);
-
-        }
+//       $closing_inventory = $this->Reports->valuation_list();
+//       // exit();
+//       $stock_value=array_sum(array_column($closing_inventory['aaData'],'stock_value'));
+//
+//        //  echo '<pre>';print_r($stock_value);exit();
+//        // $CI->load->model('Warehouse');
+//        $vno=  date('Ymdhs');
+//        $createby = $this->session->userdata('user_id');
+//        $createdate = date('Y-m-d H:i:s');
+//        $closing_inventory_value = array(
+//            'VNo'            =>  $vno,
+//            'Vtype'          =>  'INV',
+//            'VDate'          =>  $createdate,
+//            'COAID'          =>  10206,
+//            'Narration'      =>  'Closing Inventory Value',
+//            'Debit'          =>  $stock_value,
+//            'Credit'         =>  0,
+//            'IsPosted'       => 1,
+//            'CreateBy'       => $createby,
+//            'CreateDate'     => $createdate,
+//            'IsAppove'       => 1
+//        );
+//
+//        $rows=$this->db->select('*')->from('acc_transaction')->where('COAID',10206)->get()->num_rows();
+//
+//        if ($rows > 0){
+//            $this->db->where('COAID',10206);
+//            $this->db->set('Debit',$stock_value);
+//            $this->db->update('acc_transaction');
+//        }else{
+//            $this->db->insert('acc_transaction',$closing_inventory_value);
+//
+//        }
 //
        $get_profit  = $this->accounts_model->balance_sheet();
 
@@ -1248,7 +1250,7 @@ class Accounts extends CI_Controller
         $data['product_sale']  = $get_profit['product_sale'];
         $data['opening_inventory']  = $get_profit['opening_inventory'];
         $data['product_purchase']  = $get_profit['product_purchase'];
-        $data['closing_inventory']  =$stock_value;
+        $data['closing_inventory']  = $get_profit['inventory'];
         $data['drawing']  = $get_profit['drawing'];
         $data['service_income']  = $get_profit['service_income'];
         $data['direct_expense']  = $get_profit['direct_expense'];
@@ -1258,8 +1260,8 @@ class Accounts extends CI_Controller
         $data['expense']  = $get_profit['expense'];
         $data['indirect_expense_c']  = $get_profit['indirect_expense_c'];
         $data['indirect_income_c']  = $get_profit['indirect_income_c'];
-        $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['closing_inventory'];
-        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) - $data['closing_inventory'];
+        $data['goods_sold']  = $get_profit['opening_inventory'] + $get_profit['product_purchase'] + $get_profit['inventory'];
+        $data['total_i']  = ($get_profit['opening_inventory'] + $get_profit['product_purchase'] + $data['direct_expense']) -  $get_profit['inventory'];
 
         $data['total_sale']  = $get_profit['product_sale'] - $get_profit['sale_return'] + $get_profit['service_income'];
         $data['gross_profit']  =    $data['total_sale'] -  $data['total_i'];

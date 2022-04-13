@@ -131,6 +131,21 @@
                                         </tr>
                                         <tr>
 
+                                            <td colspan="8"><b>Net Income</b></td>
+
+                                            <?php if ($net_income) : ?>
+                                                <td colspan="8"><b><?php echo  number_format($net_income, 2) ?>
+                                                        <?php echo $net_income > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
+
+                                                    </b></td>
+                                            <?php else : ?>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+                                            <?php endif; ?>
+
+
+                                        </tr>
+                                        <tr hidden>
+
                                             <td colspan="8"><b>Current Assets </b></td>
 
                                             <?php if ($current_assets) : ?>
@@ -145,181 +160,73 @@
                                         </tr>
 
 
-
                                         <tr>
-                                            <td></td>
-                                            <td colspan="7">Cash In Hand</td>
-
-                                            <?php if ($cash_hand) : ?>
-                                                <td colspan="6"><?php echo  number_format($cash_hand, 2) ?>
-                                                    <?php echo $cash_hand > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
-
-                                                </td>
-                                            <?php else : ?>
-                                                <td colspan="6"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
-                                        </tr>
-                                   <tr>
-                                       <td></td>
-                                            <td colspan="7">Cash At Bank</td>
-
-                                            <?php if ($cash_bank) : ?>
-                                                <td colspan="7"><?php echo  number_format($cash_bank, 2) ?>
-                                                    <?php echo $cash_bank > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
-
-                                                </td>
-                                            <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
-                                        </tr>
-
-                                        <?php foreach ($cash_bank_c as $i) { ?>
-
-                                            <?php if ($i['amount'] > 0) { ?>
-                                                <tr>
-                                                    <td ></td>
-                                                    <td colspan="7" ><?php echo $i['HeadName'] ?></td>
-                                                    <td colspan="7"><?php echo $i['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
-                                        <tr>
-                                            <td></td>
-                                            <td colspan="7">Cash At Bkash</td>
-
-                                            <?php if ($cash_bkash) : ?>
-                                                <td colspan="7"><?php echo  number_format($cash_bkash, 2) ?>
-                                                    <?php echo $cash_bkash > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
-
-                                                </td>
-                                            <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
-                                        </tr>
-
-
-                                        <?php foreach ($cash_bkash_c as $i) { ?>
-
-                                            <?php if ($i['amount'] > 0) { ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td colspan="7"><?php echo $i['HeadName'] ?></td>
-                                                    <td colspan="7"><?php echo $i['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
-                                        <tr>
-                                            <td></td>
-                                            <td colspan="7">Cash At Nagad</td>
-
-                                            <?php if ($cash_nagad) : ?>
-                                                <td colspan="7"><?php echo  number_format($cash_nagad, 2) ?>
-                                                    <?php echo $cash_nagad > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
-
-                                                </td>
-                                            <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
-                                            <?php endif; ?>
-                                        </tr>
-
-
-                                        <?php foreach ($cash_nagad_c as $i) { ?>
-
-                                            <?php if ($i['amount'] > 0) { ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td colspan="7"> <?php echo $i['HeadName'] ?></td>
-                                                    <td colspan="7"><?php echo $i['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
-                                        <tr>
-                                            <td></td>
-                                            <td colspan="7">Account Receivable</td>
+                                         
+                                            <td colspan="8"><b>Account Receivable</b></td>
 
                                             <?php if ($acc_rcv) : ?>
-                                                <td colspan="7"><?php echo  number_format($acc_rcv, 2) ?>
+                                                <td colspan="8"><b><?php echo  number_format($acc_rcv, 2) ?>
                                                     <?php echo $acc_rcv > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
 
-                                                </td>
+                                                    </b> </td>
                                             <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+
                                             <?php endif; ?>
                                         </tr>
 
 
-                                        <?php foreach ($acc_rcv_c as $i) { ?>
 
-                                            <?php if ($i['amount'] > 0) { ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td colspan="7"><?php echo $i['HeadName'] ?></td>
-                                                    <td colspan="7"><?php echo $i['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
                                         <tr>
-                                            <td></td>
-                                            <td colspan="7">Inventory Asset</td>
+
+                                            <td colspan="8"><b>Inventory Asset</b></td>
 
                                             <?php if ($inventory) : ?>
-                                                <td colspan="7"><?php echo  number_format($inventory, 2) ?>
+                                                <td colspan="8"><b><?php echo  number_format($inventory, 2) ?>
                                                     <?php echo $inventory > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
 
-                                                </td>
+                                                    </b></td>
                                             <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+
                                             <?php endif; ?>
                                         </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td colspan="7">Closing Inventory</td>
+                                        <tr hidden>
+
+                                            <td colspan="8"><b>Closing Inventory</b></td>
 
                                             <?php if ($closing_inventory) : ?>
-                                                <td colspan="7"><?php echo  number_format($closing_inventory, 2) ?>
+                                                <td colspan="8"><b><?php echo  number_format($closing_inventory, 2) ?>
                                                     <?php echo $closing_inventory > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
 
-                                                </td>
+                                                    </b> </td>
                                             <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+
                                             <?php endif; ?>
                                         </tr>
 
                                         <tr>
 
-                                            <td></td>
-                                            <td colspan="7">Other Current Asset</td>
+
+                                            <td colspan="8"><b>Other Current Asset</b></td>
 
                                             <?php if ($other_current) : ?>
-                                                <td colspan="7"><?php echo  number_format($other_current, 2) ?>
+                                                <td colspan="8"><b><?php echo  number_format($other_current, 2) ?>
                                                     <?php echo $other_current > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
 
-                                                </td>
+                                                    </b></td>
                                             <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+
                                             <?php endif; ?>
                                         </tr>
 
 
-                                        <?php foreach ($other_current_C as $c) { ?>
-
-
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="6"><?php echo $c['HeadName'] ?></td>
-                                                <td colspan="6"><?php echo $c['amount'] ?></td>
-
-                                            </tr>
-                                        <?php } ?>
 
 
 
-                                        <tr>
+                                        <tr hidden>
                                             <td colspan="8"><b>Current Liabilities</b></td>
 
                                             <?php if ($current_liabilities) : ?>
@@ -333,31 +240,20 @@
                                         </tr>
 
                                         <tr>
-                                            <td></td>
-                                            <td colspan="7">Account Payable</td>
+
+                                            <td colspan="8"><b>Account Payable</b></td>
 
 
                                             <?php if ($acc_pay) : ?>
-                                                <td colspan="7"><?php echo  number_format($acc_pay, 2) ?>
+                                                <td colspan="8"><b><?php echo  number_format($acc_pay, 2) ?>
                                                     <?php echo $acc_pay > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
 
-                                                </td>
+                                                    </b></td>
                                             <?php else : ?>
-                                                <td colspan="7"><?php echo number_format('0', 2) ?></td>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
                                             <?php endif; ?>
                                         </tr>
-                                        <?php foreach ($acc_pay_c as $i) { ?>
-                                            <?php if ($i['amount'] > 0) { ?>
 
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td colspan="6"><?php echo $i['HeadName'] ?></td>
-                                                    <td colspan="6"><?php echo $i['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
 
 
 
@@ -379,17 +275,6 @@
                                         </tr>
 
 
-                                        <?php foreach ($non_current_liabilities_c as $i) { ?>
-                                            <?php if ($i['amount'] > 0) { ?>
-
-                                                <tr>
-                                                    <td></td>
-                                                    <td colspan="7"><?php echo $i['HeadName'] ?></td>
-                                                    <td colspan="7"><?php echo $i['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
 
 
                                         <?php
@@ -404,21 +289,7 @@
 
                                         ?>
 
-                                        <tr>
 
-                                            <td colspan="8"><b>Net Income</b></td>
-
-                                            <?php if ($net_income) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($net_income, 2) ?>
-                                                        <?php echo $net_income > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
-
-                                                    </b></td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                            <?php endif; ?>
-
-
-                                        </tr>
 
                                         <tr style="color: green;">
                                             <td  colspan="8"><b>Net Cash Flow From Operating Activities</b></td>
@@ -437,30 +308,18 @@
 
                                             <td colspan="8"><b>Fixed Assets</b></td>
 
-                                                                                        <?php if ($fixed_assets) : ?>
-                                                                                            <td colspan="8"><b><?php echo  number_format($fixed_assets, 2) ?>
-                                                                                                    <?php echo $fixed_assets > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
+                                            <?php if ($fixed_assets) : ?>
+                                                <td colspan="8"><b><?php echo  number_format($fixed_assets, 2) ?>
+                                                        <?php echo $fixed_assets > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
 
-                                                                                                </b></td>
-                                                                                        <?php else : ?>
-                                                                                            <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-                                                                                        <?php endif; ?>
+                                                    </b></td>
+                                            <?php else : ?>
+                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
+                                            <?php endif; ?>
                                         </tr>
 
 
 
-
-                                        <?php foreach ($fixed_assets_c as $i) { ?>
-
-
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="7"><?php echo $i['HeadName'] ?></td>
-                                                <td colspan="7"><?php echo $i['amount'] ?></td>
-
-                                            </tr>
-                                        <?php } ?>
 
                                         <tr style="color: green;">
                                             <td  colspan="8"><b>Net Cash Flow From Investing Activities</b></td>
@@ -491,17 +350,7 @@
                                         </tr>
 
 
-                                        <?php foreach ($long_term_l_c as $l) { ?>
-                                            <?php if ($l['amount'] > 0) { ?>
 
-                                                <tr>
-                                                    <td></td>
-                                                    <td colspan="7"><?php echo $l['HeadName'] ?></td>
-                                                    <td colspan="7"><?php echo $l['amount'] ?></td>
-
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
                                         <tr>
 
                                             <td colspan="8"><b>Drawings</b></td>
