@@ -191,20 +191,7 @@
 
                                             <?php endif; ?>
                                         </tr>
-                                        <tr hidden>
 
-                                            <td colspan="8"><b>Closing Inventory</b></td>
-
-                                            <?php if ($closing_inventory) : ?>
-                                                <td colspan="8"><b><?php echo  number_format($closing_inventory, 2) ?>
-                                                    <?php echo $closing_inventory > 0 ? '<i class="fa fa-arrow-circle-up text-success"></i>' : '<i class="fa fa-arrow-circle-down text-danger"></i>';?>
-
-                                                    </b> </td>
-                                            <?php else : ?>
-                                                <td colspan="8"><b><?php echo number_format('0', 2) ?></b></td>
-
-                                            <?php endif; ?>
-                                        </tr>
 
                                         <tr>
 
@@ -280,7 +267,8 @@
                                         <?php
 
                                         $net_income=(($total_sale-($total_i+$direct_expense))-$op_expense)+$indirect_income-$indirect_expense;
-                                            $noa=$current_assets+$current_liabilities+$net_income;
+                                            $noa=$net_income+$acc_rcv+$inventory+$other_current+$non_current_liabilities+$acc_pay;
+                                          //  $noa=0;
                                             $nia=$fixed_assets;
                                             $nfa=$long_term_l+$drawing;
 
