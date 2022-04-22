@@ -155,8 +155,8 @@ class Api extends CI_Controller {
 
     public function login(){
 
-        $email = $this->input->get('email');
-        $password =  $this->input->get('password');
+        $email = $this->input->post('email');
+        $password =  $this->input->post('password');
         if (empty($email) || empty($password)) {
             $json['response'] = [
                 'status'     => 'error',
@@ -1989,9 +1989,10 @@ class Api extends CI_Controller {
         $message_sent = true ;
         if($message_sent == true){
             $json['response'] = [
-                'status'     => 'ok',
+                'status'     => 200,
                 'message'    => 'Successfully Added',
-                'permission' => 'write'
+                'permission' => 'write',
+                'invoice_id' => $invoice_id
             ];
         }else{
             $json['response'] = [
@@ -2020,6 +2021,30 @@ class Api extends CI_Controller {
     |   SALE LIST
     |___________________________________________________
     */
+
+    public function invoice_data($invoice_id)
+    {
+
+        $invoice_detail = $this->Api_model->retrieve_invoice_html_data($invoice_id);
+        $company_info = $this->Api_model->retrieve_company_details();
+        $software_setting = $this->Api_model->software_setting_info();
+        if(!empty($invoice_detail)){
+            $json['response'] = array(
+                'status'    => 200,
+                'invoice_data' => $invoice_detail,
+                'company_info' => $company_info,
+                'software_setting' => $software_setting,
+
+            );
+        }else{
+            $json['response'] = array(
+                'status'    => 'error',
+                'message'   => 'No Record Found',
+            );
+        }
+
+        echo json_encode($json,JSON_UNESCAPED_UNICODE);
+    }
 
     public function sale_list(){
 

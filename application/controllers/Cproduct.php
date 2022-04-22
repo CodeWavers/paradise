@@ -611,7 +611,13 @@ class Cproduct extends CI_Controller {
             $brand_new_words .= $w[0].$w[1].$w[2];
         }
 
-        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+     //   $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+
+        $AI = $this->input->post('id',TRUE);
+      //  $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+        $sku=$product_new_words.$cat_new_words.$AI;
+        // echo $sku;exit();
+
 
         $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
@@ -648,6 +654,8 @@ class Cproduct extends CI_Controller {
         $data['tax']            = 0;
         $data['image']          = $image_name;
 
+        //echo '<pre>';print_r($data);exit();
+
         $result = $CI->Products->update_product($data, $product_id);
         if ($result == true) {
             $this->session->set_userdata(array('message' => display('successfully_updated')));
@@ -656,6 +664,57 @@ class Cproduct extends CI_Controller {
             $this->session->set_userdata(array('error_message' => display('product_model_already_exist')));
             redirect(base_url('Cproduct/manage_product'));
         }
+    }
+
+    public function sku_update_auto(){
+
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+
+        $product_data=$this->db->select('*')->from('product_information')->get()->result();
+
+        foreach ($product_data as $d){
+
+            $id=$d->id;
+            $parts=$d->parts;
+            $product_name=$d->product_name;
+            $category_name=$this->db->select('*')->from('product_category')->where('category_id',$d->category_id)->get()->row()->category_name;
+
+
+            $product_word = preg_split("/[\s,&_-]+/", $product_name);
+            $product_new_words = "";
+
+            foreach ($product_word as $w) {
+                $product_new_words .= $w[0];
+            }
+
+            $cat_word = preg_split("/[\s,&_-]+/", $category_name);
+            $cat_new_words = "";
+
+            foreach ($cat_word as $w) {
+                $cat_new_words .= $w[0];
+            }
+
+            $sku=$product_new_words.$cat_new_words.$id;
+
+            if (!empty($parts)){
+
+                $this->db->set('sku',$parts)->where('id',$id)->update('product_information');
+
+            }else{
+                $this->db->set('sku',$sku)->where('id',$id)->update('product_information');
+
+            }
+
+
+
+
+
+        }
+
+   //  echo '<pre>';print_r($product_data);exit();
+
+
     }
 
     //Manage Product

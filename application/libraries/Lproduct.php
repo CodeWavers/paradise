@@ -159,6 +159,7 @@ class Lproduct {
 
         $data['title']            = display('edit_your_product');
         $data['product_id']       = $product_detail[0]['product_id'];
+        $data['id']       = $product_detail[0]['id'];
         $data['product_id_two']       = $product_detail[0]['product_id_two'];
         $data['product_name']     = $product_detail[0]['product_name'];
         $data['price']            = $product_detail[0]['price'];

@@ -123,6 +123,7 @@
                                     <div class="col-sm-8">
                                         <input class="form-control" name="product_name" type="text" id="product_name" placeholder="<?php echo display('product_name') ?>" required tabindex="1" value="{product_name}" >
                                         <input type="hidden" name="product_id" value="{product_id}">
+                                        <input type="hidden" name="id" value="{id}">
                                     </div>
                                 </div>
                             </div>
