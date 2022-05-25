@@ -367,7 +367,8 @@
         //old generate number
       //  var generate_number=customer_name+'-'+vsn+'-RQ'+AI+'-'+vygn+'-'+fix1+'-'+fix2
 
-        var generate_number=vsn+vygn+'-VR'+AI;
+       // var generate_number=vsn+vygn+'-VR'+AI;
+        var generate_number=vsn+'VR'+vygn;
         $('#rqsn_no').val(generate_number.toUpperCase());
 
       // console.log(arr2);

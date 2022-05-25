@@ -262,7 +262,8 @@
 
 
               //  var generate_number=customer_name+'-'+vsn+'-SO'+AI+'-'+fix1+'-'+fix2
-                var generate_number=vsn+vygn+'-SO'+AI;
+              //   var generate_number=vsn+vygn+'-SO'+AI;
+                 var generate_number=vsn+'SO-'+vygn;
 
                 $('#so_no').val(generate_number.toUpperCase());
             }

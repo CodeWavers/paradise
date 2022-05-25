@@ -117,12 +117,28 @@ class Cproduct extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function sku_hash(){
+        $CI = & get_instance();
+        $CI->auth->check_admin_auth();
+
+        $config['encryption_key'] = 'fds2fdsKIO32';
+        $CI->load->library('encryption');
+
+      //  $ciphertext = $this->encryption->encrypt("plaintext");
+        $ciphertext=hash('sha256', 'Arman123');
+        echo $ciphertext;
+      //  echo $this->encryption->decrypt($ciphertext);
+    }
+
     //Insert Product and uload
     public function insert_product() {
         date_default_timezone_set("Asia/Dhaka");
+
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('lproduct');
+
+
         $product_id = (!empty($this->input->post('product_id',TRUE))?$this->input->post('product_id',TRUE):$this->generator(8));
         $check_product = $this->db->select('*')->from('product_information')->where('product_id',$product_id)->get()->num_rows();
         if($check_product > 0){
@@ -264,7 +280,9 @@ class Cproduct extends CI_Controller {
 
         $AI=$last_id+1;
 //        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
-        $sku=$product_new_words.$cat_new_words.$AI;
+//        $sku=$product_new_words.$cat_new_words.$AI;
+        $sku=random_string('alnum', 10);
+
        // echo $sku;exit();
         $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
@@ -641,7 +659,7 @@ class Cproduct extends CI_Controller {
         $data['country'] = $this->input->post('country',TRUE);
         $data['parts'] = $this->input->post('parts',TRUE);
         $data['tag'] = $this->input->post('tag',TRUE);
-        $data['sku'] = $sk;
+//        $data['sku'] = $sk;
         $data['price']        = $this->input->post('cost_price',TRUE);
         $data['product_model']= $this->input->post('model_id',TRUE);
         $data['brand_id']    = $this->input->post('brand_id',TRUE);
@@ -670,6 +688,7 @@ class Cproduct extends CI_Controller {
 
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
+        $CI->load->helper('string');
 
         $product_data=$this->db->select('*')->from('product_information')->get()->result();
 
@@ -695,7 +714,8 @@ class Cproduct extends CI_Controller {
                 $cat_new_words .= $w[0];
             }
 
-            $sku=$product_new_words.$cat_new_words.$id;
+            //$sku=$product_new_words.$cat_new_words.$id;
+            $sku=random_string('alnum', 10);
 
             if (!empty($parts)){
 

@@ -25,6 +25,25 @@ class Api extends CI_Controller {
 
     }
 
+
+    public function dashboard_content(){
+
+        $total_customer=$this->db->count_all("customer_information");
+        $total_product=$this->db->count_all("product_information");
+        $total_supplier=$this->db->count_all("supplier_information");
+        $total_sale=$this->db->count_all("invoice");
+
+        $json['response'] = array(
+            'status'  => 200,
+            'total_customer' =>$total_customer,
+            'total_product' =>$total_product,
+            'total_supplier' =>$total_supplier,
+            'total_sale' =>$total_sale,
+        );
+
+        echo json_encode($json,JSON_UNESCAPED_UNICODE);
+    }
+
     public function companyinfo(){
         $user_id = $this->input->get('userid');
         $company = $this->Api_model->retrieve_company($user_id);
