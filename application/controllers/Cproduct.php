@@ -776,6 +776,10 @@ class Cproduct extends CI_Controller {
         $ext = end(explode('.', $filename));
         $ext = substr(strrchr($filename, '.'), 1);
         if($ext == 'csv'){
+            $sku=random_string('alnum', 10);
+//            $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
+
+
             $count=0;
             $fp = fopen($_FILES['upload_csv_file']['tmp_name'],'r') or die("can't open file");
 
@@ -802,7 +806,7 @@ class Cproduct extends CI_Controller {
                         $insert_csv['parts'] = (!empty($csv_line[11])?$csv_line[11]:null);
                         $insert_csv['tag'] = (!empty($csv_line[12])?$csv_line[12]:null);
                         $insert_csv['country'] = (!empty($csv_line[13])?$csv_line[13]:null);
-                        $insert_csv['sku'] = (!empty($csv_line[14])?$csv_line[14]:null);
+                        $insert_csv['sku'] = (!empty($csv_line[11])?$csv_line[11]:$sku);
                     }
                     $check_supplier = $this->db->select('*')->from('supplier_information')->where('supplier_name',$insert_csv['supplier_id'])->get()->row();
 
@@ -924,7 +928,7 @@ class Cproduct extends CI_Controller {
                         'parts' => $insert_csv['parts'],
                         'tag' => $insert_csv['tag'],
                         'country' => $insert_csv['country'],
-                        'sku' => $insert_csv['sku'],
+                        'sku' =>  (!empty($insert_csv['parts'])?$insert_csv['parts']:$sku),
                         'price'         => $insert_csv['price'],
                         // 're_order_level'=> $insert_csv['re_order_level'],
                         'unit'          => $insert_csv['unit'],

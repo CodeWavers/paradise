@@ -258,7 +258,7 @@
 
                // var generate_number=customer_name+'-'+vsn+'-DC'+AI+'-'+fix1+'-'+fix2
                // var generate_number=vsn+vygn+'-DC'+AI;
-                var generate_number=vsn+'DC-'+vygn;
+                var generate_number=vsn+'DC-V'+vygn;
                 $('#dc_no').val(generate_number.toUpperCase());
             }
         })
