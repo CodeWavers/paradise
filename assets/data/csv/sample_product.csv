@@ -1,2 +1,2 @@
- Sl,Supplier Name,Barcode,Product name,Brand Name,Model,Category ,Purchase Type,Unit,Unit Cost Price,Supplier Price,Parts,Tag,Country,SKU
-,TRT COMpany,TR123,tEST PRODUCT,Dunlop,WER,Category ,Import,mileage,6000,5000,xyz,xyz,AF,AB-12-122
+ Sl,Supplier Name,Barcode,Product name,Brand Name,Model,Category ,Sub Category,Purchase Type,Unit,Unit Cost Price,Supplier Price,Parts,Tag,Country,SKU
+,TRT COMpany,TR123,Product name,Test Brand,Test Model,Test Category ,Test Sub-cat,Import,mileage,6000,5000,xyz,xyz,AF,

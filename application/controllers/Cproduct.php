@@ -12,6 +12,7 @@ class Cproduct extends CI_Controller {
         $this->db->query('SET SESSION sql_mode = ""');
         $this->load->model('Suppliers');
         $this->load->library('auth');
+        $this->load->helper('string');
     }
 
     //Index page load
@@ -776,7 +777,8 @@ class Cproduct extends CI_Controller {
         $ext = end(explode('.', $filename));
         $ext = substr(strrchr($filename, '.'), 1);
         if($ext == 'csv'){
-            $sku=random_string('alnum', 10);
+//            $sku=random_string('alnum', 10);
+            $sku=random_string('alnum', 11);
 //            $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
 
@@ -798,15 +800,16 @@ class Cproduct extends CI_Controller {
                         $insert_csv['brand_id']    = (!empty($csv_line[4])?$csv_line[4]:null);
                         $insert_csv['product_model']  = (!empty($csv_line[5])?$csv_line[5]:null);
                         $insert_csv['category_id']    = (!empty($csv_line[6])?$csv_line[6]:null);
-                        $insert_csv['ptype_id']    = (!empty($csv_line[7])?$csv_line[7]:null);
-                        $insert_csv['unit']    = (!empty($csv_line[8])?$csv_line[8]:null);
+                        $insert_csv['sub_cat_id']    = (!empty($csv_line[7])?$csv_line[7]:null);
+                        $insert_csv['ptype_id']    = (!empty($csv_line[8])?$csv_line[8]:null);
+                        $insert_csv['unit']    = (!empty($csv_line[9])?$csv_line[9]:null);
                         // $insert_csv['re_order_level']    = (!empty($csv_line[10])?$csv_line[10]:null);
-                        $insert_csv['price']        = (!empty($csv_line[9])?$csv_line[9]:null);
-                        $insert_csv['supplier_price'] = (!empty($csv_line[10])?$csv_line[10]:null);
-                        $insert_csv['parts'] = (!empty($csv_line[11])?$csv_line[11]:null);
-                        $insert_csv['tag'] = (!empty($csv_line[12])?$csv_line[12]:null);
-                        $insert_csv['country'] = (!empty($csv_line[13])?$csv_line[13]:null);
-                        $insert_csv['sku'] = (!empty($csv_line[11])?$csv_line[11]:$sku);
+                        $insert_csv['price']        = (!empty($csv_line[10])?$csv_line[10]:null);
+                        $insert_csv['supplier_price'] = (!empty($csv_line[11])?$csv_line[11]:null);
+                        $insert_csv['parts'] = (!empty($csv_line[12])?$csv_line[12]:null);
+                        $insert_csv['tag'] = (!empty($csv_line[13])?$csv_line[13]:null);
+                        $insert_csv['country'] = (!empty($csv_line[14])?$csv_line[14]:null);
+                        $insert_csv['sku'] = (!empty($csv_line[15])?$csv_line[15]:$sku);
                     }
                     $check_supplier = $this->db->select('*')->from('supplier_information')->where('supplier_name',$insert_csv['supplier_id'])->get()->row();
 
@@ -878,6 +881,23 @@ class Cproduct extends CI_Controller {
                         }
                     }
 
+                    $check_sub = $this->db->select('*')->from('product_subcat')->where(array('category_id'=>$category_id,'subcat_name' => $insert_csv['sub_cat_id']))->get()->row();
+                    if(!empty($check_sub)){
+                        $sub_cat_id = $check_sub->sub_cat_id;
+                    }else {
+                        $sub_cat_id = $this->auth->generator(15);
+                        $sub_categorydata = array(
+                            'sub_cat_id' => $sub_cat_id,
+                            'category_id' => $category_id,
+                            'subcat_name' => $insert_csv['sub_cat_id'],
+                            'status' => 1
+                        );
+                        if ($count > 0) {
+                            $this->db->insert('product_subcat', $sub_categorydata);
+
+                        }
+                    }
+
                         $check_model = $this->db->select('*')->from('product_model')->where('model_name', $insert_csv['product_model'])->get()->row();
 
 //                        echo '<pre>';print_r($check_model);exit();
@@ -920,6 +940,7 @@ class Cproduct extends CI_Controller {
                         'product_id'    =>  $product_id,
                         //'product_id'    => $insert_csv['product_id'],
                         'category_id'   => $category_id,
+                        'sub_cat_id'   => $sub_cat_id,
                         'brand_id'      => $brand_id,
                         'ptype_id'      => $insert_csv['ptype_id'],
                         'product_name'  => $insert_csv['product_name'],
@@ -946,6 +967,7 @@ class Cproduct extends CI_Controller {
                             ->from('product_information')
                             ->where('product_name',$data['product_name'])
                             ->where('category_id',$category_id)
+                            ->where('sub_cat_id',$sub_cat_id)
                             ->where('brand_id',$brand_id)
                             ->where('product_model',$model_id)
                             ->get()
@@ -958,6 +980,7 @@ class Cproduct extends CI_Controller {
                             $udata = array(
                                 'product_id'     => $result->product_id,
                                 'category_id'    => $category_id,
+                                'sub_cat_id'    => $sub_cat_id,
                                 'brand_id'    => $brand_id,
                                 'ptype_id'    =>  $insert_csv['ptype_id'],
                                 'product_name'   => $result->product_name,
@@ -975,32 +998,38 @@ class Cproduct extends CI_Controller {
 
                         }
 
-                        $supp_prd = array(
-                            //'product_id'     => $insert_csv['product_id'],
-                            'product_id'    =>  $product_id,
-                            'supplier_id'    => $supplier_id,
-                            'supplier_price' => $insert_csv['supplier_price'],
-                        );
 
-                        // $splprd = $this->db->select('*')
-                        //      ->from('supplier_product')
-                        //      ->where('supplier_id', $supplier_id)
-                        //      ->where('product_id', $product_id)
-                        //      ->get()
-                        //      ->num_rows();
-                        $this->db->insert('supplier_product',$supp_prd);
-                        // if (!empty($splprd)) {
 
-                        // }else{
-                        //     $supp_prd = array(
-                        //         'supplier_id'    => $supplier_id,
-                        //         'supplier_price' => $insert_csv['supplier_price'],
-                        //         'products_model' => $insert_csv['product_model']
-                        //     );
-                        //     $this->db->where('product_id', $product_id);
-                        //     $this->db->where('supplier_id', $supplier_id);
-                        //     $this->db->update('supplier_product', $supp_prd);
-                        // }
+                         $splprd = $this->db->select('*')
+                              ->from('supplier_product')
+                              ->where('supplier_id', $supplier_id)
+                              ->where('product_id', $product_id)
+                              ->get()
+                              ->num_rows();
+
+
+
+
+                      //  $this->db->insert('supplier_product',$supp_prd);
+                         if ($splprd > 0) {
+                             $supp_prd = array(
+                                 'supplier_id'    => $supplier_id,
+                                 'product_id'    =>  $product_id,
+                                 'supplier_price' => $insert_csv['supplier_price'],
+                                 'products_model' => $insert_csv['product_model']
+                             );
+                             $this->db->where('product_id', $product_id);
+                             $this->db->where('supplier_id', $supplier_id);
+                             $this->db->update('supplier_product', $supp_prd);
+                         }else{
+                             $supp_prd = array(
+                                 //'product_id'     => $insert_csv['product_id'],
+                                 'product_id'    =>  $product_id,
+                                 'supplier_id'    => $supplier_id,
+                                 'supplier_price' => $insert_csv['supplier_price'],
+                             );
+                             $this->db->insert('supplier_product',$supp_prd);
+                         }
 
 
 
