@@ -125,10 +125,10 @@ class Cproduct extends CI_Controller {
         $config['encryption_key'] = 'fds2fdsKIO32';
         $CI->load->library('encryption');
 
-      //  $ciphertext = $this->encryption->encrypt("plaintext");
+        //  $ciphertext = $this->encryption->encrypt("plaintext");
         $ciphertext=hash('sha256', 'Arman123');
         echo $ciphertext;
-      //  echo $this->encryption->decrypt($ciphertext);
+        //  echo $this->encryption->decrypt($ciphertext);
     }
 
     //Insert Product and uload
@@ -142,12 +142,14 @@ class Cproduct extends CI_Controller {
 
         $product_id = (!empty($this->input->post('product_id',TRUE))?$this->input->post('product_id',TRUE):$this->generator(8));
         $check_product = $this->db->select('*')->from('product_information')->where('product_id',$product_id)->get()->num_rows();
+
+
         if($check_product > 0){
             $this->session->set_userdata(array('error_message' => display('already_exists')));
             redirect(base_url('Cproduct'));
 
         }
-        $product_id_two = $this->input->post('$product_id_two',TRUE);
+        $product_id_two = $this->input->post('product_id_two',TRUE);
         $sup_price = $this->input->post('supplier_price',TRUE);
         $currency_name = $this->input->post('currency',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
@@ -157,13 +159,13 @@ class Cproduct extends CI_Controller {
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
-         //   $currency = $currency_name[$i];
+            //   $currency = $currency_name[$i];
 
             $supp_prd = array(
                 'product_id'     => $product_id,
                 'product_id_two'     => $product_id_two,
                 'supplier_id'    => $supp_id,
-              //  'currency'    => $currency,
+                //  'currency'    => $currency,
                 'supplier_price' => $supplier_price,
                 'products_model' => $product_model = $this->input->post('model_id',TRUE)
             );
@@ -218,22 +220,6 @@ class Cproduct extends CI_Controller {
 
         }
 
-        //  $price = $this->input->post('cost_price',TRUE);
-
-        //  $tax_percentage = $this->input->post('tax',TRUE);
-        //  $tax = $tax_percentage / 100;
-
-        //  $tablecolumn = $this->db->list_fields('tax_collection');
-        //  $num_column = count($tablecolumn)-4;
-        //  if($num_column > 0){
-        // $taxfield = [];
-        // for($i=0;$i<$num_column;$i++){
-        //  $taxfield[$i] = 'tax'.$i;
-        // }
-        // foreach ($taxfield as $key => $value) {
-        //  $data[$value] = $this->input->post($value)/100;
-        // }
-        // }
 
         $product_name=$this->input->post('product_name',TRUE);
         $parts=$this->input->post('parts',TRUE);
@@ -282,10 +268,16 @@ class Cproduct extends CI_Controller {
         $AI=$last_id+1;
 //        $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
 //        $sku=$product_new_words.$cat_new_words.$AI;
+        $check_product_name = $this->db->select('*')->from('product_information')->where('product_name', $this->input->post('product_name',TRUE))->get()->result();
         $sku=random_string('alnum', 10);
+        if(!empty($check_product_name)){
+            $sk=$check_product_name[0]->sku;
+        }else{
+            $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
+        }
 
-       // echo $sku;exit();
-        $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
+        // echo $sku;exit();
+
 
         $data['product_id']   = $product_id;
         $data['product_id_two']   = $product_id_two;
@@ -311,7 +303,7 @@ class Cproduct extends CI_Controller {
         $data['status']       = 1;
 
 
-      //  echo  $sku; exit();
+        //  echo  $sku; exit();
         $result = $CI->lproduct->insert_product($data);
 
 
@@ -512,14 +504,14 @@ class Cproduct extends CI_Controller {
         $this->db->delete('supplier_product');
         $sup_price = $this->input->post('supplier_price',TRUE);
         $s_id = $this->input->post('supplier_id',TRUE);
-       // $currency_name = $this->input->post('currency',TRUE);
+        // $currency_name = $this->input->post('currency',TRUE);
 
 
         $date=date('Y-m-d');
         for ($i = 0, $n = count($s_id); $i < $n; $i++) {
             $supplier_price = $sup_price[$i];
             $supp_id = $s_id[$i];
-          //  $currency = $currency_name[$i];
+            //  $currency = $currency_name[$i];
 
             $supp_prd = array(
                 'product_id'     => $product_id,
@@ -630,16 +622,15 @@ class Cproduct extends CI_Controller {
             $brand_new_words .= $w[0].$w[1].$w[2];
         }
 
-     //   $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+        //   $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
 
         $AI = $this->input->post('id',TRUE);
-      //  $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
+        //  $sku=$product_new_words.$parts.'-'.$cat_new_words.$subcat_new_words.'-'.$brand_new_words.'-'.$origin;
         $sku=$product_new_words.$cat_new_words.$AI;
         // echo $sku;exit();
 
 
         $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
-
 
         $tablecolumn = $this->db->list_fields('tax_collection');
         $num_column = count($tablecolumn)-4;
@@ -733,7 +724,7 @@ class Cproduct extends CI_Controller {
 
         }
 
-   //  echo '<pre>';print_r($product_data);exit();
+        //  echo '<pre>';print_r($product_data);exit();
 
 
     }
@@ -778,7 +769,7 @@ class Cproduct extends CI_Controller {
         $ext = substr(strrchr($filename, '.'), 1);
         if($ext == 'csv'){
 //            $sku=random_string('alnum', 10);
-            $sku=random_string('alnum', 11);
+
 //            $sk=(!empty($this->input->post('parts',TRUE)) ? $this->input->post('parts',TRUE) : $sku);
 
 
@@ -792,6 +783,7 @@ class Cproduct extends CI_Controller {
                     //keep this if condition if you want to remove the first row
                     for($i = 0, $j = count($csv_line); $i < $j; $i++)
                     {
+                        $sku=random_string('alnum', 11);
                         $product_id = $this->generator(10);
                         $insert_csv = array();
                         $insert_csv['supplier_id']    = (!empty($csv_line[1])?$csv_line[1]:null);
@@ -827,7 +819,7 @@ class Cproduct extends CI_Controller {
 
 
                         if ($count > 0) {
-                           // echo '<pre>';print_r($supplierinfo);exit();
+                            // echo '<pre>';print_r($supplierinfo);exit();
                             $this->db->insert('supplier_information',$supplierinfo);
                         }
                         $supplier_id = $this->db->insert_id();
@@ -898,42 +890,48 @@ class Cproduct extends CI_Controller {
                         }
                     }
 
-                        $check_model = $this->db->select('*')->from('product_model')->where('model_name', $insert_csv['product_model'])->get()->row();
+                    $check_model = $this->db->select('*')->from('product_model')->where('model_name', $insert_csv['product_model'])->get()->row();
 
 //                        echo '<pre>';print_r($check_model);exit();
-                        if (!empty($check_model)) {
-                            $model_id = $check_model->model_id;
-                        } else {
-                            $model_id = $this->auth->generator(15);
-                            $modeldata = array(
-                                'model_id' => $model_id,
-                                'model_name' => $insert_csv['product_model'],
-                                'status' => 1
-                            );
+                    if (!empty($check_model)) {
+                        $model_id = $check_model->model_id;
+                    } else {
+                        $model_id = $this->auth->generator(15);
+                        $modeldata = array(
+                            'model_id' => $model_id,
+                            'model_name' => $insert_csv['product_model'],
+                            'status' => 1
+                        );
 
 
-                            if ($count > 0) {
-                                $this->db->insert('product_model', $modeldata);
-
-                            }
-
+                        if ($count > 0) {
+                            $this->db->insert('product_model', $modeldata);
 
                         }
 
-                            $check_brand = $this->db->select('*')->from('product_brand')->where('brand_name', $insert_csv['brand_id'])->get()->row();
-                            if (!empty($check_brand)) {
-                                $brand_id = $check_brand->brand_id;
-                            } else {
-                                $brand_id = $this->auth->generator(15);
-                                $branddata = array(
-                                    'brand_id' => $brand_id,
-                                    'brand_name' => $insert_csv['brand_id'],
-                                    'status' => 1
-                                );
-                                if ($count > 0) {
-                                    $this->db->insert('product_brand', $branddata);
-                                }
-                            }
+
+                    }
+
+                    $check_brand = $this->db->select('*')->from('product_brand')->where('brand_name', $insert_csv['brand_id'])->get()->row();
+                    if (!empty($check_brand)) {
+                        $brand_id = $check_brand->brand_id;
+                    } else {
+                        $brand_id = $this->auth->generator(15);
+                        $branddata = array(
+                            'brand_id' => $brand_id,
+                            'brand_name' => $insert_csv['brand_id'],
+                            'status' => 1
+                        );
+                        if ($count > 0) {
+                            $this->db->insert('product_brand', $branddata);
+                        }
+                    }
+                    $check_product_name = $this->db->select('*')->from('product_information')->where('product_name', $insert_csv['product_name'])->get()->result();
+                    if(!empty($check_product_name)){
+                        $sk=$check_product_name[0]->sku;
+                    }else{
+                        $sk=(!empty($insert_csv['parts'])?$insert_csv['parts']:$sku);
+                    }
 
 
                     $data = array(
@@ -949,7 +947,7 @@ class Cproduct extends CI_Controller {
                         'parts' => $insert_csv['parts'],
                         'tag' => $insert_csv['tag'],
                         'country' => $insert_csv['country'],
-                        'sku' =>  (!empty($insert_csv['parts'])?$insert_csv['parts']:$sku),
+                        'sku' =>  $sk,
                         'price'         => $insert_csv['price'],
                         // 're_order_level'=> $insert_csv['re_order_level'],
                         'unit'          => $insert_csv['unit'],
@@ -959,7 +957,7 @@ class Cproduct extends CI_Controller {
                         'status'        => 1
                     );
 
-                  //  echo '<pre>';print_r($data);exit();
+                    //  echo '<pre>';print_r($data);exit();
 
                     if ($count > 0) {
 
@@ -1000,36 +998,36 @@ class Cproduct extends CI_Controller {
 
 
 
-                         $splprd = $this->db->select('*')
-                              ->from('supplier_product')
-                              ->where('supplier_id', $supplier_id)
-                              ->where('product_id', $product_id)
-                              ->get()
-                              ->num_rows();
+                        $splprd = $this->db->select('*')
+                            ->from('supplier_product')
+                            ->where('supplier_id', $supplier_id)
+                            ->where('product_id', $product_id)
+                            ->get()
+                            ->num_rows();
 
 
 
 
-                      //  $this->db->insert('supplier_product',$supp_prd);
-                         if ($splprd > 0) {
-                             $supp_prd = array(
-                                 'supplier_id'    => $supplier_id,
-                                 'product_id'    =>  $product_id,
-                                 'supplier_price' => $insert_csv['supplier_price'],
-                                 'products_model' => $insert_csv['product_model']
-                             );
-                             $this->db->where('product_id', $product_id);
-                             $this->db->where('supplier_id', $supplier_id);
-                             $this->db->update('supplier_product', $supp_prd);
-                         }else{
-                             $supp_prd = array(
-                                 //'product_id'     => $insert_csv['product_id'],
-                                 'product_id'    =>  $product_id,
-                                 'supplier_id'    => $supplier_id,
-                                 'supplier_price' => $insert_csv['supplier_price'],
-                             );
-                             $this->db->insert('supplier_product',$supp_prd);
-                         }
+                        //  $this->db->insert('supplier_product',$supp_prd);
+                        if ($splprd > 0) {
+                            $supp_prd = array(
+                                'supplier_id'    => $supplier_id,
+                                'product_id'    =>  $product_id,
+                                'supplier_price' => $insert_csv['supplier_price'],
+                                'products_model' => $insert_csv['product_model']
+                            );
+                            $this->db->where('product_id', $product_id);
+                            $this->db->where('supplier_id', $supplier_id);
+                            $this->db->update('supplier_product', $supp_prd);
+                        }else{
+                            $supp_prd = array(
+                                //'product_id'     => $insert_csv['product_id'],
+                                'product_id'    =>  $product_id,
+                                'supplier_id'    => $supplier_id,
+                                'supplier_price' => $insert_csv['supplier_price'],
+                            );
+                            $this->db->insert('supplier_product',$supp_prd);
+                        }
 
 
 
