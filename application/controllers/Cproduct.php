@@ -828,7 +828,7 @@ class Cproduct extends CI_Controller {
                             $headcode=$coa->HeadCode+1;
                         }
                         else{
-                            $headcode="50205000001";
+                            $headcode="502020001";
                         }
                         $c_acc=$supplier_id.'-'.$insert_csv['supplier_id'];
                         $createby=$this->session->userdata('user_id');
@@ -856,61 +856,67 @@ class Cproduct extends CI_Controller {
                             $this->db->insert('acc_coa',$supplier_coa);
                         }
                     }
+                    if (!empty( $insert_csv['category_id'])) {
+                        $check_category = $this->db->select('*')->from('product_category')->where('category_name', $insert_csv['category_id'])->get()->row();
+                        if (!empty($check_category)) {
+                            $category_id = $check_category->category_id;
+                        } else {
+                            $category_id = $this->auth->generator(15);
+                            $categorydata = array(
+                                'category_id' => $category_id,
+                                'category_name' => $insert_csv['category_id'],
+                                'status' => 1
+                            );
+                            if ($count > 0) {
+                                $this->db->insert('product_category', $categorydata);
 
-                    $check_category = $this->db->select('*')->from('product_category')->where('category_name',$insert_csv['category_id'])->get()->row();
-                    if(!empty($check_category)){
-                        $category_id = $check_category->category_id;
-                    }else {
-                        $category_id = $this->auth->generator(15);
-                        $categorydata = array(
-                            'category_id' => $category_id,
-                            'category_name' => $insert_csv['category_id'],
-                            'status' => 1
-                        );
-                        if ($count > 0) {
-                            $this->db->insert('product_category', $categorydata);
+                            }
+                        }
+                    }
+                    if (!empty( $insert_csv['sub_cat_id'])) {
+                        $check_sub = $this->db->select('*')->from('product_subcat')->where(array('category_id' => $category_id, 'subcat_name' => $insert_csv['sub_cat_id']))->get()->row();
+                        if (!empty($check_sub)) {
+                            $sub_cat_id = $check_sub->sub_cat_id;
+                        } else {
+                            $sub_cat_id = $this->auth->generator(15);
+                            $sub_categorydata = array(
+                                'sub_cat_id' => $sub_cat_id,
+                                'category_id' => $category_id,
+                                'subcat_name' => $insert_csv['sub_cat_id'],
+                                'status' => 1
+                            );
+                            if ($count > 0) {
+                                $this->db->insert('product_subcat', $sub_categorydata);
 
+                            }
                         }
                     }
 
-                    $check_sub = $this->db->select('*')->from('product_subcat')->where(array('category_id'=>$category_id,'subcat_name' => $insert_csv['sub_cat_id']))->get()->row();
-                    if(!empty($check_sub)){
-                        $sub_cat_id = $check_sub->sub_cat_id;
-                    }else {
-                        $sub_cat_id = $this->auth->generator(15);
-                        $sub_categorydata = array(
-                            'sub_cat_id' => $sub_cat_id,
-                            'category_id' => $category_id,
-                            'subcat_name' => $insert_csv['sub_cat_id'],
-                            'status' => 1
-                        );
-                        if ($count > 0) {
-                            $this->db->insert('product_subcat', $sub_categorydata);
-
-                        }
-                    }
-
-                    $check_model = $this->db->select('*')->from('product_model')->where('model_name', $insert_csv['product_model'])->get()->row();
-
+                    if (!empty( $insert_csv['product_model'])) {
+                        $check_model = $this->db->select('*')->from('product_model')->where('model_name', $insert_csv['product_model'])->get()->row();
 //                        echo '<pre>';print_r($check_model);exit();
-                    if (!empty($check_model)) {
-                        $model_id = $check_model->model_id;
-                    } else {
-                        $model_id = $this->auth->generator(15);
-                        $modeldata = array(
-                            'model_id' => $model_id,
-                            'model_name' => $insert_csv['product_model'],
-                            'status' => 1
-                        );
+                        if (!empty($check_model)) {
+                            $model_id = $check_model->model_id;
+                        } else {
+                            $model_id = $this->auth->generator(15);
+                            $modeldata = array(
+                                'model_id' => $model_id,
+                                'model_name' => $insert_csv['product_model'],
+                                'status' => 1
+                            );
 
 
-                        if ($count > 0) {
-                            $this->db->insert('product_model', $modeldata);
+                            if ($count > 0) {
+                                $this->db->insert('product_model', $modeldata);
+
+                            }
+
 
                         }
-
-
                     }
+
+                    if (!empty( $insert_csv['brand_id'])){
+
 
                     $check_brand = $this->db->select('*')->from('product_brand')->where('brand_name', $insert_csv['brand_id'])->get()->row();
                     if (!empty($check_brand)) {
@@ -926,6 +932,9 @@ class Cproduct extends CI_Controller {
                             $this->db->insert('product_brand', $branddata);
                         }
                     }
+
+                    }
+
                     $check_product_name = $this->db->select('*')->from('product_information')->where('product_name', $insert_csv['product_name'])->get()->result();
                     if(!empty($check_product_name)){
                         $sk=$check_product_name[0]->sku;
@@ -961,13 +970,21 @@ class Cproduct extends CI_Controller {
 
                     if ($count > 0) {
 
+                        if (!empty( $insert_csv['brand_id'])){
+                            $this->db->where('brand_id',$brand_id);
+                        }
+                        if (!empty( $insert_csv['sub_cat_id'])){
+                            $this->db->where('sub_cat_id',$sub_cat_id);
+                        }
+                        if (!empty( $insert_csv['category_id'])){
+                            $this->db->where('category_id',$category_id);
+                        }
+                        if (!empty( $insert_csv['product_model'])){
+                            $this->db->where('product_model',$model_id);
+                        }
                         $result = $this->db->select('*')
                             ->from('product_information')
                             ->where('product_name',$data['product_name'])
-                            ->where('category_id',$category_id)
-                            ->where('sub_cat_id',$sub_cat_id)
-                            ->where('brand_id',$brand_id)
-                            ->where('product_model',$model_id)
                             ->get()
                             ->row();
                         if (empty($result)){
