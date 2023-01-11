@@ -1670,14 +1670,13 @@ $rqsn_outlet = $CI->Rqsn->approve_rqsn_outlet_count();
                                 echo " ";
                             } ?>"><a href="<?php echo base_url('accounts/journal_voucher') ?>"><?php echo display('journal_voucher'); ?></a></li>
                         <?php } ?>
-                        <!--
                         <?php if ($this->permission1->method('aprove_v', 'read')->access()) { ?>
                             <li class="treeview <?php if ($this->uri->segment('2') == ("aprove_v")) {
                             echo "active";
                         } else {
                             echo " ";
                         } ?>"><a href="<?php echo base_url('accounts/aprove_v') ?>"><?php echo display('voucher_approval'); ?></a></li>
-                        <?php } ?> -->
+                        <?php } ?>
                         <?php if ($this->permission1->method('ac_report', 'create')->access()) { ?>
                             <li class="treeview <?php
                             if ($this->uri->segment('2') == ("voucher_report") || $this->uri->segment('2') == ("cash_book") || $this->uri->segment('2') == ("bank_book") || $this->uri->segment('2') == ("general_ledger") || $this->uri->segment('2') == ("trial_balance_new") || $this->uri->segment('2') == ("profit_loss_report") || $this->uri->segment('2') == ("cash_flow_report") || $this->uri->segment('2') == ("inventory_ledger") || $this->uri->segment('2') == ("coa_print")) {
