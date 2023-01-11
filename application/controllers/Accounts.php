@@ -329,6 +329,7 @@ class Accounts extends CI_Controller
   // Update Debit voucher
   public function update_debit_voucher()
   {
+    // $this->load->model('Accounts_model');
     $this->form_validation->set_rules('cmbDebit', display('cmbDebit'), 'max_length[100]');
     if ($this->form_validation->run()) {
       if ($this->accounts_model->update_debitvoucher()) {
@@ -720,7 +721,7 @@ class Accounts extends CI_Controller
   {
     $Headid = $this->input->post('Headid', TRUE);
     $HeadName = $this->accounts_model->general_led_get($Headid);
-    echo  "<option>Transaction Head</option>";
+    //echo  "<option>Transaction Head</option>";
     $html = "";
     foreach ($HeadName as $data) {
       $html .= "<option value='$data->HeadCode'>$data->HeadName</option>";
@@ -752,6 +753,8 @@ class Accounts extends CI_Controller
   //general ledger working
   public function accounts_report_search()
   {
+    //echo '<pre>';print_r($_POST);exit();
+
     $CI = &get_instance();
     $CI->load->model('Accounts_model');
     $CI->load->model('Invoices');
@@ -762,7 +765,7 @@ class Accounts extends CI_Controller
     $chkIsTransction = $this->input->post('chkIsTransction', TRUE);
     $HeadName    = $this->accounts_model->general_led_report_headname($cmbGLCode);
     $HeadName2   = $this->accounts_model->general_led_report_headname2($cmbGLCode, $cmbCode, $dtpFromDate, $dtpToDate, $chkIsTransction);
-    $pre_balance = $this->accounts_model->general_led_report_prebalance($cmbCode, $dtpFromDate);
+    $pre_balance = $this->accounts_model->general_led_report_prebalance($cmbGLCode, $cmbCode, $dtpFromDate);
 
     $data = array(
       'dtpFromDate' => $dtpFromDate,
@@ -775,10 +778,16 @@ class Accounts extends CI_Controller
     );
     $data['company'] = $CI->Invoices->retrieve_company();
     $data['software_info'] = $CI->Accounts_model->software_setting_info();
-    $data['ledger'] = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cmbCode)->get()->result_array();
+    if($cmbGLCode && $cmbCode)
+    {
+      $data['ledger'] = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cmbCode)->get()->result_array();
+    }
+    else{
+      $data['ledger'] = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cmbGLCode)->get()->result_array();
+    }
     $data['title'] = display('general_ledger_report');
 
-    //echo '<pre>';print_r($HeadName2);exit();
+    //echo '<pre>';print_r($data);exit();
     $content = $this->parser->parse('newaccount/general_ledger_report', $data, true);
     $this->template->full_admin_html_view($content);
   }

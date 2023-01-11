@@ -76,6 +76,8 @@ class Accounts_model extends CI_Model
 
         $voucher_no = addslashes(trim($this->input->post('txtVNo', TRUE)));
         $Vtype = "DV";
+        $check_no = $this->input->post('check_no', TRUE);
+        $check_date = $this->input->post('chq_date', TRUE);
         $cAID = $this->input->post('cmbDebit', TRUE);
         $dAID = $this->input->post('txtCode', TRUE);
         $Debit = $this->input->post('txtAmount', TRUE);
@@ -87,115 +89,116 @@ class Accounts_model extends CI_Model
         $CreateBy = $this->session->userdata('user_id');
         $createdate = date('Y-m-d H:i:s');
 
-        $bkash_id = $this->input->post('bkash_id', TRUE);
-        $nagad_id = $this->input->post('nagad_id', TRUE);
-        $bank_id = $this->input->post('bank_id_m', TRUE);
-        if (!empty($bank_id)) {
-            $bankname = $this->db->select('bank_name')->from('bank_add')->where('bank_id', $bank_id)->get()->row()->bank_name;
-            $bankcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName', $bankname)->get()->row()->HeadCode;
-        } else {
-            $bankcoaid = '';
-        }
+       // $bkash_id = $this->input->post('bkash_id', TRUE);
+       // $nagad_id = $this->input->post('nagad_id', TRUE);
+        //$bank_id = $this->input->post('bank_id_m', TRUE);
+        // if (!empty($bank_id)) {
+        //     $bankname = $this->db->select('bank_name')->from('bank_add')->where('bank_id', $bank_id)->get()->row()->bank_name;
+        //     $bankcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName', $bankname)->get()->row()->HeadCode;
+        // } else {
+        //     $bankcoaid = '';
+        // }
 
-        $cc = array(
-            'VNo'            =>  $voucher_no,
-            'Vtype'          =>  $Vtype,
-            'VDate'          =>  $VDate,
-            'COAID'          =>  1020101,
-            'Narration'      =>  $Narration,
-            'Credit'         =>  $Credit,
-            'Debit'         =>  0,
-            'IsPosted'       =>  1,
-            'CreateBy'       =>  $CreateBy,
-            'CreateDate'     =>  $createdate,
-            'IsAppove'       =>  0
-        );
-        $bankc = array(
-            'VNo'            =>  $voucher_no,
-            'Vtype'          =>  $Vtype,
-            'VDate'          =>  $VDate,
-            'COAID'          =>  $bankcoaid,
-            'Narration'      =>  $Narration,
-            'Credit'          =>  $Credit,
-            'Debit'         =>  0,
-            'IsPosted'       =>  1,
-            'CreateBy'       =>  $CreateBy,
-            'CreateDate'     =>  $createdate,
-            'IsAppove'       =>  0
-        );
+        // $cc = array(
+        //     'VNo'            =>  $voucher_no,
+        //     'Vtype'          =>  $Vtype,
+        //     'VDate'          =>  $VDate,
+        //     'COAID'          =>  1020101,
+        //     'Narration'      =>  $Narration,
+        //     'Credit'         =>  $Credit,
+        //     'Debit'         =>  0,
+        //     'IsPosted'       =>  1,
+        //     'CreateBy'       =>  $CreateBy,
+        //     'CreateDate'     =>  $createdate,
+        //     'IsAppove'       =>  0
+        // );
+        // $bankc = array(
+        //     'VNo'            =>  $voucher_no,
+        //     'Vtype'          =>  $Vtype,
+        //     'VDate'          =>  $VDate,
+        //     'COAID'          =>  $bankcoaid,
+        //     'Narration'      =>  $Narration,
+        //     'Credit'          =>  $Credit,
+        //     'Debit'         =>  0,
+        //     'IsPosted'       =>  1,
+        //     'CreateBy'       =>  $CreateBy,
+        //     'CreateDate'     =>  $createdate,
+        //     'IsAppove'       =>  0
+        // );
 
-        if (!empty($bkash_id)) {
-            $bkashname = $this->db->select('bkash_no')->from('bkash_add')->where('bkash_id', $bkash_id)->get()->row()->bkash_no;
+        // if (!empty($bkash_id)) {
+        //     $bkashname = $this->db->select('bkash_no')->from('bkash_add')->where('bkash_id', $bkash_id)->get()->row()->bkash_no;
 
-            $bkashcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName', 'BK - ' . $bkashname)->get()->row()->HeadCode;
-        } else {
-            $bkashcoaid = '';
-        }
-        $bkashc = array(
-            'VNo'            =>  $voucher_no,
-            'Vtype'          =>  $Vtype,
-            'VDate'          =>  $VDate,
-            'COAID'          =>  $bkashcoaid,
-            'Narration'      =>  $Narration,
-            'Credit'          =>  $Credit,
-            'Debit'         =>  0,
-            'IsPosted'       =>  1,
-            'CreateBy'       =>  $CreateBy,
-            'CreateDate'     =>  $createdate,
-            'IsAppove'       =>  0,
+        //     $bkashcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName', 'BK - ' . $bkashname)->get()->row()->HeadCode;
+        // } else {
+        //     $bkashcoaid = '';
+        // }
+        // $bkashc = array(
+        //     'VNo'            =>  $voucher_no,
+        //     'Vtype'          =>  $Vtype,
+        //     'VDate'          =>  $VDate,
+        //     'COAID'          =>  $bkashcoaid,
+        //     'Narration'      =>  $Narration,
+        //     'Credit'          =>  $Credit,
+        //     'Debit'         =>  0,
+        //     'IsPosted'       =>  1,
+        //     'CreateBy'       =>  $CreateBy,
+        //     'CreateDate'     =>  $createdate,
+        //     'IsAppove'       =>  0,
 
-        );
+        // );
 
-        if (!empty($nagad_id)) {
-            $nagadname = $this->db->select('nagad_no')->from('nagad_add')->where('nagad_id', $nagad_id)->get()->row()->nagad_no;
+        // if (!empty($nagad_id)) {
+        //     $nagadname = $this->db->select('nagad_no')->from('nagad_add')->where('nagad_id', $nagad_id)->get()->row()->nagad_no;
 
-            $nagadcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName', 'NG - ' . $nagadname)->get()->row()->HeadCode;
-        } else {
-            $nagadcoaid = '';
-        }
+        //     $nagadcoaid = $this->db->select('HeadCode')->from('acc_coa')->where('HeadName', 'NG - ' . $nagadname)->get()->row()->HeadCode;
+        // } else {
+        //     $nagadcoaid = '';
+        // }
 
-        $nagadc = array(
-            'VNo'            =>  $voucher_no,
-            'Vtype'          =>  $Vtype,
-            'VDate'          =>  $VDate,
-            'COAID'          =>  $nagadcoaid,
-            'Narration'      =>  $Narration,
-            'Credit'          =>  $Credit,
-            'Debit'         =>  0,
-            'IsPosted'       =>  1,
-            'CreateBy'       =>  $CreateBy,
-            'CreateDate'     =>  $createdate,
-            'IsAppove'       =>  0,
-        );
-
-
+        // $nagadc = array(
+        //     'VNo'            =>  $voucher_no,
+        //     'Vtype'          =>  $Vtype,
+        //     'VDate'          =>  $VDate,
+        //     'COAID'          =>  $nagadcoaid,
+        //     'Narration'      =>  $Narration,
+        //     'Credit'          =>  $Credit,
+        //     'Debit'         =>  0,
+        //     'IsPosted'       =>  1,
+        //     'CreateBy'       =>  $CreateBy,
+        //     'CreateDate'     =>  $createdate,
+        //     'IsAppove'       =>  0,
+        // );
 
 
-        if ($this->input->post('paytype', TRUE) == 4) {
-            $this->db->insert('acc_transaction', $bankc);
-        }
-        if ($this->input->post('paytype', TRUE) == 1) {
-            $this->db->insert('acc_transaction', $cc);
-        }
-        if ($this->input->post('paytype', TRUE) == 3) {
-            $this->db->insert('acc_transaction', $bkashc);
-        }
-        if ($this->input->post('paytype', TRUE) == 5) {
-            $this->db->insert('acc_transaction', $nagadc);
-        }
 
+
+        // if ($this->input->post('paytype', TRUE) == 4) {
+        //     $this->db->insert('acc_transaction', $bankc);
+        // }
+        //  if ($this->input->post('paytype', TRUE) == 1) {
+        //     $this->db->insert('acc_transaction', $cc);
+        //  }
+        // if ($this->input->post('paytype', TRUE) == 3) {
+        //     $this->db->insert('acc_transaction', $bkashc);
+        // }
+        // if ($this->input->post('paytype', TRUE) == 5) {
+        //     $this->db->insert('acc_transaction', $nagadc);
+        // }
+        
         for ($i = 0; $i < count($dAID); $i++) {
             $dbtid = $dAID[$i];
             $Damnt = $Debit[$i];
 
             $debitheadinfo = $this->db->select('*')->from('acc_coa')->where('HeadCode', $dbtid)->get()->row();
-
+           
             $debitinsert = array(
                 'VNo'            =>  $voucher_no,
                 'Vtype'          =>  $Vtype,
                 'VDate'          =>  $VDate,
                 'COAID'          =>  $dbtid,
-                'Narration'      =>  $Narration,
+                'Narration'      =>  'Customer debit for Paid Amount Customer ' . $debitheadinfo->HeadName . ' ' . $Narration,
+                // 'Narration'      =>  $Narration,
                 'Debit'          =>  $Damnt,
                 'Credit'         =>  0,
                 'IsPosted'       => $IsPosted,
@@ -206,6 +209,32 @@ class Accounts_model extends CI_Model
 
             $this->db->insert('acc_transaction', $debitinsert);
             $headinfo = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cAID)->get()->row();
+            // echo "<pre>";
+            // print_r($headinfo);
+            // exit();
+            if ($cAID > 102010201 && $cAID < 102010299) {
+                $CR_Narration = 'Debit voucher from ' . $headinfo->HeadName . ' Check NO. ' . $check_no . ' Check Date - ' . $check_date;
+            } else {
+                $CR_Narration = 'Debit voucher from ' . $headinfo->HeadName;
+            }
+            $cinsert = array(
+                'VNo'            =>  $voucher_no,
+                'Vtype'          =>  $Vtype,
+                'VDate'          =>  $VDate,
+                'COAID'          =>  $cAID,
+                'Narration'      =>  $CR_Narration,
+                'Debit'          =>  0,
+                'Credit'         =>  $Damnt,
+                'IsPosted'       => $IsPosted,
+                'CreateBy'       => $CreateBy,
+                'CreateDate'     => $createdate,
+                'IsAppove'       => 1
+            );
+
+            $this->db->insert('acc_transaction', $cinsert);
+            $headinfo = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cAID)->get()->row();
+
+
         }
         // exit();
         return true;
@@ -555,7 +584,7 @@ class Accounts_model extends CI_Model
         $Narration = addslashes(trim($this->input->post('txtRemarks', TRUE)));
         $IsPosted = 1;
         $IsAppove = 1;
-        $CreateBy = $this->session->userdata('id');
+        $CreateBy = $this->session->userdata('user_id');
         $createdate = date('Y-m-d H:i:s');
 
 
@@ -680,7 +709,75 @@ class Accounts_model extends CI_Model
 
         return true;
     }
+    // update Debit voucher
+    public function update_debitvoucher()
+    {
+        $voucher_no = addslashes(trim($this->input->post('txtVNo', TRUE)));
+        $Vtype = "DV";
+        $check_no = $this->input->post('check_no', TRUE);
+        $check_date = $this->input->post('chq_date', TRUE);
+        $cAID = $this->input->post('cmbDebit', TRUE);
+        $dAID = $this->input->post('txtCode', TRUE);
+        $Debit = $this->input->post('txtAmount', TRUE);
+        $Credit = $this->input->post('grand_total', TRUE);
+        $VDate = $this->input->post('dtpDate', TRUE);
+        $Narration = addslashes(trim($this->input->post('txtRemarks', TRUE)));
+        $IsPosted = 1;
+        $IsAppove = 0;
+        $CreateBy = $this->session->userdata('user_id');
+        $createdate = date('Y-m-d H:i:s');
 
+        $this->db->where('VNo', $voucher_no)
+            ->delete('acc_transaction');
+
+        for ($i = 0; $i < count($dAID); $i++) {
+            $dbtid = $dAID[$i];
+            $Damnt = $Debit[$i];
+
+            $debitheadinfo = $this->db->select('*')->from('acc_coa')->where('HeadCode', $dbtid)->get()->row();
+            $debitinsert = array(
+                'VNo'            =>  $voucher_no,
+                'Vtype'          =>  $Vtype,
+                'VDate'          =>  $VDate,
+                'COAID'          =>  $dbtid,
+                'Narration'      =>  'Customer debit for Paid Amount Customer ' . $debitheadinfo->HeadName . ' ' . $Narration,
+                'Debit'          =>  0,
+                'Credit'         =>  $Damnt,
+                'IsPosted'       => $IsPosted,
+                'CreateBy'       => $CreateBy,
+                'CreateDate'     => $createdate,
+                'IsAppove'       => 0
+            );
+
+            $this->db->insert('acc_transaction', $debitinsert);
+            $headinfo = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cAID)->get()->row();
+            if ($cAID > 102010201 && $cAID < 102010299) {
+                $CR_Narration = 'Debit voucher from ' . $headinfo->HeadName . ' Check NO. ' . $check_no . ' Check Date - ' . $check_date;
+            } else {
+                $CR_Narration = 'Debit voucher from ' . $headinfo->HeadName;
+            }
+            $cinsert = array(
+                'VNo'            =>  $voucher_no,
+                'Vtype'          =>  $Vtype,
+                'VDate'          =>  $VDate,
+                'COAID'          =>  $cAID,
+                'Narration'      =>  $CR_Narration,
+                'Debit'          =>  $Damnt,
+                'Credit'         =>  0,
+                'IsPosted'       => $IsPosted,
+                'CreateBy'       => $CreateBy,
+                'CreateDate'     => $createdate,
+                'IsAppove'       => 0
+            );
+
+            $this->db->insert('acc_transaction', $cinsert);
+
+
+            $headinfo = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cAID)->get()->row();
+        }
+
+        return true;
+    }
 
     // Insert Countra voucher
     public function insert_contravoucher()
@@ -1042,7 +1139,13 @@ class Accounts_model extends CI_Model
             $this->db->join('acc_coa', 'acc_transaction.COAID = acc_coa.HeadCode', 'left');
             $this->db->where('acc_transaction.IsAppove', 1);
             $this->db->where('VDate BETWEEN "' . $dtpFromDate . '" and "' . $dtpToDate . '"');
-            $this->db->where('acc_transaction.COAID', $cmbCode);
+            if($cmbCode && $cmbGLCode)
+            {
+                $this->db->where('acc_transaction.COAID', $cmbCode);
+            }
+            else{
+                $this->db->where('acc_transaction.COAID', $cmbGLCode);
+            }
 
 
             $query = $this->db->get();
@@ -1054,14 +1157,20 @@ class Accounts_model extends CI_Model
             $this->db->join('acc_coa', 'acc_transaction.COAID = acc_coa.HeadCode', 'left');
             $this->db->where('acc_transaction.IsAppove', 1);
             $this->db->where('VDate BETWEEN "' . $dtpFromDate . '" and "' . $dtpToDate . '"');
-            $this->db->where('acc_transaction.COAID', $cmbCode);
+            if($cmbCode && $cmbGLCode)
+            {
+                $this->db->where('acc_transaction.COAID', $cmbCode);
+            }
+            else{
+                $this->db->where('acc_transaction.COAID', $cmbGLCode);
+            }
 
             $query = $this->db->get();
             return $query->result();
         }
     }
     // prebalance calculation
-    public function general_led_report_prebalance($cmbCode, $dtpFromDate)
+    public function general_led_report_prebalance($cmbGLCode, $cmbCode, $dtpFromDate)
     {
 
 
@@ -1070,7 +1179,13 @@ class Accounts_model extends CI_Model
         $this->db->from('acc_transaction');
         $this->db->where('acc_transaction.IsAppove', 1);
         $this->db->where('VDate < ', $dtpFromDate);
-        $this->db->where('acc_transaction.COAID', $cmbCode);
+        if($cmbGLCode && $cmbCode)
+        {
+            $this->db->where('acc_transaction.COAID', $cmbCode);
+        }
+        else{
+        $this->db->where('acc_transaction.COAID', $cmbGLCode);
+        }
 
 
         $query = $this->db->get()->row();
