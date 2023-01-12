@@ -228,7 +228,7 @@ class Accounts_model extends CI_Model
                 'IsPosted'       => $IsPosted,
                 'CreateBy'       => $CreateBy,
                 'CreateDate'     => $createdate,
-                'IsAppove'       => 1
+                'IsAppove'       => 0
             );
 
             $this->db->insert('acc_transaction', $cinsert);
@@ -610,7 +610,7 @@ class Accounts_model extends CI_Model
                 'IsPosted'       => $IsPosted,
                 'CreateBy'       => $CreateBy,
                 'CreateDate'     => $createdate,
-                'IsAppove'       => 1
+                'IsAppove'       => 0
             );
 
             $this->db->insert('acc_transaction', $debitinsert);
@@ -634,7 +634,7 @@ class Accounts_model extends CI_Model
                 'IsPosted'       => $IsPosted,
                 'CreateBy'       => $CreateBy,
                 'CreateDate'     => $createdate,
-                'IsAppove'       => 1
+                'IsAppove'       => 0
             );
 
             $this->db->insert('acc_transaction', $cinsert);
@@ -658,7 +658,7 @@ class Accounts_model extends CI_Model
         $Narration = addslashes(trim($this->input->post('txtRemarks', TRUE)));
         $IsPosted = 1;
         $IsAppove = 0;
-        $CreateBy = $this->session->userdata('id');
+        $CreateBy = $this->session->userdata('user_id');
         $createdate = date('Y-m-d H:i:s');
 
         $this->db->where('VNo', $voucher_no)
@@ -741,8 +741,8 @@ class Accounts_model extends CI_Model
                 'VDate'          =>  $VDate,
                 'COAID'          =>  $dbtid,
                 'Narration'      =>  'Customer debit for Paid Amount Customer ' . $debitheadinfo->HeadName . ' ' . $Narration,
-                'Debit'          =>  0,
-                'Credit'         =>  $Damnt,
+                'Debit'          =>  $Damnt,
+                'Credit'         =>  0,
                 'IsPosted'       => $IsPosted,
                 'CreateBy'       => $CreateBy,
                 'CreateDate'     => $createdate,
@@ -762,8 +762,8 @@ class Accounts_model extends CI_Model
                 'VDate'          =>  $VDate,
                 'COAID'          =>  $cAID,
                 'Narration'      =>  $CR_Narration,
-                'Debit'          =>  $Damnt,
-                'Credit'         =>  0,
+                'Debit'          =>  0,
+                'Credit'         =>  $Damnt,
                 'IsPosted'       => $IsPosted,
                 'CreateBy'       => $CreateBy,
                 'CreateDate'     => $createdate,
@@ -792,7 +792,7 @@ class Accounts_model extends CI_Model
         $Narration = addslashes(trim($this->input->post('txtRemarks', TRUE)));
         $IsPosted = 1;
         $IsAppove = 0;
-        $CreateBy = $this->session->userdata('id');
+        $CreateBy = $this->session->userdata('user_id');
         $createdate = date('Y-m-d H:i:s');
 
         for ($i = 0; $i < count($cAID); $i++) {
@@ -831,7 +831,7 @@ class Accounts_model extends CI_Model
         $Narration = addslashes(trim($this->input->post('txtRemarks', TRUE)));
         $IsPosted = 1;
         $IsAppove = 0;
-        $CreateBy = $this->session->userdata('id');
+        $CreateBy = $this->session->userdata('user_id');
         $createdate = date('Y-m-d H:i:s');
 
         for ($i = 0; $i < count($cAID); $i++) {
@@ -1144,7 +1144,7 @@ class Accounts_model extends CI_Model
                 $this->db->where('acc_transaction.COAID', $cmbCode);
             }
             else{
-                $this->db->where('acc_transaction.COAID', $cmbGLCode);
+                $this->db->like('acc_transaction.COAID', $cmbGLCode);
             }
 
 
@@ -1162,7 +1162,7 @@ class Accounts_model extends CI_Model
                 $this->db->where('acc_transaction.COAID', $cmbCode);
             }
             else{
-                $this->db->where('acc_transaction.COAID', $cmbGLCode);
+                $this->db->like('acc_transaction.COAID', $cmbGLCode);
             }
 
             $query = $this->db->get();
@@ -1184,7 +1184,7 @@ class Accounts_model extends CI_Model
             $this->db->where('acc_transaction.COAID', $cmbCode);
         }
         else{
-        $this->db->where('acc_transaction.COAID', $cmbGLCode);
+        $this->db->like('acc_transaction.COAID', $cmbGLCode);
         }
 
 

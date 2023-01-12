@@ -752,9 +752,7 @@ class Accounts extends CI_Controller
   }
   //general ledger working
   public function accounts_report_search()
-  {
-    //echo '<pre>';print_r($_POST);exit();
-
+  { 
     $CI = &get_instance();
     $CI->load->model('Accounts_model');
     $CI->load->model('Invoices');
@@ -780,10 +778,10 @@ class Accounts extends CI_Controller
     $data['software_info'] = $CI->Accounts_model->software_setting_info();
     if($cmbGLCode && $cmbCode)
     {
-      $data['ledger'] = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cmbCode)->get()->result_array();
+      $data['ledger'] = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cmbCode)->get()->result_array();//10203001
     }
     else{
-      $data['ledger'] = $this->db->select('*')->from('acc_coa')->where('HeadCode', $cmbGLCode)->get()->result_array();
+      $data['ledger'] = $this->db->select('*')->from('acc_coa')->like('HeadCode', $cmbGLCode)->get()->result_array();//$cmbGLCode = 102030
     }
     $data['title'] = display('general_ledger_report');
 
